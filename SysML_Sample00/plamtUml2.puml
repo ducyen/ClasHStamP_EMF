@@ -1,0 +1,6 @@
+@startuml
+
+action abc
+abc --> cde
+
+@enduml

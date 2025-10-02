@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-21">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="src" output="bin" path="src"/>
+	<classpathentry kind="lib" path="C:/Workspace/Applications/Papyrus202506/plugins/org.eclipse.papyrus.sysml16.validation_2.3.0.202505231451.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/Applications/Papyrus202506/plugins/org.eclipse.papyrus.sysml16.ui_2.3.0.202505231451.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/Applications/Papyrus202506/plugins/org.eclipse.papyrus.sysml16.service.types_2.3.0.202505231451.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/Applications/Papyrus202506/plugins/org.eclipse.papyrus.sysml16.nattable.ui_2.3.0.202505231451.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/Applications/Papyrus202506/plugins/org.eclipse.papyrus.sysml16.nattable.requirement_2.3.0.202505231451.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/Applications/Papyrus202506/plugins/org.eclipse.papyrus.sysml16.nattable.common_2.3.0.202505231451.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/Applications/Papyrus202506/plugins/org.eclipse.papyrus.sysml16.modelexplorer_2.3.0.202505231451.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/Applications/Papyrus202506/plugins/org.eclipse.papyrus.sysml16.nattable.allocation_2.3.0.202505231451.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/Applications/Papyrus202506/plugins/org.eclipse.papyrus.sysml16.edit_2.3.0.202505231451.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/Applications/Papyrus202506/plugins/org.eclipse.papyrus.sysml16.diagram.requirement_2.3.0.202505231451.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/Applications/Papyrus202506/plugins/org.eclipse.papyrus.sysml16.diagram.parametric_2.3.0.202505231451.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/Applications/Papyrus202506/plugins/org.eclipse.papyrus.sysml16_2.3.0.202505231451.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/Applications/Papyrus202506/plugins/org.eclipse.papyrus.sysml16.diagram.internalblock_2.3.0.202505231451.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/Applications/Papyrus202506/plugins/org.eclipse.papyrus.sysml16.architecture_2.3.0.202505231451.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/Applications/Papyrus202506/plugins/org.eclipse.papyrus.sysml16.diagram.common_2.3.0.202505231451.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/Applications/Papyrus202506/plugins/org.eclipse.papyrus.sysml16.diagram.blockdefinition_2.3.0.202505231451.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/Applications/Papyrus202506/plugins/org.eclipse.uml2.ant_1.5.0.v20221116-1811.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/Applications/Papyrus202506/plugins/org.eclipse.uml2.codegen.ecore.ui_2.5.2.v20221116-1811.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/Applications/Papyrus202506/plugins/org.eclipse.uml2.codegen.ecore_2.5.2.v20221116-1811.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/Applications/Papyrus202506/plugins/org.eclipse.uml2.common.edit_2.5.0.v20221116-1811.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/Applications/Papyrus202506/plugins/org.eclipse.uml2.common_2.5.0.v20221116-1811.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/Applications/Papyrus202506/plugins/org.eclipse.uml2.doc_5.5.0.v20221116-1811.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/Applications/Papyrus202506/plugins/org.eclipse.uml2.examples.uml.ui_5.5.0.v20221116-1811.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/Applications/Papyrus202506/plugins/org.eclipse.uml2.examples_5.5.0.v20221116-1811.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/Applications/Papyrus202506/plugins/org.eclipse.uml2.sdk_5.5.3.v20221116-1811.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/Applications/Papyrus202506/plugins/org.eclipse.uml2.types_2.5.0.v20221116-1811.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/Applications/Papyrus202506/plugins/org.eclipse.uml2.uml.ecore.exporter_3.5.0.v20221116-1811.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/Applications/Papyrus202506/plugins/org.eclipse.uml2.uml.ecore.importer_3.5.0.v20221116-1811.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/Applications/Papyrus202506/plugins/org.eclipse.uml2.uml.edit_5.5.0.v20221116-1811.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/Applications/Papyrus202506/plugins/org.eclipse.uml2.uml.editor_5.5.0.v20221116-1811.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/Applications/Papyrus202506/plugins/org.eclipse.uml2.uml.profile.standard_1.5.0.v20221116-1811.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/Applications/Papyrus202506/plugins/org.eclipse.uml2.uml.resources_5.5.0.v20221116-1811.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/Applications/Papyrus202506/plugins/org.eclipse.uml2.uml.validation_5.5.0.v20221116-1811.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/Applications/Papyrus202506/plugins/org.eclipse.uml2.uml_5.5.0.v20221116-1811.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/Applications/Papyrus202506/plugins/org.eclipse.uml2_5.5.3.v20221116-1811.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

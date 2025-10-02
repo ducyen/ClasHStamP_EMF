@@ -1,0 +1,32 @@
+@startuml
+skinparam interface {
+	backgroundColor Transparent
+}
+skinparam component {
+	style rectangle
+}
+
+
+interface IObservable as IObservable1
+interface IObservable as IObservable2
+interface IActionListener as IActionListener1
+interface IActionListener as IActionListener2
+
+component Button {
+    portout Click
+    portout DblClk
+	Click -- IObservable1
+	Click --( IActionListener1
+	DblClk -- IObservable2
+	DblClk --( IActionListener2
+}
+
+component Application {
+    portin Form
+	Form -u-( IObservable1
+	Form -u- IActionListener1
+	Form -u-( IObservable2
+	Form -u- IActionListener2
+}
+
+@enduml
