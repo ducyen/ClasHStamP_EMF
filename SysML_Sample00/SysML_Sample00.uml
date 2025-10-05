@@ -17,10 +17,24 @@
     <packagedElement xmi:type="uml:Class" xmi:id="_sbiqgFPeEfCSZe_6QS0nMQ" name="Block17">
       <ownedAttribute xmi:type="uml:Port" xmi:id="_9SokYFSXEfCSZe_6QS0nMQ" name="Port1" aggregation="composite"/>
       <ownedAttribute xmi:type="uml:Port" xmi:id="_LsIkEFSZEfCSZe_6QS0nMQ" name="ProxyPort2" aggregation="composite"/>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_iOUOMKBhEfC7wITuTa6u1g" name="Operation3">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_MyctEKBiEfC7wITuTa6u1g" name="Parameter1"/>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_O5hHQKBiEfC7wITuTa6u1g" name="Parameter2"/>
+      </ownedOperation>
     </packagedElement>
     <packagedElement xmi:type="uml:Class" xmi:id="_gdtwMFgIEfCSCry0LRghOw" name="Requirement18"/>
     <packagedElement xmi:type="uml:StateMachine" xmi:id="_xmp8MFgKEfCSCry0LRghOw" name="StateMachine19">
-      <region xmi:type="uml:Region" xmi:id="_x1ELoFgKEfCSCry0LRghOw" name="Region1"/>
+      <region xmi:type="uml:Region" xmi:id="_x1ELoFgKEfCSCry0LRghOw" name="Region1">
+        <subvertex xmi:type="uml:State" xmi:id="_PGX1UKBTEfC7wITuTa6u1g" name="StateA">
+          <region xmi:type="uml:Region" xmi:id="_RdmLYKBTEfC7wITuTa6u1g" name="Region1">
+            <subvertex xmi:type="uml:State" xmi:id="_UQ29MKBTEfC7wITuTa6u1g" name="StateA1"/>
+          </region>
+        </subvertex>
+        <subvertex xmi:type="uml:State" xmi:id="_XMMF4KBTEfC7wITuTa6u1g" name="StateB"/>
+      </region>
+      <region xmi:type="uml:Region" xmi:id="_ODn-4KBTEfC7wITuTa6u1g" name="Region2">
+        <subvertex xmi:type="uml:State" xmi:id="_YzgpAKBTEfC7wITuTa6u1g" name="StateC"/>
+      </region>
     </packagedElement>
     <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_9aMlYFGsEfCz0JP3SxwhXg">
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_9aYLkFGsEfCz0JP3SxwhXg" source="http://www.eclipse.org/uml2/2.0.0/UML">
