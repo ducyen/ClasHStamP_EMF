@@ -18,9 +18,9 @@
       <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_s20loKswEfC1t5InUmnZzw" name="Main">
         <region xmi:type="uml:Region" xmi:id="_rtUIcKtHEfCqvNj_CnM2-g" name="Region1"/>
       </ownedBehavior>
-      <nestedClassifier xmi:type="uml:StateMachine" xmi:id="_wob2EKswEfC1t5InUmnZzw" name="Sub">
+      <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_wob2EKswEfC1t5InUmnZzw" name="Sub">
         <region xmi:type="uml:Region" xmi:id="_uG7EIKtHEfCqvNj_CnM2-g" name="Region1"/>
-      </nestedClassifier>
+      </ownedBehavior>
     </packagedElement>
   </packagedElement>
 </uml:Model>

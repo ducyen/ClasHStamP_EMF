@@ -26,14 +26,24 @@ public class Car {
 	}
 	
 	
-	/* StateMachine for Car */
+	/* ============================================
+	 * State Machines belonging to Car
+	 * ============================================ */
+	
+	
+	
 	void Main_init(void) {
 	    // Initialization code for state machine
 	}
-	
 	void Main_step(void) {
-	    // State machine step function
+	    // Step function
 	}
 	
+	void Sub_init(void) {
+	    // Initialization code for state machine
+	}
+	void Sub_step(void) {
+	    // Step function
+	}
 	
 }
