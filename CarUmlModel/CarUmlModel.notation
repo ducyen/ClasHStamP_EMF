@@ -47,32 +47,60 @@
     </styles>
     <element xmi:type="uml:Model" href="CarUmlModel.uml#_oP_KsKHrEfCD88SE8FIO7A"/>
   </notation:Diagram>
-  <notation:Diagram xmi:id="_oal4MaHrEfCD88SE8FIO7A" type="PapyrusUMLStateMachineDiagram" name="State Machine Diagram" measurementUnit="Pixel">
-    <children xmi:type="notation:Shape" xmi:id="_oal4MqHrEfCD88SE8FIO7A" type="StateMachine_Shape">
-      <children xmi:type="notation:DecorationNode" xmi:id="_oal4M6HrEfCD88SE8FIO7A" type="StateMachine_NameLabel">
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_oal4NKHrEfCD88SE8FIO7A" width="700" height="20"/>
+  <notation:Diagram xmi:id="_rtZoAKtHEfCqvNj_CnM2-g" type="PapyrusUMLStateMachineDiagram" name="NewStateMachineDiagram" measurementUnit="Pixel">
+    <children xmi:type="notation:Shape" xmi:id="_rtZoAatHEfCqvNj_CnM2-g" type="StateMachine_Shape">
+      <children xmi:type="notation:DecorationNode" xmi:id="_rtZoAqtHEfCqvNj_CnM2-g" type="StateMachine_NameLabel">
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_rtZoA6tHEfCqvNj_CnM2-g" width="931" height="20"/>
       </children>
-      <children xmi:type="notation:BasicCompartment" xmi:id="_oal4NaHrEfCD88SE8FIO7A" type="StateMachine_RegionCompartment">
-        <children xmi:type="notation:Shape" xmi:id="_oal4NqHrEfCD88SE8FIO7A" type="Region_Shape">
-          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_oal4N6HrEfCD88SE8FIO7A" source="RegionAnnotationKey">
-            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_oal4OKHrEfCD88SE8FIO7A" key="RegionZoneKey" value=""/>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_rtZoBKtHEfCqvNj_CnM2-g" type="StateMachine_RegionCompartment">
+        <children xmi:type="notation:Shape" xmi:id="_rtZoBatHEfCqvNj_CnM2-g" type="Region_Shape">
+          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_rtZoBqtHEfCqvNj_CnM2-g" source="RegionAnnotationKey">
+            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_rtZoB6tHEfCqvNj_CnM2-g" key="RegionZoneKey" value=""/>
           </eAnnotations>
-          <children xmi:type="notation:BasicCompartment" xmi:id="_oal4OaHrEfCD88SE8FIO7A" type="Region_SubvertexCompartment">
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_oal4OqHrEfCD88SE8FIO7A"/>
+          <children xmi:type="notation:BasicCompartment" xmi:id="_rtZoCKtHEfCqvNj_CnM2-g" type="Region_SubvertexCompartment">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_rtZoCatHEfCqvNj_CnM2-g"/>
           </children>
-          <element xmi:type="uml:Region" href="CarUmlModel.uml#_oal4MKHrEfCD88SE8FIO7A"/>
-          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_oal4O6HrEfCD88SE8FIO7A" width="700" height="280"/>
+          <element xmi:type="uml:Region" href="CarUmlModel.uml#_rtUIcKtHEfCqvNj_CnM2-g"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_rtZoCqtHEfCqvNj_CnM2-g" width="931" height="591"/>
         </children>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_oal4PKHrEfCD88SE8FIO7A" y="20" width="700" height="280"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_rtZoC6tHEfCqvNj_CnM2-g" y="20" width="931" height="591"/>
       </children>
-      <element xmi:type="uml:StateMachine" href="CarUmlModel.uml#_oalRIKHrEfCD88SE8FIO7A"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_oal4PaHrEfCD88SE8FIO7A" x="30" y="30" width="700" height="300"/>
+      <element xmi:type="uml:StateMachine" href="CarUmlModel.uml#_s20loKswEfC1t5InUmnZzw"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_rtZoDKtHEfCqvNj_CnM2-g" x="30" y="30" width="931" height="611"/>
     </children>
-    <styles xmi:type="notation:StringValueStyle" xmi:id="_oal4PqHrEfCD88SE8FIO7A" name="diagram_compatibility_version" stringValue="1.4.0"/>
-    <styles xmi:type="notation:DiagramStyle" xmi:id="_oal4P6HrEfCD88SE8FIO7A"/>
-    <styles xmi:type="style:PapyrusDiagramStyle" xmi:id="_oal4QKHrEfCD88SE8FIO7A" diagramKindId="org.eclipse.papyrus.uml.diagram.stateMachine">
-      <owner xmi:type="uml:Model" href="CarUmlModel.uml#_oP_KsKHrEfCD88SE8FIO7A"/>
+    <styles xmi:type="notation:StringValueStyle" xmi:id="_rtZoDatHEfCqvNj_CnM2-g" name="diagram_compatibility_version" stringValue="1.4.0"/>
+    <styles xmi:type="notation:DiagramStyle" xmi:id="_rtZoDqtHEfCqvNj_CnM2-g"/>
+    <styles xmi:type="style:PapyrusDiagramStyle" xmi:id="_rtZoD6tHEfCqvNj_CnM2-g" diagramKindId="org.eclipse.papyrus.uml.diagram.stateMachine">
+      <owner xmi:type="uml:StateMachine" href="CarUmlModel.uml#_s20loKswEfC1t5InUmnZzw"/>
     </styles>
-    <element xmi:type="uml:StateMachine" href="CarUmlModel.uml#_oalRIKHrEfCD88SE8FIO7A"/>
+    <element xmi:type="uml:StateMachine" href="CarUmlModel.uml#_s20loKswEfC1t5InUmnZzw"/>
+  </notation:Diagram>
+  <notation:Diagram xmi:id="_uG8SQKtHEfCqvNj_CnM2-g" type="PapyrusUMLStateMachineDiagram" name="NewStateMachineDiagram" measurementUnit="Pixel">
+    <children xmi:type="notation:Shape" xmi:id="_uG8SQatHEfCqvNj_CnM2-g" type="StateMachine_Shape">
+      <children xmi:type="notation:DecorationNode" xmi:id="_uG8SQqtHEfCqvNj_CnM2-g" type="StateMachine_NameLabel">
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_uG8SQ6tHEfCqvNj_CnM2-g" width="700" height="20"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_uG8SRKtHEfCqvNj_CnM2-g" type="StateMachine_RegionCompartment">
+        <children xmi:type="notation:Shape" xmi:id="_uG8SRatHEfCqvNj_CnM2-g" type="Region_Shape">
+          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_uG8SRqtHEfCqvNj_CnM2-g" source="RegionAnnotationKey">
+            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_uG8SR6tHEfCqvNj_CnM2-g" key="RegionZoneKey" value=""/>
+          </eAnnotations>
+          <children xmi:type="notation:BasicCompartment" xmi:id="_uG8SSKtHEfCqvNj_CnM2-g" type="Region_SubvertexCompartment">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_uG8SSatHEfCqvNj_CnM2-g"/>
+          </children>
+          <element xmi:type="uml:Region" href="CarUmlModel.uml#_uG7EIKtHEfCqvNj_CnM2-g"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_uG8SSqtHEfCqvNj_CnM2-g" width="700" height="280"/>
+        </children>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_uG8SS6tHEfCqvNj_CnM2-g" y="20" width="700" height="280"/>
+      </children>
+      <element xmi:type="uml:StateMachine" href="CarUmlModel.uml#_wob2EKswEfC1t5InUmnZzw"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_uG8STKtHEfCqvNj_CnM2-g" x="30" y="30" width="700" height="300"/>
+    </children>
+    <styles xmi:type="notation:StringValueStyle" xmi:id="_uG8STatHEfCqvNj_CnM2-g" name="diagram_compatibility_version" stringValue="1.4.0"/>
+    <styles xmi:type="notation:DiagramStyle" xmi:id="_uG8STqtHEfCqvNj_CnM2-g"/>
+    <styles xmi:type="style:PapyrusDiagramStyle" xmi:id="_uG8ST6tHEfCqvNj_CnM2-g" diagramKindId="org.eclipse.papyrus.uml.diagram.stateMachine">
+      <owner xmi:type="uml:StateMachine" href="CarUmlModel.uml#_wob2EKswEfC1t5InUmnZzw"/>
+    </styles>
+    <element xmi:type="uml:StateMachine" href="CarUmlModel.uml#_wob2EKswEfC1t5InUmnZzw"/>
   </notation:Diagram>
 </xmi:XMI>

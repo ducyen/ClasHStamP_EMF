@@ -1,0 +1,30 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module classJavaStm.
+ */]
+[module classJavaStm('http://www.eclipse.org/uml2/4.0.0/UML')]
+
+[**
+ * The documentation of the template genClassJavaStm.
+ * @param aClass
+ */]
+[template public genClassJavaStm(aClass : Class)]
+
+[if aClass.classifierBehavior <> null]
+/* StateMachine for [aClass.name/] */
+void [aClass.classifierBehavior.name/]_init(void) {
+    // Initialization code for state machine
+}
+
+void [aClass.classifierBehavior.name/]_step(void) {
+    // State machine step function
+}
+[/if]
+
+[/template]
+
+[template private genStmImpls(aClass: Class)]
+
+
+
+[/template]

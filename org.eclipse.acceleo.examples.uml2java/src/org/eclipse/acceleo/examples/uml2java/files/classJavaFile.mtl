@@ -5,6 +5,7 @@
 [module classJavaFile('http://www.eclipse.org/uml2/4.0.0/UML')]
 
 [import org::eclipse::acceleo::examples::uml2java::common::fileUtils /]
+[import org::eclipse::acceleo::examples::uml2java::stm::classJavaStm /]
 
 [**
  * The documentation of the template genClassJavaFile.
@@ -34,6 +35,7 @@ public class [aClass.name.toUpperFirst()/][aClass.inheritance()/] {
 		super();
 	}
 	[aClass.classBody()/]
+	[aClass.genClassJavaStm()/]
 }
 [/file]
 [/template]

@@ -34,9 +34,8 @@
     </ownedViews>
     <ownedViews xmi:type="viewpoint:DView" uid="_oUf3QKHrEfCD88SE8FIO7A">
       <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/org.eclipse.papyrus.sirius.uml.diagram.statemachine/description/papyrus_statemachine.odesign#//@ownedViewpoints[name='StateMachineDiagram']"/>
-      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_oYfmcKHrEfCD88SE8FIO7A" name="New State Machine Diagram" repPath="#_oYNSkKHrEfCD88SE8FIO7A" changeId="1759669387763">
+      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_oYfmcKHrEfCD88SE8FIO7A" name="New State Machine Diagram" repPath="#_oYNSkKHrEfCD88SE8FIO7A" changeId="1760698458121">
         <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/org.eclipse.papyrus.sirius.uml.diagram.statemachine/description/papyrus_statemachine.odesign#//@ownedViewpoints[name='StateMachineDiagram']/@ownedRepresentations[name='StateMachineDiagram']"/>
-        <target xmi:type="uml:StateMachine" href="CarUmlModel.uml#_oWc_EKHrEfCD88SE8FIO7A"/>
       </ownedRepresentationDescriptors>
     </ownedViews>
     <ownedViews xmi:type="viewpoint:DView" uid="_oUrdcKHrEfCD88SE8FIO7A">
@@ -90,15 +89,11 @@
       </data>
     </ownedAnnotationEntries>
     <ownedDiagramElements xmi:type="diagram:DNodeContainer" uid="_oYzIcKHrEfCD88SE8FIO7A" name="«stateMachine»&#xA;StateMachine1" childrenPresentation="HorizontalStack">
-      <target xmi:type="uml:StateMachine" href="CarUmlModel.uml#_oWc_EKHrEfCD88SE8FIO7A"/>
-      <semanticElements xmi:type="uml:StateMachine" href="CarUmlModel.uml#_oWc_EKHrEfCD88SE8FIO7A"/>
       <ownedStyle xmi:type="diagram:FlatContainerStyle" uid="_oY6dMKHrEfCD88SE8FIO7A" labelSize="9" showIcon="false" borderSize="1" borderSizeComputationExpression="1" foregroundColor="195,215,221">
         <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/org.eclipse.papyrus.sirius.uml.diagram.statemachine/description/papyrus_statemachine.odesign#//@ownedViewpoints[name='StateMachineDiagram']/@ownedRepresentations[name='StateMachineDiagram']/@defaultLayer/@containerMappings[name='SMD_StateMachine']/@style"/>
       </ownedStyle>
       <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/org.eclipse.papyrus.sirius.uml.diagram.statemachine/description/papyrus_statemachine.odesign#//@ownedViewpoints[name='StateMachineDiagram']/@ownedRepresentations[name='StateMachineDiagram']/@defaultLayer/@containerMappings[name='SMD_StateMachine']"/>
       <ownedDiagramElements xmi:type="diagram:DNodeContainer" uid="_oZXwMKHrEfCD88SE8FIO7A">
-        <target xmi:type="uml:Region" href="CarUmlModel.uml#_oWdmIKHrEfCD88SE8FIO7A"/>
-        <semanticElements xmi:type="uml:Region" href="CarUmlModel.uml#_oWdmIKHrEfCD88SE8FIO7A"/>
         <graphicalFilters xmi:type="diagram:HideLabelFilter" uid="_oZYXQKHrEfCD88SE8FIO7A"/>
         <ownedStyle xmi:type="diagram:FlatContainerStyle" uid="_o0zH8KHrEfCD88SE8FIO7A" labelSize="9" showIcon="false" description="_o0yg4KHrEfCD88SE8FIO7A" borderSize="1" borderSizeComputationExpression="1" borderLineStyle="dot" hideLabelByDefault="true" foregroundColor="195,215,221"/>
         <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/org.eclipse.papyrus.sirius.uml.diagram.statemachine/description/papyrus_statemachine.odesign#//@ownedViewpoints[name='StateMachineDiagram']/@ownedRepresentations[name='StateMachineDiagram']/@defaultLayer/@containerMappings[name='SMD_SHARED_OwnedRegion']/@subContainerMappings[name='SMD_RegionCompartment']"/>
@@ -107,7 +102,6 @@
     <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/org.eclipse.papyrus.sirius.uml.diagram.statemachine/description/papyrus_statemachine.odesign#//@ownedViewpoints[name='StateMachineDiagram']/@ownedRepresentations[name='StateMachineDiagram']"/>
     <filterVariableHistory xmi:type="diagram:FilterVariableHistory" uid="_oYXDkKHrEfCD88SE8FIO7A"/>
     <activatedLayers xmi:type="description_1:Layer" href="platform:/plugin/org.eclipse.papyrus.sirius.uml.diagram.statemachine/description/papyrus_statemachine.odesign#//@ownedViewpoints[name='StateMachineDiagram']/@ownedRepresentations[name='StateMachineDiagram']/@defaultLayer"/>
-    <target xmi:type="uml:StateMachine" href="CarUmlModel.uml#_oWc_EKHrEfCD88SE8FIO7A"/>
   </diagram:DSemanticDiagram>
   <diagram:DSemanticDiagram uid="_oaFh4KHrEfCD88SE8FIO7A" synchronized="false">
     <eAnnotations xmi:type="description:DAnnotation" uid="_oaXOsKHrEfCD88SE8FIO7A" source="Papyrus-SiriusDiagram">

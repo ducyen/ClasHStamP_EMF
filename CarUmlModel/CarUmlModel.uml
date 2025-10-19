@@ -3,12 +3,6 @@
   <packageImport xmi:type="uml:PackageImport" xmi:id="_obGOgKHrEfCD88SE8FIO7A">
     <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
   </packageImport>
-  <packagedElement xmi:type="uml:StateMachine" xmi:id="_oWc_EKHrEfCD88SE8FIO7A" name="StateMachine1">
-    <region xmi:type="uml:Region" xmi:id="_oWdmIKHrEfCD88SE8FIO7A" name="Region1"/>
-  </packagedElement>
-  <packagedElement xmi:type="uml:StateMachine" xmi:id="_oalRIKHrEfCD88SE8FIO7A" name="StateMachine2">
-    <region xmi:type="uml:Region" xmi:id="_oal4MKHrEfCD88SE8FIO7A" name="Region1"/>
-  </packagedElement>
   <packagedElement xmi:type="uml:Package" xmi:id="_ttUWEKHrEfCD88SE8FIO7A" name="Base">
     <packagedElement xmi:type="uml:Class" xmi:id="_vKhT4KHrEfCD88SE8FIO7A" name="HdStateMachine">
       <ownedOperation xmi:type="uml:Operation" xmi:id="_Q6jYgKHvEfCD88SE8FIO7A" name="Operation1">
@@ -18,5 +12,15 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Package" xmi:id="_S0W9UKHwEfCD88SE8FIO7A" name="stdtype">
     <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_Zx9ooKHwEfCD88SE8FIO7A" name="boolean"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_dWr4kKswEfC1t5InUmnZzw" name="Model">
+    <packagedElement xmi:type="uml:Class" xmi:id="_oRfZQKswEfC1t5InUmnZzw" name="Car" classifierBehavior="_s20loKswEfC1t5InUmnZzw">
+      <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_s20loKswEfC1t5InUmnZzw" name="Main">
+        <region xmi:type="uml:Region" xmi:id="_rtUIcKtHEfCqvNj_CnM2-g" name="Region1"/>
+      </ownedBehavior>
+      <nestedClassifier xmi:type="uml:StateMachine" xmi:id="_wob2EKswEfC1t5InUmnZzw" name="Sub">
+        <region xmi:type="uml:Region" xmi:id="_uG7EIKtHEfCqvNj_CnM2-g" name="Region1"/>
+      </nestedClassifier>
+    </packagedElement>
   </packagedElement>
 </uml:Model>
