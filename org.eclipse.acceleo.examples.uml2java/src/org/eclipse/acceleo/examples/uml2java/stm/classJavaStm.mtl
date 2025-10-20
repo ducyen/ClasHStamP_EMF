@@ -1,28 +1,48 @@
 [comment encoding = UTF-8 /]
-[module classJavaStm('http://www.eclipse.org/uml2/4.0.0/UML')]
+[module classJavaStm('http://www.eclipse.org/uml2/4.0.0/UML', use('regionStateDecl'))]
+
+[import org::eclipse::acceleo::examples::uml2java::stm::regionStateDecl/]
 
 [template public genClassJavaStm(aClass : Class)]
+
+[if  aClass.classifierBehavior <> null and aClass.classifierBehavior.oclIsKindOf(StateMachine)]
 
 /* ============================================
  * State Machines belonging to [aClass.name/]
  * ============================================ */
 
-[comment --- List classifier behavior if it exists --- /]
-[if  aClass.classifierBehavior <> null and aClass.classifierBehavior.oclIsKindOf(StateMachine)]
+[for (b : Behavior | aClass.ownedBehavior->select(oclIsKindOf(StateMachine)))]
+[let sm : StateMachine = b.oclAsType(StateMachine)]
+StateMachine: [sm.name/]
 
-[comment --- List other owned behaviors of type StateMachine --- /]
-[for (sm : Behavior | aClass.ownedBehavior->select(oclIsKindOf(StateMachine)))]
+[startRegionStateDecl(sm)/]
 
-[comment --- Optionally, generate code for each --- /]
-void [sm.name/]_init(void) {
-    // Initialization code for state machine
-}
-void [sm.name/]_step(void) {
-    // Step function
-}
+[for (r : Region | sm.region)]
+[genRegion(r)/]
+[/for]
+[/let]
 [/for]
 [/if]
 [/template]
 
-[template private genState]
+[template private genRegion(r : Region)]
+[for (s : Vertex | r.subvertex->select(oclIsKindOf(State)))]
+[genState(s.oclAsType(State))/]
+[/for]
+[/template]
+
+[template private genState(s : State)]
+[if s.submachine <> null]
+CompositeState: [s.name/] (submachine → [s.submachine.name/])
+[for (r : Region | s.submachine.region)]
+[genRegion(r)/]
+[/for]
+[elseif s.isComposite()]
+CompositeState: [s.name/]
+[for (r : Region | s.region)]
+[genRegion(r)/]
+[/for]
+[else]
+SimpleState: [s.name/]
+[/if]
 [/template]

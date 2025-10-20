@@ -1,0 +1,45 @@
+[module stateDeepTraverser('http://www.eclipse.org/uml2/4.0.0/UML')]
+
+[template public start(sm : StateMachine)]
+[for (r : Region | sm.region)]
+    [for (v : Vertex | r.subvertex)]
+        [traverse(v, null)/]
+    [/for]
+[/for]
+[/template]
+
+[template protected traverse(v : Vertex, container : State)]
+[if v.oclIsKindOf(State)]
+    [checkStateBfr(v.oclAsType(State), container)/]
+    [for (r : Region | v.oclAsType(State).region)]
+        [checkRegionBfr(v.oclAsType(State), r)/]
+        [for (subv : Vertex | r.subvertex)]
+            [traverse(subv, v.oclAsType(State))/]
+        [/for]
+        [checkRegion(v.oclAsType(State), r)/]
+    [/for]
+    [checkState(v.oclAsType(State), container)/]
+[elseif v.oclIsKindOf(Pseudostate)]
+    [checkPseudostate(v.oclAsType(Pseudostate), container)/]
+[else]
+    // Unknown vertex
+[/if]
+[/template]
+
+[template protected checkPseudostate(p : Pseudostate, container : State)]
+[comment Subclass can override /]
+[/template]
+
+[template protected checkRegionBfr(s : State, r : Region)]
+[/template]
+
+[template protected checkRegion(s : State, r : Region)]
+[/template]
+
+[template protected checkStateBfr(s : State, container : State)]
+[/template]
+
+[template protected checkState(s : State, container : State)]
+stateDeepTraverser::State: [s.name/]
+[/template]
+
