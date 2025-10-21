@@ -1,7 +1,7 @@
 [comment encoding = UTF-8 /]
 [module classJavaStm('http://www.eclipse.org/uml2/4.0.0/UML', use('regionStateDecl'))]
 
-[import org::eclipse::acceleo::examples::uml2java::stm::regionStateDecl/]
+[import org::eclipse::acceleo::examples::uml2java::stm::dynamic::stmStateDecl/]
 
 [template public genClassJavaStm(aClass : Class)]
 
@@ -14,35 +14,8 @@
 [for (b : Behavior | aClass.ownedBehavior->select(oclIsKindOf(StateMachine)))]
 [let sm : StateMachine = b.oclAsType(StateMachine)]
 StateMachine: [sm.name/]
-
-[startRegionStateDecl(sm)/]
-
-[for (r : Region | sm.region)]
-[genRegion(r)/]
-[/for]
-[/let]
+[startStmStateDecl(sm)/][/let]
 [/for]
 [/if]
 [/template]
 
-[template private genRegion(r : Region)]
-[for (s : Vertex | r.subvertex->select(oclIsKindOf(State)))]
-[genState(s.oclAsType(State))/]
-[/for]
-[/template]
-
-[template private genState(s : State)]
-[if s.submachine <> null]
-CompositeState: [s.name/] (submachine → [s.submachine.name/])
-[for (r : Region | s.submachine.region)]
-[genRegion(r)/]
-[/for]
-[elseif s.isComposite()]
-CompositeState: [s.name/]
-[for (r : Region | s.region)]
-[genRegion(r)/]
-[/for]
-[else]
-SimpleState: [s.name/]
-[/if]
-[/template]

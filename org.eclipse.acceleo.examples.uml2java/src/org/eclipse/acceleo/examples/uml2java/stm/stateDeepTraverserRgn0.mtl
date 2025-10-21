@@ -1,0 +1,47 @@
+[comment encoding = UTF-8 /]
+[module stateDeepTraverserRgn0('http://www.eclipse.org/uml2/4.0.0/UML')]
+
+[template public startRgn0(vertices : Sequence(Vertex))]
+[for (v : Vertex | vertices)]
+    [traverse(v, null)/]
+[/for]
+[/template]
+
+
+[template protected traverse(v : Vertex, container : State)]
+[comment Recursive traversal similar to traverse(IVertex iVtx, IState container) /]
+[if v.oclIsKindOf(State)]
+    [let s : State = v.oclAsType(State)]
+        [checkStateBfr(s, container)/]
+
+        [comment Traverse region 0 (if exists) /]
+        [if s.region->size() > 0]
+            [let r : Region = s.region->asSequence()->first()]
+                [for (sv : Vertex | r.subvertex)]
+                    [traverse(sv, s)/]
+                [/for]
+            [/let]
+        [/if]
+
+        [checkState(s, container)/]
+    [/let]
+[elseif v.oclIsKindOf(Pseudostate)]
+    [checkPseudostate(v.oclAsType(Pseudostate), container)/]
+[else]
+    [comment This mimics the System.out.println("★★★ERROR★★★ ...") /]
+    ★★★ERROR★★★ Traverse to an unknown state type
+[/if]
+[/template]
+
+
+[template protected checkPseudostate(p : Pseudostate, container : State)]
+[comment Overridable virtual method /]
+[/template]
+
+[template protected checkStateBfr(s : State, container : State)]
+[comment Overridable virtual method /]
+[/template]
+
+[template protected checkState(s : State, container : State)]
+[comment Overridable virtual method /]
+[/template]
