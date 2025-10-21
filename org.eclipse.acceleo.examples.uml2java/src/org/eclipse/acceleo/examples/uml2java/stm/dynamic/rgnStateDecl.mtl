@@ -6,7 +6,7 @@
 [/for]
 [/template]
 
-[template protected traverse(v : Vertex, container : State)]
+[template protected traverse(v : Vertex, container : State) post(trim())]
 [comment Recursive traversal similar to traverse(IVertex iVtx, IState container) /]
 [if v.oclIsKindOf(State)]
     [let s : State = v.oclAsType(State)]
