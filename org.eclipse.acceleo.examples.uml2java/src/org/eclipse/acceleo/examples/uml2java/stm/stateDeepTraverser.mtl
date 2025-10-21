@@ -2,9 +2,9 @@
 
 [template protected checkPseudostate(p : Pseudostate, container : State)]P [p.name/][/template]
 
-[template protected checkRegionBfr(s : State, r : Region)]RB [s.name/][/template]
+[template protected checkRegionBfr(s : State, r : Region)]RB [r.name/][/template]
 
-[template protected checkRegion(s : State, r : Region)]RA [s.name/][/template]
+[template protected checkRegion(s : State, r : Region)]RA [r.name/][/template]
 
 [template protected checkStateBfr(s : State, container : State)]SB [s.name/][/template]
 
