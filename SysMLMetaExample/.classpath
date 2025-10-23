@@ -45,5 +45,14 @@
 	<classpathentry kind="lib" path="C:/Workspace/Applications/Papyrus202506/plugins/org.eclipse.papyrus.sysml16.diagram.common_2.3.0.202505231451.jar"/>
 	<classpathentry kind="lib" path="C:/Workspace/Applications/Papyrus202506/plugins/org.eclipse.papyrus.sysml16.diagram.blockdefinition_2.3.0.202505231451.jar"/>
 	<classpathentry kind="lib" path="C:/Workspace/Applications/Papyrus202506/plugins/org.eclipse.emf.mapping.ecore2xml_2.13.0.v20240604-0832.jar"/>
+	<classpathentry kind="lib" path="lib/commons-csv-1.1.jar"/>
+	<classpathentry kind="lib" path="lib/fop-transcoder-allinone-2.9.jar"/>
+	<classpathentry kind="lib" path="lib/logback-loader-1.0.9b.jar"/>
+	<classpathentry kind="lib" path="lib/rhino-1.7.7.jar"/>
+	<classpathentry kind="lib" path="lib/serializer-2.7.2.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-api-1.6.6.jar"/>
+	<classpathentry kind="lib" path="lib/xml-apis-1.4.01.jar"/>
+	<classpathentry kind="lib" path="lib/xml-apis-ext-1.3.04.jar"/>
+	<classpathentry kind="lib" path="lib/xmlgraphics-commons-2.9.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
