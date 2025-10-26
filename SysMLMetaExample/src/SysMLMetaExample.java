@@ -16,6 +16,7 @@ public class SysMLMetaExample {
         URI modelURI = URI.createFileURI("data/SysML_Sample00.uml");
         Resource modelRes = resourceSet.getResource(modelURI, true);
         Model model = (Model) modelRes.getContents().get(0);
+
  
         listBlocks((Package) model);
     }
