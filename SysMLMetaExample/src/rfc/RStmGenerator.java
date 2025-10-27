@@ -1456,16 +1456,13 @@ public class RStmGenerator extends TBaseGenerator {
         }
     }
     
-    private Diagram getStateMachineDiagram(StateMachine stm) {
+    private Region getStateMachineDiagram(StateMachine stm) {
         Iterator<EObject> contents = stm.eAllContents();
         while (contents.hasNext()) {
             EObject obj = contents.next();
             // Check if this EObject is a GMF Diagram and has type StateMachine
-            if (obj instanceof Diagram) {
-                Diagram diagram = (Diagram) obj;
-                if ("PapyrusUMLStateMachineDiagram".equalsIgnoreCase(diagram.getType())) {
-                    return diagram;
-                }
+            if (obj instanceof Region) {
+            	return (Region)obj;
             }
         }
         return null;

@@ -35,6 +35,7 @@ public class TMain {
     }
 
     // Helper method to get full package name with "/" separators.
+    /*
     private static String getFullName(Package pkg) {
         String name = pkg.getName();
         String fullName = (name != null ? name : "");
@@ -48,10 +49,11 @@ public class TMain {
         }
         return fullName;
     }
+    */
 
     // Find a package in the model by its full name.
     private static Package findPackage(Package pkg, String fullName) {
-        if (getFullName(pkg).equals(fullName)) {
+        if (pkg.getQualifiedName().equals(fullName)) {
             return pkg;
         }
         for (PackageableElement elem : pkg.getPackagedElements()) {

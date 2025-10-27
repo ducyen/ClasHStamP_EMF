@@ -184,6 +184,9 @@ public class TBaseGenerator {
      * @throws Exception
      */
     protected String fillComment(String comment, boolean multiLineOnly) throws Exception {
+    	if (comment == null) {
+    		return "";
+    	}
         String[] commentLines = comment.split("\\r?\\n");
         String desc = "";
         if (comment.isEmpty()) {
@@ -477,6 +480,9 @@ public class TBaseGenerator {
      * 
      */
     protected boolean isStandardType(Classifier cls) {
+    	if (cls == null) {
+    		return true;
+    	}
         boolean bResult = (cls instanceof PrimitiveType) ||
                           hasStereotype(cls.getKeywords().toArray(new String[0]), "stdtype") /* ||
                           (cls.getOwner() != null && cls.getOwner() instanceof NamedElement && 

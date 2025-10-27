@@ -238,7 +238,8 @@ public class TOperGenerator extends TBaseGenerator {
                 );
                 // Virtual pointer call (C-specific)
                 if (operation.isAbstract() && !m_stxCsv.get(indent, "vptr_call", "name").isEmpty()) {
-                    if (isStandardType((Classifier)operation.getType()) 
+                    if (isStandardType((Classifier)operation.getType())
+                    	&& operation.getType() != null
                         && operation.getType().getName().equalsIgnoreCase("void") 
                         && modifier.isEmpty()) {
                         m_writer.write(
