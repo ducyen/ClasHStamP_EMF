@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Writer;
 
 import org.eclipse.uml2.uml.Class;
+import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Comment;
 
 import rfc.RStmGenerator;
@@ -16,7 +17,7 @@ public class TCtorGenerator extends TBaseGenerator {
          * @param umlClass
          * @param writer
          */
-        public TCtorGenerator(SyntaxCsv stxCsv, Class umlClass, Writer writer) {
+        public TCtorGenerator(SyntaxCsv stxCsv, Classifier umlClass, Writer writer) {
                 super(stxCsv, umlClass, writer);
         }
 

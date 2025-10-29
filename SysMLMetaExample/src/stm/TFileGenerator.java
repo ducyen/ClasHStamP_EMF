@@ -12,6 +12,7 @@ import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.PrimitiveType;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Dependency;
+import org.eclipse.uml2.uml.EncapsulatedClassifier;
 import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Realization;
 import org.eclipse.uml2.uml.StateMachine;
@@ -23,10 +24,10 @@ public class TFileGenerator extends TBaseGenerator {
     private ArrayList<String> m_doneList = new ArrayList<String>();
     private ArrayList<Class> m_doneAttr = new ArrayList<Class>();
     
-    public TFileGenerator(SyntaxCsv stxCsv, Class m_iClass) throws Exception {
+    public TFileGenerator(SyntaxCsv stxCsv, Classifier m_iClass) throws Exception {
         super(stxCsv, m_iClass, null);
         // Construct output path (using qualified name for namespace path)
-        String qualifiedName = m_iClass.getQualifiedName().replace("::", "/");
+        String qualifiedName = getFullNamespace(m_iClass).replace("::", "/");
         String outputPath = System.getenv("OUTPUT") + "/" +
             Utils.get(m_stxCsv.get("file", "name"),
                 m_iClass.getName(),
@@ -189,37 +190,41 @@ public class TFileGenerator extends TBaseGenerator {
         }
                 
         // print external types include (non-primitive attributes of this class)
-        for (Property iAttr : m_iClass.getOwnedAttributes()) {
-            Type type = iAttr.getType();
-            if (type instanceof Class) {
-                Class theType = findOwner((Class) type);
-                // skip primitive types
-                if (!(type instanceof PrimitiveType)
-                        && theType != m_iClass
-                        && !iAttr.getName().isEmpty()
-                        && type != m_iSuperClass) {
-                    // omitted: stereotype checks
-                    printInclude(impDepStx, theType, iAttr);
-                }
-            }
+        if (m_iClass instanceof EncapsulatedClassifier) {
+	        for (Property iAttr : ((EncapsulatedClassifier)m_iClass).getOwnedAttributes()) {
+	            Type type = iAttr.getType();
+	            if (type instanceof Class) {
+	                Class theType = findOwner((Class) type);
+	                // skip primitive types
+	                if (!(type instanceof PrimitiveType)
+	                        && theType != m_iClass
+	                        && !iAttr.getName().isEmpty()
+	                        && type != m_iSuperClass) {
+	                    // omitted: stereotype checks
+	                    printInclude(impDepStx, theType, iAttr);
+	                }
+	            }
+	        }
         }
         
         /////////////////////////// limited include ///////////////////////////
         String useDepStx = m_stxCsv.get("file", "ext1st");
         String callDepStx = m_stxCsv.get("file", "extnxt");
         // print external types include (second pass)
-        for (Property iAttr : m_iClass.getOwnedAttributes()) {
-            Type type = iAttr.getType();
-            if (type instanceof Class) {
-                Class theType = findOwner((Class) type);
-                if (!(type instanceof PrimitiveType)
-                        && theType != m_iClass
-                        && !iAttr.getName().isEmpty()
-                        && type != m_iSuperClass) {
-                    printInclude(useDepStx, theType, iAttr);
-                }
-            }
-        }               
+        if (m_iClass instanceof EncapsulatedClassifier) {
+	        for (Property iAttr : ((EncapsulatedClassifier)m_iClass).getOwnedAttributes()) {
+	            Type type = iAttr.getType();
+	            if (type instanceof Class) {
+	                Class theType = findOwner((Class) type);
+	                if (!(type instanceof PrimitiveType)
+	                        && theType != m_iClass
+	                        && !iAttr.getName().isEmpty()
+	                        && type != m_iSuperClass) {
+	                    printInclude(useDepStx, theType, iAttr);
+	                }
+	            }
+	        }               
+        }
         
         // print dependencies include (other client dependencies)
         for (Dependency iDependency : m_iClass.getClientDependencies()) {
@@ -309,22 +314,23 @@ public class TFileGenerator extends TBaseGenerator {
         }               
                 
         // print external attributes include (both object and reference kinds)
-        for (Property iAttr : m_iClass.getOwnedAttributes()) {
-            Type type = iAttr.getType();
-            if (type instanceof Class) {
-                Class theType = findOwner((Class) type);
-                if (!(type instanceof PrimitiveType)
-                        && theType != m_iClass
-                        && !iAttr.getName().isEmpty()
-                        && type != m_iSuperClass) {
-                    // print for object kind
-                    printInclude(impDepStx, theType, iAttr);
-                    // print for reference kind
-                    printInclude(impRefStx, theType, iAttr);
-                }
-            }
+        if (m_iClass instanceof EncapsulatedClassifier) {
+	        for (Property iAttr : ((EncapsulatedClassifier)m_iClass).getOwnedAttributes()) {
+	            Type type = iAttr.getType();
+	            if (type instanceof Class) {
+	                Class theType = findOwner((Class) type);
+	                if (!(type instanceof PrimitiveType)
+	                        && theType != m_iClass
+	                        && !iAttr.getName().isEmpty()
+	                        && type != m_iSuperClass) {
+	                    // print for object kind
+	                    printInclude(impDepStx, theType, iAttr);
+	                    // print for reference kind
+	                    printInclude(impRefStx, theType, iAttr);
+	                }
+	            }
+	        }
         }
-
         // print state-machine include (non-code state machine)
         if (iMainStm != null && !isCodeFile()) {
             String ns = m_iClass.getQualifiedName().replace("::", m_pkgPathSeparator);

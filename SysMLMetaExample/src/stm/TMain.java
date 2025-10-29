@@ -13,6 +13,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
 import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.Class;
+import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.PackageableElement;
 import org.eclipse.uml2.uml.StateMachine;
 
@@ -109,8 +110,8 @@ public class TMain {
 
             // Create code files for each class in the package
             for (PackageableElement pkgElement : targetPkg.getPackagedElements()) {
-                if (pkgElement instanceof Class) {
-                    Class umlClass = (Class) pkgElement;
+                if (pkgElement instanceof Classifier) {
+                    Classifier umlClass = (Classifier) pkgElement;
                     System.out.println("----------- Generating code for class " + umlClass.getName() + " ------------");
                     TFileGenerator fileGen = new TFileGenerator(stxCsv, umlClass);
                     TOperGenerator operPrs = new TOperGenerator(stxCsv, umlClass, null);

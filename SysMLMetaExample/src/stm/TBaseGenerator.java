@@ -11,6 +11,7 @@ import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.Generalization;
 import org.eclipse.uml2.uml.NamedElement;
+import org.eclipse.uml2.uml.Namespace;
 import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.PrimitiveType;
@@ -24,7 +25,7 @@ import org.eclipse.uml2.uml.VisibilityKind;
 
 public class TBaseGenerator {
     protected static SyntaxCsv m_stxCsv;
-    protected Class m_iClass;
+    protected Classifier m_iClass;
     protected Classifier m_iSuperClass = null;
     protected Classifier m_iAncestor = null;
     protected static Writer m_writer;
@@ -40,7 +41,7 @@ public class TBaseGenerator {
      */
     public TBaseGenerator(
             SyntaxCsv stxCsv,
-            Class iClass,
+            Classifier iClass,
             Writer writer
     ) {
         m_stxCsv = stxCsv;
@@ -659,6 +660,16 @@ public class TBaseGenerator {
             return m_stxCsv.get("visibility", "ext1st");
         }
     }
+    
+    public static String getFullNamespace(Classifier cls) {
+        StringBuilder ns = new StringBuilder();
+        for (Namespace namespace : cls.allNamespaces()) {
+            if (namespace.getName() != null && !namespace.getName().isEmpty()) {
+                ns.insert(0, namespace.getName() + "::");
+            }
+        }
+        return ns.toString();
+    }    
 
     /**
      * getDefinition

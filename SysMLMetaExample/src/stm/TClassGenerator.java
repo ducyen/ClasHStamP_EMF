@@ -24,7 +24,7 @@ public class TClassGenerator extends TBaseGenerator {
      * @param umlClass  The UML Classifier (Class or Interface) to generate code for
      * @param writer    Output writer
      */
-    public TClassGenerator(SyntaxCsv stxCsv, Class umlClass, Writer writer) {
+    public TClassGenerator(SyntaxCsv stxCsv, Classifier umlClass, Writer writer) {
         super(stxCsv, umlClass, writer);
     }
 

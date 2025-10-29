@@ -32,6 +32,7 @@ import org.eclipse.uml2.uml.ValueSpecification;
 import org.eclipse.uml2.uml.Behavior;
 import org.eclipse.uml2.uml.BehavioredClassifier;
 import org.eclipse.uml2.uml.CallEvent;
+import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.SignalEvent;
 import org.eclipse.uml2.uml.Region;
@@ -62,13 +63,15 @@ public class RStmGenerator extends TBaseGenerator {
      * @param umlClass (BehavioredClassifier, e.g. Class)
      * @param writer
      */
-    public RStmGenerator(SyntaxCsv stxCsv, org.eclipse.uml2.uml.Class umlClass, Writer writer) {
+    public RStmGenerator(SyntaxCsv stxCsv, Classifier umlClass, Writer writer) {
         super(stxCsv, umlClass, writer);
         // Collect all state machines owned by this class (including submachine diagrams)
-        for (Behavior behavior : umlClass.getOwnedBehaviors()) {
-            if (behavior instanceof StateMachine) {
-                m_sortedStmDgrs.add((StateMachine) behavior);
-            }
+        if (umlClass instanceof BehavioredClassifier) {
+	        for (Behavior behavior : ((BehavioredClassifier)umlClass).getOwnedBehaviors()) {
+	            if (behavior instanceof StateMachine) {
+	                m_sortedStmDgrs.add((StateMachine) behavior);
+	            }
+	        }
         }
         // Sort state machines such that submachine diagrams come before their parent (main) state machine
         Collections.sort(m_sortedStmDgrs, new Comparator<StateMachine>() {
@@ -652,6 +655,9 @@ public class RStmGenerator extends TBaseGenerator {
     }
     
     public Region findRegionByName(StateMachine rootStateMachine, String targetName) {
+    	if (rootStateMachine == null) {
+    		return null;
+    	}
         // Search top-level regions of the state machine
         for (Region region : rootStateMachine.getRegions()) {
             if (targetName.equals(region.getName()) || targetName.equals(region.getLabel())) {
@@ -947,7 +953,7 @@ public class RStmGenerator extends TBaseGenerator {
                             state.getName(),
                             m_iClass.getName(),
                             containerName,
-                            String.format("%2d", autoId),
+                            String.format("%2d", autoId.getOpaque()),
                             (state instanceof FinalState) ? "Final" : "Normal",
                             commentBody.toString(),
                             getStateMachineDiagram(m_stmRoot).getName()
@@ -969,7 +975,7 @@ public class RStmGenerator extends TBaseGenerator {
                                         m_iClass.getName(),
                                         containerName,
                                         subName,
-                                        String.format("%2d", autoId),
+                                        String.format("%2d", autoId.getOpaque()),
                                         "",
                                         getStateMachineDiagram(m_stmRoot).getName()
                                     		));
@@ -981,7 +987,7 @@ public class RStmGenerator extends TBaseGenerator {
                                         m_iClass.getName(),
                                         containerName,
                                         subName,
-                                        String.format("%2d", autoId),
+                                        String.format("%2d", autoId.getOpaque()),
                                         "",
                                         getStateMachineDiagram(m_stmRoot).getName()
                                     ));
@@ -1036,7 +1042,7 @@ public class RStmGenerator extends TBaseGenerator {
                     ps.getName(),
                     m_iClass.getName(),
                     rgnName,
-                    String.format("%2d", autoId),
+                    String.format("%2d", autoId.getOpaque()),
                     kind,
                     commentBody.toString(),
                     getStateMachineDiagram(m_stmRoot).getName()

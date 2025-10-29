@@ -24,13 +24,15 @@ public class TNestedClsGenerator extends TBaseGenerator {
      * @param umlClass the UML Class to process
      * @param writer   output writer
      */
-    public TNestedClsGenerator(SyntaxCsv stxCsv, Class umlClass, Writer writer) {
+    public TNestedClsGenerator(SyntaxCsv stxCsv, Classifier umlClass, Writer writer) {
         super(stxCsv, umlClass, writer);
         // Collect nested classes
-        for (org.eclipse.uml2.uml.Classifier nested : umlClass.getNestedClassifiers()) {
-            if (nested instanceof Class) {
-                m_nestedClasses.add((Class) nested);
-            }
+        if (umlClass instanceof Class) {
+	        for (Classifier nested : ((Class)umlClass).getNestedClassifiers()) {
+	            if (nested instanceof Class) {
+	                m_nestedClasses.add((Class) nested);
+	            }
+	        }
         }
         Collections.sort(m_nestedClasses, new Comparator<Class>() {
             public int compare(Class lhs, Class rhs) {

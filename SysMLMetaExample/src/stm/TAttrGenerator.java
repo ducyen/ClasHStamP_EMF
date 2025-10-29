@@ -6,10 +6,10 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import org.eclipse.uml2.uml.Class;
+import org.eclipse.uml2.uml.Classifier;
+import org.eclipse.uml2.uml.EncapsulatedClassifier;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.NamedElement;
-import org.eclipse.uml2.uml.Comment;
-import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.Generalization;
 
 import rfc.RStmGenerator;
@@ -21,7 +21,7 @@ public class TAttrGenerator extends TBaseGenerator {
      * @param umlClass  UML2 Class element
      * @param writer    Output writer
      */
-    public TAttrGenerator(SyntaxCsv stxCsv, Class umlClass, Writer writer) {
+    public TAttrGenerator(SyntaxCsv stxCsv, Classifier umlClass, Writer writer) {
         super(stxCsv, umlClass, writer);
     }
 
@@ -52,16 +52,18 @@ public class TAttrGenerator extends TBaseGenerator {
                 }
             }
         }
-        private void traverse(Class cls) {
-            Class superCls = findSuperClass(cls);
+        private void traverse(Classifier cls) {
+            Classifier superCls = findSuperClass(cls);
             if (superCls != null) {
                 traverse(superCls);
             }
-            for (Property attr : cls.getOwnedAttributes()) {
-                checking(attr);
+            if (cls instanceof EncapsulatedClassifier) {
+	            for (Property attr : ((EncapsulatedClassifier)cls).getOwnedAttributes()) {
+	                checking(attr);
+	            }
             }
         }
-        public AttrDeepTraverser(Class cls) {
+        public AttrDeepTraverser(Classifier cls) {
             traverse(cls);
         }
     }
@@ -148,13 +150,15 @@ public class TAttrGenerator extends TBaseGenerator {
             String overriddenInit = "";
             boolean bFound = false;
             // check if subclass overrides initialization of this super attribute
-            for (Property myAttr : m_iClass.getOwnedAttributes()) {
-                overriddenInit = findAttrInitValue(myAttr, m_language);
-                if (myAttr.getName().equals(attr.getName()) 
-                        && !overriddenInit.trim().isEmpty()) {
-                    bFound = true;
-                    break;
-                }
+            if (m_iClass instanceof EncapsulatedClassifier) {
+	            for (Property myAttr : ((EncapsulatedClassifier)m_iClass).getOwnedAttributes()) {
+	                overriddenInit = findAttrInitValue(myAttr, m_language);
+	                if (myAttr.getName().equals(attr.getName()) 
+	                        && !overriddenInit.trim().isEmpty()) {
+	                    bFound = true;
+	                    break;
+	                }
+	            }
             }
             // default value is passing its own name (to be replaced in templates)
             String value = Utils.get(m_stxCsv.get("ctor_call", "begin"), attr.getName());
@@ -198,57 +202,59 @@ public class TAttrGenerator extends TBaseGenerator {
         }
         // Print members initialization
         boolean bFirstRound = true;
-        for (Property attr : m_iClass.getOwnedAttributes()) {
-            String propertyCode = findPropertyCode(attr, m_language);
-            if (!attr.isStatic() && !attr.getName().isEmpty() && isNullOrEmpty(propertyCode)) {
-                String attr_kind = findAttrPath(attr);
-                // use "end" syntax by default; may be overridden below for first element
-                String syntax = m_stxCsv.get(indent, attr_kind, "end");
-                if (m_iSuperClass == null && bFirstRound) {
-                    // if class has no superclass, the first attribute uses "begin" syntax
-                    syntax = m_stxCsv.get(indent, attr_kind, "begin");
-                }
-                String superRef = "";
-                // default value placeholder (calls default constructor call syntax with name)
-                String value = Utils.get(m_stxCsv.get("ctor_call", "begin"), attr.getName());
-                if (!findAttrInitValue(attr, m_language).isEmpty()) {
-                    // has its own initialization code
-                    if (superAttrMap.containsKey(attr.getName())) {
-                        // skip if it's an inherited attribute with its own init handled in super
-                        continue;
-                    }
-                    // use the actual initialization code and mark as end of list
-                    value = Utils.get(m_stxCsv.get("ctor_call", "end"), 
-                                      findAttrInitValue(attr, m_language));
-                    syntax = m_stxCsv.get(indent, attr_kind, "end");
-                    if (m_iSuperClass == null && bFirstRound) {
-                        syntax = m_stxCsv.get(indent, attr_kind, "begin");
-                    }
-                } else {
-                    // no init code
-                    if (superAttrMap.containsKey(attr.getName())) {
-                        // skip if it's an inherited attribute (no override and no init)
-                        continue;
-                    }
-                }
-                String desc = "";
-                if (!syntax.isEmpty()) {
-                    desc = fillComment(attr, true);
-                }
-                m_writer.write(
-                        Utils.get(
-                            syntax,
-                            attr.getName(),
-                            getTypeLiteral(attr.getType()) + getTypeModifier(attr),
-                            m_iClass.getName(),
-                            value,
-                            findMultiplicity(attr),
-                            desc,
-                            superRef
-                        )
-                );
-            }
-            bFirstRound = false;
+        if (m_iClass instanceof EncapsulatedClassifier) {
+	        for (Property attr : ((EncapsulatedClassifier)m_iClass).getOwnedAttributes()) {
+	            String propertyCode = findPropertyCode(attr, m_language);
+	            if (!attr.isStatic() && !attr.getName().isEmpty() && isNullOrEmpty(propertyCode)) {
+	                String attr_kind = findAttrPath(attr);
+	                // use "end" syntax by default; may be overridden below for first element
+	                String syntax = m_stxCsv.get(indent, attr_kind, "end");
+	                if (m_iSuperClass == null && bFirstRound) {
+	                    // if class has no superclass, the first attribute uses "begin" syntax
+	                    syntax = m_stxCsv.get(indent, attr_kind, "begin");
+	                }
+	                String superRef = "";
+	                // default value placeholder (calls default constructor call syntax with name)
+	                String value = Utils.get(m_stxCsv.get("ctor_call", "begin"), attr.getName());
+	                if (!findAttrInitValue(attr, m_language).isEmpty()) {
+	                    // has its own initialization code
+	                    if (superAttrMap.containsKey(attr.getName())) {
+	                        // skip if it's an inherited attribute with its own init handled in super
+	                        continue;
+	                    }
+	                    // use the actual initialization code and mark as end of list
+	                    value = Utils.get(m_stxCsv.get("ctor_call", "end"), 
+	                                      findAttrInitValue(attr, m_language));
+	                    syntax = m_stxCsv.get(indent, attr_kind, "end");
+	                    if (m_iSuperClass == null && bFirstRound) {
+	                        syntax = m_stxCsv.get(indent, attr_kind, "begin");
+	                    }
+	                } else {
+	                    // no init code
+	                    if (superAttrMap.containsKey(attr.getName())) {
+	                        // skip if it's an inherited attribute (no override and no init)
+	                        continue;
+	                    }
+	                }
+	                String desc = "";
+	                if (!syntax.isEmpty()) {
+	                    desc = fillComment(attr, true);
+	                }
+	                m_writer.write(
+	                        Utils.get(
+	                            syntax,
+	                            attr.getName(),
+	                            getTypeLiteral(attr.getType()) + getTypeModifier(attr),
+	                            m_iClass.getName(),
+	                            value,
+	                            findMultiplicity(attr),
+	                            desc,
+	                            superRef
+	                        )
+	                );
+	            }
+	            bFirstRound = false;
+	        }
         }
     }
 
@@ -256,37 +262,39 @@ public class TAttrGenerator extends TBaseGenerator {
      * Prints static attribute declarations
      */
     public void printStaticAttrDecls() throws IOException, Exception {
-        for (Property attr : m_iClass.getOwnedAttributes()) {
-            if (attr.isStatic()) {
-                String attr_kind = findAttrPath(attr);
-                // default to "name" syntax
-                String syntax = m_stxCsv.get(indent, attr_kind, "name");
-                if (findAttrInitValue(attr, m_language).isEmpty()) {
-                    // if no initialization, use "end" syntax
-                    syntax = m_stxCsv.get(indent, attr_kind, "end");
-                }
-                if (attr.isReadOnly()) {  // not changeable (const):contentReference[oaicite:2]{index=2}
-                    // constant static attribute uses "ext1st" syntax
-                    syntax = m_stxCsv.get(indent, attr_kind, "ext1st");
-                }
-                String desc = "";
-                if (!syntax.isEmpty()) {
-                    desc = fillComment(attr, true);
-                }
-                m_writer.write(
-                        Utils.get(
-                            syntax,
-                            attr.getName(),
-                            getTypeLiteral(attr.getType()) + getTypeModifier(attr),
-                            m_iClass.getName(),
-                            findAttrInitValue(attr, m_language),
-                            findMultiplicity(attr),
-                            desc,
-                            getVisibility(attr)
-                        )
-                );
-            }
-        }
+    	if (m_iClass instanceof EncapsulatedClassifier) {
+	        for (Property attr : ((EncapsulatedClassifier)m_iClass).getOwnedAttributes()) {
+	            if (attr.isStatic()) {
+	                String attr_kind = findAttrPath(attr);
+	                // default to "name" syntax
+	                String syntax = m_stxCsv.get(indent, attr_kind, "name");
+	                if (findAttrInitValue(attr, m_language).isEmpty()) {
+	                    // if no initialization, use "end" syntax
+	                    syntax = m_stxCsv.get(indent, attr_kind, "end");
+	                }
+	                if (attr.isReadOnly()) {  // not changeable (const):contentReference[oaicite:2]{index=2}
+	                    // constant static attribute uses "ext1st" syntax
+	                    syntax = m_stxCsv.get(indent, attr_kind, "ext1st");
+	                }
+	                String desc = "";
+	                if (!syntax.isEmpty()) {
+	                    desc = fillComment(attr, true);
+	                }
+	                m_writer.write(
+	                        Utils.get(
+	                            syntax,
+	                            attr.getName(),
+	                            getTypeLiteral(attr.getType()) + getTypeModifier(attr),
+	                            m_iClass.getName(),
+	                            findAttrInitValue(attr, m_language),
+	                            findMultiplicity(attr),
+	                            desc,
+	                            getVisibility(attr)
+	                        )
+	                );
+	            }
+	        }
+    	}
     }
 
     /**
@@ -360,33 +368,35 @@ public class TAttrGenerator extends TBaseGenerator {
         }
 
         // Iterate through all instance (non-static) attributes of this class
-        for (Property attr : m_iClass.getOwnedAttributes()) {
-            String propertyCode = findPropertyCode(attr, m_language);
-            if (!attr.isStatic() && !attr.getName().isEmpty() 
-                    && isNullOrEmpty(propertyCode) && !hasLangSpecPropStx(attr)) {
-                String attr_kind = findAttrPath(attr);
-                String syntax = m_stxCsv.get(indent, attr_kind, "name");
-                if (superAttrMap.containsKey(attr.getName())) {
-                    // skip attributes inherited from superclass (already handled)
-                    continue;
-                }
-                String desc = "";
-                if (!syntax.isEmpty()) {
-                    desc = fillComment(attr, true);
-                }
-                m_writer.write(
-                    Utils.get(
-                        syntax,
-                        attr.getName(),
-                        getTypeLiteral(attr.getType()) + getTypeModifier(attr),
-                        m_iClass.getName(),
-                        findAttrInitValue(attr, m_language),
-                        findMultiplicity(attr),
-                        desc,
-                        getVisibility(attr)
-                    )
-                );
-            }
+        if (m_iClass instanceof EncapsulatedClassifier) {
+	        for (Property attr : ((EncapsulatedClassifier)m_iClass).getOwnedAttributes()) {
+	            String propertyCode = findPropertyCode(attr, m_language);
+	            if (!attr.isStatic() && !attr.getName().isEmpty() 
+	                    && isNullOrEmpty(propertyCode) && !hasLangSpecPropStx(attr)) {
+	                String attr_kind = findAttrPath(attr);
+	                String syntax = m_stxCsv.get(indent, attr_kind, "name");
+	                if (superAttrMap.containsKey(attr.getName())) {
+	                    // skip attributes inherited from superclass (already handled)
+	                    continue;
+	                }
+	                String desc = "";
+	                if (!syntax.isEmpty()) {
+	                    desc = fillComment(attr, true);
+	                }
+	                m_writer.write(
+	                    Utils.get(
+	                        syntax,
+	                        attr.getName(),
+	                        getTypeLiteral(attr.getType()) + getTypeModifier(attr),
+	                        m_iClass.getName(),
+	                        findAttrInitValue(attr, m_language),
+	                        findMultiplicity(attr),
+	                        desc,
+	                        getVisibility(attr)
+	                    )
+	                );
+	            }
+	        }
         }
 
         // If there is a state-machine generator, print main state-machine declaration
