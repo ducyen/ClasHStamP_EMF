@@ -661,7 +661,7 @@ public class TBaseGenerator {
         }
     }
     
-    public static String getFullNamespace(Classifier cls) {
+    public static String getFullNamespace(NamedElement cls) {
         StringBuilder ns = new StringBuilder();
         for (Namespace namespace : cls.allNamespaces()) {
             if (namespace.getName() != null && !namespace.getName().isEmpty()) {

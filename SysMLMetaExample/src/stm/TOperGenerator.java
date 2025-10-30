@@ -189,13 +189,14 @@ public class TOperGenerator extends TBaseGenerator {
 	                if (!syntax.isEmpty() && isCodeFile()) {
 	                    desc = fillComment(operation, false);
 	                }
+	                Classifier ancestor = m_iAncestor != null ? m_iAncestor : m_iClass;
 	                m_writer.write(
 	                    Utils.get(
 	                        syntax,
 	                        operation.getName(),
 	                        getTypeLiteral((Classifier)operation.getType()),
 	                        m_iClass.getName(),
-	                        (!operation.isAbstract() && !operation.isLeaf() && !operation.isStatic()) ? m_iAncestor.getName() : "",
+	                        (!operation.isAbstract() && !operation.isLeaf() && !operation.isStatic()) ? ancestor.getName() : "",
 	                        modifier,
 	                        desc,
 	                        // Append visibility string
@@ -448,12 +449,13 @@ public class TOperGenerator extends TBaseGenerator {
 	                String path = getOperationPath(operation);
 	                String syntax = m_stxCsv.get(indent, path, "name");
 	                String desc = "";
+	                Classifier ancestor = m_iAncestor != null ? m_iAncestor : m_iClass;
 	                String operationBegin = Utils.get(
 	                    syntax,
 	                    operation.getName(),
 	                    getTypeLiteral((Classifier)operation.getType()),
 	                    m_iClass.getName(),
-	                    (!operation.isAbstract() && !operation.isLeaf() && !operation.isStatic()) ? m_iAncestor.getName() : "",
+	                    (!operation.isAbstract() && !operation.isLeaf() && !operation.isStatic()) ? ancestor.getName() : "",
 	                    modifier,
 	                    desc,
 	                    operation.getVisibility().toString()

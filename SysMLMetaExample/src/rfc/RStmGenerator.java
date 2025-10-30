@@ -21,6 +21,7 @@ import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Pseudostate;
 import org.eclipse.uml2.uml.PseudostateKind;
 import org.eclipse.uml2.uml.Transition;
+import org.eclipse.uml2.uml.TransitionKind;
 import org.eclipse.uml2.uml.Trigger;
 import org.eclipse.uml2.uml.Event;
 import org.eclipse.uml2.uml.Constraint;
@@ -54,8 +55,6 @@ public class RStmGenerator extends TBaseGenerator {
     private StateMachine m_iMainStm = null;
     private StateMachine m_stmRoot = null;
     private Transition m_originTrans = null;
-    // Diagram map for geometry, e.g., mapping StateMachine to its Diagram (if available)
-    private Map<StateMachine, Diagram> m_diagramMap = new HashMap<>();
 
     /**
      * Constructor
@@ -77,8 +76,10 @@ public class RStmGenerator extends TBaseGenerator {
         Collections.sort(m_sortedStmDgrs, new Comparator<StateMachine>() {
             @Override
             public int compare(StateMachine o1, StateMachine o2) {
-                if (isSubmachineOf(o1, getTopVertices(o2))) return -1;
-                if (isSubmachineOf(o2, getTopVertices(o1))) return 1;
+				if (isSubmachineOf(o1, getVertexes(o2))) 
+					return -1;
+				if (isSubmachineOf(o2, getVertexes(o1))) 
+					return 1;
                 return 0;
             }
         });
@@ -86,148 +87,7 @@ public class RStmGenerator extends TBaseGenerator {
             m_iMainStm = m_sortedStmDgrs.get(m_sortedStmDgrs.size() - 1);
         }
     }
-
-    // Helper to get top-level vertices of a StateMachine (vertices in its primary region)
-    private Collection<Vertex> getTopVertices(StateMachine stm) {
-        if (stm.getRegions().isEmpty()) return Collections.emptyList();
-        return stm.getRegions().get(0).getSubvertices();
-    }
-
-    /** 
-     * Determine if a given state machine is used as a submachine within a collection of vertices 
-     */
-    private boolean m_bResult = false;
-    private boolean isSubmachineOf(StateMachine subStm, Collection<Vertex> vertices) {
-        m_bResult = false;
-        // Traverse through states to see if any submachine reference matches subStm
-        new StateDeepTraverser() {
-            protected void checkState(State state, State container, int rgnIndex) {
-                if (state.getSubmachine() != null) {
-                    if (state.getSubmachine() == subStm) {
-                        m_bResult = true;
-                    } else {
-                        // Recurse into submachine’s top-level vertices
-                        StateMachine nestedStm = state.getSubmachine();
-                        if (isSubmachineOf(subStm, nestedStm.getRegions().get(0).getSubvertices())) {
-                            m_bResult = true;
-                        }
-                    }
-                }
-            }
-        }.start(vertices);
-        return m_bResult;
-    }
     
-	/**
-	 * makeIndent
-	 * @param indent
-	 * @return
-	 */
-	private String makeIndent(int indent) {
-		indent+=2;
-		if (indent > 0) {
-			return String.join("", Collections.nCopies(indent * 4, " "));
-		}
-		return "";
-	} 
-	
-	/**
-	 * makeRegionName
-	 * @param iState
-	 * @param rgnIndex
-	 * @return
-	 */
-	private String makeRgnName(State iState, int rgnIndex) {
-		return rgnIndex == 0 ? iState.getName() : iState.getName() + "Rgn" + rgnIndex;
-	}
-	
-
-    /**
-     * Extract the event trigger name of a Transition (first trigger's event or trigger name).
-     */
-    private String getEventName(Transition trans) {
-        String eventName = "";
-        if (!trans.getTriggers().isEmpty()) {
-            Trigger trigger = trans.getTriggers().get(0);
-            Event ev = trigger.getEvent();
-            if (ev != null && ev.getName() != null && !ev.getName().isEmpty()) {
-                // Use event's own name if defined
-                eventName = ev.getName();
-            } else if (ev instanceof SignalEvent) {
-                SignalEvent sigEv = (SignalEvent) ev;
-                if (sigEv.getSignal() != null) {
-                    eventName = sigEv.getSignal().getName();
-                }
-            } else if (ev instanceof CallEvent) {
-                CallEvent callEv = (CallEvent) ev;
-                if (callEv.getOperation() != null) {
-                    eventName = callEv.getOperation().getName();
-                }
-            } 
-            if (eventName.isEmpty() && trigger.getName() != null) {
-                // Fallback to trigger name if event has no name
-                eventName = trigger.getName();
-            }
-        }
-        return eventName.trim();
-    }
-
-    /**
-     * Extract the guard condition text for a Transition.
-     */
-    private String getGuardText(Transition trans) {
-        String guardText = "";
-        Constraint guard = trans.getGuard();
-        if (guard != null && guard.getSpecification() != null) {
-            ValueSpecification spec = guard.getSpecification();
-            if (spec instanceof OpaqueExpression) {
-                OpaqueExpression expr = (OpaqueExpression) spec;
-                if (!expr.getBodies().isEmpty()) {
-                    guardText = expr.getBodies().get(0);
-                }
-            } else {
-                // For simplicity, handle LiteralString or other specifications
-                try {
-                    guardText = spec.stringValue();
-                } catch (Exception e) {
-                    guardText = "";
-                }
-            }
-        }
-        return guardText.trim();
-    }
-
-    /**
-     * Extract the effect action text for a Transition.
-     */
-    private String getActionText(Transition trans) {
-        String actionText = "";
-        if (trans.getEffect() instanceof OpaqueBehavior) {
-            OpaqueBehavior effect = (OpaqueBehavior) trans.getEffect();
-            if (effect != null && !effect.getBodies().isEmpty()) {
-                actionText = effect.getBodies().get(0);
-            }
-        }
-        // If the effect is another kind of behavior, we could handle accordingly (not needed if not present).
-        return actionText.trim();
-    }
-
-    /**
-     * Get internal transitions of a State (those that do not exit the state). 
-     * In UML2, these are transitions with kind == INTERNAL.
-     */
-    private Collection<Transition> getInternalTransitions(State state) {
-        List<Transition> internals = new ArrayList<>();
-        // A state’s internal transitions are not explicitly separated in UML model; 
-        // we identify them as self-transitions with kind INTERNAL
-        for (Transition t : state.getOutgoings()) {
-            if (t.getKind() == org.eclipse.uml2.uml.TransitionKind.INTERNAL_LITERAL) {
-                internals.add(t);
-            }
-        }
-        return internals;
-    }
-
     // Inner class for depth-first traversal of region 0 (single-region) state hierarchy
     private class StateDeepTraverserRgn0 {
         protected int m_level = 0;
@@ -316,1152 +176,313 @@ public class RStmGenerator extends TBaseGenerator {
             }
         }
     }
-
-    // ... (Other inner classes like event traversers, omitted for brevity)
-
-    public StateMachine getMainStm() {
-        return m_iMainStm;
-    }
-
-    // Example EventDeepTraverser using UML2 triggers
-    private class EventDeepTraverser extends StateDeepTraverser {
-        protected void checkState(State state, State container, int rgnIndex) {
-            // If submachine state, recursively traverse its submachine’s vertices
-            if (state.getSubmachine() != null) {
-                StateMachine subMachine = state.getSubmachine();
-                new EventDeepTraverser().start(getTopVertices(subMachine));
-                // Collect events from submachine’s transitions
-                for (Transition t : subMachine.getRegions().get(0).getTransitions()) {
-                    String evName = getEventName(t);
-                    if (!evName.isEmpty() && !uniqueSortedEvents.contains(evName)) {
-                        uniqueSortedEvents.add(evName);
-                    }
-                }
-            }
-            // Collect events from internal transitions of this state
-            for (Transition t : getInternalTransitions(state)) {
-                String evName = getEventName(t);
-                if (!evName.isEmpty() && !uniqueSortedEvents.contains(evName)) {
-                    uniqueSortedEvents.add(evName);
-                }
-            }
-        }
-    }
-
-    private List<String> uniqueSortedEvents = new ArrayList<>();
-    public void printEventDecl() throws IOException, Exception {
-        // Print event declaration (enum)
-        m_writer.write(Utils.get(m_stxCsv.get(indent, "event_decl", "name"),
-                                 m_iClass.getName(),
-                                 m_iClass.getName(),
-                                 m_iMainStm != null ? m_iMainStm.getName() : "" ));
-        // Traverse submachines and states to gather events
-        new EventDeepTraverser().start(getTopVertices(m_iMainStm));
-        // Also collect events of main state machine transitions
-        if (m_iMainStm != null && !m_iMainStm.getRegions().isEmpty()) {
-            for (Transition t : m_iMainStm.getRegions().get(0).getTransitions()) {
-                String evName = getEventName(t);
-                if (!evName.isEmpty() && !uniqueSortedEvents.contains(evName)) {
-                    uniqueSortedEvents.add(evName);
-                }
-            }
-        }
-        Collections.sort(uniqueSortedEvents);
-        System.out.println(makeIndent(indent) + "class Events(Enum):");
-        indent++;
-        String path = m_stxCsv.get(indent, "event_decl", "ext1st");
-        for (String key : uniqueSortedEvents) {
-            System.out.println(makeIndent(indent) + key + " = auto()");
-            m_writer.write(Utils.get(path, key, m_iClass.getName(), m_iClass.getName(), "", "", ""));
-            path = m_stxCsv.get(indent, "event_decl", "extnxt");
-        }
-        indent--;
-        m_writer.write(Utils.get(m_stxCsv.get(indent, "event_decl", "end"),
-                                 m_iClass.getName(),
-                                 m_iClass.getName(),
-                                 m_iMainStm != null ? m_iMainStm.getName() : "" ));
-    }
-
-    public void printStmInitialization() throws IOException, Exception {
-        m_writer.write(Utils.get(m_stxCsv.get(indent, "statemachine", "extnxt"),
-                                 m_iMainStm.getName(),
-                                 m_iMainStm.getName(), "", "", "", ""));
-    }
-
-    public void printMainStmDeclaration() throws IOException, Exception {
-        m_writer.write(Utils.get(m_stxCsv.get(indent, "statemachine", "ext1st"),
-                                 m_iMainStm.getName(),
-                                 m_iMainStm.getName(), "", "", "", ""));
-    }
-
-    // ... (Other methods for printing state machine implementations, states, etc., similarly adapted)
-
+    
+	/**
+	 * makeIndent
+	 * @param indent
+	 * @return
+	 */
+	private String makeIndent(int indent) {
+		indent+=2;
+		if (indent > 0) {
+			return String.join("", Collections.nCopies(indent * 4, " "));
+		}
+		return "";
+	} 
+	
+	private Transition[] toArray(Collection<Transition> collection) {
+		return collection.toArray(new Transition[0]);
+	}
+	
+	/**
+	 * makeRegionName
+	 * @param iState
+	 * @param rgnIndex
+	 * @return
+	 */
+	private String makeRgnName(State iState, int rgnIndex) {
+		return rgnIndex == 0 ? iState.getName() : iState.getName() + "Rgn" + rgnIndex;
+	}
+	
     /**
      * Determine if a transition is external (exits the least common ancestor state).
      * Uses GMF Notation to check if transition points lie outside the LCA state's bounds.
      */
     private boolean checkIfExternalTrans(Transition lastTrans) {
-        Vertex targetVertex = lastTrans.getTarget();
-        try {
-            Vertex commonStateVertex = null;
-            // Determine lowest common ancestor (LCA) state between m_originTrans.getSource() and targetVertex
-            Vertex sourceVertex = m_originTrans.getSource();
-            // Climb up from target to source
-            Vertex traverse = targetVertex;
-            while (traverse != sourceVertex) {
-                Region region = traverse.getContainer(); // region containing this vertex
-                if (region != null && region.getState() != null) {
-                    traverse = region.getState();
-                    if (traverse == sourceVertex) {
-                        commonStateVertex = traverse;
-                        break;
-                    }
-                } else {
-                    break; // reached top without finding source
-                }
-            }
-            // Climb up from source to target
-            traverse = sourceVertex;
-            while (traverse != targetVertex) {
-                Region region = traverse.getContainer();
-                if (region != null && region.getState() != null) {
-                    traverse = region.getState();
-                    if (traverse == targetVertex) {
-                        commonStateVertex = traverse;
-                        break;
-                    }
-                } else {
-                    break;
-                }
-            }
-            if (commonStateVertex != null && commonStateVertex instanceof State) {
-                State commonState = (State) commonStateVertex;
-                // Retrieve diagram and shapes for geometry calculation
-                Diagram diag = m_diagramMap.get(commonState.containingStateMachine());
-                if (diag != null) {
-                    // Find notation Node for commonState and Edge for transitions
-                    Node stateNode = findDiagramNode(commonState, diag);
-                    Edge originEdge = findDiagramEdge(m_originTrans, diag);
-                    Edge targetEdge = findDiagramEdge(lastTrans, diag);
-                    if (stateNode != null && originEdge != null && targetEdge != null) {
-                        Bounds bounds = (Bounds) stateNode.getLayoutConstraint();
-                        double minX = bounds.getX();
-                        double maxX = bounds.getX() + bounds.getWidth();
-                        double minY = bounds.getY();
-                        double maxY = bounds.getY() + bounds.getHeight();
-                        // Check if any bendpoint of either transition lies outside commonState bounds
-                        if (isEdgeOutsideBounds(originEdge, minX, maxX, minY, maxY) 
-                                || isEdgeOutsideBounds(targetEdge, minX, maxX, minY, maxY)) {
-                            return true;
-                        }
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    // Helper to find a Node in the diagram corresponding to a given element
-    private Node findDiagramNode(org.eclipse.uml2.uml.Element element, Diagram diagram) {
-        for (Object obj : diagram.getChildren()) {
-            if (obj instanceof Node) {
-                Node node = (Node) obj;
-                if (node.getElement() == element) return node;
-            }
-        }
-        return null;
-    }
-    // Helper to find an Edge in the diagram for a given transition
-    private Edge findDiagramEdge(Transition transition, Diagram diagram) {
-        for (Object obj : diagram.getEdges()) {
-            if (obj instanceof Edge) {
-                Edge edge = (Edge) obj;
-                if (edge.getElement() == transition) return edge;
-            }
-        }
-        return null;
-    }
-    // Helper to check if any points of an edge lie outside given bounds
-    private boolean isEdgeOutsideBounds(Edge edge, double minX, double maxX, double minY, double maxY) {
-        if (edge.getBendpoints() instanceof RelativeBendpoints) {
-            RelativeBendpoints bp = (RelativeBendpoints) edge.getBendpoints();
-            for (Object obj : bp.getPoints()) {
-            	if (!(obj instanceof RelativeBendpoint))
-            		continue;
-            	RelativeBendpoint rb = (RelativeBendpoint)obj;
-                // Compute absolute coordinates roughly (approximate source and target anchors as edge ends):
-                int absX = rb.getSourceX();
-                int absY = rb.getSourceY();
-                // Here we might add anchor location, but assume relative small offsets suffice:
-                if (absX < minX || absX > maxX || absY < minY || absY > maxY) {
-                    return true;
-                }
-                // Also consider target offsets:
-                absX = rb.getTargetX();
-                absY = rb.getTargetY();
-                if (absX < minX || absX > maxX || absY < minY || absY > maxY) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public void printStmImpls() throws IOException, Exception {
-        // Iterate over each StateMachine owned by the class (BehavioredClassifier)
-        BehavioredClassifier classifier = (BehavioredClassifier) m_iClass;
-        for (Behavior behavior : classifier.getOwnedBehaviors()) {
-            if (!(behavior instanceof StateMachine)) continue;
-            StateMachine stateMachine = (StateMachine) behavior;
-            m_stmRoot = stateMachine;  // set current state machine context
-
-            // Prepare names and definition similar to Astah version
-            String rgnName = stateMachine.getName();
-            String rgnDgrName = stateMachine.getName();  // using stateMachine name as diagram name
-            String rgnDefinition = getElementDocumentation(stateMachine);  // retrieve documentation if any
-
-            // Get top-level region vertices (states/pseudostates in the state machine)
-            Region topRegion = stateMachine.getRegions().isEmpty() ? null : stateMachine.getRegions().get(0);
-            List<Vertex> rgnVertices = (topRegion != null) ? topRegion.getSubvertices() : Collections.emptyList();
-
-            System.out.println(makeIndent(indent) + "# Statemachine sub-class");
-            System.out.println(makeIndent(indent) + "class " + rgnDgrName + "(ParallelStatemachine):");
-
-            // Capture state definitions for all regions (including nested regions) into a temporary writer
-            StringWriter tempWriter = new StringWriter();
-            Writer originalWriter = m_writer;
-            m_writer = tempWriter;
-            // Traverse all composite states to print their nested state definitions
-            for (Vertex v : rgnVertices) {
-                traverseStateDefinitions(v);
-            }
-            // Also include top-level states definitions in the main region
-            printStatesDefinition(rgnName, rgnDgrName, rgnDefinition, rgnVertices);
-            m_writer = originalWriter;  // restore original writer
-
-            // Write the beginning of the state machine class using template (statemachine.begin)
-            m_writer.write(Utils.get(
-                m_stxCsv.get(indent, "statemachine", "begin"),
-                rgnDgrName,                      // name (state machine class name)
-                m_iClass.getName(),              // type (context class name)
-                rgnName + "Hsm",                 // container (state machine instance name, e.g., with HSM suffix)
-                tempWriter.toString(),           // value (state definitions block)
-                "", "", 
-                stateMachine.getName()           // scope (using stateMachine name as scope)
-            ));
-            indent++;
-
-            // Print sub-state-machine and region declarations/initializations (if any parallel regions)
-            String subStmAndRgnInitStr = printSubStmAndRgnDecls(rgnName, rgnDgrName, rgnDefinition, rgnVertices);
-
-            // Generate nested Region classes for each composite state's regions (sub-regions)
-            for (Vertex v : rgnVertices) {
-                traverseRegionClasses(v, stateMachine);
-            }
-            // Also generate the class for the top-level region of this state machine
-            System.out.println(makeIndent(indent) + "# Region sub-class");
-            System.out.println(makeIndent(indent) + "class _" + rgnName + "Hsm(Statemachine):");
-            indent++;
-            printStmImpl(stateMachine, rgnName, rgnDgrName, rgnDefinition, rgnVertices);
-            indent--;
-
-            // Print state-machine API methods (event declarations, etc.) if needed
-            printStmAPIs(stateMachine);
-
-            indent--;
-            // Write the end of the state machine class using template (statemachine.end)
-            m_writer.write(Utils.get(
-                m_stxCsv.get(indent, "statemachine", "end"),
-                rgnDgrName,                // name
-                m_iClass.getName(),        // type
-                rgnName,                   // container
-                subStmAndRgnInitStr,       // value (initialization strings for sub state machines/regions)
-                "", "", 
-                stateMachine.getName()     // scope
-            ));
-        }
-    }
-
-    /**
-     * Helper to retrieve the "definition" or documentation of a UML element.
-     * For EMF UML, we use the first owned comment as the definition text (if exists).
-     */
-    private String getElementDocumentation(Element element) {
-        if (element == null) return "";
-        if (!element.getOwnedComments().isEmpty()) {
-            String doc = element.getOwnedComments().get(0).getBody();
-            return (doc != null) ? doc : "";
-        }
-        return "";
-    }
-
-    /**
-     * Recursively traverse vertices to collect and print state definitions for nested regions.
-     * (This replaces the Astah StateDeepTraverser for state definitions.)
-     */
-    private void traverseStateDefinitions(Vertex vertex) throws IOException, Exception {
-        if (vertex instanceof State) {
-            State state = (State) vertex;
-            // If this state has substates (i.e., is a composite state with one or more Regions)
-            if (!state.getRegions().isEmpty()) {
-                // Iterate each region in the composite state
-                for (int subRgnIndex = 0; subRgnIndex < state.getRegions().size(); subRgnIndex++) {
-                    Region subRegion = state.getRegions().get(subRgnIndex);
-                    String subRgnName = makeRgnName(state, subRgnIndex);
-                    String subRgnClassName = subRgnName + "Hsm";
-                    String subRgnDef = getElementDocumentation(state);
-                    List<Vertex> subVertices = subRegion.getSubvertices();
-                    // Print state definitions for this sub-region
-                    printStatesDefinition(subRgnName, subRgnClassName, subRgnDef, subVertices);
-                    // Recurse into deeper nested regions
-                    for (Vertex subV : subVertices) {
-                        traverseStateDefinitions(subV);
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Recursively traverse vertices to generate region sub-class implementations for composite states.
-     * (Replaces the Astah StateDeepTraverser usage for region classes and transitions.)
-     */
-    private void traverseRegionClasses(Vertex vertex, StateMachine rootStm) throws IOException, Exception {
-        if (vertex instanceof State) {
-            State state = (State) vertex;
-            if (!state.getRegions().isEmpty()) {
-                // For each orthogonal region inside this composite state, generate a region class
-                for (int subRgnIndex = 0; subRgnIndex < state.getRegions().size(); subRgnIndex++) {
-                    Region subRegion = state.getRegions().get(subRgnIndex);
-                    String subRgnName = makeRgnName(state, subRgnIndex);
-                    String subRgnClassName = "_" + subRgnName + "Hsm";  // prefix with "_" for region class
-                    String subRgnDef = getElementDocumentation(state);
-                    List<Vertex> subVertices = subRegion.getSubvertices();
-                    System.out.println(makeIndent(indent) + "# Region sub-class");
-                    System.out.println(makeIndent(indent) + "class " + subRgnClassName + "(Statemachine):");
-                    indent++;
-                    // Generate the implementation (states, transitions) for this sub-region
-                    printStmImpl(rootStm, subRgnName, subRgnName + "Hsm", subRgnDef, subVertices);
-                    indent--;
-                    // Recurse deeper into any nested composite states within this region
-                    for (Vertex subV : subVertices) {
-                        traverseRegionClasses(subV, rootStm);
-                    }
-                }
-            }
-        }
+    	return lastTrans.getKind() == TransitionKind.EXTERNAL_LITERAL;
     }
     
-    public Region findRegionByName(StateMachine rootStateMachine, String targetName) {
-    	if (rootStateMachine == null) {
-    		return null;
+    /**
+     * getSubvertexes
+     * @param stmOrState
+     * @return
+     */
+    private Collection<Vertex> getVertexes(NamedElement stmOrState) {
+    	return getSubvertexes(stmOrState);
+    }
+    private Collection<Vertex> getSubvertexes(NamedElement stmOrState) {
+    	Collection<Vertex> vtxCol = new ArrayList<Vertex>();
+    	if (stmOrState instanceof StateMachine) {
+    		vtxCol = ((StateMachine)stmOrState).getRegions().get(0).getSubvertices();
+    	} else {
+	    	if (stmOrState instanceof State) {
+	    		for (Region rgn: ((State)stmOrState).getRegions()) {
+	    			vtxCol.addAll(rgn.getSubvertices());
+	    		}
+	    	}
     	}
-        // Search top-level regions of the state machine
-        for (Region region : rootStateMachine.getRegions()) {
-            if (targetName.equals(region.getName()) || targetName.equals(region.getLabel())) {
-                return region;
-            }
-        }
-
-        // Recursively search composite states for matching sub-regions
-        for (Region region : rootStateMachine.getRegions()) {
-            for (Vertex vertex : region.getSubvertices()) {
-                if (vertex instanceof State) {
-                    State compositeState = (State) vertex;
-                    for (Region subRegion : compositeState.getRegions()) {
-                        if (targetName.equals(subRegion.getName()) || targetName.equals(subRegion.getLabel())) {
-                            return subRegion;
-                        }
-                        // Optionally go deeper (recursive) if needed
-                        Region found = findRegionByName(compositeState.getSubmachine(), targetName);
-                        if (found != null) return found;
-                    }
-                }
-            }
-        }
-
-        // Not found
-        return null;
+    	return vtxCol;
+    }
+    
+    /**
+     * getSubvertexes
+     * @param stmOrState
+     * @return
+     */
+    private Collection<Vertex> getSubvertexes(NamedElement stmOrState, int rgnIndex) throws IllegalArgumentException {
+    	Collection<Vertex> vtxCol = new ArrayList<Vertex>();
+    	if (stmOrState instanceof StateMachine) {
+    		vtxCol = ((StateMachine)stmOrState).getRegions().get(rgnIndex).getSubvertices();
+    	} else {
+	    	if (stmOrState instanceof State) {
+	    		if (rgnIndex > 0 && rgnIndex >= ((State)stmOrState).getRegions().size()) {
+	    			throw new IllegalArgumentException();
+	    		} else if (!((State)stmOrState).getRegions().isEmpty()) {
+		    		Region rgn = ((State)stmOrState).getRegions().get(rgnIndex);
+	    			vtxCol = rgn.getSubvertices();
+	    		}
+	    	}
+    	}
+    	return vtxCol;
     }    
+    
+    /**
+     * isChoicePseudostate
+     * @param iPst
+     * @return
+     */
+    private boolean isChoicePseudostate(Pseudostate iPst) {
+    	return iPst.getKind() == PseudostateKind.CHOICE_LITERAL;
+    }
 
     /**
-     * Generate the implementation of a state machine region: transitions, state handlers, etc.
-     * This corresponds to the original printStmImpl, adapted for UML2 API.
+     * isJunctionPseudostate
+     * @param iPst
+     * @return
      */
-    private void printStmImpl(StateMachine stmRoot, String rgnName, String rgnClassName,
-                              String rgnDefinition, List<Vertex> vertices) throws IOException, Exception {
-        // Loop through each transition originating from any vertex in this region
-        Region currentRegion = null;
-        if (stmRoot.getRegions().size() > 0 && stmRoot.getRegions().get(0).getSubvertices().equals(vertices)) {
-            // If vertices list is the top region's vertices
-            currentRegion = stmRoot.getRegions().get(0);
-        } else {
-            // Otherwise, find which region these vertices belong to (by name or context)
-            // (For simplicity, we assume rgnName identifies the region within stmRoot or a composite state)
-            currentRegion = findRegionByName(stmRoot, rgnName);
-        }
-        if (currentRegion == null) {
-            return; // no region to process
-        }
-
-        // Iterate all transitions in this region
-        for (Transition transition : currentRegion.getTransitions()) {
-            Vertex source = transition.getSource();
-            Vertex target = transition.getTarget();
-            String guardStr = "";
-            String eventName = "";
-            String actionCode = "";
-
-            // Determine event trigger name (if any)
-            if (!transition.getTriggers().isEmpty()) {
-                Trigger trigger = transition.getTriggers().get(0);
-                Event event = trigger.getEvent();
-                if (event instanceof CallEvent) {
-                    // For CallEvents, use the operation name as event name
-                    CallEvent callEvent = (CallEvent) event;
-                    if (callEvent.getOperation() != null) {
-                        eventName = callEvent.getOperation().getName();
-                    }
-                } else if (event instanceof SignalEvent) {
-                    // For SignalEvents, use the signal name
-                    SignalEvent sigEvent = (SignalEvent) event;
-                    if (sigEvent.getSignal() != null) {
-                        eventName = sigEvent.getSignal().getName();
-                    }
-                } else if (event != null && event.getName() != null) {
-                    // Other event types (TimeEvent, ChangeEvent, etc.) or named triggers
-                    eventName = event.getName();
-                } else if (trigger.getName() != null) {
-                    // If the trigger itself is named (fallback)
-                    eventName = trigger.getName();
-                }
-            }
-            // Determine guard condition string (if any)
-            Constraint guard = transition.getGuard();
-            if (guard != null && guard.getSpecification() != null) {
-                ValueSpecification spec = guard.getSpecification();
-                if (spec instanceof OpaqueExpression) {
-                    OpaqueExpression expr = (OpaqueExpression) spec;
-                    if (!expr.getBodies().isEmpty()) {
-                        guardStr = expr.getBodies().get(0).trim();
-                    }
-                } else if (spec.stringValue() != null) {
-                    guardStr = spec.stringValue().trim();
-                }
-            }
-            // Determine effect action code (if any)
-            Behavior effect = transition.getEffect();
-            if (effect instanceof OpaqueBehavior) {
-                OpaqueBehavior ob = (OpaqueBehavior) effect;
-                if (!ob.getBodies().isEmpty()) {
-                    actionCode = ob.getBodies().get(0).trim();
-                }
-            } else if (effect != null) {
-                // If effect is some other Behavior, use its name as a placeholder
-                actionCode = (effect.getName() != null) ? effect.getName() : "";
-            }
-
-            // Now generate code for this transition similar to original
-            if (target instanceof State) {
-                // Target is a state
-                if (!guardStr.isEmpty()) {
-                    // If a guard is present, print an if/else block
-                    System.out.println(makeIndent(indent) + (guardStr.equalsIgnoreCase("else") ? "else:" : ("if " + guardStr + ":")));
-                    // Write the opening of the branch (guard condition) using templates
-                    m_writer.write(Utils.get(
-                        m_stxCsv.get(indent, "branch", guardStr.equalsIgnoreCase("else") ? "begin" : "ext1st"),
-                        guardStr,                     // name (guard condition or "else")
-                        m_iClass.getName(),           // type
-                        "",                          // container
-                        guardStr,                     // value (reuse guard as value)
-                        collectActions(indent, actionCode),  // modifier (actions code)
-                        "", 
-                        stmRoot.getName()             // scope (state machine name)
-                    ));
-                    indent++;
-                    // Recurse or handle nested transitions (e.g., if target has outgoing transitions or pseudostates)
-                    TraverseTransition(stmRoot, rgnName, vertices, transition);
-                    indent--;
-                } else {
-                    // No guard: directly handle transition
-                    TraverseTransition(stmRoot, rgnName, vertices, transition);
-                }
-            } else {
-                // Target is a pseudostate (e.g., Choice, Junction, Join, etc.)
-                if (!guardStr.isEmpty()) {
-                    // Guard present for pseudostate transition
-                    System.out.println(makeIndent(indent) + (guardStr.equalsIgnoreCase("else") ? "else:" : ("if " + guardStr + ":")));
-                    m_writer.write(Utils.get(
-                        m_stxCsv.get(indent, "branch", guardStr.equalsIgnoreCase("else") ? "begin" : "ext1st"),
-                        guardStr, 
-                        m_iClass.getName(),
-                        "",
-                        guardStr,
-                        collectActions(indent, actionCode),
-                        "",
-                        stmRoot.getName()
-                    ));
-                    indent++;
-                }
-                // Special handling for joins: if this transition's source is a Join pseudostate, combine conditions
-                if (source instanceof Pseudostate && ((Pseudostate) source).getKind() == PseudostateKind.JOIN_LITERAL) {
-                    Pseudostate joinPseudo = (Pseudostate) source;
-                    System.out.println(makeIndent(indent) + "# begin joining");
-                    boolean firstCond = true;
-                    StringBuilder isInConditions = new StringBuilder();
-                    // Iterate all incoming transitions to the join pseudostate
-                    for (Transition incoming : joinPseudo.getIncomings()) {
-                        if (incoming == transition) continue;  // skip the current transition itself
-                        // Only consider completion transitions from States (no trigger events on incoming)
-                        if (incoming.getSource() instanceof State) {
-                            // Ensure incoming has no event trigger
-                            if (incoming.getTriggers().isEmpty()) {
-                                State sourceState = (State) incoming.getSource();
-                                // Find which region's state machine contains this source state
-                                String targetMachineName = findTargetMachineName(stmRoot.getName(), stmRoot, sourceState);
-                                String targetMachineRef;
-                                if (targetMachineName.equals(rgnName + "Hsm")) {
-                                    targetMachineRef = "self";
-                                } else {
-                                    targetMachineRef = "self.main." + targetMachineName;
-                                }
-                                if (firstCond) {
-                                    System.out.println(makeIndent(indent) + "if IsIn(" + targetMachineRef + ".currentState, " 
-                                                       + stmRoot.getName() + "." + sourceState.getName() + ") \\");
-                                    // Start of combined condition (ext1st template)
-                                    isInConditions.append(Utils.get(
-                                        m_stxCsv.get(indent, "trans_action", "ext1st"),
-                                        sourceState.getName(),
-                                        m_iClass.getName(),
-                                        targetMachineName,
-                                        sourceState.getName(),
-                                        targetMachineName,
-                                        transition.getName(),  // description (using transition name or definition)
-                                        stmRoot.getName()
-                                    ));
-                                    firstCond = false;
-                                } else {
-                                    System.out.println(makeIndent(indent) + " and IsIn(" + targetMachineRef + ".currentState, " 
-                                                       + stmRoot.getName() + "." + sourceState.getName() + ") \\");
-                                    // Subsequent condition (extnxt template)
-                                    isInConditions.append(Utils.get(
-                                        m_stxCsv.get(indent, "trans_action", "extnxt"),
-                                        sourceState.getName(),
-                                        m_iClass.getName(),
-                                        targetMachineName,
-                                        sourceState.getName(),
-                                        targetMachineName,
-                                        transition.getName(),
-                                        stmRoot.getName()
-                                    ));
-                                }
-                            } else {
-                                System.out.println("★★★ERROR★★★: Joining from other regions cannot have an event trigger.");
-                            }
-                        }
-                    }
-                    // Once combined conditions are built, output the join transition branch
-                    if (joinPseudo.getOutgoings().size() == 1) {  // join should have exactly one outgoing transition
-                        System.out.println(makeIndent(indent) + ":");
-                        // Write the combined condition branch to output (branch.ext1st template)
-                        m_writer.write(Utils.get(
-                            m_stxCsv.get(indent, "branch", "ext1st"),
-                            isInConditions.toString(),
-                            m_iClass.getName(),
-                            "",
-                            isInConditions.toString(),
-                            collectActions(indent, actionCode),
-                            "",
-                            stmRoot.getName()
-                        ));
-                        indent++;
-                        // Print the single outgoing transition of the join pseudostate
-                        Transition outgoingTrans = joinPseudo.getOutgoings().get(0);
-                        printTransition(stmRoot, rgnName, vertices, outgoingTrans);
-                        indent--;
-                        // Close the branch (branch.end template) unless it's an "else" branch of a choice with no guard
-                        if (!(transition.getSource() instanceof Pseudostate &&
-                              ((Pseudostate) transition.getSource()).getKind() == PseudostateKind.CHOICE_LITERAL &&
-                              guardStr.isEmpty())) {
-                            m_writer.write(Utils.get(
-                                m_stxCsv.get(indent, "branch", "end"),
-                                isInConditions.toString(),
-                                m_iClass.getName(),
-                                "",
-                                isInConditions.toString(),
-                                collectActions(indent, actionCode),
-                                "",
-                                stmRoot.getName()
-                            ));
-                        }
-                    }
-                } else {
-                    // For non-join pseudostate transitions or after join handling, simply print the transition
-                    printTransition(stmRoot, rgnName, vertices, transition);
-                }
-                if (!guardStr.isEmpty()) {
-                    // If we opened a guard branch for pseudostate, close it (branch.end)
-                    indent--;
-                    m_writer.write(Utils.get(
-                        m_stxCsv.get(indent, "branch", "end"),
-                        guardStr,
-                        m_iClass.getName(),
-                        "",
-                        guardStr,
-                        collectActions(indent, actionCode),
-                        "",
-                        stmRoot.getName()
-                    ));
-                }
-            }
-        }
+    private boolean isJunctionPseudostate(Pseudostate iPst) {
+    	return iPst.getKind() == PseudostateKind.JUNCTION_LITERAL;
     }
-    
-    public void printStatesDefinition(
-            String rgnName, String rgnDgrName, String rgnDefinition,
-            java.util.List<Vertex> rgnVertices
-        ) throws IOException, Exception {
-        // Print debug header
-        System.out.println(makeIndent(indent) + "# States definitions");
 
-        // Prepare a temporary writer to collect state definitions
-        StringWriter tempWriter = new StringWriter();
-        Writer originalWriter = m_writer;
-        m_writer = tempWriter;
-        AtomicInteger autoId = new AtomicInteger(0);
-
-        // Helper to process (possibly composite) states recursively
-        java.util.function.BiConsumer<State,String> processState = new java.util.function.BiConsumer<State,String>() {
-            public void accept(State state, String containerName) {
-                try {
-                    // Collect comments as description
-                    StringBuilder commentBody = new StringBuilder();
-                    for (Comment cmt : state.getOwnedComments()) {
-                        if (cmt.getBody() != null) {
-                            commentBody.append(cmt.getBody());
-                        }
-                    }
-                    // Leaf state (no nested regions)
-                    if (state.getRegions().isEmpty()) {
-                        System.out.println(makeIndent(indent) 
-                                           + state.getName() + " = MakeState(" + autoId + ")");
-                        // Write a state_decl "name" entry with name, container, id, kind, description
-                        m_writer.write(Utils.get(
-                            m_stxCsv.get(indent, "state_decl", "name"),
-                            state.getName(),
-                            m_iClass.getName(),
-                            containerName,
-                            String.format("%2d", autoId.getOpaque()),
-                            (state instanceof FinalState) ? "Final" : "Normal",
-                            commentBody.toString(),
-                            getStateMachineDiagram(m_stmRoot).getName()
-                        ));
-                        autoId.getAndIncrement();
-                    }
-                    // Composite state (has sub-vertices)
-                    else {
-                        // Collect substate names
-                        String subStateNames = null;
-                        for (Vertex sub : state.getRegions().get(0).getSubvertices()) {
-                            if (sub instanceof State || sub instanceof Pseudostate) {
-                                String subName = ((NamedElement)sub).getName();
-                                if (subStateNames == null) {
-                                    subStateNames = subName;
-                                    m_writer.write(Utils.get(
-                                        m_stxCsv.get(indent, "state_decl", "ext1st"),
-                                        state.getName(),
-                                        m_iClass.getName(),
-                                        containerName,
-                                        subName,
-                                        String.format("%2d", autoId.getOpaque()),
-                                        "",
-                                        getStateMachineDiagram(m_stmRoot).getName()
-                                    		));
-                                } else {
-                                    subStateNames += " | " + subName;
-                                    m_writer.write(Utils.get(
-                                        m_stxCsv.get(indent, "state_decl", "extnxt"),
-                                        state.getName(),
-                                        m_iClass.getName(),
-                                        containerName,
-                                        subName,
-                                        String.format("%2d", autoId.getOpaque()),
-                                        "",
-                                        getStateMachineDiagram(m_stmRoot).getName()
-                                    ));
-                                }
-                            }
-                        }
-                        // End of composite state's sub-vertex list
-                        m_writer.write(Utils.get(
-                            m_stxCsv.get(indent, "state_decl", "end"),
-                            state.getName(),
-                            m_iClass.getName(),
-                            containerName,
-                            "",
-                            state.getName(),
-                            rgnDefinition,
-                            getStateMachineDiagram(m_stmRoot).getName()
-                        ));
-                        System.out.println(makeIndent(indent) 
-                                           + state.getName() + " = " + subStateNames);
-                        // Recurse into substates
-                        for (Vertex sub : state.getRegions().get(0).getSubvertices()) {
-                            if (sub instanceof State) {
-                                accept((State)sub, state.getName());
-                            }
-                        }
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-
-        // Process each top-level vertex in the region
-        for (Vertex vert : rgnVertices) {
-            // Pseudostate (initial, history, fork, etc.)
-            if (vert instanceof Pseudostate) {
-                Pseudostate ps = (Pseudostate) vert;
-                System.out.println(makeIndent(indent) 
-                                   + ps.getName() + " = MakeState(" + autoId + ")");
-                StringBuilder commentBody = new StringBuilder();
-                for (Comment cmt : ps.getOwnedComments()) {
-                    if (cmt.getBody() != null) {
-                        commentBody.append(cmt.getBody());
-                    }
-                }
-                // Use UML2 Pseudostate.getKind()
-                String kind = ps.getKind().getLiteral();  // e.g. "Initial", "Fork", "History", etc.:contentReference[oaicite:2]{index=2}
-                m_writer.write(Utils.get(
-                    m_stxCsv.get(indent, "state_decl", "name"),
-                    ps.getName(),
-                    m_iClass.getName(),
-                    rgnName,
-                    String.format("%2d", autoId.getOpaque()),
-                    kind,
-                    commentBody.toString(),
-                    getStateMachineDiagram(m_stmRoot).getName()
-                ));
-                autoId.getAndIncrement();
-            }
-            // State (could be composite or leaf; includes FinalState)
-            else if (vert instanceof State) {
-                State st = (State) vert;
-                // Top-level states have the region name as container
-                processState.accept(st, rgnName);
-            }
-        }
-
-        // Restore original writer and write the region's 'begin' entry
-        m_writer = originalWriter;
-        m_writer.write(Utils.get(
-            m_stxCsv.get(indent, "state_decl", "begin"),
-            rgnName,
-            m_iClass.getName(),
-            rgnName + "Hsm",
-            tempWriter.toString(),
-            "",
-            "",
-            getStateMachineDiagram(m_stmRoot).getName()
-        ));
+    /**
+     * isDeepHistoryPseudostate
+     * @param iPst
+     * @return
+     */
+    private boolean isDeepHistoryPseudostate(Pseudostate iPst) {
+    	return iPst.getKind() == PseudostateKind.DEEP_HISTORY_LITERAL;
     }
-    
-    public void printStmAPIs(StateMachine stateMachine) throws IOException {
-        // Map each event name to a list of Events (or Transitions) with that name
-        Map<String, List<Event>> eventsByName = new LinkedHashMap<>();
-        if (!stateMachine.getRegions().isEmpty()) {
-            // Get all transitions from the first region
-            for (Transition transition : stateMachine.getRegions().get(0).getTransitions()) {
-                for (Trigger trigger : transition.getTriggers()) {
-                    Event event = trigger.getEvent();
-                    String name;
-                    // Derive a name based on Event type
-                    if (event instanceof CallEvent) {
-                        Operation op = ((CallEvent) event).getOperation();
-                        name = (op != null) ? op.getName() : event.getName();
-                    } else if (event instanceof SignalEvent) {
-                        Signal sig = ((SignalEvent) event).getSignal();
-                        name = (sig != null) ? sig.getName() : event.getName();
-                    } else if (event instanceof TimeEvent) {
-                        TimeExpression when = ((TimeEvent) event).getWhen();
-                        if (when != null && when.getExpr() != null) {
-                            // If the TimeEvent has an expression, use its value or string
-                            ValueSpecification expr = when.getExpr();
-                            name = expr.stringValue(); 
-                            if (name == null || name.isEmpty()) {
-                                name = event.getName();
-                            }
-                        } else {
-                            name = event.getName();
-                        }
-                    } else {
-                        name = event.getName();
-                    }
-                    // Group events by the derived name
-                    eventsByName.computeIfAbsent(name, k -> new ArrayList<>()).add(event);
-                }
-            }
-        }
-        // For each distinct event name, write an API block
-        for (String eventName : eventsByName.keySet()) {
-            // Example: write a template block for this event
-            // (Utils.get might refer to a template key and parameters)
-            try {
-				m_writer.write(Utils.get("stmApiTemplate", eventName));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-        }
+
+    /**
+     * isShallowHistoryPseudostate
+     * @param iPst
+     * @return
+     */
+    private boolean isShallowHistoryPseudostate(Pseudostate iPst) {
+    	return iPst.getKind() == PseudostateKind.SHALLOW_HISTORY_LITERAL;
+    }
+
+    /**
+     * isEntryPointPseudostate
+     * @param iPst
+     * @return
+     */
+    private boolean isEntryPointPseudostate(Pseudostate iPst) {
+    	return iPst.getKind() == PseudostateKind.ENTRY_POINT_LITERAL;
+    }
+
+    /**
+     * isExitPointPseudostate
+     * @param iPst
+     * @return
+     */
+    private boolean isExitPointPseudostate(Pseudostate iPst) {
+    	return iPst.getKind() == PseudostateKind.EXIT_POINT_LITERAL;
+    }
+
+    /**
+     * isForkPseudostate
+     * @param iPst
+     * @return
+     */
+    private boolean isForkPseudostate(Pseudostate iPst) {
+    	return iPst.getKind() == PseudostateKind.FORK_LITERAL;
+    }
+
+    /**
+     * isJoinPseudostate
+     * @param iPst
+     * @return
+     */
+    private boolean isJoinPseudostate(Pseudostate iPst) {
+    	return iPst.getKind() == PseudostateKind.JOIN_LITERAL;
     }
     
     /**
-     * Translated printSubStmAndRgnDecls method using UML2 (EMF) API.
+     * isInitialPseudostate
+     * @param iPst
+     * @return
      */
-    public String printSubStmAndRgnDecls(
-            String rgnName,
-            String rgnDgrName,
-            String rgnDefinition,
-            List<Vertex> rgnVertices
-    ) throws IOException, Exception {
-        // Result string builder for extended entries
-        StringBuilder result = new StringBuilder();
-
-        // Print __init__ and parent constructor call
-        System.out.println(makeIndent(indent) + "def __init__(self, _main, _parent):");
-        indent++;
-        System.out.println(makeIndent(indent) + "super().__init__(_main, _parent)");
-
-        // Declare sub-machine and regions field for this region
-        System.out.println(makeIndent(indent) + "# sub-machine and regions declaration");
-        System.out.println(makeIndent(indent) + "self." + rgnName + "Hsm = self._" + rgnName + "Hsm(self, self.parent)");
-        try {
-            // Write region declaration (name and ext1st entries)
-            m_writer.write(Utils.get(
-                m_stxCsv.get(indent, "region", "name"),
-                rgnName + "Hsm",            // name
-                m_iClass.getName(),         // type
-                rgnName + "Hsm",            // container
-                "",                         // value
-                rgnDefinition,              // modifier/description
-                m_stmRoot.getName()         // scope (using state machine name)
-            ));
-            result.append(Utils.get(
-                m_stxCsv.get(indent, "region", "ext1st"),
-                rgnName + "Hsm",            // name
-                m_iClass.getName(),         // type
-                rgnName + "Hsm",            // container
-                "",                         // value
-                rgnDefinition,              // modifier/description
-                m_stmRoot.getName()         // scope
-            ));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        // Traverse vertices in this region
-        for (Vertex vertex : rgnVertices) {
-            // 1. Handle history pseudostates
-            if (vertex instanceof Pseudostate) {
-                Pseudostate pseudo = (Pseudostate) vertex;
-                PseudostateKind kind = pseudo.getKind();
-                if (kind == PseudostateKind.SHALLOW_HISTORY_LITERAL || kind == PseudostateKind.DEEP_HISTORY_LITERAL) {
-                    System.out.println(makeIndent(indent) + "self." + pseudo.getName() + " = 0");
-                    try {
-                        m_writer.write(Utils.get(
-                            m_stxCsv.get(indent, "history", "name"),
-                            pseudo.getName(),        // name
-                            m_iClass.getName(),      // type
-                            "",                      // container
-                            "",                      // value
-                            rgnDefinition,           // modifier/description
-                            m_stmRoot.getName()      // scope
-                        ));
-                        result.append(Utils.get(
-                            m_stxCsv.get(indent, "history", "ext1st"),
-                            pseudo.getName(),        // name
-                            m_iClass.getName(),      // type
-                            "",                      // container
-                            "",                      // value
-                            rgnDefinition,           // modifier/description
-                            m_stmRoot.getName()      // scope
-                        ));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-            // 2. Handle regions within states (composite/parallel regions)
-            if (vertex instanceof State) {
-                State state = (State) vertex;
-                List<Region> regions = state.getRegions();
-                // For each subregion of the composite state
-                for (int subRgnIdx = 0; subRgnIdx < regions.size(); subRgnIdx++) {
-                    String baseName = (subRgnIdx == 0) 
-                        ? state.getName() 
-                        : state.getName() + "Rgn" + subRgnIdx;
-                    System.out.println(makeIndent(indent) + 
-                        "self." + baseName + "Hsm = self._" + baseName + "Hsm(self, self.parent)");
-                    try {
-                        m_writer.write(Utils.get(
-                            m_stxCsv.get(indent, "region", "name"),
-                            baseName + "Hsm",       // name
-                            m_iClass.getName(),     // type
-                            baseName + "Hsm",       // container
-                            "",                     // value
-                            rgnDefinition,          // modifier/description
-                            m_stmRoot.getName()     // scope
-                        ));
-                        result.append(Utils.get(
-                            m_stxCsv.get(indent, "region", "ext1st"),
-                            baseName + "Hsm",       // name
-                            m_iClass.getName(),     // type
-                            baseName + "Hsm",       // container
-                            "",                     // value
-                            rgnDefinition,          // modifier/description
-                            m_stmRoot.getName()     // scope
-                        ));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-
-        // 3. Handle submachine states
-        for (Vertex vertex : rgnVertices) {
-            if (vertex instanceof State) {
-                State state = (State) vertex;
-                StateMachine subStm = state.getSubmachine();
-                if (subStm != null) {
-                    String subStmName = subStm.getName();
-                    // Determine the parent region Hsm name for this submachine
-                    String targetMachineName = findTargetMachineName(rgnName, m_stmRoot, state);
-                    if (targetMachineName == null) {
-                        targetMachineName = rgnName + "Hsm";
-                    }
-                    System.out.println(makeIndent(indent) + 
-                        "self." + state.getName() + "Hsm = " 
-                        + subStmName + "(self, self." + targetMachineName + ")");
-                    try {
-                        m_writer.write(Utils.get(
-                            m_stxCsv.get(indent, "substm", "name"),
-                            state.getName() + "Hsm",    // name
-                            m_iClass.getName(),         // type
-                            subStmName,                 // container (sub-machine class name)
-                            "",                         // value
-                            targetMachineName,          // modifier (parent region Hsm)
-                            rgnDefinition,              // description
-                            m_stmRoot.getName()         // scope
-                        ));
-                        result.append(Utils.get(
-                            m_stxCsv.get(indent, "substm", "ext1st"),
-                            state.getName() + "Hsm",    // name
-                            m_iClass.getName(),         // type
-                            subStmName,                 // container
-                            "",                         // value
-                            targetMachineName,          // modifier
-                            rgnDefinition,              // description
-                            m_stmRoot.getName()         // scope
-                        ));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-
-        indent--;
-        return result.toString();
+    private boolean isInitialPseudostate(Pseudostate iPst) {
+    	return iPst.getKind() == PseudostateKind.INITIAL_LITERAL;
     }
-    
     
     /**
-     * TraverseTransition
-     * @param stmRoot
-     * @param rgnName
-     * @param vertices
-     * @param transition
+     * Extract the guard condition text for a Transition.
      */
-    private void TraverseTransition(StateMachine stmRoot, String rgnName, List<Vertex> vertices, Transition transition) {
-        // Get the target vertex of the transition
-        Vertex target = transition.getTarget();
-        if (target == null) {
-            return; // Nothing to process if there is no target
-        }
-
-        // Case 1: target is a State
-        if (target instanceof State) {
-            State state = (State) target;
-            // If the state is composite (has subregions), recursively process its regions
-            if (!state.getRegions().isEmpty()) {
-                for (Region region : state.getRegions()) {
-                    // Recursively traverse transitions within this subregion
-                    for (Transition subTrans : region.getTransitions()) {
-                        TraverseTransition(stmRoot, region.getName(), region.getSubvertices(), subTrans);
-                    }
-                }
-            }
-            // If the state is simple (no regions), no further recursion is needed
-        }
-        // Case 2: target is a Pseudostate
-        else if (target instanceof Pseudostate) {
-            Pseudostate ps = (Pseudostate) target;
-            PseudostateKind kind = ps.getKind();
-            // For choice or junction pseudostates (and others), follow all outgoing transitions
-            for (Transition outgoing : ps.getOutgoings()) {
-                TraverseTransition(stmRoot, rgnName, vertices, outgoing);
-            }
-        }
-        // Other target types (e.g. final states) can be ignored or handled as needed
+    private String getGuard(Transition trans) {
+    	return getGuardText(trans);
     }
-    
- // Public-facing method — matches existing 3-argument call
-    private String findTargetMachineName(String currentRegionName, StateMachine rootStm, State targetState) {
-        if (rootStm.getRegions().isEmpty()) return null;
-        List<Vertex> topLevelVertices = rootStm.getRegions().get(0).getSubvertices();
-        return findTargetMachineNameRecursive(currentRegionName, topLevelVertices, targetState, null);
-    }
-
-    // Internal recursive helper
-    private String findTargetMachineNameRecursive(String currentRegionName, List<Vertex> vertices, State targetState, State parentState) {
-        for (Vertex v : vertices) {
-            if (v instanceof State) {
-                State state = (State) v;
-                if (state.equals(targetState)) {
-                    return currentRegionName + "Hsm";
-                }
-                if (state.getSubmachine() != null) {
-                    for (Region subRegion : state.getSubmachine().getRegions()) {
-                        String result = findTargetMachineNameRecursive(
-                            state.getName() + "@" + state.getSubmachine().getName(),
-                            subRegion.getSubvertices(),
-                            targetState,
-                            state
-                        );
-                        if (result != null) return result;
-                    }
-                }
-                if (state.isComposite()) {
-                    List<Region> regions = state.getRegions();
-                    for (int i = 0; i < regions.size(); i++) {
-                        Region region = regions.get(i);
-                        String regionPrefix = (i == 0)
-                            ? state.getName()
-                            : state.getName() + "Rgn" + i;
-                        for (Vertex subV : region.getSubvertices()) {
-                            if (subV.equals(targetState)) {
-                                return regionPrefix + "Hsm";
-                            }
-                        }
-                        String result = findTargetMachineNameRecursive(regionPrefix, region.getSubvertices(), targetState, state);
-                        if (result != null) return result;
-                    }
-                }
-            }
-        }
-        return null;
-    }
-    
-    private void printTransition(StateMachine stmRoot, String rgnName, List<Vertex> vertices, Transition transition) throws Exception {
-        // Get source and target of the transition
-        Vertex src = transition.getSource();
-        Vertex tgt = transition.getTarget();
-
-        // Handle triggers (use the Event name as condition)
-        for (Trigger trigger : transition.getTriggers()) {
-            Event event = trigger.getEvent();
-            if (event != null) {
-                String eventName = event.getName();
-                if (eventName != null && !eventName.isEmpty()) {
-                    try {
-                        // Write a transition line for this event (first trigger)
-                        m_writer.write(Utils.get(
-                            m_stxCsv.get(indent, "transition", "ext1st"),
-                            eventName,          // name (the event name)
-                            "",                 // type (class name, if any; left blank here)
-                            rgnName,            // container (region or state name)
-                            "",                 // value
-                            "",                 // modifier
-                            "",                 // description
-                            stmRoot.getName()   // scope (state machine name)
-                        ));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    // (If multiple triggers exist, you could loop and use "extnxt" for subsequent triggers)
-                    break; // only use the first trigger as condition
-                }
-            }
-        }
-
-        // Handle guard condition (if present)
-        Constraint guard = transition.getGuard();
-        if (guard != null) {
+    private String getGuardText(Transition trans) {
+        String guardText = "";
+        Constraint guard = trans.getGuard();
+        if (guard != null && guard.getSpecification() != null) {
             ValueSpecification spec = guard.getSpecification();
             if (spec instanceof OpaqueExpression) {
                 OpaqueExpression expr = (OpaqueExpression) spec;
                 if (!expr.getBodies().isEmpty()) {
-                    String guardCondition = expr.getBodies().get(0);
-                    if (guardCondition != null && !guardCondition.isEmpty()) {
-                        try {
-                            // Write a branch line for the guard condition
-                            m_writer.write(Utils.get(
-                                m_stxCsv.get(indent, "branch", "ext1st"),
-                                guardCondition,  // name (guard text)
-                                "",              // type
-                                "",              // container
-                                guardCondition,  // value (guard text again)
-                                "",              // modifier
-                                "",              // description
-                                stmRoot.getName()// scope
-                            ));
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
+                    guardText = expr.getBodies().get(0);
+                }
+            } else {
+                // For simplicity, handle LiteralString or other specifications
+                try {
+                    guardText = spec.stringValue();
+                } catch (Exception e) {
+                    guardText = "";
                 }
             }
         }
-
-        // Handle effect actions (if present)
-        Behavior effect = transition.getEffect();
-        if (effect instanceof OpaqueBehavior) {
-            OpaqueBehavior ob = (OpaqueBehavior) effect;
-            List<String> bodies = ob.getBodies();
-            if (!bodies.isEmpty()) {
-                String action = bodies.get(0);
-                if (action != null && !action.isEmpty()) {
-                    // Determine target state name for the action (if target is a State or Pseudostate)
-                    String targetName = (tgt instanceof NamedElement) ? ((NamedElement) tgt).getName() : "";
-                    try {
-                        // Write a transition action (begin) line
-                        m_writer.write(Utils.get(
-                            m_stxCsv.get(indent, "trans_action", "begin"),
-                            targetName,      // name (target state name)
-                            "",              // type
-                            rgnName,         // container
-                            "",              // value
-                            action,          // modifier (use action text)
-                            "",              // description
-                            stmRoot.getName()// scope
-                        ));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
+        return guardText.trim();
     }
     
+    /**
+     * 
+     * @param stm
+     * @return
+     */
+    private Collection<Transition> getTransitions(StateMachine stm) {
+    	return stm.getRegions().get(0).getTransitions();
+    }
+    
+    /**
+     * Get internal transitions of a State (those that do not exit the state). 
+     * In UML2, these are transitions with kind == INTERNAL.
+     */
+    private Collection<Transition> getInternalTransitions(State state) {
+        List<Transition> internals = new ArrayList<>();
+        // A state’s internal transitions are not explicitly separated in UML model; 
+        // we identify them as self-transitions with kind INTERNAL
+        for (Transition t : state.getOutgoings()) {
+            if (t.getKind() == TransitionKind.INTERNAL_LITERAL) {
+                internals.add(t);
+            }
+        }
+        return internals;
+    }
+    
+    
+    /**
+     * Extract the event trigger name of a Transition (first trigger's event or trigger name).
+     */
+    private String getEvent(Transition trans) {
+    	return getEventName(trans);
+    }
+    private String getEventName(Transition trans) {
+        String eventName = "";
+        if (!trans.getTriggers().isEmpty()) {
+            Trigger trigger = trans.getTriggers().get(0);
+            Event ev = trigger.getEvent();
+            if (ev != null && ev.getName() != null && !ev.getName().isEmpty()) {
+                // Use event's own name if defined
+                eventName = ev.getName();
+            } else if (ev instanceof SignalEvent) {
+                SignalEvent sigEv = (SignalEvent) ev;
+                if (sigEv.getSignal() != null) {
+                    eventName = sigEv.getSignal().getName();
+                }
+            } else if (ev instanceof CallEvent) {
+                CallEvent callEv = (CallEvent) ev;
+                if (callEv.getOperation() != null) {
+                    eventName = callEv.getOperation().getName();
+                }
+            } 
+            if (eventName.isEmpty() && trigger.getName() != null) {
+                // Fallback to trigger name if event has no name
+                eventName = trigger.getName();
+            }
+        }
+        return eventName.trim();
+    }
+    
+
+    /**
+     * Extract the effect action text for a Transition.
+     */
+    private String getAction(Transition trans) {
+    	return getActionText(trans);
+    }
+    private String getActionText(Transition trans) {
+        String actionText = "";
+        if (trans.getEffect() instanceof OpaqueBehavior) {
+            OpaqueBehavior effect = (OpaqueBehavior) trans.getEffect();
+            if (effect != null && !effect.getBodies().isEmpty()) {
+                actionText = effect.getBodies().get(0);
+            }
+        }
+        // If the effect is another kind of behavior, we could handle accordingly (not needed if not present).
+        return actionText.trim();
+    }
+
+    /**
+     * getEntry
+     * @param iState
+     * @return
+     */
+    private String getEntry(State iState) {
+        String actionText = "";
+        if (iState.getEntry() instanceof OpaqueBehavior) {
+            OpaqueBehavior effect = (OpaqueBehavior) iState.getEntry();
+            if (effect != null && !effect.getBodies().isEmpty()) {
+                actionText = effect.getBodies().get(0);
+            }
+        }
+        // If the effect is another kind of behavior, we could handle accordingly (not needed if not present).
+        return actionText.trim();
+    }
+
+    /**
+     * getExit
+     * @param iState
+     * @return
+     */
+    private String getExit(State iState) {
+        String actionText = "";
+        if (iState.getExit() instanceof OpaqueBehavior) {
+            OpaqueBehavior effect = (OpaqueBehavior) iState.getExit();
+            if (effect != null && !effect.getBodies().isEmpty()) {
+                actionText = effect.getBodies().get(0);
+            }
+        }
+        // If the effect is another kind of behavior, we could handle accordingly (not needed if not present).
+        return actionText.trim();
+    }
+    
+    
+    /**
+     * getStateMachineDiagram
+     * @param stm
+     * @return
+     */
     private Region getStateMachineDiagram(StateMachine stm) {
         Iterator<EObject> contents = stm.eAllContents();
         while (contents.hasNext()) {
@@ -1473,6 +494,2628 @@ public class RStmGenerator extends TBaseGenerator {
         }
         return null;
     }    
-    // ... Additional code for printing transitions and states (printTransition, TraverseTransition, etc.), 
-    // converting Astah API calls to UML2 as shown above.
+    
+    /** 
+     * Determine if a given state machine is used as a submachine within a collection of vertices 
+     */
+    private boolean m_bResult = false;
+    private boolean isSubmachineOf(StateMachine subStm, Collection<Vertex> vertices) {
+        m_bResult = false;
+        // Traverse through states to see if any submachine reference matches subStm
+        new StateDeepTraverser() {
+            protected void checkState(State state, State container, int rgnIndex) {
+                if (state.getSubmachine() != null) {
+                    if (state.getSubmachine() == subStm) {
+                        m_bResult = true;
+                    } else {
+                        // Recurse into submachine’s top-level vertices
+                        StateMachine nestedStm = state.getSubmachine();
+                        if (isSubmachineOf(subStm, getSubvertexes(nestedStm))) {
+                            m_bResult = true;
+                        }
+                    }
+                }
+            }
+        }.start(vertices);
+        return m_bResult;
+    }
+    
+	/**
+	 * findTargetMachineName
+	 * @param iStm
+	 * @param targetState
+	 * @return null if not found
+	 *         state machine name if targetVertex is in top levels
+	 *         containing region name in other cases
+	 */
+	private String findTargetMachineName(String rgnName, Collection<Vertex> iVertices, Vertex targetVertex, StringBuilder targetRgnName) {
+		class ContainingRegionFinder extends StateDeepTraverser {
+			public State m_containingState = null;
+			public int	m_containingRgnIndex = 0;
+			public boolean m_found = false;
+			private Vertex m_targetVertex = targetVertex;
+			private Stack<State> regionStateStack = new Stack<State>();
+			private Stack<Integer> regionIndexStack = new Stack<Integer>();
+			protected void checkPseudostate(Pseudostate iPseudostate, State container, int rgnIndex) {
+				if (m_targetVertex == iPseudostate) {
+					m_found = true;					
+				}
+			}
+			protected void checkRegionBfr(State iState, int subRgnIndex, State container, int rgnIndex) {
+				if (!m_found) {
+					m_containingState = iState;
+					m_containingRgnIndex = subRgnIndex;
+					regionStateStack.push(iState);
+					regionIndexStack.push(subRgnIndex);
+				}
+			}
+			protected void checkRegion(State iState, int subRgnIndex, State container, int rgnIndex) {
+				if (!m_found) {
+					regionStateStack.pop();
+					regionIndexStack.pop();
+					if (regionStateStack.size() > 0) {
+						m_containingState = regionStateStack.peek();
+						m_containingRgnIndex = regionIndexStack.peek();
+					} else {
+						m_containingState = null;
+						m_containingRgnIndex = 0;						
+					}
+				}
+			}
+			protected void checkState(State iState, State container, int rgnIndex) {
+				if (iState.isSubmachineState()) {
+					for (Vertex subVertex: getSubvertexes(iState)) {
+						if (m_targetVertex == subVertex) {
+							m_found = true;
+							return;
+						}
+					}
+				}				
+				if (m_targetVertex == iState) {
+					m_found = true;
+				}
+			}
+			public ContainingRegionFinder() {
+				super();
+			}
+		}
+		ContainingRegionFinder containingRegion = new ContainingRegionFinder();
+		containingRegion.start(iVertices);
+		String targetMachine;
+		if (!containingRegion.m_found) {
+			targetMachine = null;
+		} else if (containingRegion.m_containingState == null) {	// containing region nor sub-machine not found
+			targetMachine = rgnName + "Hsm";
+			if (targetRgnName != null) {
+				targetRgnName.append(rgnName);
+			}
+		} else {
+			if (containingRegion.m_containingRgnIndex == 0) {	// sub-machine
+				targetMachine = containingRegion.m_containingState.getName() + "@" + containingRegion.m_containingState.getSubmachine().getName();
+				if (targetRgnName != null) {
+					targetRgnName.append(targetMachine);
+				}
+			} else {
+				targetMachine = makeRgnName(containingRegion.m_containingState, containingRegion.m_containingRgnIndex) + "Hsm";
+				if (targetRgnName != null) {
+					targetRgnName.append(makeRgnName(containingRegion.m_containingState, containingRegion.m_containingRgnIndex));
+				}
+			}
+		}
+		return targetMachine;
+	}
+	
+	/**
+	 * printTransition
+	 * @param iTrans
+	 */
+	private void printTransition(StateMachine stmRoot, String rgnName, Collection<Vertex> iVertices, Transition iTrans) {
+		// ■ branch.name
+		// ■ branch.ext1st
+		// ■ branch.extnxt
+		// ■ branch.begin
+		// ■ branch.end
+		// if target is State
+		if (iTrans.getTarget() instanceof State) {
+			
+			// if has Guard
+			if (!getGuardText(iTrans).isEmpty()) {
+				// print If Guard
+				System.out.println(makeIndent(indent) + (getGuardText(iTrans).equalsIgnoreCase("else") ? "else:" : ("if " + getGuardText(iTrans) + ":")));
+				try {
+					if (getGuardText(iTrans).equalsIgnoreCase("else")) {
+						m_writer.write(Utils.get(m_stxCsv.get(indent, "branch", "begin"), 
+							getGuardText(iTrans),				// name 
+							m_iClass.getName(), 				// type
+							"", 								// container
+							getGuardText(iTrans),		 		// value
+							collectActions(indent, getActionText(iTrans)),// modifier
+							"",									// description 
+							getStateMachineDiagram(stmRoot).getName()// scope
+						));
+					} else {
+						m_writer.write(Utils.get(m_stxCsv.get(indent, "branch", "ext1st"), 
+							getGuardText(iTrans),					// name 
+							m_iClass.getName(), 				// type
+							"", 								// container
+							getGuardText(iTrans),		 			// value
+							collectActions(indent, getActionText(iTrans)),// modifier
+							"",									// description 
+							getStateMachineDiagram(stmRoot).getName()// scope
+						));
+					}
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				indent++;
+				TraverseTransition(stmRoot, rgnName, iVertices, iTrans);
+				indent--;
+			} else {// else (does have Guard)
+				TraverseTransition(stmRoot, rgnName, iVertices, iTrans);
+			}
+		} else {// else (target is not State)
+			// if has Guard
+			if (!getGuardText(iTrans).isEmpty()) {
+				// print If Guard
+				System.out.println(makeIndent(indent) + (getGuardText(iTrans).equalsIgnoreCase("else") ? "else:" : ("if " + getGuardText(iTrans) + ":")));
+				try {
+					if (getGuardText(iTrans).equalsIgnoreCase("else")) {
+						m_writer.write(Utils.get(m_stxCsv.get(indent, "branch", "begin"), 
+							getGuard(iTrans),					// name 
+							m_iClass.getName(), 				// type
+							"", 								// container
+							getGuard(iTrans),		 			// value
+							collectActions(indent, getAction(iTrans)),// modifier
+							"",									// description 
+							getStateMachineDiagram(stmRoot).getName()// scope
+						));
+					} else {
+						m_writer.write(Utils.get(m_stxCsv.get(indent, "branch", "ext1st"), 
+							getGuard(iTrans),					// name 
+							m_iClass.getName(), 				// type
+							"", 								// container
+							getGuard(iTrans),		 			// value
+							collectActions(indent, getAction(iTrans)),// modifier
+							"",									// description 
+							getStateMachineDiagram(stmRoot).getName()// scope
+						));
+					}
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				indent++;
+				// print Action if have
+				if (!getAction(iTrans).trim().isEmpty()) {
+					System.out.println(makeIndent(indent) + getAction(iTrans).trim());
+					try {
+						String actions = collectActions(indent, getAction(iTrans).trim());
+						System.out.println(actions);
+						m_writer.write(actions);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+				}
+
+				TraverseTransition(stmRoot, rgnName, iVertices, iTrans);
+				indent--;
+			} else {// else (does have Guard)
+				// print Action if have
+				if (!getAction(iTrans).trim().isEmpty()) {
+					System.out.println(makeIndent(indent) + getAction(iTrans).trim());
+					try {
+						String actions = collectActions(indent, getAction(iTrans).trim());
+						System.out.println(actions);
+						m_writer.write(actions);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				TraverseTransition(stmRoot, rgnName, iVertices, iTrans);
+			}
+		}
+	}
+    
+	/**
+	 * TransitionTo
+	 * @param iTrans
+	 * @param targetStateName
+	 * @param stmRoot
+	 * @param rgnName
+	 */
+	private void TransitionTo(Transition iTrans, String targetStateName, StateMachine stmRoot, String rgnName) {
+		Vertex iTgtVtx = iTrans.getTarget();
+		String targetMachineName = findTargetMachineName(stmRoot.getName(), getSubvertexes(stmRoot), iTgtVtx, null);
+		// if target belongs to this region: print curState -> targetState
+		// if target belongs to other region: print targetMachine.curState -> targetState
+		// print BgnTrans
+		
+		/**
+		 * ▲ trans_action.name
+		 * [->][nAME]Params* e = ( [nAME]Params* )pEventParams;
+		 * ▲ trans_action.ext1st
+		 * [->][nAME]
+		 * ▲ trans_action.extnxt
+		 * [->][nAME]
+		 * ■ trans_action.begin
+		 * [->][Scope]_BgnTrans( p[tYPE], pStm, [sCOPE]_[nAME] );
+		 * [mODIFIER][->][Scope]_EndTrans( p[tYPE], pStm );
+		 * [->]bResult = TRUE;
+		 * ▲ trans_action.end
+		 * [->]bResult = TRUE;
+		 */		
+		if (targetMachineName != null && targetMachineName.equals(rgnName + "Hsm")) {
+			/**
+			 * Sample:
+			 * Stm_BgnTrans( pClass, pStm, STM_TARGET_STATE )
+			 * Stm_EndTrans( pClass, pStm );
+			 */			
+			String targetMachineRef = "self";
+			// Check if transition is local or external
+			if (checkIfExternalTrans(iTrans)) {
+				System.out.println(makeIndent(indent) + targetMachineRef + ".isExternalTrans = True");
+				try {
+					m_writer.write(Utils.get(m_stxCsv.get(indent, "state_action", "ext1st"), ""));
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			// print BgnTrans
+			System.out.println(makeIndent(indent) + targetMachineRef + ".BgnTrans(" + getStateMachineDiagram(stmRoot).getName() + "." + targetStateName + ")");
+			// print Action if have
+			if (!getAction(iTrans).trim().isEmpty()) {
+				System.out.println(makeIndent(indent) + getAction(iTrans).trim());
+			}
+			// print EndTrans
+			System.out.println(makeIndent(indent) + targetMachineRef + ".EndTrans()");			
+			try {
+				if (m_bIsInternalTrans == false) {
+					m_writer.write(Utils.get(m_stxCsv.get(indent, "trans_action", "begin"),
+						targetStateName,								// name
+						m_iClass.getName(),								// type
+						targetMachineName,								// container
+						"",												// value
+						collectActions(indent, getAction(iTrans)),		// modifier
+						getDefinition(iTrans),							// description
+						getStateMachineDiagram(stmRoot).getName()		// scope
+					));
+				} else {
+					m_writer.write(Utils.get(m_stxCsv.get(indent, "trans_action", "end"),
+						targetStateName,								// name
+						m_iClass.getName(),								// type
+						targetMachineName,								// container
+						"",												// value
+						collectActions(indent, getAction(iTrans)),		// modifier
+						getDefinition(iTrans),							// description
+						getStateMachineDiagram(stmRoot).getName()		// scope
+					));
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		} else {
+			/**
+			 * ▲ substm.begin
+			 */
+			String targetMachineRef = "self.main." + targetMachineName;
+			System.out.println(makeIndent(indent) + targetMachineRef + "Hsm.Initiate(" + getStateMachineDiagram(stmRoot).getName() + "." + targetStateName + ")");
+			try {
+				m_writer.write(Utils.get(m_stxCsv.get(indent, "region", "begin"),
+					targetStateName,								// name
+					m_iClass.getName(),								// type
+					targetMachineName,								// container
+					"",												// value
+					targetMachineName,								// modifier
+					getDefinition(iTrans),							// description
+					getStateMachineDiagram(stmRoot).getName()		// scope
+				));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}		
+	}
+	/**
+	 * TraverseTransition
+	 * @param iTrans
+	 */
+	private void TraverseTransition(StateMachine stmRoot, String rgnName, Collection<Vertex> iVertices, Transition iTrans) {
+		Vertex iTgtVtx = iTrans.getTarget();
+		if (iTgtVtx != null) {
+			if (iTgtVtx instanceof Pseudostate) {				
+				Pseudostate iPstate = (Pseudostate)iTgtVtx;
+				Collection<Transition> outgoings = iTgtVtx.getOutgoings();
+				// check if external transition or local transition
+				if (isChoicePseudostate(iPstate)) {
+					if (outgoings.size() == 2) {
+						Transition ifChoice, elseChoice;
+						if (getGuard(toArray(outgoings)[0]).equalsIgnoreCase("else")) {
+							ifChoice = toArray(outgoings)[1];
+							elseChoice = toArray(outgoings)[0];
+						} else if (getGuard(toArray(outgoings)[1]).equalsIgnoreCase("else")) {
+							ifChoice = toArray(outgoings)[0];
+							elseChoice = toArray(outgoings)[1];
+						} else {
+							ifChoice = null;
+							elseChoice = null;
+						}
+						if (ifChoice != null && elseChoice != null) {
+							// print if
+							printTransition(stmRoot, rgnName, iVertices, ifChoice);
+							// print else
+							printTransition(stmRoot, rgnName, iVertices, elseChoice);
+							// print end-if
+							System.out.println(makeIndent(indent) + "# end if");
+							try {
+								m_writer.write(Utils.get(m_stxCsv.get(indent, "branch", "end"), 
+									getGuard(iTrans),					// name 
+									m_iClass.getName(), 				// type
+									"", 								// container
+									getGuard(iTrans),		 			// value
+									collectActions(indent, getAction(iTrans)),// modifier
+									"",									// description 
+									getStateMachineDiagram(stmRoot).getName()// scope
+								));
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+					} else if (outgoings.size() == 1) {
+						Transition ifChoice = toArray(outgoings)[0];
+						if (ifChoice != null) {
+							// print if
+							printTransition(stmRoot, rgnName, iVertices, ifChoice);
+							// print end-if
+							System.out.println(makeIndent(indent) + "# end if");
+							try {
+								m_writer.write(Utils.get(m_stxCsv.get(indent, "branch", "end"), 
+									getGuard(iTrans),					// name 
+									m_iClass.getName(), 				// type
+									"", 								// container
+									getGuard(iTrans),		 			// value
+									collectActions(indent, getAction(iTrans)),// modifier
+									"",									// description 
+									getStateMachineDiagram(stmRoot).getName()// scope
+								));
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+					} else {
+						System.out.println("★★★ERROR★★★: Choice cannot have more than 2 outgoings");						
+					}
+				}else if (isJunctionPseudostate(iPstate)) {
+					// traverse junction's outgoing
+					if (outgoings.size() == 1) {
+						printTransition(stmRoot, rgnName, iVertices, toArray(outgoings)[0]);
+					} else {
+						System.out.println("★★★ERROR★★★: Junction must have only one outgoing");
+					}
+				}else if (isDeepHistoryPseudostate(iPstate) || isShallowHistoryPseudostate(iPstate)) {
+					// print curState -> shallowHistName & thisMachine's bit mask
+					// if other regions existed: print targetRegion.pseudoState -> shallowHistName
+					System.out.println(makeIndent(indent) + "if self.main." + iPstate.getName() + " != 0:");
+					StringBuilder containingRgn = new StringBuilder();
+					String targetHsm = findTargetMachineName(stmRoot.getName(), getSubvertexes(stmRoot), iPstate, containingRgn);
+					indent++;
+					System.out.println(makeIndent(indent) + "self.lastEnteredStateRecovering = True");
+					String targetStateName = iTgtVtx.getName();
+					// print BgnTrans
+					System.out.println(makeIndent(indent)  + "self.BgnTrans(self.main." + targetStateName + ")");
+					// print Action if have
+					if (!getAction(iTrans).trim().isEmpty()) {
+						System.out.println(makeIndent(indent) + getAction(iTrans).trim());
+					}
+					// print EndTrans
+					System.out.println(makeIndent(indent) + "self.EndTrans()");									
+					indent--;
+					StringWriter tempWriter = new StringWriter();
+					Writer originalWriter = m_writer;  // Save the original FileWriter
+					m_writer = tempWriter;					
+					if (iPstate.getOutgoings().size() > 0) {
+						System.out.println(makeIndent(indent) + "else:");
+						indent++;
+						printTransition(stmRoot, rgnName, iVertices, toArray(iPstate.getOutgoings())[0]);
+						indent--;
+					} else {
+						indent++;
+						targetStateName = rgnName;
+						State container = null;
+						if (iTgtVtx.getContainer() != null) {
+							container = (State)iTgtVtx.getContainer();
+							try {
+								if (!Arrays.asList(getSubvertexes(container, 0)).contains(iTgtVtx)) {	// the pseudo-state belong to a region top
+									container = null;
+								}
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+						if (container != null) {
+							targetStateName = container.getName();
+						}
+						TransitionTo(iTrans, targetStateName, stmRoot, rgnName);
+						indent--;
+					}
+					m_writer = originalWriter;
+					
+					// ■ history.begin
+					// ■ deep_hist.begin
+					// [->]if( pStm->[nAME] != STATE_UNDEF ){
+					// [->]    [Scope]_BgnTrans( p[tYPE], pStm, pStm->[nAME] );
+					// [mODIFIER][->]    [Scope]_EndTrans( p[tYPE], pStm );
+					// [->]    bResult = TRUE;
+					// [->]    break;
+					// [->]}else{
+					// [vALUE][->]}
+
+					try {
+						String syntax = isShallowHistoryPseudostate(iPstate) ? m_stxCsv.get(indent, "history", "begin"): m_stxCsv.get(indent, "deep_hist", "begin");
+						m_writer.write(Utils.get(syntax, 
+							iPstate.getName(),					// name 
+							m_iClass.getName(), 				// type
+							targetHsm,							// container
+							tempWriter.toString(),	 			// value
+							collectActions(indent, getAction(iTrans).trim()),// modifier
+							"",									// description 
+							getStateMachineDiagram(stmRoot).getName()// scope
+						));
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}					
+				}else if (isEntryPointPseudostate(iPstate)) {
+					// if target's container does not have sub-machine: throws error
+					// else: print subMachine.pseudoState -> entryPoint state
+					// if target belongs to this region: print curState -> entryPt's container
+					// if target belongs to other region: print targetMachine.curState -> entryPt's container
+					State targetState = (State)iPstate.getContainer();
+					String targetMachineName = findTargetMachineName(stmRoot.getName(), getSubvertexes(stmRoot), targetState, null);
+					String targetMachineRef;
+					if (targetMachineName.equals(rgnName + "Hsm")) {
+						targetMachineRef = "self";
+					} else {
+						targetMachineRef = "self.main." + targetMachineName;
+					}
+					// print BgnTrans
+					System.out.println(makeIndent(indent) + targetMachineRef + ".BgnTrans(" + getStateMachineDiagram(stmRoot).getName() + "." + targetState.getName() + ")");
+					// print Action if have
+					State container = (State)iPstate.getContainer();
+					System.out.println(makeIndent(indent) + "self.main." + targetState + "Hsm.Initiate(self.lastEnteredStateRecovering, _" + container.getSubmachine().getName() + "Hsm." + iPstate.getName() + ")");
+					if (!getAction(iTrans).trim().isEmpty()) {
+						System.out.println(makeIndent(indent) + getAction(iTrans).trim());
+					}
+					System.out.println(makeIndent(indent) + targetMachineRef + ".EndTrans()");
+					String actions = "";
+					try {
+						actions = collectActions(indent, getAction(iTrans));
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					try {						
+						actions += Utils.get(m_stxCsv.get(indent, "substm", "begin"), 
+							iPstate.getName(),							// name 
+							m_iClass.getName(), 						// type
+							getStateMachineDiagram(container.getSubmachine()).getName(),// container
+							"",											// value
+							targetState.getName() + "Hsm",						// modifier
+							"",											// description 
+							getStateMachineDiagram(stmRoot).getName()	// scope
+						);
+						m_writer.write(actions);
+						/*
+						m_writer.write(Utils.get(m_stxCsv.get(indent, "trans_action", "begin"),
+							targetState.getName(),							// name
+							m_iClass.getName(),								// type
+							targetMachineName,								// container
+							"",												// value
+							actions,								// modifier
+							getDefinition(iTrans),							// description
+							getStateMachineDiagram(stmRoot).getName()		// scope
+						));
+						*/
+						TransitionTo(iTrans, targetState.getName(), stmRoot, targetMachineName);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}else if (isExitPointPseudostate(iPstate)) {
+					// if parentMachine is existed: print parentMachine.pseudoState -> exitPoint state
+					String targetMachineName = stmRoot.getName() + "Hsm";
+					String targetMachineRef;
+					if (targetMachineName.equals(rgnName + "Hsm")) {
+						targetMachineRef = "self";
+					} else {
+						targetMachineRef = "self.main." + targetMachineName;
+					}
+					// print BgnTrans
+					System.out.println(makeIndent(indent) + targetMachineRef + ".BgnTrans(" + getStateMachineDiagram(stmRoot).getName() + "." + stmRoot.getName() + ")");
+					// print Action if have
+					System.out.println(makeIndent(indent) + "self.parent.pseudoState = " + getStateMachineDiagram(stmRoot).getName() + "." + iPstate.getName());
+					if (!getAction(iTrans).trim().isEmpty()) {
+						System.out.println(makeIndent(indent) + getAction(iTrans).trim());
+					}
+					System.out.println(makeIndent(indent) + targetMachineRef + ".EndTrans()");
+					String actions = "";
+					try {
+						actions = collectActions(indent, getAction(iTrans));
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					try {						
+						actions += Utils.get(m_stxCsv.get(indent, "substm", "end"), 
+							iPstate.getName(),							// name 
+							m_iClass.getName(), 						// type
+							targetMachineName,							// container
+							"",											// value
+							"",											// modifier
+							"",											// description 
+							getStateMachineDiagram(stmRoot).getName()	// scope
+						);
+						m_writer.write(Utils.get(m_stxCsv.get(indent, "trans_action", "begin"),
+							stmRoot.getName(),							// name
+							m_iClass.getName(),							// type
+							targetMachineName,							// container
+							"",											// value
+							actions,									// modifier
+							getDefinition(iTrans),						// description
+							getStateMachineDiagram(stmRoot).getName()	// scope
+						));
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}else if (isForkPseudostate(iPstate)) {
+					// traverse all outgoings
+					System.out.println(makeIndent(indent) + "# begin forking");
+					// find out-going direct to state belonging to the machine same as the origin
+					Transition mainTrans = null;
+					for (Transition outgoing: outgoings) {
+						String sourceMachineName = findTargetMachineName(stmRoot.getName(), getSubvertexes(stmRoot), m_originTrans.getSource(), null);
+						String targetMachineName = findTargetMachineName(stmRoot.getName(), getSubvertexes(stmRoot), outgoing.getTarget(), null);
+						if (sourceMachineName.equals(targetMachineName)) {
+							mainTrans = outgoing;
+							break;
+						}
+					}
+					if (checkIfExternalTrans(mainTrans)) {
+						System.out.println(makeIndent(indent) + "self.isExternalTrans = True");
+						try {
+							m_writer.write(Utils.get(m_stxCsv.get(indent, "state_action", "ext1st"), ""));
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					System.out.println(makeIndent(indent) + "self.BgnTrans(" + getStateMachineDiagram(stmRoot).getName() + "." + mainTrans.getTarget().getName() + ")");
+					
+					StringWriter tempWriter = new StringWriter();
+					Writer originalWriter = m_writer;  // Save the original FileWriter
+					m_writer = tempWriter;
+					
+					for (Transition outgoing: outgoings) {
+						if (outgoing != mainTrans) {
+							printTransition(stmRoot, rgnName, iVertices, outgoing);
+						}
+					}
+					m_writer = originalWriter;					
+					
+					System.out.println(makeIndent(indent) + "self.EndTrans()");
+					System.out.println(makeIndent(indent) + "# end forking");
+					String actions = "";
+					try {
+						actions = collectActions(indent, getAction(iTrans));
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					try {
+						actions += tempWriter;
+						m_writer.write(Utils.get(m_stxCsv.get(indent, "trans_action", "begin"),
+							mainTrans.getTarget().getName(),				// name
+							m_iClass.getName(),								// type
+							rgnName + "Hsm",								// container
+							"",												// value
+							actions,										// modifier
+							getDefinition(iTrans),							// description
+							getStateMachineDiagram(stmRoot).getName()		// scope
+						));
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}else if (isJoinPseudostate(iPstate)) {
+					// if joint bar belongs to this machine: print isIn(..) from other incoming transitions.
+					System.out.println(makeIndent(indent) + "# begin joining");
+					boolean firstRound = true;
+					String isInConditions = "";
+					for (Transition incoming: iPstate.getIncomings()) {
+						if (incoming != iTrans) {
+							if (incoming.getSource() instanceof State && getEvent(incoming).trim().isEmpty()) {
+								State sourceState = (State)incoming.getSource();
+								StringBuilder containingRgn = new StringBuilder();
+								String targetMachineName = findTargetMachineName(stmRoot.getName(), getVertexes(stmRoot), sourceState, containingRgn);
+								String targetMachineRef;
+								if (targetMachineName.equals(rgnName + "Hsm")) {
+									targetMachineRef = "self";
+								} else {
+									targetMachineRef = "self.main." + targetMachineName;
+								}
+								if (firstRound) {
+									System.out.println(makeIndent(indent) + "if IsIn(" + targetMachineRef + ".currentState," + getStateMachineDiagram(stmRoot).getName() + "." + sourceState + ")\\");
+									try {
+										// [cONTAINER]_IsIn( &( ( [sCOPE]* )pStm->pMain )->[mODIFIER], [sCOPE]_[vALUE] )
+										isInConditions = Utils.get(m_stxCsv.get(indent, "trans_action", "ext1st"),
+											sourceState.getName(),							// name
+											m_iClass.getName(),								// type
+											targetMachineName,								// container
+											sourceState.getName(),							// value
+											targetMachineName,								// modifier
+											getDefinition(iTrans),							// description
+											getStateMachineDiagram(stmRoot).getName()		// scope
+										);
+									} catch (Exception e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+									firstRound = false;
+								} else {
+									System.out.println(makeIndent(indent) + " and IsIn(" + targetMachineRef + ".currentState, " + getStateMachineDiagram(stmRoot).getName() + "." + sourceState + ")\\");
+									try {
+										// [cONTAINER]_IsIn( &( ( [sCOPE]* )pStm->pMain )->[mODIFIER], [sCOPE]_[vALUE] )
+										isInConditions += Utils.get(m_stxCsv.get(indent, "trans_action", "extnxt"),
+											sourceState.getName(),							// name
+											m_iClass.getName(),								// type
+											targetMachineName,								// container
+											sourceState.getName(),							// value
+											targetMachineName,								// modifier
+											getDefinition(iTrans),							// description
+											getStateMachineDiagram(stmRoot).getName()		// scope
+										);
+									} catch (Exception e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+								}
+							} else {
+								System.out.println("★★★ERROR★★★: Joining from other regions cannot have event name");
+							}
+						}						
+					}					
+					if (outgoings.size() == 1) {
+						System.out.println(makeIndent(indent) + ":");
+						try {
+							m_writer.write(Utils.get(m_stxCsv.get(indent, "branch", "ext1st"), 
+								isInConditions,						// name 
+								m_iClass.getName(), 				// type
+								"", 								// container
+								isInConditions,			 			// value
+								collectActions(indent, getAction(iTrans)),// modifier
+								"",									// description 
+								getStateMachineDiagram(stmRoot).getName()// scope
+							));
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						indent++;
+						printTransition(stmRoot, rgnName, iVertices, toArray(outgoings)[0]);
+						indent--;
+						if (iTrans.getSource() instanceof Pseudostate && isChoicePseudostate(((Pseudostate)iTrans.getSource())) && getGuard(iTrans).trim().isEmpty()) {
+							//   ─◇ ─[empty]→┃▎
+							//   └──[else]→
+						} else {
+							try {
+								m_writer.write(Utils.get(m_stxCsv.get(indent, "branch", "end"), 
+									isInConditions,						// name 
+									m_iClass.getName(), 				// type
+									"", 								// container
+									isInConditions,			 			// value
+									collectActions(indent, getAction(iTrans)),// modifier
+									"",									// description 
+									getStateMachineDiagram(stmRoot).getName()// scope
+								));
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+					} else {
+						System.out.println("★★★ERROR★★★");
+					}
+					System.out.println(makeIndent(indent) + "# end joining");
+				}else if (isInitialPseudostate(iPstate)) {
+					// throws error
+					System.out.println("★★★ERROR★★★");
+				}else {
+					// throws error
+					System.out.println("★★★ERROR★★★");
+				}
+			}else if (iTgtVtx instanceof FinalState) {
+				try {
+					String targetStateName = rgnName;
+					State container = null;
+					if (iTgtVtx.getContainer() != null) {
+						container = (State)iTgtVtx.getContainer();
+						if (!Arrays.asList(getSubvertexes(container, 0)).contains(iTgtVtx)) {	// the pseudo-state belong to a region top
+							container = null;
+						}
+					}
+					if (container != null) {
+						targetStateName = container.getName();
+					}
+					
+					// if same level shallowHistory
+					// set it to Zero
+					String containingMachine = findTargetMachineName(rgnName, iVertices, iTgtVtx, null);
+					container = (State)iTgtVtx.getContainer();
+					Vertex shallowHistPt = findShallowHistoryPseudostate(containingMachine == null || container == null ? iVertices : getSubvertexes(container, 0));
+					if (shallowHistPt != null) {
+						System.out.println(makeIndent(indent) + "self.main." + shallowHistPt.getName() + " = 0");
+						// ■ history.end
+						m_writer.write(Utils.get(m_stxCsv.get(indent, "history", "end"), 
+							shallowHistPt.getName(),			// name 
+							m_iClass.getName(), 				// type
+							"", 								// container
+							"",						 			// value
+							"",									// modifier
+							"",									// description 
+							getStateMachineDiagram(stmRoot).getName()// scope
+						));
+					}						
+					TransitionTo(iTrans, targetStateName, stmRoot, rgnName);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}else if(iTgtVtx instanceof State){ 
+				String targetStateName = iTgtVtx.getName();
+				TransitionTo(iTrans, targetStateName, stmRoot, rgnName);
+			} else {
+				System.out.println("★★★ERROR★★★ Not supported target vertex");						
+			}
+		}
+	}
+    
+	
+	/**
+	 * isLeafState
+	 * @param iVertex
+	 * @return
+	 */
+	private boolean isLeafState(Vertex iVertex) {
+		if (iVertex instanceof State) {
+			State iState = (State)iVertex;
+			try {
+				if (!(iState instanceof FinalState)) {
+					if ((getSubvertexes(iState, 0).size() == 0 || iState.isSubmachineState())) {
+						return true;
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		if (iVertex instanceof Pseudostate) {
+			Pseudostate iPseudostate = (Pseudostate)iVertex;
+			State container = null;
+			if (iPseudostate.getContainer() != null && iPseudostate.getContainer() instanceof State) {
+				container = (State)iPseudostate.getContainer();
+			}
+			if (isInitialPseudostate(iPseudostate) 
+			 || isEntryPointPseudostate(iPseudostate) && container == null
+			 || isExitPointPseudostate(iPseudostate) && container == null
+			 //|| isShallowHistoryPseudostate(iPseudostate) && iPseudostate.getOutgoings().length == 1
+			 //|| isDeepHistoryPseudostate(iPseudostate) && iPseudostate.getOutgoings().length == 1
+			) {
+				return true;
+			}
+		}				
+		return false;
+	}
+
+	/**
+	 * isCompositeState
+	 * @param iVertex
+	 * @return
+	 */
+	protected boolean isCompositeState(Vertex iVertex) {
+		if (iVertex instanceof State) {
+			State iState = (State)iVertex;
+			if (!(iState instanceof FinalState)) {
+				if (!isLeafState(iVertex)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * getMainStm
+	 * @return
+	 */
+    public StateMachine getMainStm() {
+        return m_iMainStm;
+    }
+
+
+    
+    
+    
+    
+    
+	/**
+	 * printEventDecl
+	 * @throws Exception 
+	 * @throws IOException 
+	 */
+	List<String> uniqueSortedEvents = new ArrayList<>();
+	public void printEventDecl() throws IOException, Exception  {
+		// print event_decl enumeration
+		m_writer.write(Utils.get(m_stxCsv.get(indent, "event_decl", "name"), 
+			m_iClass.getName(), 
+			m_iClass.getName(),
+			getStateMachineDiagram(m_iMainStm).getName()
+		));
+		
+		// print events of sub-machines
+		class EventDeepTraverser extends StateDeepTraverser {
+			protected void checkState(State iState, State container, int rgnIndex) {
+				if (iState.isSubmachineState()) {
+					StateMachine iSubMachine = iState.getSubmachine();
+					new EventDeepTraverser().start(getVertexes(iSubMachine));
+					for (Transition iTrans: getTransitions(iSubMachine)) {
+						if (!getEvent(iTrans).trim().isEmpty()) {
+							if (!uniqueSortedEvents.contains(getEvent(iTrans).trim())) {
+								uniqueSortedEvents.add(getEvent(iTrans).trim());
+							}
+						}
+					}		
+				}
+				// collect internal transitions
+				for (Transition iTrans: getInternalTransitions(iState)) {
+					if (!getEvent(iTrans).trim().isEmpty()) {
+						if (!uniqueSortedEvents.contains(getEvent(iTrans).trim())) {
+							uniqueSortedEvents.add(getEvent(iTrans).trim());
+						}
+					}
+				}
+			}
+		};
+		new EventDeepTraverser().start(getVertexes(m_iMainStm));
+		// print events of main-machine
+		for (Transition iTrans: getTransitions(m_iMainStm)) {
+			if (!getEvent(iTrans).trim().isEmpty()) {
+				if (!uniqueSortedEvents.contains(getEvent(iTrans).trim())) {
+					uniqueSortedEvents.add(getEvent(iTrans).trim());
+				}
+			}
+		}		
+		Collections.sort(uniqueSortedEvents);
+		System.out.println(makeIndent(indent) + "class Events(Enum):");
+		indent++;
+		String path = m_stxCsv.get(indent, "event_decl", "ext1st");
+		for (String key: uniqueSortedEvents) {
+			System.out.println(makeIndent(indent) + key + " = auto()");
+			m_writer.write(Utils.get(path, key, m_iClass.getName(), m_iClass.getName(), "", "", ""));
+			path = m_stxCsv.get(indent, "event_decl", "extnxt");
+		}
+		indent--;
+		m_writer.write(Utils.get(m_stxCsv.get(indent, "event_decl", "end"), 
+			m_iClass.getName(), 
+			m_iClass.getName(),
+			getStateMachineDiagram(m_iMainStm).getName()
+		));
+	}
+	
+	/**
+	 * printStmInitialization
+	 * @throws IOException
+	 * @throws Exception
+	 */
+	public void printStmInitialization() throws IOException, Exception {
+		m_writer.write(Utils.get(
+			m_stxCsv.get(indent, "statemachine", "extnxt"), 
+			m_iMainStm.getName(), 
+			getStateMachineDiagram(m_iMainStm).getName(), 
+			"",
+			"", "", ""
+		));
+	}
+	
+	/**
+	 * printMainStmDeclaration
+	 * @throws IOException
+	 * @throws Exception
+	 */
+	public void printMainStmDeclaration() throws IOException, Exception {
+		m_writer.write(Utils.get(
+			m_stxCsv.get(indent, "statemachine", "ext1st"), 
+			m_iMainStm.getName(), 
+			getStateMachineDiagram(m_iMainStm).getName(), 
+			"",
+			"", "", ""
+		));
+	}
+
+	/**
+	 * findInitialPseudostate
+	 * @param iState
+	 * @param iStm
+	 * @return
+	 */
+	protected Pseudostate findInitialPseudostate(Collection<Vertex> iVertices) {
+		for (Vertex iVtx: iVertices) {
+			if (iVtx instanceof Pseudostate) {
+				Pseudostate iPseudostate = (Pseudostate)iVtx;
+				if (isInitialPseudostate(iPseudostate)) {
+					return iPseudostate;
+				}
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * findShallowHistoryPseudostate
+	 * @param iState
+	 * @param iStm
+	 * @return
+	 */
+	protected Pseudostate findShallowHistoryPseudostate(Collection<Vertex> iVertices) {
+		for (Vertex iVtx: iVertices) {
+			if (iVtx instanceof Pseudostate) {
+				Pseudostate iPseudostate = (Pseudostate)iVtx;
+				if (isShallowHistoryPseudostate(iPseudostate)) {
+					return iPseudostate;
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * findDeepHistoryPseudostate
+	 * @param iState
+	 * @param iStm
+	 * @return
+	 */
+	protected Pseudostate findDeepHistoryPseudostate(Collection<Vertex> iVertices) {
+		for (Vertex iVtx: iVertices) {
+			if (iVtx instanceof Pseudostate) {
+				Pseudostate iPseudostate = (Pseudostate)iVtx;
+				if (isDeepHistoryPseudostate(iPseudostate)) {
+					return iPseudostate;
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * printStmTypes
+	 * @throws IOException
+	 * @throws Exception
+	 */
+	public void printStmImpls() throws IOException, Exception {		
+		// list up state-machines
+		for (StateMachine iStm: m_sortedStmDgrs) {
+			m_stmRoot = iStm;
+			String rgnName = iStm.getName();
+			String rgnDgrName = getStateMachineDiagram(iStm).getName();
+			String rgnDefinition = getDefinition(iStm);
+			Collection<Vertex> rgnVertices = getVertexes(iStm);
+			
+			System.out.println(makeIndent(indent) + "# Statemachine sub-class");						
+			// print state-machine sub-class
+			System.out.println(makeIndent(indent) + "class " + rgnDgrName + "(ParallelStatemachine):");
+			
+			StringWriter tempWriter = new StringWriter();
+			Writer originalWriter = m_writer;  // Save the original FileWriter
+			m_writer = tempWriter;					
+			
+			// list up region state declaration
+			new StateDeepTraverser() {
+				protected void checkRegion(State iState, int subRgnIndex, State container, int rgnIndex) {
+					try {
+						String rgnName = makeRgnName(iState, subRgnIndex);
+						String rgnDgrName = makeRgnName(iState, subRgnIndex) + "Hsm";
+						String rgnDefinition = getDefinition(iState);
+						Collection<Vertex> rgnVertices = getSubvertexes(iState, subRgnIndex);
+						// print state-machine sub-class
+						printStatesDefinition(		
+							rgnName,
+							rgnDgrName,
+							rgnDefinition,
+							rgnVertices
+						);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}.start(getVertexes(iStm));			
+			// list up main state declaration
+			printStatesDefinition(		
+				rgnName,
+				rgnDgrName,
+				rgnDefinition,
+				rgnVertices
+			);
+			
+			m_writer = originalWriter;
+
+			// ▲ state.name
+			// ▲ state.ext1st
+			// ▲ state.extnxt
+			// ■ state.begin
+			// ■ state.end
+			m_writer.write(Utils.get(
+				m_stxCsv.get(indent, "statemachine", "begin"), 
+				rgnDgrName, 
+				m_iClass.getName(),
+				rgnName + "Hsm", 
+				tempWriter.toString(), 
+				"", 
+				"",
+				getStateMachineDiagram(iStm).getName()// scope				
+			));					
+			indent++;
+			
+			String subStmAndRgnInitStr = printSubStmAndRgnDecls(		
+				rgnName,
+				rgnDgrName,
+				rgnDefinition,
+				rgnVertices
+			);
+			
+			// list up sub-regions
+			new StateDeepTraverser() {
+				protected void checkRegion(State iState, int subRgnIndex, State container, int rgnIndex) {
+					try {
+						String rgnName = makeRgnName(iState, subRgnIndex);
+						String rgnDgrName = makeRgnName(iState, subRgnIndex) + "Hsm";
+						String rgnDefinition = getDefinition(iState);
+						Collection<Vertex> rgnVertices = getSubvertexes(iState, subRgnIndex);
+						System.out.println(makeIndent(indent) + "# Region sub-class");						
+						// print state-machine sub-class
+						System.out.println(makeIndent(indent) + "class _" + rgnName + "Hsm(Statemachine):");
+						indent++;							
+						printStmImpl(
+							iStm,
+							rgnName,
+							rgnDgrName,
+							rgnDefinition,
+							rgnVertices
+						);
+						indent--;
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}.start(getVertexes(iStm));
+			
+			System.out.println(makeIndent(indent) + "# Region sub-class");						
+			// print state-machine sub-class
+			System.out.println(makeIndent(indent) + "class _" + rgnName + "Hsm(Statemachine):");
+			indent++;
+			
+			printStmImpl(
+				iStm,
+				rgnName,
+				rgnDgrName,
+				rgnDefinition,
+				rgnVertices
+			);
+			indent--;
+			
+			printStmAPIs(iStm);
+			
+			indent--;
+			m_writer.write(Utils.get(
+				m_stxCsv.get(indent, "statemachine", "end"), 
+				rgnDgrName, 					// name
+				m_iClass.getName(),				// type
+				rgnName, 						// container
+				subStmAndRgnInitStr,			// value 
+				"", 							// modifier
+				"",								// description
+				getStateMachineDiagram(iStm).getName()// scope
+			));			
+		}
+	}
+	
+	/**
+	 * printStatesDefinition
+	 * @param rgnName
+	 * @param rgnDgrName
+	 * @param rgnDefinition
+	 * @param rgnVertices
+	 * @throws IOException
+	 * @throws Exception
+	 */
+	public void printStatesDefinition(		
+		String rgnName,
+		String rgnDgrName,
+		String rgnDefinition,
+		Collection<Vertex> rgnVertices
+	) throws IOException, Exception {		
+		// print states definitions
+		System.out.println(makeIndent(indent) + "# States definitions");
+		
+		StringWriter tempWriter = new StringWriter();
+		Writer originalWriter = m_writer;  // Save the original FileWriter
+		m_writer = tempWriter;		
+		
+		new StateDeepTraverserRgn0() {
+			private int m_autoId = 0;
+			public void printCompositeState(Collection<Vertex> iVertices, String stateName, String containerName, String definition) {
+				String subStateNames = null;
+				try {
+					for (Vertex iVertex: iVertices) {
+						if (isLeafState(iVertex) || isCompositeState(iVertex)) {
+							if (subStateNames == null) {
+								subStateNames = iVertex.getName();
+								m_writer.write(Utils.get(m_stxCsv.get(indent, "state_decl", "ext1st"), 
+									stateName, 
+									m_iClass.getName(), 
+									containerName, 
+									iVertex.getName(), 
+									String.format("%2d", 0), 
+									definition,
+									getStateMachineDiagram(m_stmRoot).getName()
+								));
+							} else {
+								subStateNames += (" | " + iVertex.getName());
+								m_writer.write(Utils.get(m_stxCsv.get(indent, "state_decl", "extnxt"), 
+									stateName, 
+									m_iClass.getName(), 
+									containerName, 
+									iVertex.getName(), 
+									String.format("%2d", 0), 
+									definition,
+									getStateMachineDiagram(m_stmRoot).getName()
+								));
+							}
+						}
+					}
+					m_writer.write(Utils.get(m_stxCsv.get(indent, "state_decl", "end"), 
+						stateName, 
+						m_iClass.getName(), 
+						containerName, 
+						"", 
+						stateName, 
+						definition,
+						getStateMachineDiagram(m_stmRoot).getName()
+					));												
+					// print regions
+					System.out.println(makeIndent(indent) + stateName + " = " + subStateNames);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			protected void checkPseudostate(Pseudostate iPseudostate, State container) {
+				// print initial point, main-machine entry point, sub-machine exit point as simple states
+				if (isLeafState(iPseudostate)) {
+					System.out.println(makeIndent(indent) + iPseudostate.getName() + " = MakeState(" + m_autoId + ")");
+					try {
+						m_writer.write(Utils.get(m_stxCsv.get(indent, "state_decl", "name"), 
+							iPseudostate.getName(), 
+							m_iClass.getName(),
+							container != null ? container.getName() : rgnName,
+							String.format("%2d", m_autoId),
+							"",
+							getDefinition(iPseudostate),
+							getStateMachineDiagram(m_stmRoot).getName()
+						));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					m_autoId++;;
+				}
+			}
+			protected void checkState(State iState, State container) {
+				String containerName = rgnName;
+				if (iState.getContainer() != null) {
+					containerName = ((NamedElement)iState.getContainer()).getName();
+				}
+				if (isLeafState(iState)) {
+					// print leaf states
+					System.out.println(makeIndent(indent) + iState.getName() + " = MakeState(" + m_autoId + ")");
+					try {
+						m_writer.write(Utils.get(m_stxCsv.get(indent, "state_decl", "name"), 
+							iState.getName(), 
+							m_iClass.getName(),
+							containerName,
+							String.format("%2d", m_autoId),
+							"",
+							getDefinition(iState),
+							getStateMachineDiagram(m_stmRoot).getName()
+						));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					m_autoId++;
+				} else if (isCompositeState(iState)) {
+					try {
+						printCompositeState(getSubvertexes(iState, 0), iState.getName(), containerName, getDefinition(iState));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			public void start(Collection<Vertex> iVertices) {
+				super.start(iVertices);
+				printCompositeState(rgnVertices, rgnName, "", rgnDefinition);
+			}
+		}.start(rgnVertices);
+		
+		m_writer = originalWriter;
+		
+		m_writer.write(Utils.get(m_stxCsv.get(indent, "state_decl", "begin"), 
+			rgnName, 
+			m_iClass.getName(),
+			rgnName + "Hsm",
+			tempWriter.toString(),
+			"",
+			"",
+			getStateMachineDiagram(m_stmRoot).getName()
+		));
+	}
+	
+	/**
+	 * printSubStmAndRgnDecls
+	 * @throws IOException
+	 * @throws Exception
+	 */
+	private String m_sResult;
+	public String printSubStmAndRgnDecls(		
+		String rgnName,
+		String rgnDgrName,
+		String rgnDefinition,
+		Collection<Vertex> rgnVertices
+	) throws IOException, Exception {
+		m_sResult = "";
+				
+		System.out.println(makeIndent(indent) + "def __init__(self, _main, _parent):");
+		indent++;
+		System.out.println(makeIndent(indent) + "super().__init__(_main, _parent)");
+		
+		System.out.println(makeIndent(indent) + "# sub-machine and regions declaration");
+		System.out.println(makeIndent(indent) + "self." + rgnName + "Hsm = self._" + rgnName + "Hsm(self, self.parent)");
+		try {
+			m_writer.write(Utils.get(
+				m_stxCsv.get(indent, "region", "name"), 
+				rgnName + "Hsm",					// name
+				m_iClass.getName(),							// type
+				rgnName + "Hsm",						// container 
+				"", 										// value
+				"",											// modifier
+				rgnDefinition,								// definition
+				getStateMachineDiagram(m_stmRoot).getName()	// scope
+			));
+			m_sResult += Utils.get(
+				m_stxCsv.get(indent, "region", "ext1st"), 
+				rgnName + "Hsm",					// name
+				m_iClass.getName(),							// type
+				rgnName + "Hsm",						// container 
+				"", 										// value
+				"",											// modifier
+				rgnDefinition,								// definition
+				getStateMachineDiagram(m_stmRoot).getName()	// scope
+			);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		new StateDeepTraverser() {
+			protected void checkPseudostate(Pseudostate iPseudostate, State container, int rgnIdx) {
+				if (isShallowHistoryPseudostate(iPseudostate) || isDeepHistoryPseudostate(iPseudostate)) {
+					System.out.println(makeIndent(indent) + "self." + iPseudostate.getName() + " = 0");
+					try {
+						m_writer.write(Utils.get(
+							m_stxCsv.get(indent, "history", "name"), 
+							iPseudostate.getName(),						// name
+							m_iClass.getName(),							// type
+							"",											// container 
+							"", 										// value
+							"",											// modifier
+							rgnDefinition,								// definition
+							getStateMachineDiagram(m_stmRoot).getName()	// scope
+						));
+						m_sResult += Utils.get(
+							m_stxCsv.get(indent, "history", "ext1st"), 
+							iPseudostate.getName(),						// name
+							m_iClass.getName(),							// type
+							"",											// container 
+							"", 										// value
+							"",											// modifier
+							rgnDefinition,								// definition
+							getStateMachineDiagram(m_stmRoot).getName()	// scope
+						);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}		
+				}
+			}
+			protected void checkRegionBfr(State iState, int subRgnIdx, State container, int rgnIndex) {
+				System.out.println(makeIndent(indent) + "self." + makeRgnName(iState, subRgnIdx) + "Hsm = self._" + makeRgnName(iState, subRgnIdx) + "Hsm(self, self.parent)");					
+				try {
+					m_writer.write(Utils.get(
+						m_stxCsv.get(indent, "region", "name"), 
+						makeRgnName(iState, subRgnIdx) + "Hsm",		// name
+						m_iClass.getName(),							// type
+						makeRgnName(iState, subRgnIdx) + "Hsm",		// container 
+						"", 										// value
+						"",											// modifier
+						rgnDefinition,								// definition
+						getStateMachineDiagram(m_stmRoot).getName()	// scope
+					));
+					m_sResult += Utils.get(
+						m_stxCsv.get(indent, "region", "ext1st"), 
+						makeRgnName(iState, subRgnIdx) + "Hsm",		// name
+						m_iClass.getName(),							// type
+						makeRgnName(iState, subRgnIdx) + "Hsm",		// container 
+						"", 										// value
+						"",											// modifier
+						rgnDefinition,								// definition
+						getStateMachineDiagram(m_stmRoot).getName()	// scope
+					);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}		
+			}
+			protected void checkState(State iState, State container, int rgnIndex) {
+				if (iState.isSubmachineState()) {
+					Region iSubStmDgr = getStateMachineDiagram(iState.getSubmachine());
+					String targetMachineName = findTargetMachineName(rgnName, rgnVertices, iState, null);
+					System.out.println(makeIndent(indent) + "self." + iState.getName() + "Hsm = " + iSubStmDgr.getName() + "(self, self." + targetMachineName + ")");
+					try {
+						m_writer.write(Utils.get(
+							m_stxCsv.get(indent, "substm", "name"), 
+							iState.getName() + "Hsm",					// name
+							m_iClass.getName(),							// type
+							iSubStmDgr.getName(),						// container 
+							"", 										// value
+							targetMachineName,							// modifier
+							rgnDefinition,								// definition
+							getStateMachineDiagram(m_stmRoot).getName()	// scope
+						));
+						m_sResult += Utils.get(
+							m_stxCsv.get(indent, "substm", "ext1st"), 
+							iState.getName() + "Hsm",					// name
+							m_iClass.getName(),							// type
+							iSubStmDgr.getName(),						// container 
+							"", 										// value
+							targetMachineName,							// modifier
+							rgnDefinition,								// definition
+							getStateMachineDiagram(m_stmRoot).getName()	// scope
+						);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}		
+				}
+			}
+		}.start(rgnVertices);
+		
+		indent--;
+		
+		return m_sResult;
+	}
+	
+	/**
+	 * printStmAPIs
+	 */
+	private void printStmAPIs(StateMachine iStm) {
+		/**
+		 * print state-machine API: event-handle
+		 */
+		System.out.println(makeIndent(indent) + "def EventHandle(self, e, params):");
+		indent++;
+		// print regions and sub-machines' event-handles
+		System.out.println(makeIndent(indent) + "result = False");
+		StringWriter tempWriter = new StringWriter();
+		Writer originalWriter = m_writer;  // Save the original FileWriter
+		m_writer = tempWriter;					
+				
+		/**
+		 * print state-machine API: run-to-completion
+		 */		
+		System.out.println(makeIndent(indent) + "def DefaultTrans(self):");
+		indent++;
+		System.out.println(makeIndent(indent) + "while True:");
+		indent++;
+		System.out.println(makeIndent(indent) + "result = False");
+		
+		// print regions and sub-machines' default-transitions		
+		tempWriter = new StringWriter();
+		m_writer = tempWriter;					
+		new StateDeepTraverser() {
+			protected void checkRegion(State iState, int subRgnIndex, State container, int rgnIndex) {
+				String regionName = makeRgnName(iState, subRgnIndex); 
+				System.out.print(makeIndent(indent) + "result = ");
+				m_sResult = "";
+				try {
+					new StateDeepTraverserRgn0() {
+						protected void checkState(State iState, State container) {
+							if (iState.isSubmachineState()) {
+								String subStmDgrName = getStateMachineDiagram(iState.getSubmachine()).getName();
+								System.out.print("self." + iState.getName() + "Hsm.DefaultTrans() or ");
+								try {
+									m_sResult += Utils.get(
+										m_stxCsv.get(indent, "stm_api", "end"), 
+										iState.getName(),							// name
+										m_iClass.getName(),							// type
+										subStmDgrName,								// container 
+										"", 										// value
+										iState.getName() + "Hsm",					// modifier
+										"",											// definition
+										getStateMachineDiagram(m_stmRoot).getName()	// scope
+									);
+								} catch (Exception e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
+						}
+					}.start(getSubvertexes(iState, subRgnIndex));
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				System.out.println("self." + regionName + "Hsm.DefaultTrans() or result");
+				try {
+					m_writer.write(Utils.get(
+						m_stxCsv.get(indent, "stm_api", "begin"), 
+						regionName,									// name
+						m_iClass.getName(),							// type
+						regionName + "Hsm",							// container 
+						"", 										// value
+						m_sResult,									// modifier
+						"",											// definition
+						getStateMachineDiagram(m_stmRoot).getName()	// scope
+					));
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}.start(getVertexes(iStm));
+		
+		// print this machine default-transition
+		System.out.print(makeIndent(indent) + "result = ");
+		m_sResult = "";
+		new StateDeepTraverserRgn0() {
+			protected void checkState(State iState, State container) {
+				if (iState.isSubmachineState()) {
+					String subStmDgrName = getStateMachineDiagram(iState.getSubmachine()).getName();
+					System.out.print("self." + iState.getName() + "Hsm.DefaultTrans() or ");
+					try {
+						m_sResult += Utils.get(
+							m_stxCsv.get(indent, "stm_api", "end"), 
+							iState.getName(),							// name
+							m_iClass.getName(),							// type
+							subStmDgrName,								// container 
+							"", 										// value
+							iState.getName() + "Hsm",					// modifier
+							"",											// definition
+							getStateMachineDiagram(m_stmRoot).getName()	// scope
+						);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		}.start(getVertexes(iStm));
+		System.out.println("self." + iStm.getName() + "Hsm.DefaultTrans() or result");
+		System.out.println(makeIndent(indent) + "if result == False:");
+		System.out.println(makeIndent(indent) + "    break");
+		try {
+			m_writer.write(Utils.get(
+				m_stxCsv.get(indent, "stm_api", "begin"), 
+				iStm.getName(),								// name
+				m_iClass.getName(),							// type
+				iStm.getName() + "Hsm",						// container 
+				"", 										// value
+				m_sResult,									// modifier
+				"",											// definition
+				getStateMachineDiagram(m_stmRoot).getName()	// scope
+			));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String defaultTrans = tempWriter.toString();
+		m_writer = originalWriter;
+		indent--;
+		System.out.println(makeIndent(indent) + "# end loop");
+		indent--;
+		System.out.println(makeIndent(indent) + "# end def");
+
+		// print Initiate function
+		System.out.println(makeIndent(indent) + "def Initiate(self, lastEnteredStateRecovering, entryPoint = 0):");
+		System.out.println(makeIndent(indent) + "    self.lastEnteredStateRecovering = lastEnteredStateRecovering");
+		System.out.println(makeIndent(indent) + "    self." + iStm.getName() + "Hsm.Initiate(entryPoint)");
+		System.out.println(makeIndent(indent) + "# end def");
+		// print Terminate function
+		System.out.println(makeIndent(indent) + "def Terminate(self):");
+		System.out.println(makeIndent(indent) + "    self." + iStm.getName() + "Hsm.Terminate()");
+		System.out.println(makeIndent(indent) + "# end def");		
+
+		try {
+			m_writer.write(Utils.get(
+				m_stxCsv.get(indent, "stm_api", "name"), 
+				iStm.getName(),								// name
+				m_iClass.getName(),							// type
+				iStm.getName() + "Hsm",						// container 
+				"",			 								// value
+				defaultTrans,								// modifier
+				"",											// definition
+				getStateMachineDiagram(m_stmRoot).getName()	// scope
+			));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * printStmType
+	 * @throws IOException
+	 * @throws Exception
+	 */
+	boolean m_bIsInternalTrans = false;
+	public void printStmImpl(
+		StateMachine stmRoot,
+		String rgnName,
+		String rgnDgrName,
+		String rgnDefinition,
+		Collection<Vertex> rgnVertices
+	) throws IOException, Exception {
+		System.out.println(makeIndent(indent) + "# Region implementation: " + rgnName);
+
+		// print states' entryAction, eventHandle, exitAction
+		new StateDeepTraverserRgn0() {
+			protected void checkStateBfr(State _iState, State container) {				
+				if (_iState instanceof FinalState) {
+					return;
+				}
+				String stateName = rgnName;
+				String rectRatio = "";
+				if (_iState != null) {
+					stateName = _iState.getName();
+				}
+				String containerName = rgnName;
+				if (container != null) {
+					containerName = container.getName();
+				}
+				
+				// ■ transition.name
+				// ■ transition.ext1st
+				// ▲ transition.extnxt
+				// ▲ transition.begin
+				// ▲ transition.end
+				// print state entry actions
+				System.out.println(makeIndent(indent) + "def " + stateName + "_Enter(self):");
+				indent++;
+				System.out.println(makeIndent(indent) + "if self.Enterable(" + getStateMachineDiagram(stmRoot).getName() + "." + stateName + "):");
+				if (_iState != null) {
+					System.out.println(makeIndent(indent) + "    self." + containerName + "_Enter()");
+				}
+				try {
+					String actions = "";
+					Collection<Vertex> vertices = rgnVertices;
+					if (_iState != null) {
+						stateName = _iState.getName();
+						vertices = getSubvertexes(_iState, 0);
+					}
+					// if initialPoint exists AND targetState == thisState: curState <- initialPoint
+					Vertex initPt = findInitialPseudostate(vertices);
+					if (initPt != null) {
+						System.out.println(makeIndent(indent) + "    if self.targetState == " + getStateMachineDiagram(stmRoot).getName() + "." + stateName + ":");
+						System.out.println(makeIndent(indent) + "        self.pseudoState = " + getStateMachineDiagram(stmRoot).getName() + "." + initPt.getName());
+						// ■ action.begin
+						actions += Utils.get(m_stxCsv.get(indent, "state_action", "name"), 
+							stateName,							// name 
+							m_iClass.getName(), 				// type
+							containerName, 						// container
+							"",									// value
+							initPt.getName(), 					// modifier
+							"",									// description 
+							getStateMachineDiagram(stmRoot).getName()// scope
+						);
+					}
+
+					// if lastEnteteredStateRecovering, recover last state
+					if (_iState == null) {
+						// ▲ deep_hist.end
+						System.out.println(makeIndent(indent) + "    if self.lastEnteredStateRecovering:");
+						System.out.println(makeIndent(indent) + "        self.pseudoState = self.lastEnteredState");
+						actions += Utils.get(m_stxCsv.get(indent, "deep_hist", "end"), 
+							"",			// name 
+							m_iClass.getName(), 				// type
+							"", 								// container
+							"",		 			// value
+							"",									// modifier
+							"",									// description 
+							getStateMachineDiagram(stmRoot).getName()// scope
+						);
+					}
+					
+					// if container has shallowHistoryPt and : shallowHistory <- thisState
+					if (_iState != null) {
+						Vertex shallowHistPt = findShallowHistoryPseudostate(container == null ? rgnVertices : getSubvertexes(container, 0));
+						// ■ history.extnxt
+						if (shallowHistPt != null) {
+							//String containingMachine = _iState != null ? findTargetMachineName(rgnName, rgnVertices, _iState) : stmRoot.getName();
+							System.out.println(makeIndent(indent) + "    self.main." + shallowHistPt.getName() + " = " + getStateMachineDiagram(stmRoot).getName() + "." + _iState.getName());
+							actions += Utils.get(m_stxCsv.get(indent, "history", "extnxt"), 
+								shallowHistPt.getName(),			// name 
+								m_iClass.getName(), 				// type
+								"", 								// container
+								_iState.getName(),		 			// value
+								"",									// modifier
+								"",									// description 
+								getStateMachineDiagram(stmRoot).getName()// scope
+							);
+						}
+					}
+					// initiate regions if available
+					int subRgnIndex = 1;
+					while (_iState != null) {
+						try {
+							String regionName = subRgnIndex == 0 ? stateName : stateName + "Rgn" + subRgnIndex; 
+							if (getSubvertexes(_iState, subRgnIndex).size() > 0) {
+								System.out.println(makeIndent(indent) + "    self.main." + regionName + "Hsm.Initiate()");
+								// ■ substm.begin
+								actions += Utils.get(m_stxCsv.get(indent, "state_action", "begin"), 
+									stateName,							// name 
+									m_iClass.getName(), 				// type
+									regionName + "Hsm",					// container
+									"",									// value
+									regionName + "Hsm",					// modifier
+									"",									// description 
+									getStateMachineDiagram(stmRoot).getName()// scope
+								);
+							}
+							subRgnIndex++;
+						} catch (Exception e) {
+							break;
+						}
+					}
+					
+					if (_iState != null && _iState.isSubmachineState()) {
+						String subStmName = getStateMachineDiagram(_iState.getSubmachine()).getName();
+						// initiate sub-machine if available
+						System.out.println(makeIndent(indent) + "    self.main." + stateName + "Hsm.Initiate(self.lastEnteredStateRecovering)");
+						// ■ substm.begin
+						// [cONTAINER]_Reset( p[tYPE], ( ( [sCOPE]* )pStm->pMain )->[mODIFIER], [sCOPE]_[nAME] );
+						actions += Utils.get(m_stxCsv.get(indent, "state_action", "begin"), 
+							stateName,							// name 
+							m_iClass.getName(), 				// type
+							subStmName, 						// container
+							"",									// value
+							stateName + "Hsm",					// modifier
+							"",									// description 
+							getStateMachineDiagram(stmRoot).getName()// scope
+						);
+					}
+					System.out.println(makeIndent(indent) + "    self.DefaultEntryAction('" + stateName + "')");
+
+					// event-processing for regions if available
+					subRgnIndex = 1;
+					String modifier = "";
+					while (_iState != null) {
+						try {
+							String regionName = subRgnIndex == 0 ? stateName : stateName + "Rgn" + subRgnIndex; 
+							if (getSubvertexes(_iState, subRgnIndex).size() > 0) {
+								System.out.println(makeIndent(indent) + "    self.main." + regionName + "Hsm.Initiate()");
+								// ■ substm.begin
+								modifier += Utils.get(m_stxCsv.get(indent, "stm_api", "ext1st"), 
+									stateName,							// name 
+									m_iClass.getName(), 				// type
+									regionName + "Hsm",					// container
+									"",									// value
+									regionName + "Hsm",					// modifier
+									"",									// description 
+									getStateMachineDiagram(stmRoot).getName()// scope
+								);
+							}
+							subRgnIndex++;
+						} catch (Exception e) {
+							break;
+						}
+					}
+					
+					if (_iState != null && _iState.isSubmachineState()) {
+						String subStmName = getStateMachineDiagram(_iState.getSubmachine()).getName();
+						// event-processing for sub-machine if available
+						System.out.println(makeIndent(indent) + "    self.main." + stateName + "Hsm.Initiate(self.lastEnteredStateRecovering)");
+						// ■ substm.begin
+						// [cONTAINER]_Reset( p[tYPE], ( ( [sCOPE]* )pStm->pMain )->[mODIFIER], [sCOPE]_[nAME] );
+						modifier += Utils.get(m_stxCsv.get(indent, "stm_api", "extnxt"), 
+							stateName,							// name 
+							m_iClass.getName(), 				// type
+							subStmName, 						// container
+							"",									// value
+							stateName + "Hsm",					// modifier
+							"",									// description 
+							getStateMachineDiagram(stmRoot).getName()// scope
+						);
+					}
+					
+					if (_iState != null) {
+						/* TODO
+						Rectangle2D iRect = null;
+						for (IPresentation iPresentxn : _iState.getPresentations()) {
+							INodePresentation iNode = (INodePresentation)iPresentxn;
+							iRect = iNode.getRectangle();
+						}
+						Rectangle2D iLocalStmRect = getStateMachineDiagram(stmRoot).getBoundRect();
+						if (iRect != null && iLocalStmRect != null) {
+							rectRatio = "" + Math.round(iRect.getX()) 
+									+ "\t" + Math.round(iRect.getY())
+									+ "\t" + Math.round(iRect.getWidth())
+									+ "\t" + Math.round(iRect.getHeight())
+									+ "\t" + Math.round(iLocalStmRect.getX())
+									+ "\t" + Math.round(iLocalStmRect.getY())
+									+ "\t" + Math.round(iLocalStmRect.getWidth())
+									+ "\t" + Math.round(iLocalStmRect.getHeight())
+									+ "\t" + _iState.getName();
+						}
+						*/
+						// Added transition action
+						actions += collectActions(indent, getEntry(_iState));
+						
+						m_writer.write(Utils.get(m_stxCsv.get(indent, "transition", "name"), 
+							stateName,					// name 
+							m_iClass.getName(), 				// type
+							containerName, 						// container
+							actions, 							// value
+							modifier,							// modifier
+							getFullNamespace(getStateMachineDiagram(stmRoot)).replace("::", "/") + "\t" + rectRatio,// description 
+							getStateMachineDiagram(stmRoot).getName()// scope
+						));
+					} else {
+						m_writer.write(Utils.get(m_stxCsv.get(indent, "trans_top", "name"), 
+							stateName,							// name 
+							m_iClass.getName(), 				// type
+							containerName, 						// container
+							actions,							// value
+							modifier,							// modifier
+							"",									// description 
+							getStateMachineDiagram(stmRoot).getName()// scope
+						));
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				indent--;
+				System.out.println(makeIndent(indent) + "# end def");
+				
+				// print transitions from states
+				System.out.println(makeIndent(indent) + "def " + stateName + "_EventHandle(self, e, params):");
+				System.out.println(makeIndent(indent) + "    self.sourceState = " + getStateMachineDiagram(stmRoot).getName() + "." + stateName);
+				indent++;
+				boolean firstRound = true;
+				if (_iState != null) {
+					List<String> internalEvents = new ArrayList<>();
+					for (Transition iTrans: getInternalTransitions(_iState)) {
+						if (!internalEvents.contains(getEvent(iTrans).trim())) {
+							internalEvents.add(getEvent(iTrans).trim());
+						}
+					}	
+					for (Transition iTrans: _iState.getOutgoings()) {
+						if (internalEvents.contains(getEvent(iTrans).trim())) {
+							m_bIsInternalTrans = true;
+						}
+						if (!getEvent(iTrans).trim().isEmpty()) {
+							m_originTrans = iTrans;
+							if (firstRound) {
+								System.out.println(makeIndent(indent) + "if e == Events." + getEvent(iTrans).trim() + ":");
+								try {
+									m_writer.write(Utils.get(m_stxCsv.get(indent, "transition", "ext1st"), 
+										getEvent(iTrans).trim(),			// name 
+										m_iClass.getName(), 				// type
+										containerName, 						// container
+										"",		 							// value
+										"", 								// modifier
+										"",									// description 
+										getStateMachineDiagram(stmRoot).getName()// scope
+									));
+								} catch (Exception e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								firstRound = false;
+							} else {
+								System.out.println(makeIndent(indent) + "elif e == Events." + getEvent(iTrans).trim() + ":");
+								try {
+									m_writer.write(Utils.get(m_stxCsv.get(indent, "transition", "extnxt"), 
+										getEvent(iTrans).trim(),			// name 
+										m_iClass.getName(), 				// type
+										containerName, 						// container
+										"",		 							// value
+										"", 								// modifier
+										"",									// description 
+										getStateMachineDiagram(stmRoot).getName()// scope
+									));
+								} catch (Exception e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
+							indent++;
+							if (!getGuard(iTrans).isEmpty()) {
+								// print if
+								printTransition(stmRoot, rgnName, rgnVertices, iTrans);
+								// print end-if
+								System.out.println(makeIndent(indent) + "return True");
+								System.out.println(makeIndent(indent) + "# end if");
+								try {
+									m_writer.write(Utils.get(m_stxCsv.get(indent, "branch", "end"), 
+										getGuard(iTrans),					// name 
+										m_iClass.getName(), 				// type
+										"", 								// container
+										getGuard(iTrans),		 			// value
+										collectActions(indent, getAction(iTrans)),// modifier
+										"",									// description 
+										getStateMachineDiagram(stmRoot).getName()// scope
+									));
+								} catch (Exception e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								
+							} else {
+								printTransition(stmRoot, rgnName, rgnVertices, iTrans);
+								System.out.println(makeIndent(indent) + "return True");
+							}
+							indent--;
+						}
+						m_bIsInternalTrans = false;
+					}
+				}
+				try {
+					if (_iState != null) {
+						System.out.println(makeIndent(indent) + "return self." + containerName + "_EventHandle(e, params)");
+						if (firstRound == false) {
+							m_writer.write(Utils.get(m_stxCsv.get(indent, "transition", "begin"), 
+								stateName,					// name 
+								m_iClass.getName(), 				// type
+								containerName, 						// container
+								"",		 							// value
+								"", 								// modifier
+								"",									// description 
+								rgnDgrName							// scope
+							));
+						}
+					} else {
+						System.out.println(makeIndent(indent) + "return False");
+						if (firstRound == false) {
+							m_writer.write(Utils.get(m_stxCsv.get(indent, "trans_top", "begin"), 
+								stateName,					// name 
+								m_iClass.getName(), 				// type
+								containerName, 						// container
+								"",		 							// value
+								"", 								// modifier
+								"",									// description 
+								rgnDgrName							// scope
+							));
+						}
+					}
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				indent--;
+				System.out.println(makeIndent(indent) + "# end def");
+				
+				// print state exit actions
+				System.out.println(makeIndent(indent) + "def " + stateName + "_Exit(self):");
+				indent++;
+				System.out.println(makeIndent(indent) + "if self.Exitable(" + getStateMachineDiagram(stmRoot).getName() + "."  + stateName + "):");
+				try {
+					String actions = "";
+					// if deepHistoryPt exists, deepHistoryPt <- lastEnteredState
+					Vertex subDeepHistPt = findDeepHistoryPseudostate(_iState == null ? rgnVertices : getSubvertexes(_iState, 0));
+					if (subDeepHistPt != null) {
+						//String containingMachine = _iState != null ? findTargetMachineName(rgnName, rgnVertices, _iState) : stmRoot.getName();
+						System.out.println(makeIndent(indent) + "    self.main." + subDeepHistPt.getName() + " = self.lastEnteredState");
+						// ▲ deep_hist.extnxt
+						actions += Utils.get(m_stxCsv.get(indent, "deep_hist", "extnxt"), 
+							subDeepHistPt.getName(),			// name 
+							m_iClass.getName(), 				// type
+							"", 								// container
+							"",						 			// value
+							"",									// modifier
+							"",									// description 
+							getStateMachineDiagram(stmRoot).getName()// scope
+						);
+					}					
+					// terminate regions if available
+					int subRgnIndex = 1;
+					while (_iState != null) {
+						try {
+							String regionName = subRgnIndex == 0 ? stateName : stateName + "Rgn" + subRgnIndex; 
+							if (getSubvertexes(_iState, subRgnIndex).size() > 0) {
+								System.out.println(makeIndent(indent) + "    self.main." + regionName + "Hsm.Terminate()");							
+								// ■ substm.end
+								actions += Utils.get(m_stxCsv.get(indent, "state_action", "end"), 
+									stateName,							// name 
+									m_iClass.getName(), 				// type
+									regionName + "Hsm",					// container
+									"",									// value
+									regionName + "Hsm",					// modifier
+									"",									// description 
+									getStateMachineDiagram(stmRoot).getName()// scope
+								);
+							}
+							subRgnIndex++;
+						} catch (Exception e) {
+							break;
+						}
+					}
+					if (_iState != null && _iState.isSubmachineState()) {
+						String subStmDgrName = getStateMachineDiagram(_iState.getSubmachine()).getName();
+						// terminate sub-machine if available
+						System.out.println(makeIndent(indent) + "    self.main." + stateName + "Hsm.Terminate()");
+						// ■ substm.begin
+						// [cONTAINER]_Reset( p[tYPE], ( ( [sCOPE]* )pStm->pMain )->[mODIFIER], [sCOPE]_[nAME] );
+						actions += Utils.get(m_stxCsv.get(indent, "state_action", "end"), 
+							stateName,							// name 
+							m_iClass.getName(), 				// type
+							subStmDgrName, 						// container
+							"",									// value
+							stateName + "Hsm",					// modifier
+							"",									// description 
+							getStateMachineDiagram(stmRoot).getName()// scope
+						);
+					}
+					
+					try {
+
+						if (_iState != null) {
+							actions += collectActions(indent, getExit(_iState));
+							
+							m_writer.write(Utils.get(m_stxCsv.get(indent, "transition", "end"), 
+								stateName,					// name 
+								m_iClass.getName(), 				// type
+								containerName, 						// container
+								actions, 							// value
+								"", 								// modifier
+								getFullNamespace(getStateMachineDiagram(stmRoot)).replace("::", "/") + "\t" + rectRatio,// description 
+								getStateMachineDiagram(stmRoot).getName()// scope
+							));
+						} else {
+							m_writer.write(Utils.get(m_stxCsv.get(indent, "trans_top", "end"), 
+								stateName,					// name 
+								m_iClass.getName(), 				// type
+								containerName, 						// container
+								actions, 							// value
+								"", 								// modifier
+								"",									// description 
+								getStateMachineDiagram(stmRoot).getName()// scope
+							));
+						}
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				System.out.println(makeIndent(indent) + "    self.DefaultExitAction('" + stateName + "')");
+				if (_iState != null) {
+					System.out.println(makeIndent(indent) + "    self." + containerName + "_Exit()");
+				}
+				indent--;
+				System.out.println(makeIndent(indent) + "# end def");
+			}
+			public void start(Collection<Vertex> iVertices) {				
+				checkStateBfr(null, null);
+				super.start(iVertices);
+			}			
+		}.start(rgnVertices);
+
+		/**
+		 * print state-exit-map
+		 */
+		System.out.println(makeIndent(indent) + "def BgnTrans(self, targetState):");
+		System.out.println(makeIndent(indent) + "    self.targetState = targetState");
+		System.out.println(makeIndent(indent) + "    self.pseudoState = targetState");
+		m_writer.write(Utils.get(m_stxCsv.get(indent, "state_exit", "name"), 
+			rgnName, 										// name
+			m_iClass.getName(), 							// type
+			rgnName + "Hsm",	 						// container
+			"", 											// value
+			"", 											// modifier
+			"", 											// description
+			getStateMachineDiagram(stmRoot).getName()		// scope
+		));
+		indent++;
+		System.out.println(makeIndent(indent) + "if self.currentState == " + getStateMachineDiagram(stmRoot).getName() + "." + rgnName + ":");
+		System.out.println(makeIndent(indent) + "    self." + rgnName + "_Exit()");
+		m_writer.write(Utils.get(m_stxCsv.get(indent, "state_exit", "ext1st"), 
+			rgnName, 								// name
+			m_iClass.getName(), 					// type
+			rgnName + "Hsm",	 						// container
+			"",		 								// value
+			"", 									// modifier
+			"", 									// description
+			getStateMachineDiagram(stmRoot).getName()// scope
+		));
+		new StateDeepTraverserRgn0() {
+			protected void checkState(State iState, State container) {
+				if (!(iState instanceof FinalState)) {
+					System.out.println(makeIndent(indent) + "elif self.currentState == " + getStateMachineDiagram(stmRoot).getName() + "." + iState.getName() + ":");
+					System.out.println(makeIndent(indent) + "    self." + iState.getName() + "_Exit()");
+					try {
+						m_writer.write(Utils.get(m_stxCsv.get(indent, "state_exit", "extnxt"), 
+							iState.getName(), 						// name
+							m_iClass.getName(), 					// type
+							rgnName + "Hsm",	 						// container
+							"", 									// value
+							"", 									// modifier
+							"", 									// description
+							getStateMachineDiagram(stmRoot).getName()// scope
+						));
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		}.start(rgnVertices);
+		indent--;
+		m_writer.write(Utils.get(m_stxCsv.get(indent, "state_exit", "begin"), 
+			rgnName, 										// name
+			m_iClass.getName(), 							// type
+			rgnName + "Hsm",	 						// container
+			"", 											// value
+			"", 											// modifier
+			"", 											// description
+			getStateMachineDiagram(stmRoot).getName()		// scope
+		));
+		System.out.println(makeIndent(indent) + "# end def");
+		m_writer.write(Utils.get(m_stxCsv.get(indent, "state_exit", "end"), 
+			rgnName, 										// name
+			m_iClass.getName(), 							// type
+			rgnName + "Hsm",	 						// container
+			"", 											// value
+			"", 											// modifier
+			"", 											// description
+			getStateMachineDiagram(stmRoot).getName()		// scope
+		));
+		
+		/**
+		 * print state-eventProc-map
+		 */
+		System.out.println(makeIndent(indent) + "def EventHandle(self, e, params):");
+		m_writer.write(Utils.get(m_stxCsv.get(indent, "state_impl", "name"), 
+			rgnName, 										// name
+			m_iClass.getName(), 							// type
+			rgnName + "Hsm",	 						// container
+			"", 											// value
+			"", 											// modifier
+			"", 											// description
+			getStateMachineDiagram(stmRoot).getName()		// scope
+		));
+		indent++;
+		System.out.println(makeIndent(indent) + "if self.currentState == " + getStateMachineDiagram(stmRoot).getName() + "." + rgnName + ":");
+		System.out.println(makeIndent(indent) + "    return self." + rgnName + "_EventHandle(e, params)");
+		m_writer.write(Utils.get(m_stxCsv.get(indent, "state_impl", "ext1st"), 
+			rgnName, 								// name
+			m_iClass.getName(), 					// type
+			rgnName + "Hsm",	 						// container
+			"",		 								// value
+			"", 									// modifier
+			"", 									// description
+			getStateMachineDiagram(stmRoot).getName()// scope
+		));		
+		new StateDeepTraverserRgn0() {
+			protected void checkState(State iState, State container) {
+				if (!(iState instanceof FinalState)) {
+					System.out.println(makeIndent(indent) + "elif self.currentState == " + getStateMachineDiagram(stmRoot).getName() + "." + iState.getName() + ":");
+					System.out.println(makeIndent(indent) + "    return self." + iState.getName() + "_EventHandle(e, params)");
+					try {
+						m_writer.write(Utils.get(m_stxCsv.get(indent, "state_impl", "extnxt"), 
+							iState.getName(), 						// name
+							m_iClass.getName(), 					// type
+							rgnName + "Hsm",	 						// container
+							"",		 								// value
+							"", 									// modifier
+							"", 									// description
+							getStateMachineDiagram(stmRoot).getName()// scope
+						));
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}		
+				}
+			}
+		}.start(rgnVertices);
+		indent--;
+		m_writer.write(Utils.get(m_stxCsv.get(indent, "state_impl", "begin"), 
+			rgnName, 										// name
+			m_iClass.getName(), 							// type
+			rgnName + "Hsm",	 						// container
+			"", 											// value
+			"", 											// modifier
+			"", 											// description
+			getStateMachineDiagram(stmRoot).getName()		// scope
+		));
+		System.out.println(makeIndent(indent) + "# end def");
+		m_writer.write(Utils.get(m_stxCsv.get(indent, "state_impl", "end"), 
+			rgnName, 										// name
+			m_iClass.getName(), 							// type
+			rgnName + "Hsm",	 						// container
+			"", 											// value
+			"", 											// modifier
+			"", 											// description
+			getStateMachineDiagram(stmRoot).getName()		// scope
+		));
+		
+		
+		/**
+		 * print state-entry-map
+		 */				
+		System.out.println(makeIndent(indent) + "def EndTrans(self):");
+		System.out.println(makeIndent(indent) + "    self.currentState = self.targetState"); 
+		System.out.println(makeIndent(indent) + "    self.isExternalTrans = False");
+		m_writer.write(Utils.get(m_stxCsv.get(indent, "state_entry", "name"), 
+			rgnName, 										// name
+			m_iClass.getName(), 							// type
+			rgnName + "Hsm",	 						// container
+			"", 											// value
+			"", 											// modifier
+			"", 											// description
+			getStateMachineDiagram(stmRoot).getName()		// scope
+		));
+		indent++;
+		m_writer.write(Utils.get(m_stxCsv.get(indent, "state_entry", "ext1st"), 
+			rgnName, 								// name
+			m_iClass.getName(), 					// type
+			rgnName + "Hsm",	 						// container
+			"",		 								// value
+			"", 									// modifier
+			"", 									// description
+			getStateMachineDiagram(stmRoot).getName()// scope
+		));		
+		System.out.println(makeIndent(indent) + "if self.currentState == " + getStateMachineDiagram(stmRoot).getName() + "." + rgnName + ":");
+		System.out.println(makeIndent(indent) + "    self." + rgnName + "_Enter()");
+		new StateDeepTraverserRgn0() {
+			protected void checkState(State iState, State container) {
+				if (!(iState instanceof FinalState)) {
+					System.out.println(makeIndent(indent) + "elif self.currentState == " + getStateMachineDiagram(stmRoot).getName() + "." + iState.getName() + ":");
+					System.out.println(makeIndent(indent) + "    self." + iState.getName() + "_Enter()");
+					try {
+						m_writer.write(Utils.get(m_stxCsv.get(indent, "state_entry", "extnxt"), 
+							iState.getName(), 						// name
+							m_iClass.getName(), 					// type
+							rgnName + "Hsm",	 						// container
+							"",		 								// value
+							"", 									// modifier
+							"", 									// description
+							getStateMachineDiagram(stmRoot).getName()// scope
+						));
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		}.start(rgnVertices);
+		indent--;
+		m_writer.write(Utils.get(m_stxCsv.get(indent, "state_entry", "begin"), 
+			rgnName, 										// name
+			m_iClass.getName(), 							// type
+			rgnName + "Hsm",	 						// container
+			"", 											// value
+			"", 											// modifier
+			"", 											// description
+			getStateMachineDiagram(stmRoot).getName()		// scope
+		));
+		System.out.println(makeIndent(indent) + "# end def");
+		m_writer.write(Utils.get(m_stxCsv.get(indent, "state_entry", "end"), 
+			rgnName, 										// name
+			m_iClass.getName(), 							// type
+			rgnName + "Hsm",	 						// container
+			"", 											// value
+			"", 											// modifier
+			"", 											// description
+			getStateMachineDiagram(stmRoot).getName()		// scope
+		));
+
+		// print null-triggered transitions
+		System.out.println(makeIndent(indent) + "def DefaultTrans(self):");
+		m_writer.write(Utils.get(m_stxCsv.get(indent, "default_trans", "name"), 
+			rgnName,							// name 
+			m_iClass.getName(), 				// type
+			rgnName + "Hsm",	 						// container
+			"",		 							// value
+			"", 								// modifier
+			"",									// description 
+			getStateMachineDiagram(stmRoot).getName()// scope
+		));
+		indent++;
+		System.out.println(makeIndent(indent) + "self.sourceState = self.currentState");
+		System.out.println(makeIndent(indent) + "self.lcaState = 0");
+		boolean firstRound = true;
+		for (Transition iTrans: getTransitions(stmRoot)) {
+			Vertex iSrcVtx = iTrans.getSource();
+			// find all transitions originated from a vertex belong to this region only
+			String targetMachineName = findTargetMachineName(rgnName, rgnVertices, iSrcVtx, null);
+			if (getEvent(iTrans).trim().isEmpty() && targetMachineName != null && targetMachineName.equals(rgnName + "Hsm")) {
+				m_originTrans = iTrans;
+				if (iSrcVtx != null) {
+					if (iSrcVtx instanceof Pseudostate) {
+						Pseudostate iPstate = (Pseudostate)iSrcVtx;
+						// check if external transition or local transition
+						if (isEntryPointPseudostate(iPstate) && iPstate.getContainer() == null/* || iPstate.isStubState()*/
+						 || isExitPointPseudostate(iPstate) && iPstate.getContainer() != null
+						 //|| isDeepHistoryPseudostate(iPstate)
+						 //|| isShallowHistoryPseudostate(iPstate)
+						 //|| isChoicePseudostate(iPstate)
+					     //|| isJunctionPseudostate(iPstate)
+					     //|| isForkPseudostate(iPstate)
+						 //|| isJoinPseudostate(iPstate)
+						 || isInitialPseudostate(iPstate)
+						) {
+							String containerName = rgnName;
+							State container = null;
+							if (iSrcVtx.getContainer() != null && iSrcVtx.getContainer() instanceof State) {
+								container = (State)iSrcVtx.getContainer();
+								if (!Arrays.asList(getSubvertexes(container, 0)).contains(iSrcVtx)) {	// the pseudo-state belong to a region top
+									container = null;
+								}
+							}
+							if (container != null) {
+								containerName = container.getName();
+							}
+							String pseudoStateName = iPstate.getName();
+							if (isInitialPseudostate(iPstate)
+							 || isEntryPointPseudostate(iPstate) && iPstate.getContainer() == null
+							) {
+								String ifCondition = Utils.get(m_stxCsv.get("default_trans", "ext1st"), 
+									iSrcVtx.getName(),					// name 
+									m_iClass.getName(), 				// type
+									getStateMachineDiagram(stmRoot).getName(),// container
+									containerName,						// value
+									"",									// modifier
+									"",									// description 
+									getStateMachineDiagram(stmRoot).getName()// scope
+								);
+								if (firstRound) {
+									System.out.println(makeIndent(indent) + "if self.pseudoState == " + getStateMachineDiagram(stmRoot).getName() + "." + pseudoStateName + ":");
+									m_writer.write(Utils.get(m_stxCsv.get(indent, "branch", "ext1st"), 
+										ifCondition						// name
+									));
+									firstRound = false;
+								} else {
+									System.out.println(makeIndent(indent) + "elif self.pseudoState == " + getStateMachineDiagram(stmRoot).getName() + "." + pseudoStateName + ":");
+									m_writer.write(Utils.get(m_stxCsv.get(indent, "branch", "extnxt"), 
+										ifCondition						// name
+									));
+								}
+							} else {  // isExitPointPseudostate(iPstate) && iPstate.getContainer() != null
+								container = (State)iSrcVtx.getContainer();
+								containerName = container.getName();
+								String subMachineDgrName = "";
+								if (container.isSubmachineState()) {
+									subMachineDgrName = getStateMachineDiagram(container.getSubmachine()).getName();
+								}
+								String ifCondition = Utils.get(m_stxCsv.get("default_trans", "extnxt"), 
+									iSrcVtx.getName(),					// name 
+									m_iClass.getName(), 				// type
+									subMachineDgrName, 					// container
+									containerName,						// value
+									"",									// modifier
+									"",									// description 
+									getStateMachineDiagram(stmRoot).getName()// scope
+								);
+								if (firstRound) {
+									System.out.println(makeIndent(indent) + "if self.currentState == " + getStateMachineDiagram(stmRoot).getName() + "." + container.getName() + " and self.pseudoState == " + subMachineDgrName + "." + pseudoStateName + ":");
+									m_writer.write(Utils.get(m_stxCsv.get(indent, "branch", "ext1st"), 
+										ifCondition						// name
+									));
+									firstRound = false;
+								} else {
+									System.out.println(makeIndent(indent) + "elif self.currentState == " + getStateMachineDiagram(stmRoot).getName() + "." + container.getName() + " and self.pseudoState == " + subMachineDgrName + "." + pseudoStateName + ":");
+									m_writer.write(Utils.get(m_stxCsv.get(indent, "branch", "extnxt"), 
+										ifCondition						// name
+									));
+								}
+							}
+							indent++;
+							if (!getGuard(iTrans).isEmpty()) {
+								// print if
+								printTransition(stmRoot, rgnName, rgnVertices, iTrans);
+								// print end-if
+								System.out.println(makeIndent(indent) + "return True");
+								System.out.println(makeIndent(indent) + "# end if");
+								try {
+									m_writer.write(Utils.get(m_stxCsv.get(indent, "branch", "end"), 
+										getGuard(iTrans),					// name 
+										m_iClass.getName(), 				// type
+										"", 								// container
+										getGuard(iTrans),		 			// value
+										collectActions(indent, getAction(iTrans)),// modifier
+										"",									// description 
+										getStateMachineDiagram(stmRoot).getName()// scope
+									));
+								} catch (Exception e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								
+							} else {
+								printTransition(stmRoot, rgnName, rgnVertices, iTrans);
+								System.out.println(makeIndent(indent) + "return True");
+							}
+							indent--;								
+						}else {
+							// throws error
+						}
+					}else if (iSrcVtx instanceof State && !isJoinBar(iTrans.getTarget())) {
+						State iState = (State)iSrcVtx;
+						String syntax;
+						if (firstRound) {
+							System.out.println(makeIndent(indent) + "if self.currentState == " + getStateMachineDiagram(stmRoot).getName() + "." + iState.getName() + "\\");
+							syntax = m_stxCsv.get(indent, "branch", "ext1st");
+							firstRound = false;
+						} else {
+							System.out.println(makeIndent(indent) + "elif self.currentState == " + getStateMachineDiagram(stmRoot).getName() + "." + iState.getName() + "\\");
+							syntax = m_stxCsv.get(indent, "branch", "extnxt");
+						}
+						int subRgnIdx = 1;
+						String isCompletedConditions = "";
+						while (true) {											// All sub-regions must be completed
+							try {
+								if (getSubvertexes(iState, subRgnIdx).size() > 0) {
+									String subRgnName = makeRgnName(iState, subRgnIdx);
+									System.out.println(makeIndent(indent) + "    and self.main." + subRgnName + "Hsm.pseudoState == self.main." + subRgnName + "\\");
+									isCompletedConditions += Utils.get(m_stxCsv.get(indent, "region", "extnxt"),
+										subRgnName,										// name
+										m_iClass.getName(),								// type
+										subRgnName + "Hsm",								// container
+										subRgnName,										// value
+										targetMachineName,								// modifier
+										getDefinition(iTrans),							// description
+										getStateMachineDiagram(stmRoot).getName()		// scope
+									);
+								}
+							} catch (Exception e) {
+								break;
+							}
+							subRgnIdx++;
+						}
+						// sub-machine, if have, must be completed
+						if (iState.isSubmachineState()) {
+							String subStmName = getStateMachineDiagram(iState.getSubmachine()).getName();
+							System.out.println(makeIndent(indent) + "    and self.main." + subStmName + "Hsm.pseudoState == self.main." + subStmName + "\\");
+							isCompletedConditions += Utils.get(m_stxCsv.get(indent, "substm", "extnxt"),
+								subStmName,										// name
+								m_iClass.getName(),								// type
+								subStmName,										// container
+								subStmName,										// value
+								iState.getName() + "Hsm",						// modifier
+								getDefinition(iTrans),							// description
+								getStateMachineDiagram(stmRoot).getName()		// scope
+							);
+						}
+						
+						System.out.println(makeIndent(indent) + ":");
+						String ifCondition = Utils.get(m_stxCsv.get(indent, "default_trans", "extnxt"), 
+							iSrcVtx.getName(),					// name 
+							m_iClass.getName(), 				// type
+							getStateMachineDiagram(stmRoot).getName(),// container
+							iSrcVtx.getName(),					// value
+							isCompletedConditions,				// modifier
+							"",									// description 
+							getStateMachineDiagram(stmRoot).getName()// scope
+						);
+						m_writer.write(Utils.get(syntax, 
+							ifCondition							// name 
+						));
+						indent++;
+						if (!getGuard(iTrans).isEmpty()) {
+							// print if
+							printTransition(stmRoot, rgnName, rgnVertices, iTrans);
+							// print end-if
+							System.out.println(makeIndent(indent) + "return True");
+							System.out.println(makeIndent(indent) + "#endif");
+							try {
+								m_writer.write(Utils.get(m_stxCsv.get(indent, "branch", "end"), 
+									getGuard(iTrans),					// name 
+									m_iClass.getName(), 				// type
+									"", 								// container
+									getGuard(iTrans),		 			// value
+									collectActions(indent, getAction(iTrans)),// modifier
+									"",									// description 
+									getStateMachineDiagram(stmRoot).getName()// scope
+								));
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							
+						} else {
+							printTransition(stmRoot, rgnName, rgnVertices, iTrans);
+							System.out.println(makeIndent(indent) + "return True");
+						}
+						indent--;								
+					}else if (iSrcVtx instanceof State && isJoinBar(iTrans.getTarget())) {
+						// Check if this join bar belongs to this region
+						Pseudostate iPstate = (Pseudostate)iTrans.getTarget();
+						Collection<Transition> outgoings = iPstate.getOutgoings();						
+						
+						String joinBarMachineName = findTargetMachineName(rgnName, rgnVertices, iPstate, null);
+						if (joinBarMachineName != null && joinBarMachineName.equals(rgnName + "Hsm")) {
+							System.out.println(makeIndent(indent) + "# begin joining");
+							String isInConditions = "";
+							for (Transition incoming: iPstate.getIncomings()) {
+								if (incoming != iTrans) {
+									if (incoming.getSource() instanceof State && getEvent(incoming).trim().isEmpty()) {
+										State sourceState = (State)incoming.getSource();
+										StringBuilder containingRgn = new StringBuilder();
+										targetMachineName = findTargetMachineName(stmRoot.getName(), getVertexes(stmRoot), sourceState, containingRgn);
+										String targetMachineRef;
+										if (targetMachineName.equals(rgnName + "Hsm")) {
+											targetMachineRef = "self";
+										} else {
+											targetMachineRef = "self.main." + targetMachineName;
+										}
+										if (isInConditions.isEmpty()) {
+											System.out.println(makeIndent(indent) + "if IsIn(" + targetMachineRef + ".currentState," + getStateMachineDiagram(stmRoot).getName() + "." + sourceState + ")\\");
+											try {
+												// [cONTAINER]_IsIn( &( ( [sCOPE]* )pStm->pMain )->[mODIFIER], [sCOPE]_[vALUE] )
+												isInConditions = Utils.get(m_stxCsv.get(indent, "trans_action", "ext1st"),
+													sourceState.getName(),							// name
+													m_iClass.getName(),								// type
+													targetMachineName,								// container
+													sourceState.getName(),							// value
+													targetMachineName,								// modifier
+													getDefinition(iTrans),							// description
+													getStateMachineDiagram(stmRoot).getName()		// scope
+												);
+											} catch (Exception e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
+											firstRound = false;
+										} else {
+											System.out.println(makeIndent(indent) + " and IsIn(" + targetMachineRef + ".currentState, " + getStateMachineDiagram(stmRoot).getName() + "." + sourceState + ")\\");
+											try {
+												// [cONTAINER]_IsIn( &( ( [sCOPE]* )pStm->pMain )->[mODIFIER], [sCOPE]_[vALUE] )
+												isInConditions += Utils.get(m_stxCsv.get(indent, "trans_action", "extnxt"),
+													sourceState.getName(),							// name
+													m_iClass.getName(),								// type
+													targetMachineName,								// container
+													sourceState.getName(),							// value
+													targetMachineName,								// modifier
+													getDefinition(iTrans),							// description
+													getStateMachineDiagram(stmRoot).getName()		// scope
+												);
+											} catch (Exception e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
+										}
+									} else {
+										System.out.println("★★★ERROR★★★: Joining from other regions cannot have event name");
+									}
+								}						
+							}
+							if (outgoings.size() == 1) {
+								System.out.println(makeIndent(indent) + ":");
+								try {
+									m_writer.write(Utils.get(m_stxCsv.get(indent, "branch", "ext1st"), 
+										isInConditions,						// name 
+										m_iClass.getName(), 				// type
+										"", 								// container
+										isInConditions,			 			// value
+										collectActions(indent, getAction(iTrans)),// modifier
+										"",									// description 
+										getStateMachineDiagram(stmRoot).getName()// scope
+									));
+								} catch (Exception e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								indent++;
+								printTransition(stmRoot, rgnName, rgnVertices, toArray(outgoings)[0]);
+								indent--;
+							}							
+						}
+					}else if (iSrcVtx instanceof FinalState) {
+						// throws error
+					}else {
+						// throws error
+					}
+				}
+			}
+		}
+		// if this region/machine is active and pseudoState != currentState : transit to pseudoState
+		if (firstRound) {
+			System.out.println(makeIndent(indent) + "if self.currentState != 0 and self.currentState != self.pseudoState" + ":");
+			firstRound = false;
+		} else {
+			System.out.println(makeIndent(indent) + "elif self.currentState != 0 and self.currentState != self.pseudoState" + ":");
+		}
+		System.out.println(makeIndent(indent) + "    self.BgnTrans(self.pseudoState)");
+		System.out.println(makeIndent(indent) + "    self.EndTrans()");
+		System.out.println(makeIndent(indent) + "    return True");
+		System.out.println(makeIndent(indent) + "self.lastEnteredStateRecovering = False");
+		System.out.println(makeIndent(indent) + "return False");
+		m_writer.write(Utils.get(m_stxCsv.get(indent, "default_trans", "begin"), 
+			rgnName,							// name 
+			m_iClass.getName(), 				// type
+			rgnName + "Hsm",	 						// container
+			"",		 							// value
+			"", 								// modifier
+			"",									// description 
+			getStateMachineDiagram(stmRoot).getName()// scope
+		));
+		indent--;
+		System.out.println(makeIndent(indent) + "# end def");
+
+		m_writer.write(Utils.get(m_stxCsv.get(indent, "default_trans", "end"), 
+			rgnName,							// name 
+			m_iClass.getName(), 				// type
+			rgnName + "Hsm",	 						// container
+			"",		 							// value
+			"", 								// modifier
+			"",									// description 
+			getStateMachineDiagram(stmRoot).getName()// scope
+		));		
+		
+		System.out.println(makeIndent(indent) + "def Initiate(self, entryPoint = 0):");
+		System.out.println(makeIndent(indent) + "    if entryPoint != 0:");
+		System.out.println(makeIndent(indent) + "        self.pseudoState = entryPoint");
+		System.out.println(makeIndent(indent) + "        return");
+		System.out.println(makeIndent(indent) + "    if self.pseudoState == 0:");
+		System.out.println(makeIndent(indent) + "        self.pseudoState = " + getStateMachineDiagram(stmRoot).getName() + "." + rgnName);
+		System.out.println(makeIndent(indent) + "    self.BgnTrans(self.pseudoState)");
+		System.out.println(makeIndent(indent) + "    self.EndTrans()");
+		System.out.println(makeIndent(indent) + "# end def");
+
+		System.out.println(makeIndent(indent) + "def Terminate(self):");
+		System.out.println(makeIndent(indent) + "    self.BgnTrans(0)");
+		System.out.println(makeIndent(indent) + "    self.EndTrans()");
+		System.out.println(makeIndent(indent) + "# end def");
+		
+	}
 }
