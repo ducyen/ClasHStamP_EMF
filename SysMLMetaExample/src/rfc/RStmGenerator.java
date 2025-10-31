@@ -45,10 +45,10 @@ import org.eclipse.gmf.runtime.notation.Edge;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.notation.Bounds;
 import org.eclipse.gmf.runtime.notation.RelativeBendpoints;
-
-//import org.eclipse.gmf.runtime.notation.RelativeBendpoint;
-// ... other imports (java.io.Writer, java.util.*, etc.)
+import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.gmf.runtime.notation.datatype.RelativeBendpoint;
+import org.eclipse.gmf.runtime.notation.NotationPackage;
+import org.eclipse.gmf.runtime.notation.LayoutConstraint;
 
 public class RStmGenerator extends TBaseGenerator {
     private List<StateMachine> m_sortedStmDgrs = new ArrayList<>();
@@ -520,6 +520,31 @@ public class RStmGenerator extends TBaseGenerator {
         return m_bResult;
     }
     
+    /**
+     * findNodeForElement
+     * @param parent
+     * @param element
+     * @return
+     */
+    private static Node findNodeForElement(View parent, EObject element) {
+        // Check this node itself
+        if (parent.getElement() == element && parent instanceof Node) {
+            return (Node) parent;
+        }
+
+        // Recurse through children
+        for (Object child : parent.getChildren()) {
+            if (child instanceof View) {
+                Node found = findNodeForElement((View) child, element);
+                if (found != null) {
+                    return found;
+                }
+            }
+        }
+        return null;
+    }
+    
+    
 	/**
 	 * findTargetMachineName
 	 * @param iStm
@@ -817,9 +842,9 @@ public class RStmGenerator extends TBaseGenerator {
 				m_writer.write(Utils.get(m_stxCsv.get(indent, "region", "begin"),
 					targetStateName,								// name
 					m_iClass.getName(),								// type
-					targetMachineName,								// container
+					"",												// container
 					"",												// value
-					targetMachineName,								// modifier
+					"",												// modifier
 					getDefinition(iTrans),							// description
 					getStateMachineDiagram(stmRoot).getName()		// scope
 				));
@@ -2274,26 +2299,60 @@ public class RStmGenerator extends TBaseGenerator {
 					}
 					
 					if (_iState != null) {
-						/* TODO
-						Rectangle2D iRect = null;
-						for (IPresentation iPresentxn : _iState.getPresentations()) {
-							INodePresentation iNode = (INodePresentation)iPresentxn;
-							iRect = iNode.getRectangle();
+						// Iterate over the notation model to find the View corresponding to this UML State
+						Rectangle2D rect = null;
+						Rectangle2D localStmRect = null;
+
+						for (EObject eObj : stm.TMain.notationResource.getContents()) {
+						    if (eObj instanceof Diagram) {
+						        Diagram diagram = (Diagram) eObj;
+
+						        if (diagram.getElement() == stmRoot) {
+						            // Find the node for the state
+						            Node stateNode = findNodeForElement(diagram, _iState);
+						            if (stateNode != null && stateNode.getLayoutConstraint() instanceof Bounds) {
+						                Bounds bounds = (Bounds) stateNode.getLayoutConstraint();
+						                rect = new Rectangle2D.Double(
+						                        bounds.getX(),
+						                        bounds.getY(),
+						                        bounds.getWidth(),
+						                        bounds.getHeight()
+						                );
+						            }
+
+						            // Find the node for the state machine itself
+						            Node rootNode = findNodeForElement(diagram, stmRoot);
+						            if (rootNode != null && rootNode.getLayoutConstraint() instanceof Bounds) {
+						                Bounds bounds = (Bounds) rootNode.getLayoutConstraint();
+						                localStmRect = new Rectangle2D.Double(
+						                        bounds.getX(),
+						                        bounds.getY(),
+						                        bounds.getWidth(),
+						                        bounds.getHeight()
+						                );
+						            }
+
+						            break; // Done with this diagram
+						        }
+						    }
 						}
-						Rectangle2D iLocalStmRect = getStateMachineDiagram(stmRoot).getBoundRect();
-						if (iRect != null && iLocalStmRect != null) {
-							rectRatio = "" + Math.round(iRect.getX()) 
-									+ "\t" + Math.round(iRect.getY())
-									+ "\t" + Math.round(iRect.getWidth())
-									+ "\t" + Math.round(iRect.getHeight())
-									+ "\t" + Math.round(iLocalStmRect.getX())
-									+ "\t" + Math.round(iLocalStmRect.getY())
-									+ "\t" + Math.round(iLocalStmRect.getWidth())
-									+ "\t" + Math.round(iLocalStmRect.getHeight())
-									+ "\t" + _iState.getName();
-						}
-						*/
-						// Added transition action
+
+						// Output ratio
+						if (rect != null && localStmRect != null) {
+						    rectRatio = String.format(
+						        "%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%s",
+						        Math.round(rect.getX()),
+						        Math.round(rect.getY()),
+						        Math.round(rect.getWidth()),
+						        Math.round(rect.getHeight()),
+						        Math.round(localStmRect.getX()),
+						        Math.round(localStmRect.getY()),
+						        Math.round(localStmRect.getWidth()),
+						        Math.round(localStmRect.getHeight()),
+						        _iState.getName()
+						    );
+						    System.out.println(rectRatio);
+						}						// Added transition action
 						actions += collectActions(indent, getEntry(_iState));
 						
 						m_writer.write(Utils.get(m_stxCsv.get(indent, "transition", "name"), 

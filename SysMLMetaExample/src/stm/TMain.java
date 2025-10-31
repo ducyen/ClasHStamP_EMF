@@ -12,10 +12,13 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
 import org.eclipse.uml2.uml.Package;
-import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.PackageableElement;
 import org.eclipse.uml2.uml.StateMachine;
+import org.eclipse.gmf.runtime.notation.NotationPackage;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.eclipse.papyrus.infra.gmfdiag.style.StylePackage;
+import org.eclipse.papyrus.infra.gmfdiag.style.impl.StylePackageImpl;
 
 import rfc.RStmGenerator;
 
@@ -24,6 +27,8 @@ import rfc.RStmGenerator;
  * 
  */
 public class TMain {
+	public static Resource notationResource;
+	
     private static int getMajorJavaVersion() {
         String version = System.getProperty("java.version");
         if (version.startsWith("1.")) {
@@ -97,7 +102,29 @@ public class TMain {
             String projectPath = System.getenv("PROJECT");
             ResourceSet resourceSet = new ResourceSetImpl();
             UMLResourcesUtil.init(resourceSet);
-            Resource resource = resourceSet.getResource(URI.createFileURI(projectPath), true);
+            
+            // 🧩 Add this before loading .notation
+            resourceSet.getResourceFactoryRegistry()
+                .getExtensionToFactoryMap()
+                .put("notation", new XMIResourceFactoryImpl());
+            NotationPackage.eINSTANCE.eClass();
+            StylePackage.eINSTANCE.eClass();
+            
+            // 1️⃣ Load UML model
+            URI umlUri = URI.createFileURI(projectPath);
+            Resource resource = resourceSet.getResource(umlUri, true);
+            
+            // 2️⃣ Load NOTATION model (diagram layout)
+            URI notationUri = umlUri.trimFileExtension().appendFileExtension("notation");
+            notationResource = resourceSet.getResource(notationUri, true);
+
+            // 3️⃣ (Optional) Load DI model (diagram metadata)
+            // URI diUri = umlUri.trimFileExtension().appendFileExtension("di");
+            // Resource diResource = resourceSet.getResource(diUri, true);
+
+            // ✅ Now you can traverse the diagram layout
+            System.out.println("Notation resource loaded: " + notationResource);            
+            
             Package model = (Package) resource.getContents().get(0);
 
             // find specified package
