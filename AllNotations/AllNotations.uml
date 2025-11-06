@@ -1,0 +1,604 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:Codegen="http://www.eclipse.org/papyrus/Codegen/1" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML">
+  <uml:Model xmi:id="_xr06YLpSEfCEnM4Nhn5qiQ" name="AllNotations">
+    <packageImport xmi:type="uml:PackageImport" xmi:id="_xxcaMLpSEfCEnM4Nhn5qiQ">
+      <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+    </packageImport>
+    <packagedElement xmi:type="uml:Package" xmi:id="_bcwv0LpVEfCEnM4Nhn5qiQ" name="JavaSample00">
+      <packagedElement xmi:type="uml:Package" xmi:id="_sJM38LpVEfCEnM4Nhn5qiQ" name="Abstracts">
+        <packagedElement xmi:type="uml:Class" xmi:id="_sJOGELpVEfCEnM4Nhn5qiQ" name="BaseClass" visibility="public">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_sJOtILpVEfCEnM4Nhn5qiQ" name="publicMethod" visibility="public" isAbstract="true"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_sJPUMLpVEfCEnM4Nhn5qiQ" name="protectedMethod" visibility="protected" isAbstract="true"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_sJPUMbpVEfCEnM4Nhn5qiQ" name="packageVisibleMethod" visibility="private" isAbstract="true"/>
+        </packagedElement>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_tBkDULpVEfCEnM4Nhn5qiQ" name="Base">
+        <packagedElement xmi:type="uml:Class" xmi:id="_tBlRcLpVEfCEnM4Nhn5qiQ" name="StateMachine" visibility="public">
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_tBlRcbpVEfCEnM4Nhn5qiQ" name="pParentStm" visibility="private" type="_tBlRcLpVEfCEnM4Nhn5qiQ" isUnique="false">
+            <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_tBmfkLpVEfCEnM4Nhn5qiQ" name="defaultValue">
+              <language>JAVA</language>
+              <body>NULL</body>
+            </defaultValue>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_tBw3oLpVEfCEnM4Nhn5qiQ" name="nCurrentState" visibility="private" type="_tBo70LpVEfCEnM4Nhn5qiQ" isUnique="false">
+            <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_tBxesLpVEfCEnM4Nhn5qiQ" name="defaultValue">
+              <language>JAVA</language>
+              <body>STATE_TOP</body>
+            </defaultValue>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_tBxesbpVEfCEnM4Nhn5qiQ" name="nLCAState" visibility="private" type="_tBo70LpVEfCEnM4Nhn5qiQ" isUnique="false">
+            <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_tBxesrpVEfCEnM4Nhn5qiQ" name="defaultValue">
+              <language>JAVA</language>
+              <body>STATE_UNDEF</body>
+            </defaultValue>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_tByFwLpVEfCEnM4Nhn5qiQ" name="nTargetState" visibility="private" type="_tBo70LpVEfCEnM4Nhn5qiQ" isUnique="false">
+            <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_tByFwbpVEfCEnM4Nhn5qiQ" name="defaultValue">
+              <language>JAVA</language>
+              <body>STATE_UNDEF</body>
+            </defaultValue>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_tByFwrpVEfCEnM4Nhn5qiQ" name="nSourceState" visibility="private" type="_tBo70LpVEfCEnM4Nhn5qiQ" isUnique="false">
+            <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_tByFw7pVEfCEnM4Nhn5qiQ" name="defaultValue">
+              <language>JAVA</language>
+              <body>STATE_UNDEF</body>
+            </defaultValue>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_tBys0LpVEfCEnM4Nhn5qiQ" name="nPseudostate" visibility="private" type="_tBo70LpVEfCEnM4Nhn5qiQ" isUnique="false">
+            <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_tBys0bpVEfCEnM4Nhn5qiQ" name="defaultValue">
+              <language>JAVA</language>
+              <body>STATE_TOP</body>
+            </defaultValue>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_tBz68LpVEfCEnM4Nhn5qiQ" name="bIsExternTrans" visibility="private" type="_tBys0rpVEfCEnM4Nhn5qiQ" isUnique="false">
+            <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_tBz68bpVEfCEnM4Nhn5qiQ" name="defaultValue">
+              <language>JAVA</language>
+              <body>false</body>
+            </defaultValue>
+          </ownedAttribute>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_tCBWULpVEfCEnM4Nhn5qiQ" name="Enterable" specification="_tCAIMrpVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body>return 0;</body>
+          </ownedBehavior>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_tCB9Y7pVEfCEnM4Nhn5qiQ" name="Exitable" specification="_tCB9YLpVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body>return 0;</body>
+          </ownedBehavior>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_tCCkcLpVEfCEnM4Nhn5qiQ" name="IsFinished" specification="_tCB9ZLpVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body>return 0;</body>
+          </ownedBehavior>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_tCAIMrpVEfCEnM4Nhn5qiQ" name="Enterable" visibility="public" method="_tCBWULpVEfCEnM4Nhn5qiQ">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_tCAIM7pVEfCEnM4Nhn5qiQ" type="_tCAIMbpVEfCEnM4Nhn5qiQ" direction="return"/>
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_tCAvQLpVEfCEnM4Nhn5qiQ" name="nThisState" type="_tCAIMbpVEfCEnM4Nhn5qiQ"/>
+          </ownedOperation>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_tCB9YLpVEfCEnM4Nhn5qiQ" name="Exitable" visibility="public" isLeaf="true" method="_tCB9Y7pVEfCEnM4Nhn5qiQ">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_tCB9YbpVEfCEnM4Nhn5qiQ" type="_tCAIMbpVEfCEnM4Nhn5qiQ" direction="return"/>
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_tCB9YrpVEfCEnM4Nhn5qiQ" name="nThisState" type="_tCAIMbpVEfCEnM4Nhn5qiQ"/>
+          </ownedOperation>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_tCB9ZLpVEfCEnM4Nhn5qiQ" name="IsFinished" visibility="public" method="_tCCkcLpVEfCEnM4Nhn5qiQ">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_tCB9ZbpVEfCEnM4Nhn5qiQ" type="_tCAIMbpVEfCEnM4Nhn5qiQ" direction="return"/>
+          </ownedOperation>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_tBys0rpVEfCEnM4Nhn5qiQ" name="bool"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_tCCkcbpVEfCEnM4Nhn5qiQ" name="Main" visibility="public"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_tCDLgLpVEfCEnM4Nhn5qiQ" name="EventParams" visibility="public"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_uQn3cLpVEfCEnM4Nhn5qiQ" name="Interfaces">
+        <packagedElement xmi:type="uml:Interface" xmi:id="_uQpFkLpVEfCEnM4Nhn5qiQ" name="Interface2" visibility="public">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_uQqTsbpVEfCEnM4Nhn5qiQ" name="methodWithParams" visibility="public" isLeaf="true">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_uQq6wLpVEfCEnM4Nhn5qiQ" name="parm1" type="_uQpFkbpVEfCEnM4Nhn5qiQ"/>
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_uQq6wbpVEfCEnM4Nhn5qiQ" name="parm2" type="_uQqTsLpVEfCEnM4Nhn5qiQ"/>
+          </ownedOperation>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Interface" xmi:id="_uQrh0LpVEfCEnM4Nhn5qiQ" name="Interface1" visibility="public">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_uQrh0bpVEfCEnM4Nhn5qiQ" name="finalMethod" visibility="public" isLeaf="true"/>
+        </packagedElement>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_vGDqoLpVEfCEnM4Nhn5qiQ" name="Model">
+        <packagedElement xmi:type="uml:Class" xmi:id="_vGERsLpVEfCEnM4Nhn5qiQ" name="Composition" visibility="public">
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_vGERsbpVEfCEnM4Nhn5qiQ" name="attribute4" visibility="private" type="_tCAIMbpVEfCEnM4Nhn5qiQ" isUnique="false"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_vGJKMLpVEfCEnM4Nhn5qiQ" name="Aggregration" visibility="public">
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_vGJxQLpVEfCEnM4Nhn5qiQ" name="attribute2" visibility="private" type="_tCAIMbpVEfCEnM4Nhn5qiQ" isUnique="false"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_vGLmcLpVEfCEnM4Nhn5qiQ" name="Context" visibility="public">
+          <generalization xmi:type="uml:Generalization" xmi:id="_vGNboLpVEfCEnM4Nhn5qiQ" general="_sJOGELpVEfCEnM4Nhn5qiQ"/>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_vGXMorpVEfCEnM4Nhn5qiQ" name="classOrStaticAttribute" visibility="private" isStatic="true" type="_tCAIMbpVEfCEnM4Nhn5qiQ" isUnique="false"/>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_vGXzsLpVEfCEnM4Nhn5qiQ" name="publicAttribute" visibility="public" type="_uQpFkbpVEfCEnM4Nhn5qiQ" isUnique="false"/>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_vGXzsbpVEfCEnM4Nhn5qiQ" name="privateAttribute" visibility="private" type="_tCAIMbpVEfCEnM4Nhn5qiQ" isUnique="false"/>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_vGXzsrpVEfCEnM4Nhn5qiQ" name="internalAttribute" visibility="private" type="_tCAIMbpVEfCEnM4Nhn5qiQ" isUnique="false"/>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_vGXztLpVEfCEnM4Nhn5qiQ" name="isInitializedAttribute" visibility="private" type="_vGXzs7pVEfCEnM4Nhn5qiQ" isUnique="false">
+            <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_vGXztbpVEfCEnM4Nhn5qiQ" name="defaultValue">
+              <language>JAVA</language>
+              <body>true</body>
+            </defaultValue>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_vGYawLpVEfCEnM4Nhn5qiQ" name="readOnlyAttribute" visibility="private" isLeaf="true" type="_tCAIMbpVEfCEnM4Nhn5qiQ" isUnique="false"/>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_vGYawbpVEfCEnM4Nhn5qiQ" name="initializedStaticArray" visibility="private" isStatic="true" type="_tCAIMbpVEfCEnM4Nhn5qiQ" isUnique="false">
+            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_vGYawrpVEfCEnM4Nhn5qiQ"/>
+            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_vGYaw7pVEfCEnM4Nhn5qiQ" value="*"/>
+            <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_vGYaxLpVEfCEnM4Nhn5qiQ" name="defaultValue">
+              <language>JAVA</language>
+              <body>{ 1, 2, 3 }</body>
+            </defaultValue>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_vGZB0LpVEfCEnM4Nhn5qiQ" name="finalConstantAttribute" visibility="private" isLeaf="true" isStatic="true" type="_tCAIMbpVEfCEnM4Nhn5qiQ" isUnique="false">
+            <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_vGZB0bpVEfCEnM4Nhn5qiQ" name="defaultValue">
+              <language>JAVA</language>
+              <body>5</body>
+            </defaultValue>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_vGZB0rpVEfCEnM4Nhn5qiQ" name="anAggregation" visibility="private" type="_vGJKMLpVEfCEnM4Nhn5qiQ" isUnique="false">
+            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_vGZB07pVEfCEnM4Nhn5qiQ"/>
+            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_vGZB1LpVEfCEnM4Nhn5qiQ" value="*"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_vGZB1bpVEfCEnM4Nhn5qiQ" name="aProtectedComposition" visibility="protected" type="_vGERsLpVEfCEnM4Nhn5qiQ" isUnique="false">
+            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_vGZB1rpVEfCEnM4Nhn5qiQ"/>
+            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_vGZB17pVEfCEnM4Nhn5qiQ" value="*"/>
+          </ownedAttribute>
+          <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_vGV-gLpVEfCEnM4Nhn5qiQ" name="Context implements Interface2" client="_vGLmcLpVEfCEnM4Nhn5qiQ" supplier="_uQpFkLpVEfCEnM4Nhn5qiQ" contract="_uQpFkLpVEfCEnM4Nhn5qiQ"/>
+          <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_vGXMobpVEfCEnM4Nhn5qiQ" name="Context implements Interface1" client="_vGLmcLpVEfCEnM4Nhn5qiQ" supplier="_uQrh0LpVEfCEnM4Nhn5qiQ" contract="_uQrh0LpVEfCEnM4Nhn5qiQ"/>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vGZo4LpVEfCEnM4Nhn5qiQ" name="classOrStaticMethod" specification="_vGZB2LpVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body></body>
+          </ownedBehavior>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vGZo4rpVEfCEnM4Nhn5qiQ" name="publicMethod" specification="_vGZo4bpVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body></body>
+          </ownedBehavior>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vGaP8bpVEfCEnM4Nhn5qiQ" name="privateLeafMethod" specification="_vGaP8LpVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body></body>
+          </ownedBehavior>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vGaP87pVEfCEnM4Nhn5qiQ" name="protectedMethod" specification="_vGaP8rpVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body></body>
+          </ownedBehavior>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vGaP9bpVEfCEnM4Nhn5qiQ" name="packageVisibleMethod" specification="_vGaP9LpVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body></body>
+          </ownedBehavior>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vGa3ArpVEfCEnM4Nhn5qiQ" name="methodWithParams" specification="_vGaP9rpVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body></body>
+          </ownedBehavior>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vGbeELpVEfCEnM4Nhn5qiQ" name="methodReturnsSomething" specification="_vGa3A7pVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body>return null;</body>
+          </ownedBehavior>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vGbeErpVEfCEnM4Nhn5qiQ" name="methodThrowsException" specification="_vGbeEbpVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body></body>
+          </ownedBehavior>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vGbeFLpVEfCEnM4Nhn5qiQ" name="finalMethod" specification="_vGbeE7pVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body></body>
+          </ownedBehavior>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vGZB2LpVEfCEnM4Nhn5qiQ" name="classOrStaticMethod" visibility="public" isLeaf="true" isStatic="true" method="_vGZo4LpVEfCEnM4Nhn5qiQ"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vGZo4bpVEfCEnM4Nhn5qiQ" name="publicMethod" visibility="public" method="_vGZo4rpVEfCEnM4Nhn5qiQ"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vGaP8LpVEfCEnM4Nhn5qiQ" name="privateLeafMethod" visibility="private" isLeaf="true" method="_vGaP8bpVEfCEnM4Nhn5qiQ"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vGaP8rpVEfCEnM4Nhn5qiQ" name="protectedMethod" visibility="protected" method="_vGaP87pVEfCEnM4Nhn5qiQ"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vGaP9LpVEfCEnM4Nhn5qiQ" name="packageVisibleMethod" visibility="package" method="_vGaP9bpVEfCEnM4Nhn5qiQ"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vGaP9rpVEfCEnM4Nhn5qiQ" name="methodWithParams" visibility="public" isLeaf="true" method="_vGa3ArpVEfCEnM4Nhn5qiQ">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_vGa3ALpVEfCEnM4Nhn5qiQ" name="parm1" type="_uQpFkbpVEfCEnM4Nhn5qiQ"/>
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_vGa3AbpVEfCEnM4Nhn5qiQ" name="parm2" type="_uQqTsLpVEfCEnM4Nhn5qiQ"/>
+          </ownedOperation>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vGa3A7pVEfCEnM4Nhn5qiQ" name="methodReturnsSomething" visibility="public" isLeaf="true" method="_vGbeELpVEfCEnM4Nhn5qiQ">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_vGa3BbpVEfCEnM4Nhn5qiQ" type="_vGa3BLpVEfCEnM4Nhn5qiQ" direction="return"/>
+          </ownedOperation>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vGbeEbpVEfCEnM4Nhn5qiQ" name="methodThrowsException" visibility="public" isLeaf="true" method="_vGbeErpVEfCEnM4Nhn5qiQ"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vGbeE7pVEfCEnM4Nhn5qiQ" name="finalMethod" visibility="public" isLeaf="true" method="_vGbeFLpVEfCEnM4Nhn5qiQ"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_vGa3BLpVEfCEnM4Nhn5qiQ" name="UsedDependency" visibility="public">
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_vG274LpVEfCEnM4Nhn5qiQ" name="attribute6" visibility="private" type="_tCAIMbpVEfCEnM4Nhn5qiQ" isUnique="false"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_vGcsMLpVEfCEnM4Nhn5qiQ" name="FlexButton" visibility="public">
+          <generalization xmi:type="uml:Generalization" xmi:id="_vGcsMrpVEfCEnM4Nhn5qiQ" general="_vGcsMbpVEfCEnM4Nhn5qiQ"/>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_vGcsM7pVEfCEnM4Nhn5qiQ" name="m_value" visibility="private" type="_tCAIMbpVEfCEnM4Nhn5qiQ" isUnique="false"/>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_vGcsNLpVEfCEnM4Nhn5qiQ" name="m_valueMax" visibility="private" type="_tCAIMbpVEfCEnM4Nhn5qiQ" isUnique="false"/>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_vGdTQLpVEfCEnM4Nhn5qiQ" name="m_valueTmp" visibility="private" type="_tCAIMbpVEfCEnM4Nhn5qiQ" isUnique="false">
+            <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_vGdTQbpVEfCEnM4Nhn5qiQ" name="defaultValue">
+              <language>JAVA</language>
+              <body>0</body>
+            </defaultValue>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_vGdTQrpVEfCEnM4Nhn5qiQ" name="m_style" visibility="private" type="_tCAIMbpVEfCEnM4Nhn5qiQ" isUnique="false"/>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_vGd6UbpVEfCEnM4Nhn5qiQ" name="m_knobPos" visibility="private" type="_vGdTQ7pVEfCEnM4Nhn5qiQ" isUnique="false">
+            <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_vGehYLpVEfCEnM4Nhn5qiQ" name="defaultValue">
+              <language>JAVA</language>
+              <body>{ 0 }</body>
+            </defaultValue>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_vGehYrpVEfCEnM4Nhn5qiQ" name="m_mouseListeners" visibility="protected" type="_vGehYbpVEfCEnM4Nhn5qiQ" isUnique="false"/>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_vGehY7pVEfCEnM4Nhn5qiQ" name="m_buttonListeners" visibility="protected" type="_vGehYbpVEfCEnM4Nhn5qiQ" isUnique="false"/>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vGgWk7pVEfCEnM4Nhn5qiQ" name="load" specification="_vGfIcbpVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body>return null;</body>
+          </ownedBehavior>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vGg9orpVEfCEnM4Nhn5qiQ" name="draw0" specification="_vGg9oLpVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body></body>
+          </ownedBehavior>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vGhksLpVEfCEnM4Nhn5qiQ" name="draw1" specification="_vGg9o7pVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body></body>
+          </ownedBehavior>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vGhktbpVEfCEnM4Nhn5qiQ" name="updateMouseState" specification="_vGhksbpVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body></body>
+          </ownedBehavior>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vGiy07pVEfCEnM4Nhn5qiQ" name="IsInRect" specification="_vGiy0LpVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body>return null;</body>
+          </ownedBehavior>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vGjZ4LpVEfCEnM4Nhn5qiQ" name="OnPushBtnPressed" specification="_vGiy1LpVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body>return null;</body>
+          </ownedBehavior>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vGjZ4rpVEfCEnM4Nhn5qiQ" name="OnHoldEntry" specification="_vGjZ4bpVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body></body>
+          </ownedBehavior>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vGjZ5LpVEfCEnM4Nhn5qiQ" name="OnHoldExit" specification="_vGjZ47pVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body></body>
+          </ownedBehavior>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vGkA8bpVEfCEnM4Nhn5qiQ" name="DrawPushStyle" specification="_vGjZ5bpVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body></body>
+          </ownedBehavior>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vGkoArpVEfCEnM4Nhn5qiQ" name="DrawSelectStyle" specification="_vGkoALpVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body></body>
+          </ownedBehavior>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vGlPErpVEfCEnM4Nhn5qiQ" name="DrawToggleStyle" specification="_vGlPELpVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body></body>
+          </ownedBehavior>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vGl2IbpVEfCEnM4Nhn5qiQ" name="DrawSlideStyle" specification="_vGlPE7pVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body></body>
+          </ownedBehavior>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vGmdMbpVEfCEnM4Nhn5qiQ" name="DrawPressed" specification="_vGl2IrpVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body></body>
+          </ownedBehavior>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vGnEQbpVEfCEnM4Nhn5qiQ" name="DrawKnob" specification="_vGmdMrpVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body></body>
+          </ownedBehavior>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vGnrUbpVEfCEnM4Nhn5qiQ" name="GetValue" specification="_vGnEQrpVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body>return 0;</body>
+          </ownedBehavior>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vGnrVLpVEfCEnM4Nhn5qiQ" name="SetValue" specification="_vGnrUrpVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body></body>
+          </ownedBehavior>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vGfIcbpVEfCEnM4Nhn5qiQ" name="load" visibility="public" method="_vGgWk7pVEfCEnM4Nhn5qiQ">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_vGgWkbpVEfCEnM4Nhn5qiQ" type="_vGfvgLpVEfCEnM4Nhn5qiQ" direction="return"/>
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_vGgWkrpVEfCEnM4Nhn5qiQ" name="renderer" type="_vGehZLpVEfCEnM4Nhn5qiQ"/>
+          </ownedOperation>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vGg9oLpVEfCEnM4Nhn5qiQ" name="draw0" visibility="public" method="_vGg9orpVEfCEnM4Nhn5qiQ">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_vGg9obpVEfCEnM4Nhn5qiQ" name="renderer" type="_vGehZLpVEfCEnM4Nhn5qiQ"/>
+          </ownedOperation>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vGg9o7pVEfCEnM4Nhn5qiQ" name="draw1" visibility="public" method="_vGhksLpVEfCEnM4Nhn5qiQ">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_vGg9pLpVEfCEnM4Nhn5qiQ" name="renderer" type="_vGehZLpVEfCEnM4Nhn5qiQ"/>
+          </ownedOperation>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vGhksbpVEfCEnM4Nhn5qiQ" name="updateMouseState" visibility="public" method="_vGhktbpVEfCEnM4Nhn5qiQ">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_vGhksrpVEfCEnM4Nhn5qiQ" name="x" type="_tCAIMbpVEfCEnM4Nhn5qiQ"/>
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_vGhks7pVEfCEnM4Nhn5qiQ" name="y" type="_tCAIMbpVEfCEnM4Nhn5qiQ"/>
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_vGhktLpVEfCEnM4Nhn5qiQ" name="mouseEvent" type="_tCAIMbpVEfCEnM4Nhn5qiQ"/>
+          </ownedOperation>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vGiy0LpVEfCEnM4Nhn5qiQ" name="IsInRect" visibility="public" isLeaf="true" method="_vGiy07pVEfCEnM4Nhn5qiQ">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_vGiy0bpVEfCEnM4Nhn5qiQ" type="_vGfvgLpVEfCEnM4Nhn5qiQ" direction="return"/>
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_vGiy0rpVEfCEnM4Nhn5qiQ" name="pEventPrams" type="_vGhkt7pVEfCEnM4Nhn5qiQ"/>
+          </ownedOperation>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vGiy1LpVEfCEnM4Nhn5qiQ" name="OnPushBtnPressed" visibility="public" isLeaf="true" method="_vGjZ4LpVEfCEnM4Nhn5qiQ">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_vGiy1bpVEfCEnM4Nhn5qiQ" type="_vGfvgLpVEfCEnM4Nhn5qiQ" direction="return"/>
+          </ownedOperation>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vGjZ4bpVEfCEnM4Nhn5qiQ" name="OnHoldEntry" visibility="public" isLeaf="true" method="_vGjZ4rpVEfCEnM4Nhn5qiQ"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vGjZ47pVEfCEnM4Nhn5qiQ" name="OnHoldExit" visibility="public" isLeaf="true" method="_vGjZ5LpVEfCEnM4Nhn5qiQ"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vGjZ5bpVEfCEnM4Nhn5qiQ" name="DrawPushStyle" visibility="public" isLeaf="true" method="_vGkA8bpVEfCEnM4Nhn5qiQ">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_vGkA8LpVEfCEnM4Nhn5qiQ" name="renderer" type="_vGehZLpVEfCEnM4Nhn5qiQ"/>
+          </ownedOperation>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vGkoALpVEfCEnM4Nhn5qiQ" name="DrawSelectStyle" visibility="public" isLeaf="true" method="_vGkoArpVEfCEnM4Nhn5qiQ">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_vGkoAbpVEfCEnM4Nhn5qiQ" name="renderer" type="_vGehZLpVEfCEnM4Nhn5qiQ"/>
+          </ownedOperation>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vGlPELpVEfCEnM4Nhn5qiQ" name="DrawToggleStyle" visibility="public" isLeaf="true" method="_vGlPErpVEfCEnM4Nhn5qiQ">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_vGlPEbpVEfCEnM4Nhn5qiQ" name="renderer" type="_vGehZLpVEfCEnM4Nhn5qiQ"/>
+          </ownedOperation>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vGlPE7pVEfCEnM4Nhn5qiQ" name="DrawSlideStyle" visibility="public" isLeaf="true" method="_vGl2IbpVEfCEnM4Nhn5qiQ">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_vGl2ILpVEfCEnM4Nhn5qiQ" name="renderer" type="_vGehZLpVEfCEnM4Nhn5qiQ"/>
+          </ownedOperation>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vGl2IrpVEfCEnM4Nhn5qiQ" name="DrawPressed" visibility="public" isLeaf="true" method="_vGmdMbpVEfCEnM4Nhn5qiQ">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_vGmdMLpVEfCEnM4Nhn5qiQ" name="renderer" type="_vGehZLpVEfCEnM4Nhn5qiQ"/>
+          </ownedOperation>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vGmdMrpVEfCEnM4Nhn5qiQ" name="DrawKnob" visibility="public" isLeaf="true" method="_vGnEQbpVEfCEnM4Nhn5qiQ">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_vGnEQLpVEfCEnM4Nhn5qiQ" name="renderer" type="_vGehZLpVEfCEnM4Nhn5qiQ"/>
+          </ownedOperation>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vGnEQrpVEfCEnM4Nhn5qiQ" name="GetValue" visibility="public" isLeaf="true" method="_vGnrUbpVEfCEnM4Nhn5qiQ">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_vGnrULpVEfCEnM4Nhn5qiQ" type="_tCAIMbpVEfCEnM4Nhn5qiQ" direction="return"/>
+          </ownedOperation>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vGnrUrpVEfCEnM4Nhn5qiQ" name="SetValue" visibility="public" isLeaf="true" method="_vGnrVLpVEfCEnM4Nhn5qiQ">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_vGnrU7pVEfCEnM4Nhn5qiQ" name="value" type="_tCAIMbpVEfCEnM4Nhn5qiQ"/>
+          </ownedOperation>
+          <nestedClassifier xmi:type="uml:Class" xmi:id="_vGoSYLpVEfCEnM4Nhn5qiQ" name="MouseEventParams" visibility="public">
+            <ownedAttribute xmi:type="uml:Property" xmi:id="_vGo5cLpVEfCEnM4Nhn5qiQ" name="pos" visibility="public" type="_vGdTQ7pVEfCEnM4Nhn5qiQ" isUnique="false"/>
+          </nestedClassifier>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_vGcsMbpVEfCEnM4Nhn5qiQ" name="Sprite"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_vGehYbpVEfCEnM4Nhn5qiQ" name="EventListener"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_vGfvgLpVEfCEnM4Nhn5qiQ" name="bool"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_vGpggLpVEfCEnM4Nhn5qiQ" name="ContextImpl" visibility="public">
+          <generalization xmi:type="uml:Generalization" xmi:id="_vGpggbpVEfCEnM4Nhn5qiQ" general="_vGLmcLpVEfCEnM4Nhn5qiQ"/>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vGqHkbpVEfCEnM4Nhn5qiQ" name="protectedMethod" specification="_vGqHkLpVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body></body>
+          </ownedBehavior>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vGuZAbpVEfCEnM4Nhn5qiQ" name="checkE1Params" specification="_vGtx8LpVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body>return false;</body>
+          </ownedBehavior>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vGqHkLpVEfCEnM4Nhn5qiQ" name="protectedMethod" visibility="protected" method="_vGqHkbpVEfCEnM4Nhn5qiQ"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vGtx8LpVEfCEnM4Nhn5qiQ" name="checkE1Params" visibility="protected" isLeaf="true" isStatic="true" method="_vGuZAbpVEfCEnM4Nhn5qiQ">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_vGtx8bpVEfCEnM4Nhn5qiQ" type="_vGXzs7pVEfCEnM4Nhn5qiQ" direction="return"/>
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_vGuZALpVEfCEnM4Nhn5qiQ" name="e" type="_tCDLgLpVEfCEnM4Nhn5qiQ"/>
+          </ownedOperation>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_vGwOMLpVEfCEnM4Nhn5qiQ" name="Primitive" visibility="public">
+          <generalization xmi:type="uml:Generalization" xmi:id="_vGwOMbpVEfCEnM4Nhn5qiQ" general="_vGcsMbpVEfCEnM4Nhn5qiQ"/>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_vGxcUbpVEfCEnM4Nhn5qiQ" name="primitiveType" visibility="private" type="_vGw1QLpVEfCEnM4Nhn5qiQ" isUnique="false">
+            <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_vGyDYLpVEfCEnM4Nhn5qiQ" name="defaultValue">
+              <language>JAVA</language>
+              <body>&quot;&quot;</body>
+            </defaultValue>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_vGyDYbpVEfCEnM4Nhn5qiQ" name="fontFace" visibility="private" type="_vGw1QLpVEfCEnM4Nhn5qiQ" isUnique="false">
+            <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_vGyDYrpVEfCEnM4Nhn5qiQ" name="defaultValue">
+              <language>JAVA</language>
+              <body>&quot;&quot;</body>
+            </defaultValue>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_vGyDY7pVEfCEnM4Nhn5qiQ" name="fontSize" visibility="private" type="_tCAIMbpVEfCEnM4Nhn5qiQ" isUnique="false">
+            <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_vGyDZLpVEfCEnM4Nhn5qiQ" name="defaultValue">
+              <language>JAVA</language>
+              <body>12</body>
+            </defaultValue>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_vGyqcLpVEfCEnM4Nhn5qiQ" name="textLabel" visibility="private" type="_vGw1QLpVEfCEnM4Nhn5qiQ" isUnique="false">
+            <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_vGyqcbpVEfCEnM4Nhn5qiQ" name="defaultValue">
+              <language>JAVA</language>
+              <body>&quot;&quot;</body>
+            </defaultValue>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_vGyqcrpVEfCEnM4Nhn5qiQ" name="oldLabel" visibility="private" type="_vGw1QLpVEfCEnM4Nhn5qiQ" isUnique="false">
+            <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_vGyqc7pVEfCEnM4Nhn5qiQ" name="defaultValue">
+              <language>JAVA</language>
+              <body>&quot;&quot;</body>
+            </defaultValue>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_vGzRgbpVEfCEnM4Nhn5qiQ" name="font" visibility="private" type="_vGyqdLpVEfCEnM4Nhn5qiQ" isUnique="false">
+            <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_vGzRgrpVEfCEnM4Nhn5qiQ" name="defaultValue">
+              <language>JAVA</language>
+              <body>null</body>
+            </defaultValue>
+          </ownedAttribute>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vGz4krpVEfCEnM4Nhn5qiQ" name="draw0" specification="_vGz4kLpVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body></body>
+          </ownedBehavior>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vGz4lLpVEfCEnM4Nhn5qiQ" name="update" specification="_vGz4k7pVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body></body>
+          </ownedBehavior>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vG0fobpVEfCEnM4Nhn5qiQ" name="draw1" specification="_vGz4lbpVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body></body>
+          </ownedBehavior>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vG1GsLpVEfCEnM4Nhn5qiQ" name="load" specification="_vG0forpVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body>return null;</body>
+          </ownedBehavior>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vG1GsrpVEfCEnM4Nhn5qiQ" name="free" specification="_vG1GsbpVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body></body>
+          </ownedBehavior>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vG1GtrpVEfCEnM4Nhn5qiQ" name="setLabel" specification="_vG1GtLpVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body></body>
+          </ownedBehavior>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vGz4kLpVEfCEnM4Nhn5qiQ" name="draw0" visibility="public" method="_vGz4krpVEfCEnM4Nhn5qiQ">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_vGz4kbpVEfCEnM4Nhn5qiQ" name="renderer" type="_vGehZLpVEfCEnM4Nhn5qiQ"/>
+          </ownedOperation>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vGz4k7pVEfCEnM4Nhn5qiQ" name="update" visibility="public" method="_vGz4lLpVEfCEnM4Nhn5qiQ"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vGz4lbpVEfCEnM4Nhn5qiQ" name="draw1" visibility="public" method="_vG0fobpVEfCEnM4Nhn5qiQ">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_vG0foLpVEfCEnM4Nhn5qiQ" name="renderer" type="_vGehZLpVEfCEnM4Nhn5qiQ"/>
+          </ownedOperation>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vG0forpVEfCEnM4Nhn5qiQ" name="load" visibility="public" method="_vG1GsLpVEfCEnM4Nhn5qiQ">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_vG0fo7pVEfCEnM4Nhn5qiQ" type="_vGfvgLpVEfCEnM4Nhn5qiQ" direction="return"/>
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_vG0fpLpVEfCEnM4Nhn5qiQ" name="renderer" type="_vGehZLpVEfCEnM4Nhn5qiQ"/>
+          </ownedOperation>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vG1GsbpVEfCEnM4Nhn5qiQ" name="free" visibility="public" method="_vG1GsrpVEfCEnM4Nhn5qiQ"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vG1GtLpVEfCEnM4Nhn5qiQ" name="setLabel" visibility="public" method="_vG1GtrpVEfCEnM4Nhn5qiQ">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_vG1GtbpVEfCEnM4Nhn5qiQ" name="value" type="_vG1Gs7pVEfCEnM4Nhn5qiQ"/>
+          </ownedOperation>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_vG1twLpVEfCEnM4Nhn5qiQ" name="AttachmentConstraint" visibility="public">
+          <generalization xmi:type="uml:Generalization" xmi:id="_vG1twrpVEfCEnM4Nhn5qiQ" general="_vG1twbpVEfCEnM4Nhn5qiQ"/>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vG1txbpVEfCEnM4Nhn5qiQ" name="apply" specification="_vG1tw7pVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body></body>
+          </ownedBehavior>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vG1tw7pVEfCEnM4Nhn5qiQ" name="apply" visibility="public" method="_vG1txbpVEfCEnM4Nhn5qiQ">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_vG1txLpVEfCEnM4Nhn5qiQ" name="target" type="_vGcsMbpVEfCEnM4Nhn5qiQ"/>
+          </ownedOperation>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_vG1twbpVEfCEnM4Nhn5qiQ" name="TransformConstraint" visibility="public">
+          <generalization xmi:type="uml:Generalization" xmi:id="_vG6mQbpVEfCEnM4Nhn5qiQ" general="_vG6mQLpVEfCEnM4Nhn5qiQ"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_vG3i8LpVEfCEnM4Nhn5qiQ" name="Button" visibility="public">
+          <generalization xmi:type="uml:Generalization" xmi:id="_vG3i8rpVEfCEnM4Nhn5qiQ" general="_vG3i8bpVEfCEnM4Nhn5qiQ"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_vG3i8bpVEfCEnM4Nhn5qiQ" name="ImgSprite"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_vG3i87pVEfCEnM4Nhn5qiQ" name="CalledDependency" visibility="public">
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_vG3i9LpVEfCEnM4Nhn5qiQ" name="attribute0" visibility="private" type="_tCAIMbpVEfCEnM4Nhn5qiQ" isUnique="false"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_vG5YILpVEfCEnM4Nhn5qiQ" name="TrackToConstraint" visibility="public">
+          <generalization xmi:type="uml:Generalization" xmi:id="_vG5YIbpVEfCEnM4Nhn5qiQ" general="_vG1twbpVEfCEnM4Nhn5qiQ"/>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vG5_MbpVEfCEnM4Nhn5qiQ" name="apply" specification="_vG5YIrpVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body></body>
+          </ownedBehavior>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vG5YIrpVEfCEnM4Nhn5qiQ" name="apply" visibility="public" method="_vG5_MbpVEfCEnM4Nhn5qiQ">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_vG5_MLpVEfCEnM4Nhn5qiQ" name="target" type="_vGcsMbpVEfCEnM4Nhn5qiQ"/>
+          </ownedOperation>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_vG6mQLpVEfCEnM4Nhn5qiQ" name="Constraint" visibility="public" isAbstract="true">
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_vG70YLpVEfCEnM4Nhn5qiQ" name="m_source" visibility="protected" type="_vGcsMbpVEfCEnM4Nhn5qiQ" isUnique="false"/>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_vG70YbpVEfCEnM4Nhn5qiQ" name="m_influence" visibility="protected" type="_uQqTsLpVEfCEnM4Nhn5qiQ" isUnique="false"/>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_vG70YrpVEfCEnM4Nhn5qiQ" name="m_next" visibility="protected" type="_vG6mQLpVEfCEnM4Nhn5qiQ" isUnique="false"/>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vG70Z7pVEfCEnM4Nhn5qiQ" name="getNext" specification="_vG70ZbpVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body>return null;</body>
+          </ownedBehavior>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vG70Y7pVEfCEnM4Nhn5qiQ" name="apply" visibility="public" isAbstract="true">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_vG70ZLpVEfCEnM4Nhn5qiQ" name="target" type="_vGcsMbpVEfCEnM4Nhn5qiQ"/>
+          </ownedOperation>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vG70ZbpVEfCEnM4Nhn5qiQ" name="getNext" visibility="public" isLeaf="true" method="_vG70Z7pVEfCEnM4Nhn5qiQ">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_vG70ZrpVEfCEnM4Nhn5qiQ" type="_vG6mQLpVEfCEnM4Nhn5qiQ" direction="return"/>
+          </ownedOperation>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_vG6mQrpVEfCEnM4Nhn5qiQ" name="TranslationConstraint" visibility="public">
+          <generalization xmi:type="uml:Generalization" xmi:id="_vG6mQ7pVEfCEnM4Nhn5qiQ" general="_vG1twbpVEfCEnM4Nhn5qiQ"/>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vG7NUrpVEfCEnM4Nhn5qiQ" name="apply" specification="_vG7NULpVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body></body>
+          </ownedBehavior>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vG7NULpVEfCEnM4Nhn5qiQ" name="apply" visibility="public" method="_vG7NUrpVEfCEnM4Nhn5qiQ">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_vG7NUbpVEfCEnM4Nhn5qiQ" name="target" type="_vGcsMbpVEfCEnM4Nhn5qiQ"/>
+          </ownedOperation>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_vG9pkLpVEfCEnM4Nhn5qiQ" name="AFriend" visibility="public">
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_vG9pkbpVEfCEnM4Nhn5qiQ" name="attribute3" visibility="private" type="_tCAIMbpVEfCEnM4Nhn5qiQ" isUnique="false"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_vG-QoLpVEfCEnM4Nhn5qiQ" name="RotationConstraint" visibility="public">
+          <generalization xmi:type="uml:Generalization" xmi:id="_vG-QobpVEfCEnM4Nhn5qiQ" general="_vG1twbpVEfCEnM4Nhn5qiQ"/>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vG-3srpVEfCEnM4Nhn5qiQ" name="apply" specification="_vG-3sLpVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body></body>
+          </ownedBehavior>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vG-3sLpVEfCEnM4Nhn5qiQ" name="apply" visibility="public" method="_vG-3srpVEfCEnM4Nhn5qiQ">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_vG-3sbpVEfCEnM4Nhn5qiQ" name="target" type="_vGcsMbpVEfCEnM4Nhn5qiQ"/>
+          </ownedOperation>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_vG_ewLpVEfCEnM4Nhn5qiQ" name="CarBody" visibility="public">
+          <generalization xmi:type="uml:Generalization" xmi:id="_vG_ewbpVEfCEnM4Nhn5qiQ" general="_vG3i8bpVEfCEnM4Nhn5qiQ"/>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_vG_ewrpVEfCEnM4Nhn5qiQ" name="x0" visibility="private" type="_tCAIMbpVEfCEnM4Nhn5qiQ" isUnique="false">
+            <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_vG_ew7pVEfCEnM4Nhn5qiQ" name="defaultValue">
+              <language>JAVA</language>
+              <body>0</body>
+            </defaultValue>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_vG_exLpVEfCEnM4Nhn5qiQ" name="gVar" visibility="private" isStatic="true" type="_tCAIMbpVEfCEnM4Nhn5qiQ" isUnique="false">
+            <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_vG_exbpVEfCEnM4Nhn5qiQ" name="defaultValue">
+              <language>JAVA</language>
+              <body>1</body>
+            </defaultValue>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_vG_exrpVEfCEnM4Nhn5qiQ" name="x" visibility="private" isStatic="true" type="_tCAIMbpVEfCEnM4Nhn5qiQ" isUnique="false">
+            <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_vG_ex7pVEfCEnM4Nhn5qiQ" name="defaultValue">
+              <language>JAVA</language>
+              <body>2</body>
+            </defaultValue>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_vG_eyLpVEfCEnM4Nhn5qiQ" name="y" visibility="private" isStatic="true" type="_tCAIMbpVEfCEnM4Nhn5qiQ" isUnique="false">
+            <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_vHAF0LpVEfCEnM4Nhn5qiQ" name="defaultValue">
+              <language>JAVA</language>
+              <body>3</body>
+            </defaultValue>
+          </ownedAttribute>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vHAF0rpVEfCEnM4Nhn5qiQ" name="moveRight" specification="_vHAF0bpVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body></body>
+          </ownedBehavior>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vHAF1LpVEfCEnM4Nhn5qiQ" name="moveLeft" specification="_vHAF07pVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body></body>
+          </ownedBehavior>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vHAF1rpVEfCEnM4Nhn5qiQ" name="turnOff" specification="_vHAF1bpVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body></body>
+          </ownedBehavior>
+          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vHAF2LpVEfCEnM4Nhn5qiQ" name="turnOn" specification="_vHAF17pVEfCEnM4Nhn5qiQ">
+            <language>JAVA</language>
+            <body></body>
+          </ownedBehavior>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vHAF0bpVEfCEnM4Nhn5qiQ" name="moveRight" visibility="public" isLeaf="true" method="_vHAF0rpVEfCEnM4Nhn5qiQ"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vHAF07pVEfCEnM4Nhn5qiQ" name="moveLeft" visibility="public" isLeaf="true" method="_vHAF1LpVEfCEnM4Nhn5qiQ"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vHAF1bpVEfCEnM4Nhn5qiQ" name="turnOff" visibility="public" isLeaf="true" method="_vHAF1rpVEfCEnM4Nhn5qiQ"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vHAF17pVEfCEnM4Nhn5qiQ" name="turnOn" visibility="public" isLeaf="true" method="_vHAF2LpVEfCEnM4Nhn5qiQ"/>
+          <nestedClassifier xmi:type="uml:Class" xmi:id="_vHAF2bpVEfCEnM4Nhn5qiQ" name="E1Params" visibility="public">
+            <generalization xmi:type="uml:Generalization" xmi:id="_vHBT8bpVEfCEnM4Nhn5qiQ" general="_vHAs4LpVEfCEnM4Nhn5qiQ"/>
+            <ownedAttribute xmi:type="uml:Property" xmi:id="_vHBT8rpVEfCEnM4Nhn5qiQ" name="x" visibility="private" type="_tCAIMbpVEfCEnM4Nhn5qiQ" isUnique="false"/>
+          </nestedClassifier>
+        </packagedElement>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_tBntsLpVEfCEnM4Nhn5qiQ" name="importedTypes">
+      <packagedElement xmi:type="uml:Package" xmi:id="_tBntsbpVEfCEnM4Nhn5qiQ" name="stdtype">
+        <packagedElement xmi:type="uml:Class" xmi:id="_tBo70LpVEfCEnM4Nhn5qiQ" name="uint32_t"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_uQpFkbpVEfCEnM4Nhn5qiQ" name="String"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_vGdTQ7pVEfCEnM4Nhn5qiQ" name="SDL_Point"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_vGehZLpVEfCEnM4Nhn5qiQ" name="SDL_Renderer"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_vGw1QLpVEfCEnM4Nhn5qiQ" name="STR255"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_vGyqdLpVEfCEnM4Nhn5qiQ" name="TTF_Font"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_tCAIMLpVEfCEnM4Nhn5qiQ" name="primitivetype">
+        <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_tCAIMbpVEfCEnM4Nhn5qiQ" name="Integer"/>
+        <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_uQqTsLpVEfCEnM4Nhn5qiQ" name="Float"/>
+        <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_vGXzs7pVEfCEnM4Nhn5qiQ" name="Boolean"/>
+        <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_vG1Gs7pVEfCEnM4Nhn5qiQ" name="Char"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_vGhktrpVEfCEnM4Nhn5qiQ" name="FlexButton">
+        <packagedElement xmi:type="uml:Class" xmi:id="_vGhkt7pVEfCEnM4Nhn5qiQ" name="MouseEventParams"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_vHAF2rpVEfCEnM4Nhn5qiQ" name="Generic">
+        <packagedElement xmi:type="uml:Class" xmi:id="_vHAs4LpVEfCEnM4Nhn5qiQ" name="EventParams"/>
+      </packagedElement>
+    </packagedElement>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_A7dGQLpTEfCEnM4Nhn5qiQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_A7vaILpTEfCEnM4Nhn5qiQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/PapyrusJava/1#/"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://PapyrusJava_PROFILES/PapyrusJava.profile.uml#_j9REUByGEduN1bTiWJ0lyw"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_A7x2YLpTEfCEnM4Nhn5qiQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_A7x2YbpTEfCEnM4Nhn5qiQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/Codegen/1#/"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://Codegen_PROFILES/Codegen.profile.uml#_fPDsIBa-EearhdjjJ6cVzQ"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_A77nYLpTEfCEnM4Nhn5qiQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_A77nYbpTEfCEnM4Nhn5qiQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard#/"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://UML_PROFILES/Standard.profile.uml#_0"/>
+    </profileApplication>
+  </uml:Model>
+  <Codegen:External xmi:id="_tBwQkLpVEfCEnM4Nhn5qiQ" name="stdtype.uint32_t" base_Classifier="_tBo70LpVEfCEnM4Nhn5qiQ"/>
+  <Codegen:External xmi:id="_tBzT4LpVEfCEnM4Nhn5qiQ" name="bool" base_Classifier="_tBys0rpVEfCEnM4Nhn5qiQ"/>
+  <Codegen:External xmi:id="_uQpsoLpVEfCEnM4Nhn5qiQ" name="stdtype.String" base_Classifier="_uQpFkbpVEfCEnM4Nhn5qiQ"/>
+  <Codegen:External xmi:id="_vGM0kLpVEfCEnM4Nhn5qiQ" name="Abstracts.BaseClass" base_Classifier="_sJOGELpVEfCEnM4Nhn5qiQ"/>
+  <Codegen:External xmi:id="_vGOCsLpVEfCEnM4Nhn5qiQ" name="Interfaces.Interface2" base_Classifier="_uQpFkLpVEfCEnM4Nhn5qiQ"/>
+  <Codegen:External xmi:id="_vGXMoLpVEfCEnM4Nhn5qiQ" name="Interfaces.Interface1" base_Classifier="_uQrh0LpVEfCEnM4Nhn5qiQ"/>
+  <Codegen:External xmi:id="_vGd6ULpVEfCEnM4Nhn5qiQ" name="stdtype.SDL_Point" base_Classifier="_vGdTQ7pVEfCEnM4Nhn5qiQ"/>
+  <Codegen:External xmi:id="_vGfIcLpVEfCEnM4Nhn5qiQ" name="stdtype.SDL_Renderer" base_Classifier="_vGehZLpVEfCEnM4Nhn5qiQ"/>
+  <Codegen:External xmi:id="_vGgWkLpVEfCEnM4Nhn5qiQ" name="bool" base_Classifier="_vGfvgLpVEfCEnM4Nhn5qiQ"/>
+  <Codegen:External xmi:id="_vGiLwLpVEfCEnM4Nhn5qiQ" name="FlexButton.MouseEventParams" base_Classifier="_vGhkt7pVEfCEnM4Nhn5qiQ"/>
+  <Codegen:External xmi:id="_vGsj0LpVEfCEnM4Nhn5qiQ" name="Base.EventParams" base_Classifier="_tCDLgLpVEfCEnM4Nhn5qiQ"/>
+  <Codegen:External xmi:id="_vGxcULpVEfCEnM4Nhn5qiQ" name="stdtype.STR255" base_Classifier="_vGw1QLpVEfCEnM4Nhn5qiQ"/>
+  <Codegen:External xmi:id="_vGzRgLpVEfCEnM4Nhn5qiQ" name="stdtype.TTF_Font" base_Classifier="_vGyqdLpVEfCEnM4Nhn5qiQ"/>
+  <Codegen:External xmi:id="_vHBT8LpVEfCEnM4Nhn5qiQ" name="Generic.EventParams" base_Classifier="_vHAs4LpVEfCEnM4Nhn5qiQ"/>
+</xmi:XMI>
