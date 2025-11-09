@@ -7,9 +7,10 @@
     <packagedElement xmi:type="uml:Package" xmi:id="_bcwv0LpVEfCEnM4Nhn5qiQ" name="JavaSample00">
       <packagedElement xmi:type="uml:Package" xmi:id="_sJM38LpVEfCEnM4Nhn5qiQ" name="Abstracts">
         <packagedElement xmi:type="uml:Class" xmi:id="_sJOGELpVEfCEnM4Nhn5qiQ" name="BaseClass" visibility="public">
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_nWm2wL02EfC7372XF4tNJw" name="derivableAttribute" visibility="package" type="_tCAIMbpVEfCEnM4Nhn5qiQ"/>
           <ownedOperation xmi:type="uml:Operation" xmi:id="_sJOtILpVEfCEnM4Nhn5qiQ" name="publicMethod" visibility="public" isAbstract="true"/>
           <ownedOperation xmi:type="uml:Operation" xmi:id="_sJPUMLpVEfCEnM4Nhn5qiQ" name="protectedMethod" visibility="protected" isAbstract="true"/>
-          <ownedOperation xmi:type="uml:Operation" xmi:id="_sJPUMbpVEfCEnM4Nhn5qiQ" name="packageVisibleMethod" visibility="private" isAbstract="true"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_sJPUMbpVEfCEnM4Nhn5qiQ" name="packageVisibleMethod" visibility="package" isAbstract="true"/>
         </packagedElement>
       </packagedElement>
       <packagedElement xmi:type="uml:Package" xmi:id="_tBkDULpVEfCEnM4Nhn5qiQ" name="Base">
@@ -175,7 +176,9 @@
             <language>JAVA</language>
             <body></body>
           </ownedBehavior>
-          <ownedOperation xmi:type="uml:Operation" xmi:id="_vGZB2LpVEfCEnM4Nhn5qiQ" name="classOrStaticMethod" visibility="public" isLeaf="true" isStatic="true" method="_vGZo4LpVEfCEnM4Nhn5qiQ"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vGZB2LpVEfCEnM4Nhn5qiQ" name="classOrStaticMethod" visibility="public" isLeaf="true" isStatic="true" method="_vGZo4LpVEfCEnM4Nhn5qiQ">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_KQW84LsTEfCEnM4Nhn5qiQ" name="" visibility="public" type="_XKiUULsTEfCEnM4Nhn5qiQ" direction="return" effect="create"/>
+          </ownedOperation>
           <ownedOperation xmi:type="uml:Operation" xmi:id="_vGZo4bpVEfCEnM4Nhn5qiQ" name="publicMethod" visibility="public" method="_vGZo4rpVEfCEnM4Nhn5qiQ"/>
           <ownedOperation xmi:type="uml:Operation" xmi:id="_vGaP8LpVEfCEnM4Nhn5qiQ" name="privateLeafMethod" visibility="private" isLeaf="true" method="_vGaP8bpVEfCEnM4Nhn5qiQ"/>
           <ownedOperation xmi:type="uml:Operation" xmi:id="_vGaP8rpVEfCEnM4Nhn5qiQ" name="protectedMethod" visibility="protected" method="_vGaP87pVEfCEnM4Nhn5qiQ"/>
@@ -330,7 +333,6 @@
         </packagedElement>
         <packagedElement xmi:type="uml:Class" xmi:id="_vGcsMbpVEfCEnM4Nhn5qiQ" name="Sprite"/>
         <packagedElement xmi:type="uml:Class" xmi:id="_vGehYbpVEfCEnM4Nhn5qiQ" name="EventListener"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_vGfvgLpVEfCEnM4Nhn5qiQ" name="bool"/>
         <packagedElement xmi:type="uml:Class" xmi:id="_vGpggLpVEfCEnM4Nhn5qiQ" name="ContextImpl" visibility="public">
           <generalization xmi:type="uml:Generalization" xmi:id="_vGpggbpVEfCEnM4Nhn5qiQ" general="_vGLmcLpVEfCEnM4Nhn5qiQ"/>
           <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vGqHkbpVEfCEnM4Nhn5qiQ" name="protectedMethod" specification="_vGqHkLpVEfCEnM4Nhn5qiQ">
@@ -480,9 +482,6 @@
             <ownedParameter xmi:type="uml:Parameter" xmi:id="_vG7NUbpVEfCEnM4Nhn5qiQ" name="target" type="_vGcsMbpVEfCEnM4Nhn5qiQ"/>
           </ownedOperation>
         </packagedElement>
-        <packagedElement xmi:type="uml:Class" xmi:id="_vG9pkLpVEfCEnM4Nhn5qiQ" name="AFriend" visibility="public">
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_vG9pkbpVEfCEnM4Nhn5qiQ" name="attribute3" visibility="private" type="_tCAIMbpVEfCEnM4Nhn5qiQ" isUnique="false"/>
-        </packagedElement>
         <packagedElement xmi:type="uml:Class" xmi:id="_vG-QoLpVEfCEnM4Nhn5qiQ" name="RotationConstraint" visibility="public">
           <generalization xmi:type="uml:Generalization" xmi:id="_vG-QobpVEfCEnM4Nhn5qiQ" general="_vG1twbpVEfCEnM4Nhn5qiQ"/>
           <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vG-3srpVEfCEnM4Nhn5qiQ" name="apply" specification="_vG-3sLpVEfCEnM4Nhn5qiQ">
@@ -544,6 +543,9 @@
             <ownedAttribute xmi:type="uml:Property" xmi:id="_vHBT8rpVEfCEnM4Nhn5qiQ" name="x" visibility="private" type="_tCAIMbpVEfCEnM4Nhn5qiQ" isUnique="false"/>
           </nestedClassifier>
         </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_vG9pkLpVEfCEnM4Nhn5qiQ" name="AFriend" visibility="public">
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_vG9pkbpVEfCEnM4Nhn5qiQ" name="attribute3" visibility="package" type="_tCAIMbpVEfCEnM4Nhn5qiQ" isUnique="false"/>
+        </packagedElement>
       </packagedElement>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="_tBntsLpVEfCEnM4Nhn5qiQ" name="importedTypes">
@@ -554,6 +556,8 @@
         <packagedElement xmi:type="uml:Class" xmi:id="_vGehZLpVEfCEnM4Nhn5qiQ" name="SDL_Renderer"/>
         <packagedElement xmi:type="uml:Class" xmi:id="_vGw1QLpVEfCEnM4Nhn5qiQ" name="STR255"/>
         <packagedElement xmi:type="uml:Class" xmi:id="_vGyqdLpVEfCEnM4Nhn5qiQ" name="TTF_Font"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_XKiUULsTEfCEnM4Nhn5qiQ" name="void"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_vGfvgLpVEfCEnM4Nhn5qiQ" name="bool"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Package" xmi:id="_tCAIMLpVEfCEnM4Nhn5qiQ" name="primitivetype">
         <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_tCAIMbpVEfCEnM4Nhn5qiQ" name="Integer"/>
@@ -601,4 +605,5 @@
   <Codegen:External xmi:id="_vGxcULpVEfCEnM4Nhn5qiQ" name="stdtype.STR255" base_Classifier="_vGw1QLpVEfCEnM4Nhn5qiQ"/>
   <Codegen:External xmi:id="_vGzRgLpVEfCEnM4Nhn5qiQ" name="stdtype.TTF_Font" base_Classifier="_vGyqdLpVEfCEnM4Nhn5qiQ"/>
   <Codegen:External xmi:id="_vHBT8LpVEfCEnM4Nhn5qiQ" name="Generic.EventParams" base_Classifier="_vHAs4LpVEfCEnM4Nhn5qiQ"/>
+  <Codegen:External xmi:id="_XKjicLsTEfCEnM4Nhn5qiQ" name="stdtype.uint32_t" base_Classifier="_XKiUULsTEfCEnM4Nhn5qiQ"/>
 </xmi:XMI>
