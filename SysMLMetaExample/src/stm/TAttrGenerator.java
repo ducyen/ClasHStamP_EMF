@@ -111,8 +111,7 @@ public class TAttrGenerator extends TBaseGenerator {
 
         String column = "ext1st";
         for (Property attr : attrMap.values()) {
-            String attr_kind = "ctor_call";
-            String syntax = m_stxCsv.get(indent, attr_kind, column);
+            String syntax = m_stxCsv.get(indent, "ctor_call", column);
 
             String desc = "";
             if (!attr.getOwnedComments().isEmpty()) {
@@ -138,7 +137,7 @@ public class TAttrGenerator extends TBaseGenerator {
      * Collects **super** constructor call parameters (for generating super(...) calls)
      */
     public String collectSuperCtorCallParams() throws IOException, Exception {
-    	if (m_iSuperClass instanceof Class) {
+    	if (!(m_iSuperClass instanceof Class)) {
     		return "";
     	}
         AttrDeepTraverser superAttrTraverser = new AttrDeepTraverser((Class)m_iSuperClass);
@@ -162,12 +161,11 @@ public class TAttrGenerator extends TBaseGenerator {
             }
             // default value is passing its own name (to be replaced in templates)
             String value = Utils.get(m_stxCsv.get("ctor_call", "begin"), attr.getName());
-            String attr_kind = "ctor_call";
             if (bFound) {
                 // if subclass has its own init, use that instead
                 value = Utils.get(m_stxCsv.get("ctor_call", "end"), overriddenInit);
             }
-            String syntax = m_stxCsv.get(indent, attr_kind, column);
+            String syntax = m_stxCsv.get(indent, "ctor_call", column);
 
             String desc = "";
             if (!attr.getOwnedComments().isEmpty()) {

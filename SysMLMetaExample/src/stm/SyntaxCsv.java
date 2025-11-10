@@ -79,7 +79,9 @@ public class SyntaxCsv {
 			result = null;
 		}
 		String sDebug = "";
-		//sDebug = " /* " + row + "." + col + " */";
+		if (System.getenv("PATH_DBG") != null && System.getenv("PATH_DBG").equals("ON")) {
+			sDebug = " /* " + row + "." + col + " */";
+		}
 		return insertToFirstLineEnd(result, sDebug);
 	}
 }

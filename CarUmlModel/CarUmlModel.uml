@@ -15,11 +15,41 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Package" xmi:id="_dWr4kKswEfC1t5InUmnZzw" name="Model">
     <packagedElement xmi:type="uml:Class" xmi:id="_oRfZQKswEfC1t5InUmnZzw" name="Car" classifierBehavior="_s20loKswEfC1t5InUmnZzw">
-      <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_s20loKswEfC1t5InUmnZzw" name="Main">
-        <region xmi:type="uml:Region" xmi:id="_rtUIcKtHEfCqvNj_CnM2-g" name="Region1"/>
+      <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_s20loKswEfC1t5InUmnZzw" name="MainTop">
+        <region xmi:type="uml:Region" xmi:id="_rtUIcKtHEfCqvNj_CnM2-g" name="Region0">
+          <transition xmi:type="uml:Transition" xmi:id="_7Bb5AKzXEfCB5JEEBbYU0A" source="_3dDMQKzXEfCB5JEEBbYU0A" target="_0n0EgKzXEfCB5JEEBbYU0A"/>
+          <subvertex xmi:type="uml:State" xmi:id="_0n0EgKzXEfCB5JEEBbYU0A" name="Idle"/>
+          <subvertex xmi:type="uml:Pseudostate" xmi:id="_3dDMQKzXEfCB5JEEBbYU0A" name="MainTopInit"/>
+          <subvertex xmi:type="uml:State" xmi:id="_947qkKzXEfCB5JEEBbYU0A" name="Standby"/>
+          <subvertex xmi:type="uml:State" xmi:id="_BKqhEKzYEfCB5JEEBbYU0A" name="Operating">
+            <region xmi:type="uml:Region" xmi:id="_GKEaUqzYEfCB5JEEBbYU0A" name="Region0">
+              <subvertex xmi:type="uml:State" xmi:id="_GKEaWazYEfCB5JEEBbYU0A" name="Depature" submachine="_MpG3IKzUEfCB5JEEBbYU0A"/>
+              <subvertex xmi:type="uml:State" xmi:id="_IZhUcKzYEfCB5JEEBbYU0A" name="Crusing"/>
+              <subvertex xmi:type="uml:State" xmi:id="_KmErkKzYEfCB5JEEBbYU0A" name="Arrival" submachine="_MpG3IKzUEfCB5JEEBbYU0A"/>
+            </region>
+            <region xmi:type="uml:Region" xmi:id="_LJ7KAK2dEfCB5JEEBbYU0A" name="Region1">
+              <subvertex xmi:type="uml:State" xmi:id="_MpMkYK2dEfCB5JEEBbYU0A" name="StateTest"/>
+            </region>
+          </subvertex>
+        </region>
+        <region xmi:type="uml:Region" xmi:id="_z_pRQKzXEfCB5JEEBbYU0A" name="Region1">
+          <subvertex xmi:type="uml:State" xmi:id="_TwdXgKzYEfCB5JEEBbYU0A" name="Mode">
+            <region xmi:type="uml:Region" xmi:id="_6u-IoKzaEfCB5JEEBbYU0A" name="Region0">
+              <subvertex xmi:type="uml:Pseudostate" xmi:id="_6u_WwKzaEfCB5JEEBbYU0A" name="ModeInit"/>
+              <subvertex xmi:type="uml:State" xmi:id="_UhWB4KzYEfCB5JEEBbYU0A" name="Pass"/>
+              <subvertex xmi:type="uml:State" xmi:id="_BT9foKzbEfCB5JEEBbYU0A" name="Stop"/>
+            </region>
+          </subvertex>
+        </region>
       </ownedBehavior>
-      <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_wob2EKswEfC1t5InUmnZzw" name="Sub">
-        <region xmi:type="uml:Region" xmi:id="_uG7EIKtHEfCqvNj_CnM2-g" name="Region1"/>
+      <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_MpG3IKzUEfCB5JEEBbYU0A" name="SubTop" submachineState="_KmErkKzYEfCB5JEEBbYU0A _GKEaWazYEfCB5JEEBbYU0A">
+        <region xmi:type="uml:Region" xmi:id="_RwK3kKzUEfCB5JEEBbYU0A" name="Region0">
+          <subvertex xmi:type="uml:State" xmi:id="_ahFTkKzUEfCB5JEEBbYU0A" name="State1"/>
+          <subvertex xmi:type="uml:State" xmi:id="_bc1xMKzUEfCB5JEEBbYU0A" name="State2"/>
+        </region>
+        <region xmi:type="uml:Region" xmi:id="_ZYvygKzUEfCB5JEEBbYU0A" name="Region1">
+          <subvertex xmi:type="uml:State" xmi:id="_hDtTEKzUEfCB5JEEBbYU0A" name="State1"/>
+        </region>
       </ownedBehavior>
     </packagedElement>
   </packagedElement>

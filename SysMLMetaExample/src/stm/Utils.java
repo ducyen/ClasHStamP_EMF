@@ -6,7 +6,7 @@ public class Utils {
 		String result = new String();
 		int i, curPos = 0;
 		for (i = 0; i < input.length(); i++) {
-			if (i > 0 && Character.isUpperCase(input.charAt(i))) {
+			if (i > 0 && Character.isLetterOrDigit(input.charAt(i-1)) && Character.isUpperCase(input.charAt(i))) {
 				result += input.substring(curPos, i).toLowerCase();
 				result += "_";
 				curPos = i;
@@ -45,7 +45,7 @@ public class Utils {
 		String result = new String();
 		int i, curPos = 0;
 		for (i = 0; i < input.length(); i++) {
-			if (i > 0 && Character.isUpperCase(input.charAt(i))) {
+			if (i > 0 && Character.isLetterOrDigit(input.charAt(i-1)) && Character.isUpperCase(input.charAt(i))) {
 				result += input.substring(curPos, i).toUpperCase();
 				result += "_";
 				curPos = i;

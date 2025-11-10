@@ -59,6 +59,7 @@ public class TMain {
 
     // Find a package in the model by its full name.
     private static Package findPackage(Package pkg, String fullName) {
+    	System.out.println("Checking " + pkg.getQualifiedName());
         if (pkg.getQualifiedName().equals(fullName)) {
             return pkg;
         }

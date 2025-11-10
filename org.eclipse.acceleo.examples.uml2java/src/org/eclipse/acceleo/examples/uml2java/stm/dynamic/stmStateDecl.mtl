@@ -31,3 +31,7 @@
     // Unknown vertex
 [/if]
 [/template]
+
+[template protected checkRegion(s : State, r : Region)]
+R [r.name/]
+[/template]

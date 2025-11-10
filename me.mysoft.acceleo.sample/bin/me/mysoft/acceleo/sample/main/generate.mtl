@@ -1,25 +1,36 @@
 [comment encoding = UTF-8 /]
- [module generate('http://www.eclipse.org/uml2/5.0.0/UML')/]
- 
- [template public generateElement(aClass : Class)] 
-  [comment @main /]
- [file (aClass.name.concat('.java'), false)]
-   public class [aClass.name.toUpperFirst()/] {
-   [for (p: Property | aClass.attribute) separator('\n')]
-     private [p.type.name/] [p.name/];
-   [/for]
- 
-   [for (p: Property | aClass.attribute) separator('\n')]
-     public [p.type.name/] get[p.name.toUpperFirst()/]() {
-       return this.[p.name/];
-     }
-   [/for]
- 
-   [for (o: Operation | aClass.ownedOperation) separator('\n')]
-     public [o.type.name/] [o.name/]() {
-       // TODO should be implemented
-     }
-   [/for]
-   }
- [/file]
- [/template]
+[module generate('http://www.eclipse.org/uml2/5.0.0/UML')/]
+
+[query public stripLines(s : String) : String =
+    s.trim()
+     .replaceAll('(?m)[^@][\\s\\r\\n]*[@$]', '')       -- replace middle @ lines with newline
+/]
+
+[template public generateElement(sm : StateMachine)]
+[comment @main /]
+[file (sm.name.concat('_StateMachine.txt'), false)]
+[generateStm(sm)/]
+[/file]
+[/template]
+
+[template private generateStm(sm : StateMachine) post(stripLines())]
+@StateMachine: [sm.name/]@
+[for (region : Region | sm.region)]
+[generateRegion(region, 1)/]
+[/for]
+[/template]
+
+[template private generateRegion(r : Region, level : Integer) post(stripLines())]
+[for (sub : Vertex | r.subvertex)]
+[if (sub.oclIsKindOf(State))]
+[generateState(sub.oclAsType(State), level)/]
+[/if]
+[/for]
+[/template]
+
+[template private generateState(s : State, level : Integer) post(stripLines())]
+@State: [s.name/]@
+[for (r : Region | s.region)]
+[generateRegion(r, level + 1)/]
+[/for]
+[/template]

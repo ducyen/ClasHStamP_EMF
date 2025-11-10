@@ -91,7 +91,11 @@ public class TFileGenerator extends TBaseGenerator {
      */
     public void printHeader() throws IOException, Exception {
         // Use qualified name with package separator for namespace
-        String ns = m_iClass.getQualifiedName().replace("::", m_pkgPathSeparator);
+        String ns = "";
+        if (m_iClass.getNamespace() != null) {
+            String qn = m_iClass.getNamespace().getQualifiedName();
+            ns = qn.replace("::", m_pkgPathSeparator);
+        }
         m_writer.write(
             Utils.get(m_stxCsv.get("file", "begin"),
                 m_iClass.getName(),
@@ -245,7 +249,11 @@ public class TFileGenerator extends TBaseGenerator {
         // print state-machine include (if coding state machines)
         if (iMainStm != null && isCodeFile()) {
             // Use similar template for state machine name
-            String ns = m_iClass.getQualifiedName().replace("::", m_pkgPathSeparator);
+            String ns = "";
+            if (m_iClass.getNamespace() != null) {
+                String qn = m_iClass.getNamespace().getQualifiedName();
+                ns = qn.replace("::", m_pkgPathSeparator);
+            }
             m_writer.write(Utils.get(m_stxCsv.get(indent, "statemachine", "name"),
                     m_iClass.getName(),
                     m_iSuperClass != null ? m_iSuperClass.getName() : m_iClass.getName(),
@@ -333,7 +341,11 @@ public class TFileGenerator extends TBaseGenerator {
         }
         // print state-machine include (non-code state machine)
         if (iMainStm != null && !isCodeFile()) {
-            String ns = m_iClass.getQualifiedName().replace("::", m_pkgPathSeparator);
+            String ns = "";
+            if (m_iClass.getNamespace() != null) {
+                String qn = m_iClass.getNamespace().getQualifiedName();
+                ns = qn.replace("::", m_pkgPathSeparator);
+            }
             m_writer.write(Utils.get(m_stxCsv.get(indent, "statemachine", "name"),
                     m_iClass.getName(),
                     m_iSuperClass != null ? m_iSuperClass.getName() : m_iClass.getName(),

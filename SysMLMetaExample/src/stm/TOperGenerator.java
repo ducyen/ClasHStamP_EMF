@@ -60,7 +60,7 @@ public class TOperGenerator extends TBaseGenerator {
         if (m_iClass instanceof OperationOwner) {
 	        for (Operation operation : ((OperationOwner)m_iClass).getOwnedOperations()) {
 	            if (!operation.isLeaf() && !operation.isStatic()) {
-	                String modifier = operation.isStatic() ? "static" : "";
+	                String modifier = "";
 	                path = operation.isAbstract() ? "vptr_decl" : "vptr_impl";
 	                String syntax = m_stxCsv.get(indent, path, "begin");
 	                String desc = "";
@@ -79,6 +79,9 @@ public class TOperGenerator extends TBaseGenerator {
 	                for (Parameter param : operation.getOwnedParameters()) {
 	                    String paramDir;
 	                    // Determine parameter direction using UML2 enum
+	                    if (param.getDirection() == ParameterDirectionKind.RETURN_LITERAL) {
+	                        continue;
+	                    }
 	                    if (param.getDirection() == ParameterDirectionKind.OUT_LITERAL) {
 	                        paramDir = "ext1st";
 	                    } else if (param.getDirection() == ParameterDirectionKind.INOUT_LITERAL) {
@@ -182,7 +185,7 @@ public class TOperGenerator extends TBaseGenerator {
 	            if (((isPub == isPublic) && !isPriv) || (isPublic && isPriv)
 	                && (!operation.isAbstract() || (!operation.isLeaf() && !operation.isStatic()))
 	            ) {
-	                String modifier = operation.isStatic() ? "static" : "";
+	                String modifier = "";
 	                String path = getOperationPath(operation);
 	                String syntax = m_stxCsv.get(indent, path, "name");
 	                String desc = "";
@@ -200,7 +203,7 @@ public class TOperGenerator extends TBaseGenerator {
 	                        modifier,
 	                        desc,
 	                        // Append visibility string
-	                        operation.getVisibility().toString()
+	                        getVisibility(operation)
 	                    )
 	                );
 	                
@@ -208,6 +211,9 @@ public class TOperGenerator extends TBaseGenerator {
 	                syntax = m_stxCsv.get(indent, path, "ext1st");
 	                for (Parameter param : operation.getOwnedParameters()) {
 	                    String paramDir;
+	                    if (param.getDirection() == ParameterDirectionKind.RETURN_LITERAL) {
+	                        continue;
+	                    }
 	                    if (param.getDirection() == ParameterDirectionKind.OUT_LITERAL) {
 	                        paramDir = "ext1st";
 	                    } else if (param.getDirection() == ParameterDirectionKind.INOUT_LITERAL) {
@@ -275,6 +281,9 @@ public class TOperGenerator extends TBaseGenerator {
 	                    syntax = m_stxCsv.get(indent, "vptr_call", "ext1st");
 	                    for (Parameter param : operation.getOwnedParameters()) {
 	                        String paramDir;
+		                    if (param.getDirection() == ParameterDirectionKind.RETURN_LITERAL) {
+		                        continue;
+		                    }	                        
 	                        if (param.getDirection() == ParameterDirectionKind.OUT_LITERAL) {
 	                            paramDir = "ext1st";
 	                        } else if (param.getDirection() == ParameterDirectionKind.INOUT_LITERAL) {
@@ -345,7 +354,7 @@ public class TOperGenerator extends TBaseGenerator {
         if (m_iClass instanceof OperationOwner) {
 	        for (Operation operation : ((OperationOwner)m_iClass).getOwnedOperations()) {
 	            if (operation.isAbstract() && (operation.isLeaf() || operation.isStatic())) {
-	                String modifier = operation.isStatic() ? "static" : "";
+	                String modifier = "";
 	                String path = getOperationPath(operation);
 	                String syntax = m_stxCsv.get(indent, path, "name");
 	                String desc = "";
@@ -358,7 +367,7 @@ public class TOperGenerator extends TBaseGenerator {
 	                        "",
 	                        modifier,
 	                        desc,
-	                        operation.getVisibility().toString()
+	                        getVisibility(operation)
 	                    )
 	                );
 	                
@@ -366,6 +375,9 @@ public class TOperGenerator extends TBaseGenerator {
 	                boolean firstRound = true;
 	                for (Parameter param : operation.getOwnedParameters()) {
 	                    String paramDir;
+	                    if (param.getDirection() == ParameterDirectionKind.RETURN_LITERAL) {
+	                        continue;
+	                    }
 	                    if (param.getDirection() == ParameterDirectionKind.OUT_LITERAL) {
 	                        paramDir = "ext1st";
 	                    } else if (param.getDirection() == ParameterDirectionKind.INOUT_LITERAL) {
@@ -445,7 +457,7 @@ public class TOperGenerator extends TBaseGenerator {
             // TransactionManager.beginTransaction();
             if (m_iClass instanceof OperationOwner) {
 	            for (Operation operation : ((OperationOwner)m_iClass).getOwnedOperations()) {
-	                String modifier = operation.isStatic() ? "static" : "";
+	                String modifier = "";
 	                String path = getOperationPath(operation);
 	                String syntax = m_stxCsv.get(indent, path, "name");
 	                String desc = "";
@@ -458,12 +470,15 @@ public class TOperGenerator extends TBaseGenerator {
 	                    (!operation.isAbstract() && !operation.isLeaf() && !operation.isStatic()) ? ancestor.getName() : "",
 	                    modifier,
 	                    desc,
-	                    operation.getVisibility().toString()
+	                    getVisibility(operation)
 	                );
 	                
 	                boolean firstRound = true;
 	                for (Parameter param : operation.getOwnedParameters()) {
 	                    String paramDir;
+	                    if (param.getDirection() == ParameterDirectionKind.RETURN_LITERAL) {
+	                        continue;
+	                    }
 	                    if (param.getDirection() == ParameterDirectionKind.OUT_LITERAL) {
 	                        paramDir = "ext1st";
 	                    } else if (param.getDirection() == ParameterDirectionKind.INOUT_LITERAL) {
@@ -471,6 +486,7 @@ public class TOperGenerator extends TBaseGenerator {
 	                    } else {
 	                        paramDir = "name";
 	                    }
+	                    System.out.println("Checking " + operation.getName() + " param " + param.getName());
 	                    operationBegin += Utils.get(
 	                        firstRound ? m_stxCsv.get(indent, path, "ext1st") : m_stxCsv.get(indent, path, "extnxt"),
 	                        param.getName(),

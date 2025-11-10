@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Blocks="http://www.eclipse.org/papyrus/sysml/1.6/SysML/Blocks" xmlns:Codegen="http://www.eclipse.org/papyrus/Codegen/1" xmlns:PortsAndFlows="http://www.eclipse.org/papyrus/sysml/1.6/SysML/PortsAndFlows" xmlns:Requirements="http://www.eclipse.org/papyrus/sysml/1.6/SysML/Requirements" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http://www.eclipse.org/papyrus/sysml/1.6/SysML/Blocks http://www.eclipse.org/papyrus/sysml/1.6/SysML#//blocks http://www.eclipse.org/papyrus/sysml/1.6/SysML/PortsAndFlows http://www.eclipse.org/papyrus/sysml/1.6/SysML#//portsandflows http://www.eclipse.org/papyrus/sysml/1.6/SysML/Requirements http://www.eclipse.org/papyrus/sysml/1.6/SysML#//requirements">
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Blocks="http://www.eclipse.org/papyrus/sysml/1.6/SysML/Blocks" xmlns:Codegen="http://www.eclipse.org/papyrus/Codegen/1" xmlns:Requirements="http://www.eclipse.org/papyrus/sysml/1.6/SysML/Requirements" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http://www.eclipse.org/papyrus/sysml/1.6/SysML/Blocks http://www.eclipse.org/papyrus/sysml/1.6/SysML#//blocks http://www.eclipse.org/papyrus/sysml/1.6/SysML/Requirements http://www.eclipse.org/papyrus/sysml/1.6/SysML#//requirements">
   <uml:Model xmi:id="_9ZHnUFGsEfCz0JP3SxwhXg" name="SysML_Sample00">
     <packageImport xmi:type="uml:PackageImport" xmi:id="_9ddUwFGsEfCz0JP3SxwhXg">
       <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
@@ -7,34 +7,77 @@
     <packageImport xmi:type="uml:PackageImport" xmi:id="_9d2WUFGsEfCz0JP3SxwhXg">
       <importedPackage xmi:type="uml:Package" href="pathmap://SysML16_LIBRARIES/SysML-Standard-Library.uml#SysML.package_packagedElement_Libraries"/>
     </packageImport>
-    <packagedElement xmi:type="uml:Activity" xmi:id="_9f92MFGsEfCz0JP3SxwhXg" name="Activity13" node="_I8N3EFGtEfCz0JP3SxwhXg">
-      <node xmi:type="uml:CreateObjectAction" xmi:id="_I8N3EFGtEfCz0JP3SxwhXg" name="CreateObjectAction1"/>
-    </packagedElement>
-    <packagedElement xmi:type="uml:Package" xmi:id="_XOZesFPbEfCSZe_6QS0nMQ" name="SamplePkg"/>
-    <packagedElement xmi:type="uml:Interface" xmi:id="_Js-PIFPdEfCSZe_6QS0nMQ" name="ISubject">
-      <ownedOperation xmi:type="uml:Operation" xmi:id="_w7AD4FSYEfCSZe_6QS0nMQ" name="Operation1"/>
-    </packagedElement>
-    <packagedElement xmi:type="uml:Class" xmi:id="_sbiqgFPeEfCSZe_6QS0nMQ" name="Block17">
-      <ownedAttribute xmi:type="uml:Port" xmi:id="_9SokYFSXEfCSZe_6QS0nMQ" name="Port1" aggregation="composite"/>
-      <ownedAttribute xmi:type="uml:Port" xmi:id="_LsIkEFSZEfCSZe_6QS0nMQ" name="ProxyPort2" aggregation="composite"/>
-      <ownedOperation xmi:type="uml:Operation" xmi:id="_iOUOMKBhEfC7wITuTa6u1g" name="Operation3">
-        <ownedParameter xmi:type="uml:Parameter" xmi:id="_MyctEKBiEfC7wITuTa6u1g" name="Parameter1"/>
-        <ownedParameter xmi:type="uml:Parameter" xmi:id="_O5hHQKBiEfC7wITuTa6u1g" name="Parameter2"/>
-      </ownedOperation>
-    </packagedElement>
-    <packagedElement xmi:type="uml:Class" xmi:id="_gdtwMFgIEfCSCry0LRghOw" name="Requirement18"/>
-    <packagedElement xmi:type="uml:StateMachine" xmi:id="_xmp8MFgKEfCSCry0LRghOw" name="StateMachine19">
-      <region xmi:type="uml:Region" xmi:id="_x1ELoFgKEfCSCry0LRghOw" name="Region1">
-        <subvertex xmi:type="uml:State" xmi:id="_PGX1UKBTEfC7wITuTa6u1g" name="StateA">
-          <region xmi:type="uml:Region" xmi:id="_RdmLYKBTEfC7wITuTa6u1g" name="Region1">
-            <subvertex xmi:type="uml:State" xmi:id="_UQ29MKBTEfC7wITuTa6u1g" name="StateA1"/>
+    <packagedElement xmi:type="uml:Package" xmi:id="_S3n2UK_eEfCB5JEEBbYU0A" name="Model">
+      <packagedElement xmi:type="uml:Class" xmi:id="_gdtwMFgIEfCSCry0LRghOw" name="Requirement18"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_Gej5oK-3EfCB5JEEBbYU0A" name="Context">
+        <generalization xmi:type="uml:Generalization" xmi:id="_fADVoK-7EfCB5JEEBbYU0A" general="_sbiqgFPeEfCSZe_6QS0nMQ"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_jZ0LMK-7EfCB5JEEBbYU0A" name="classOrStaticAttribute" visibility="private" isStatic="true">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_aWKaULo4EfCEnM4Nhn5qiQ" name="publicAttribute">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_oF9xMLpDEfCEnM4Nhn5qiQ" name="privateAttribute" visibility="private">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_3AG1QLpDEfCEnM4Nhn5qiQ" name="internalAttribute" visibility="package">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_FbcdcLpEEfCEnM4Nhn5qiQ" name="isInitializedAttribute" visibility="protected">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+          <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_Mzu5oLpEEfCEnM4Nhn5qiQ" value="true"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_UYGqALpEEfCEnM4Nhn5qiQ" name="readOnlyAttribute" visibility="private" isReadOnly="true">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_sD5w8LpEEfCEnM4Nhn5qiQ" name="initializedStaticArray" visibility="private" isStatic="true">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_jSvn4LpFEfCEnM4Nhn5qiQ" value="*"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_2jLvELpLEfCEnM4Nhn5qiQ" name="finalConstantAttribute" visibility="private" isStatic="true" isReadOnly="true">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+          <defaultValue xmi:type="uml:LiteralInteger" xmi:id="_C13BoLpMEfCEnM4Nhn5qiQ" value="5"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_IG1zELpMEfCEnM4Nhn5qiQ" name="derivableAttribute" visibility="private" isDerived="true">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+        </ownedAttribute>
+        <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_XCqvgLIEEfCLxaWCOqMQ4w" name="MainStm">
+          <region xmi:type="uml:Region" xmi:id="_Z80zgLIEEfCLxaWCOqMQ4w" name="MainHsm">
+            <transition xmi:type="uml:Transition" xmi:id="_SpnlgLPOEfCHBsnyfd21VQ" source="_NrF2ALPOEfCHBsnyfd21VQ" target="_JCR30LPOEfCHBsnyfd21VQ"/>
+            <transition xmi:type="uml:Transition" xmi:id="_5d5ugLPOEfCHBsnyfd21VQ" name="E1" source="_JCR30LPOEfCHBsnyfd21VQ" target="_bVfJcLPOEfCHBsnyfd21VQ">
+              <effect xmi:type="uml:OpaqueBehavior" xmi:id="_R0ehsLPYEfCHBsnyfd21VQ" name="printf(&quot;Hello&quot;)"/>
+              <trigger xmi:type="uml:Trigger" xmi:id="_tA-sELPUEfCHBsnyfd21VQ" name="Trigger1" event="_Gn6qALPVEfCHBsnyfd21VQ"/>
+            </transition>
+            <subvertex xmi:type="uml:State" xmi:id="_JCR30LPOEfCHBsnyfd21VQ" name="S1"/>
+            <subvertex xmi:type="uml:Pseudostate" xmi:id="_NrF2ALPOEfCHBsnyfd21VQ" name="MainStmInit"/>
+            <subvertex xmi:type="uml:State" xmi:id="_bVfJcLPOEfCHBsnyfd21VQ" name="S2">
+              <region xmi:type="uml:Region" xmi:id="_gCww4LPOEfCHBsnyfd21VQ" name="Region1">
+                <subvertex xmi:type="uml:State" xmi:id="_gCymELPOEfCHBsnyfd21VQ" name="S21"/>
+                <subvertex xmi:type="uml:State" xmi:id="_igPf8LPOEfCHBsnyfd21VQ" name="S22"/>
+              </region>
+            </subvertex>
           </region>
-        </subvertex>
-        <subvertex xmi:type="uml:State" xmi:id="_XMMF4KBTEfC7wITuTa6u1g" name="StateB"/>
-      </region>
-      <region xmi:type="uml:Region" xmi:id="_ODn-4KBTEfC7wITuTa6u1g" name="Region2">
-        <subvertex xmi:type="uml:State" xmi:id="_YzgpAKBTEfC7wITuTa6u1g" name="StateC"/>
-      </region>
+        </ownedBehavior>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_YM-X0LsKEfCEnM4Nhn5qiQ" name="classOrStaticMethod">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_b9bKoLsKEfCEnM4Nhn5qiQ" name="Parameter1" visibility="public" effect="create"/>
+        </ownedOperation>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Enumeration" xmi:id="_23MvIK_2EfCB5JEEBbYU0A" name="Enumeration6"/>
+      <packagedElement xmi:type="uml:CallEvent" xmi:id="_Gn6qALPVEfCHBsnyfd21VQ" name="E1"/>
+      <packagedElement xmi:type="uml:Realization" xmi:id="_UkMYgLo0EfCoN4Q71-sSNg" client="_Gej5oK-3EfCB5JEEBbYU0A" supplier="_Js-PIFPdEfCSZe_6QS0nMQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_lIXrwLL9EfC43JsjHj1mVQ" name="Abstracts">
+      <packagedElement xmi:type="uml:Class" xmi:id="_sbiqgFPeEfCSZe_6QS0nMQ" name="BaseClass" isAbstract="true">
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_5vdNgLntEfCoN4Q71-sSNg" name="derivableAttribute" visibility="private" isDerived="true"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_DJ02MLnuEfCoN4Q71-sSNg" name="publicMethod" isAbstract="true"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_F60-MLnuEfCoN4Q71-sSNg" name="protectedMethod" visibility="protected" isAbstract="true"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_OFmAMLnuEfCoN4Q71-sSNg" name="packageVisibleMethod" visibility="package" isAbstract="true"/>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_-Ik38LnvEfCoN4Q71-sSNg" name="Interfaces">
+      <packagedElement xmi:type="uml:Interface" xmi:id="_Js-PIFPdEfCSZe_6QS0nMQ" name="Interface1">
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_OmIPgLnwEfCoN4Q71-sSNg" name="finalMethod" isLeaf="true"/>
+      </packagedElement>
     </packagedElement>
     <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_9aMlYFGsEfCz0JP3SxwhXg">
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_9aYLkFGsEfCz0JP3SxwhXg" source="http://www.eclipse.org/uml2/2.0.0/UML">
@@ -102,11 +145,17 @@
       </eAnnotations>
       <appliedProfile xmi:type="uml:Profile" href="pathmap://Codegen_PROFILES/Codegen.profile.uml#_fPDsIBa-EearhdjjJ6cVzQ"/>
     </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_60ZnYLPOEfCHBsnyfd21VQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_60ef4LPOEfCHBsnyfd21VQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="pathmap://PAPYRUS_ACTIONLANGUAGE_PROFILE/ActionLanguage-Profile.profile.uml#_Kv8EIKFXEeS_KNX0nfvIVQ"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://PAPYRUS_ACTIONLANGUAGE_PROFILE/ActionLanguage-Profile.profile.uml#ActionLanguage"/>
+    </profileApplication>
   </uml:Model>
   <Blocks:Block xmi:id="_sblGwFPeEfCSZe_6QS0nMQ" base_Class="_sbiqgFPeEfCSZe_6QS0nMQ"/>
   <Codegen:GeneratorHint xmi:id="_1Vqt0FSXEfCSZe_6QS0nMQ" base_Element="_9ZHnUFGsEfCz0JP3SxwhXg" generatorID="Standard C++">
     <language xmi:type="Codegen:Language" href="pathmap://Codegen_PROFILES/languages.uml#_nya50CjREeayco6FJ_OtTQ"/>
   </Codegen:GeneratorHint>
-  <PortsAndFlows:ProxyPort xmi:id="_LsLAUFSZEfCSZe_6QS0nMQ" base_Port="_LsIkEFSZEfCSZe_6QS0nMQ"/>
   <Requirements:Requirement xmi:id="_geDHYFgIEfCSCry0LRghOw" base_NamedElement="_gdtwMFgIEfCSCry0LRghOw" base_Class="_gdtwMFgIEfCSCry0LRghOw"/>
+  <Blocks:Block xmi:id="_Ge3boK-3EfCB5JEEBbYU0A" base_Class="_Gej5oK-3EfCB5JEEBbYU0A"/>
 </xmi:XMI>

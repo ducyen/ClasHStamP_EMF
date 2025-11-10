@@ -30,7 +30,7 @@ public class TBaseGenerator {
     protected Classifier m_iAncestor = null;
     protected static Writer m_writer;
     protected static String m_namespaceSeparator;
-    protected static String m_pkgPathSeparator;
+    public static String m_pkgPathSeparator;
     protected static String m_language = null;
     protected static int indent = 0;
     /**
@@ -227,10 +227,8 @@ public class TBaseGenerator {
         int upper = iAttr.getUpper();
         if (upper > 1) {
             return String.valueOf(upper);
-        } else if (upper == -1) {
-            return " ";
         } else {
-            return String.valueOf(upper);
+            return "";
         }
     }
 

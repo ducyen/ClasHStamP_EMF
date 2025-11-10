@@ -1,11 +1,11 @@
 [module stateDeepTraverser('http://www.eclipse.org/uml2/4.0.0/UML')]
 
-[template protected checkPseudostate(p : Pseudostate, container : State)]P [p.name/][/template]
+[template protected checkPseudostate(p : Pseudostate, container : State)][/template]
 
-[template protected checkRegionBfr(s : State, r : Region)]RB [r.name/][/template]
+[template protected checkRegionBfr(s : State, r : Region)][/template]
 
-[template protected checkRegion(s : State, r : Region)]RA [r.name/][/template]
+[template protected checkRegion(s : State, r : Region)][/template]
 
-[template protected checkStateBfr(s : State, container : State)]SB [s.name/][/template]
+[template protected checkStateBfr(s : State, container : State)][/template]
 
-[template protected checkState(s : State, container : State)]SA [s.name/][/template]
+[template protected checkState(s : State, container : State)][/template]

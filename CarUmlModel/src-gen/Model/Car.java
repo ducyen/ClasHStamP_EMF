@@ -26,24 +26,50 @@ public class Car {
 	}
 	
 	
+	
 	/* ============================================
 	 * State Machines belonging to Car
 	 * ============================================ */
 	
+	StateMachine: MainTop
 	
+	    
+	    
+	    
+	    
+	        
+	        
+	    R Region1
+	        
+	        
+	        
+	        
+	        
+	        
+	    
+	    
+	    
+	    
+	R Region0
 	
-	void Main_init(void) {
-	    // Initialization code for state machine
-	}
-	void Main_step(void) {
-	    // Step function
-	}
+	    
+	        
+	        
+	        
+	        
+	        
+	    
+	R Region1
+	StateMachine: SubTop
 	
-	void Sub_init(void) {
-	    // Initialization code for state machine
-	}
-	void Sub_step(void) {
-	    // Step function
-	}
+	    
+	    
+	    
+	    
+	R Region0
+	
+	    
+	    
+	R Region1
 	
 }
