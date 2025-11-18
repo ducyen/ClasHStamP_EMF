@@ -4,12 +4,12 @@ package all_notations.java_sample00.model;
 import java.io.*;
 import java.util.*;
 
-public  class AFriend
-{
-    public  AFriend(
-        Integer _attribute3
-    ){
-        attribute3 = _attribute3;
-    }                                                                                           
-    Integer attribute3;                                         
-}
+        public  class AFriend
+        {
+            public  AFriend(
+                Integer _attribute3
+            ){
+                attribute3 = _attribute3;
+            }                                                                                   
+            Integer attribute3;                                 
+        }

@@ -4,8 +4,8 @@ package all_notations.java_sample00.model;
 import java.io.*;
 import java.util.*;
 import all_notations.java_sample00.abstracts.*;
-import all_notations.java_sample00.model.*;
 import all_notations.java_sample00.interfaces.*;
+import all_notations.java_sample00.model.*;
 
 public  class Context extends BaseClass implements Interface2, Interface1
 {
@@ -29,7 +29,6 @@ public  class Context extends BaseClass implements Interface2, Interface1
     } /* Context.methodWithParams */
     public UsedDependency methodReturnsSomething(
     ){
-    	return null;
     } /* Context.methodReturnsSomething */
     public void methodThrowsException(
     ){
@@ -66,7 +65,7 @@ public  class Context extends BaseClass implements Interface2, Interface1
     }                                                                                           
     public String publicAttribute;                              
     private Integer privateAttribute;                           
-    private Integer internalAttribute;                          
+    Integer internalAttribute;                                  
     private Boolean isInitializedAttribute;                     
     private Integer readOnlyAttribute;                          
     private Aggregration[] anAggregation;                         

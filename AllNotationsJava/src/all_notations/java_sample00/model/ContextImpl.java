@@ -4,9 +4,20 @@ package all_notations.java_sample00.model;
 import java.io.*;
 import java.util.*;
 import all_notations.java_sample00.model.*;
+import all_notations.java_sample00.base.*;
+import all_notations.java_sample00.abstracts.*;
 
 public  class ContextImpl extends Context
 {
+    public enum EventId {
+        E0,
+        E1,
+        E2,
+        E3,
+        E4,
+        E5,
+        Num
+    };
     protected void protectedMethod(
     ){
     } /* ContextImpl.protectedMethod */
@@ -15,16 +26,1221 @@ public  class ContextImpl extends Context
         EventParams e
     ){
     } /* ContextImpl.checkE1Params */
-    public  ContextImpl(
-        Integer _derivableAttribute,
-        String _publicAttribute,
-        Integer _privateAttribute,
-        Integer _internalAttribute,
-        Integer _readOnlyAttribute,
-        Aggregration[] _anAggregation,
-        Composition[] _aProtectedComposition
-    ) {
-        super( _derivableAttribute, _publicAttribute, _privateAttribute, _internalAttribute, _readOnlyAttribute, _anAggregation, _aProtectedComposition );
+    protected class SubStmTop {
+        protected StateMachine pParentStm = null;
+        protected boolean lastEnteredStateRecovering = false;
+/* states' declaration */
+        public static final long S1              = ( 1 <<  0 );
+        public static final long SubStmInit      = ( 1 <<  1 );
+        public static final long Entry1          = ( 1 <<  2 );
+        public static final long Exit1           = ( 1 <<  3 );
+        public static final long SubStm          = ( S1 | SubStmInit | Entry1 | Exit1 );
+        _SubStmTop SubStmHsm = new _SubStmTop();                
+/* Duc Here */
+        class _SubStmTop extends StateMachine {
+        void SubStm_Entry( ContextImpl pContextImpl ){
+            if( Enterable( SubStmTop.SubStm ) ){
+                if( !( ( SubStmTop )pMain ).lastEnteredStateRecovering && nTargetState == SubStmTop.SubStm ){
+                    nPseudostate = SubStmTop.SubStmInit;
+                }
+                if ( ( ( SubStmTop )pMain ).lastEnteredStateRecovering ) {
+                    nPseudostate = lastEnteredState;
+                }
+            }
+        }
+        boolean SubStm_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
+            boolean bResult = false;
+            if( !bHandled ){
+                nSourceState = SubStmTop.SubStm;
+            }
+            bHandled |= bResult;
+            wasHandled |= bResult;
+            return bHandled;
+        }
+        void SubStm_Exit( ContextImpl pContextImpl ){
+            if( Exitable( SubStmTop.SubStm ) ){ 
+            }
+        }
+        void S1_Entry( ContextImpl pContextImpl ){
+            if( Enterable( SubStmTop.S1 ) ){
+                SubStm_Entry( pContextImpl );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/SubStm/	209	30	121	81	30	30	700	300	S1" );
+            }
+        }
+        boolean S1_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
+            boolean bResult = false;
+            if( !bHandled ){
+                nSourceState = SubStmTop.S1;
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/SubStm/	209	30	121	81	30	30	700	300	S1" );
+            }
+            bHandled |= bResult;
+            wasHandled |= bResult;
+            return SubStm_EventProc( pContextImpl, nEventId, pEventParams );
+        }
+        void S1_Exit( ContextImpl pContextImpl ){
+            if( Exitable( SubStmTop.S1 ) ){ 
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/SubStm/	209	30	121	81	30	30	700	300	S1" );
+                SubStm_Exit( pContextImpl );
+            }
+        }
+        void BgnTrans( ContextImpl pContextImpl, long targetState ){
+            nTargetState = targetState;
+            nPseudostate = targetState;
+            if( nCurrentState == SubStm ) { SubStm_Exit( pContextImpl ); }
+            else if( nCurrentState == S1 ) { S1_Exit( pContextImpl ); }
+            else {}
+        }
+        public boolean Reset(  ContextImpl pContextImpl ) {
+            return Reset( pContextImpl, StateMachine.STATE_UNDEF, false );
+        }
+        public boolean Reset(  ContextImpl pContextImpl, boolean lastEnteredStateRecovering ) {
+            return Reset( pContextImpl, StateMachine.STATE_UNDEF, lastEnteredStateRecovering );
+        }
+        public boolean Reset(  ContextImpl pContextImpl, long entryPt ) {
+            return Reset( pContextImpl, entryPt, false );
+        }
+        public boolean Reset( ContextImpl pContextImpl, long entryPt, boolean lastEnteredStateRecovering ) {
+            if( entryPt != StateMachine.STATE_UNDEF ){
+                Req( entryPt );
+                return false;
+            }
+            nPseudostate = SubStmTop.SubStm;
+            bIsExternTrans = true;
+            BgnTrans( pContextImpl, nPseudostate );
+            EndTrans( pContextImpl );
+            return true;
+        }
+        public boolean EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
+            boolean bResult = false;
+            nLCAState = StateMachine.STATE_UNDEF;
+            bHandled = false;
+            wasHandled = false;
+            if( nCurrentState == SubStm ) { SubStm_EventProc( pContextImpl, nEventId, pEventParams ); }
+            else if( nCurrentState == S1 ) { S1_EventProc( pContextImpl, nEventId, pEventParams ); }
+            else {}
+            return bResult;
+        }
+        boolean Abort( ContextImpl pContextImpl ) {
+            nSourceState = SubStmTop.SubStm;
+            BgnTrans( pContextImpl, StateMachine.STATE_UNDEF );
+            EndTrans( pContextImpl );
+            return true;
+        }
+        void EndTrans( ContextImpl pContextImpl ){
+            nCurrentState = nTargetState;
+            bIsExternTrans = false;
+            if( nCurrentState == SubStm ) { SubStm_Entry( pContextImpl ); }
+            else if( nCurrentState == S1 ) { S1_Entry( pContextImpl ); }
+            else {}
+        }
+        boolean StateDefaultTrans( ContextImpl pContextImpl ){
+            boolean bResult = false;
+            nSourceState = nCurrentState;
+            nLCAState = StateMachine.STATE_UNDEF;
+                if ( nPseudostate == SubStmTop.SubStmInit  ) {
+                    bIsExternTrans = true;
+                    BgnTrans( pContextImpl, SubStmTop.S1 );
+                    EndTrans( pContextImpl );
+                    bResult |= true;
+            }else if( nCurrentState != nPseudostate ){
+                BgnTrans( pContextImpl, nPseudostate );
+                EndTrans( pContextImpl );
+                bResult = true;
+            }else{
+            }
+            bHandled |= bResult;
+            wasHandled |= bResult;
+            ( ( SubStmTop )pMain ).lastEnteredStateRecovering = false;
+            return bResult;
+        }
+        }
+        public boolean EventProc( ContextImpl pContextImpl, EventId nEventId, EventParams pEventParams ){
+            return SubStmHsm.EventProc( pContextImpl, nEventId, pEventParams );
+        }
+        public boolean StateDefaultTrans( ContextImpl pContextImpl ){
+            boolean bResult;
+            while( true ){
+                bResult = false;
+                bResult |= SubStmHsm.StateDefaultTrans( pContextImpl );
+                if( bResult == false ){
+                    break;
+                }
+            }
+            return bResult;
+        }
+        public boolean Reset( ContextImpl pContextImpl ){
+            return SubStmHsm.Reset( pContextImpl, StateMachine.STATE_UNDEF, false );
+        }
+        public boolean Reset( ContextImpl pContextImpl, long entryPt, boolean lastEnteredStateRecovering ){
+            SubStmHsm.Abort( pContextImpl );
+            return SubStmHsm.Reset( pContextImpl, entryPt, lastEnteredStateRecovering );
+        }
+        public boolean Abort( ContextImpl pContextImpl ){
+            return SubStmHsm.Abort( pContextImpl );
+        }
+        public boolean IsFinished(){
+            return SubStmHsm.nPseudostate == SubStmTop.SubStm;
+        }
 
-    }                                                                                           
-}
+        public void Prepare( StateMachine pParent ){
+            pParentStm = pParent;
+            SubStmHsm.pMain = this;
+        }
+    } /* SubStmTop */
+    protected class MainStmTop {
+        protected StateMachine pParentStm = null;
+        protected boolean lastEnteredStateRecovering = false;
+/* states' declaration */
+        public static final long S821            = ( 1 <<  0 );
+        public static final long S82Init         = ( 1 <<  1 );
+        public static final long S822            = ( 1 <<  2 );
+        public static final long S8Rgn1          = ( S821 | S82Init | S822 );
+/* states' declaration */
+        public static final long S7121           = ( 1 <<  0 );
+        public static final long S7122           = ( 1 <<  1 );
+        public static final long S712Init        = ( 1 <<  2 );
+        public static final long S71Rgn1         = ( S7121 | S7122 | S712Init );
+/* states' declaration */
+        public static final long S1              = ( 1 <<  0 );
+        public static final long MainStmInit     = ( 1 <<  1 );
+        public static final long S21             = ( 1 <<  2 );
+        public static final long S22             = ( 1 <<  3 );
+        public static final long S2Init          = ( 1 <<  4 );
+        public static final long S2              = ( S21 | S22 | S2Init );
+        public static final long S811            = ( 1 <<  5 );
+        public static final long S81Init         = ( 1 <<  6 );
+        public static final long S812            = ( 1 <<  7 );
+        public static final long S8              = ( S811 | S81Init | S812 );
+        public static final long S7111           = ( 1 <<  8 );
+        public static final long S7112           = ( 1 <<  9 );
+        public static final long S711Init        = ( 1 << 10 );
+        public static final long S71             = ( S7111 | S7112 | S711Init );
+        public static final long S7Init          = ( 1 << 11 );
+        public static final long S72             = ( 1 << 12 );
+        public static final long S7              = ( S71 | S7Init | S72 );
+        public static final long S6              = ( 1 << 13 );
+        public static final long S3              = ( 1 << 14 );
+        public static final long S9              = ( 1 << 15 );
+        public static final long MainStm         = ( S1 | MainStmInit | S2 | S8 | S7 | S6 | S3 | S9 );
+        _MainStmTop MainStmHsm = new _MainStmTop();             
+        long S2ShallowHist;
+        _S8Rgn1Hsm S8Rgn1Hsm = new _S8Rgn1Hsm();                
+        _S71Rgn1Hsm S71Rgn1Hsm = new _S71Rgn1Hsm();             
+        long S7DeepHist;
+    SubStmTop S6Hsm;                                            
+    SubStmTop S9Hsm;                                            
+/* Duc Here */
+        class _S8Rgn1Hsm extends StateMachine {
+        void S8Rgn1_Entry( ContextImpl pContextImpl ){
+            if( Enterable( MainStmTop.S8Rgn1 ) ){
+                    if( !( ( MainStmTop )pMain ).lastEnteredStateRecovering && nTargetState == MainStmTop.S8Rgn1 ){
+                        nPseudostate = MainStmTop.S82Init;
+                    }
+                    if ( ( ( MainStmTop )pMain ).lastEnteredStateRecovering ) {
+                        nPseudostate = lastEnteredState;
+                    }
+            }
+        }
+        boolean S8Rgn1_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
+            boolean bResult = false;
+            if( !bHandled ){
+                nSourceState = MainStmTop.S8Rgn1;
+            }
+            bHandled |= bResult;
+            wasHandled |= bResult;
+            return bHandled;
+        }
+        void S8Rgn1_Exit( ContextImpl pContextImpl ){
+            if( Exitable( MainStmTop.S8Rgn1 ) ){ 
+            }
+        }
+        void S821_Entry( ContextImpl pContextImpl ){
+            if( Enterable( MainStmTop.S821 ) ){
+                S8Rgn1_Entry( pContextImpl );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	479	16	121	81	30	30	1461	931	S821" );
+            }
+        }
+        boolean S821_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
+            boolean bResult = false;
+            if( !bHandled ){
+                nSourceState = MainStmTop.S821;
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	479	16	121	81	30	30	1461	931	S821" );
+                switch( nEventId ){
+                case EventId.E2:{
+                        if (( ( MainStmTop )pMain ).MainStmHsm.IsIn( MainStmTop_S812 )) {
+                            ( ( MainStmTop )pMain ).MainStmHsm.Reset( pContextImpl, MainStmTop.S811 );
+                        }
+                } break;
+                default: break;
+                }
+            }
+            bHandled |= bResult;
+            wasHandled |= bResult;
+            return S8Rgn1_EventProc( pContextImpl, nEventId, pEventParams );
+        }
+        void S821_Exit( ContextImpl pContextImpl ){
+            if( Exitable( MainStmTop.S821 ) ){ 
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	479	16	121	81	30	30	1461	931	S821" );
+                S8Rgn1_Exit( pContextImpl );
+            }
+        }
+        void S822_Entry( ContextImpl pContextImpl ){
+            if( Enterable( MainStmTop.S822 ) ){
+                S8Rgn1_Entry( pContextImpl );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	119	16	121	81	30	30	1461	931	S822" );
+            }
+        }
+        boolean S822_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
+            boolean bResult = false;
+            if( !bHandled ){
+                nSourceState = MainStmTop.S822;
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	119	16	121	81	30	30	1461	931	S822" );
+            }
+            bHandled |= bResult;
+            wasHandled |= bResult;
+            return S8Rgn1_EventProc( pContextImpl, nEventId, pEventParams );
+        }
+        void S822_Exit( ContextImpl pContextImpl ){
+            if( Exitable( MainStmTop.S822 ) ){ 
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	119	16	121	81	30	30	1461	931	S822" );
+                S8Rgn1_Exit( pContextImpl );
+            }
+        }
+        void BgnTrans( ContextImpl pContextImpl, long targetState ){
+            nTargetState = targetState;
+            nPseudostate = targetState;
+            if( nCurrentState == S8Rgn1 ) { S8Rgn1_Exit( pContextImpl ); }
+            else if( nCurrentState == S821 ) { S821_Exit( pContextImpl ); }
+            else if( nCurrentState == S822 ) { S822_Exit( pContextImpl ); }
+            else {}
+        }
+        public boolean Reset(  ContextImpl pContextImpl ) {
+            return Reset( pContextImpl, StateMachine.STATE_UNDEF, false );
+        }
+        public boolean Reset(  ContextImpl pContextImpl, boolean lastEnteredStateRecovering ) {
+            return Reset( pContextImpl, StateMachine.STATE_UNDEF, lastEnteredStateRecovering );
+        }
+        public boolean Reset(  ContextImpl pContextImpl, long entryPt ) {
+            return Reset( pContextImpl, entryPt, false );
+        }
+        public boolean Reset( ContextImpl pContextImpl, long entryPt, boolean lastEnteredStateRecovering ) {
+            if( entryPt != StateMachine.STATE_UNDEF ){
+                Req( entryPt );
+                return false;
+            }
+            nPseudostate = MainStmTop.S8Rgn1;
+            bIsExternTrans = true;
+            BgnTrans( pContextImpl, nPseudostate );
+            EndTrans( pContextImpl );
+            return true;
+        }
+        public boolean EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
+            boolean bResult = false;
+            nLCAState = StateMachine.STATE_UNDEF;
+            bHandled = false;
+            wasHandled = false;
+            if( nCurrentState == S8Rgn1 ) { S8Rgn1_EventProc( pContextImpl, nEventId, pEventParams ); }
+            else if( nCurrentState == S821 ) { S821_EventProc( pContextImpl, nEventId, pEventParams ); }
+            else if( nCurrentState == S822 ) { S822_EventProc( pContextImpl, nEventId, pEventParams ); }
+            else {}
+            return bResult;
+        }
+        boolean Abort( ContextImpl pContextImpl ) {
+            nSourceState = MainStmTop.S8Rgn1;
+            BgnTrans( pContextImpl, StateMachine.STATE_UNDEF );
+            EndTrans( pContextImpl );
+            return true;
+        }
+        void EndTrans( ContextImpl pContextImpl ){
+            nCurrentState = nTargetState;
+            bIsExternTrans = false;
+            if( nCurrentState == S8Rgn1 ) { S8Rgn1_Entry( pContextImpl ); }
+            else if( nCurrentState == S821 ) { S821_Entry( pContextImpl ); }
+            else if( nCurrentState == S822 ) { S822_Entry( pContextImpl ); }
+            else {}
+        }
+        boolean StateDefaultTrans( ContextImpl pContextImpl ){
+            boolean bResult = false;
+            nSourceState = nCurrentState;
+            nLCAState = StateMachine.STATE_UNDEF;
+                    if ( nPseudostate == MainStmTop.S82Init  ) {
+                        bIsExternTrans = true;
+                        BgnTrans( pContextImpl, MainStmTop.S821 );
+                        EndTrans( pContextImpl );
+                        bResult |= true;
+            }else if( nCurrentState != nPseudostate ){
+                BgnTrans( pContextImpl, nPseudostate );
+                EndTrans( pContextImpl );
+                bResult = true;
+            }else{
+            }
+            bHandled |= bResult;
+            wasHandled |= bResult;
+            ( ( MainStmTop )pMain ).lastEnteredStateRecovering = false;
+            return bResult;
+        }
+        }
+        class _S71Rgn1Hsm extends StateMachine {
+        void S71Rgn1_Entry( ContextImpl pContextImpl ){
+            if( Enterable( MainStmTop.S71Rgn1 ) ){
+                    if( !( ( MainStmTop )pMain ).lastEnteredStateRecovering && nTargetState == MainStmTop.S71Rgn1 ){
+                        nPseudostate = MainStmTop.S712Init;
+                    }
+                    if ( ( ( MainStmTop )pMain ).lastEnteredStateRecovering ) {
+                        nPseudostate = lastEnteredState;
+                    }
+            }
+        }
+        boolean S71Rgn1_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
+            boolean bResult = false;
+            if( !bHandled ){
+                nSourceState = MainStmTop.S71Rgn1;
+            }
+            bHandled |= bResult;
+            wasHandled |= bResult;
+            return bHandled;
+        }
+        void S71Rgn1_Exit( ContextImpl pContextImpl ){
+            if( Exitable( MainStmTop.S71Rgn1 ) ){ 
+            }
+        }
+        void S7121_Entry( ContextImpl pContextImpl ){
+            if( Enterable( MainStmTop.S7121 ) ){
+                S71Rgn1_Entry( pContextImpl );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	19	40	81	61	30	30	1461	931	S7121" );
+            }
+        }
+        boolean S7121_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
+            boolean bResult = false;
+            if( !bHandled ){
+                nSourceState = MainStmTop.S7121;
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	19	40	81	61	30	30	1461	931	S7121" );
+                switch( nEventId ){
+                case EventId.E5:{
+                        bIsExternTrans = true;
+                        BgnTrans( pContextImpl, MainStmTop.S7122 );
+                        EndTrans( pContextImpl );
+                        bResult |= true;
+                } break;
+                default: break;
+                }
+            }
+            bHandled |= bResult;
+            wasHandled |= bResult;
+            return S71Rgn1_EventProc( pContextImpl, nEventId, pEventParams );
+        }
+        void S7121_Exit( ContextImpl pContextImpl ){
+            if( Exitable( MainStmTop.S7121 ) ){ 
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	19	40	81	61	30	30	1461	931	S7121" );
+                S71Rgn1_Exit( pContextImpl );
+            }
+        }
+        void S7122_Entry( ContextImpl pContextImpl ){
+            if( Enterable( MainStmTop.S7122 ) ){
+                S71Rgn1_Entry( pContextImpl );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	19	140	81	61	30	30	1461	931	S7122" );
+            }
+        }
+        boolean S7122_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
+            boolean bResult = false;
+            if( !bHandled ){
+                nSourceState = MainStmTop.S7122;
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	19	140	81	61	30	30	1461	931	S7122" );
+            }
+            bHandled |= bResult;
+            wasHandled |= bResult;
+            return S71Rgn1_EventProc( pContextImpl, nEventId, pEventParams );
+        }
+        void S7122_Exit( ContextImpl pContextImpl ){
+            if( Exitable( MainStmTop.S7122 ) ){ 
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	19	140	81	61	30	30	1461	931	S7122" );
+                S71Rgn1_Exit( pContextImpl );
+            }
+        }
+        void BgnTrans( ContextImpl pContextImpl, long targetState ){
+            nTargetState = targetState;
+            nPseudostate = targetState;
+            if( nCurrentState == S71Rgn1 ) { S71Rgn1_Exit( pContextImpl ); }
+            else if( nCurrentState == S7121 ) { S7121_Exit( pContextImpl ); }
+            else if( nCurrentState == S7122 ) { S7122_Exit( pContextImpl ); }
+            else {}
+        }
+        public boolean Reset(  ContextImpl pContextImpl ) {
+            return Reset( pContextImpl, StateMachine.STATE_UNDEF, false );
+        }
+        public boolean Reset(  ContextImpl pContextImpl, boolean lastEnteredStateRecovering ) {
+            return Reset( pContextImpl, StateMachine.STATE_UNDEF, lastEnteredStateRecovering );
+        }
+        public boolean Reset(  ContextImpl pContextImpl, long entryPt ) {
+            return Reset( pContextImpl, entryPt, false );
+        }
+        public boolean Reset( ContextImpl pContextImpl, long entryPt, boolean lastEnteredStateRecovering ) {
+            if( entryPt != StateMachine.STATE_UNDEF ){
+                Req( entryPt );
+                return false;
+            }
+            nPseudostate = MainStmTop.S71Rgn1;
+            bIsExternTrans = true;
+            BgnTrans( pContextImpl, nPseudostate );
+            EndTrans( pContextImpl );
+            return true;
+        }
+        public boolean EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
+            boolean bResult = false;
+            nLCAState = StateMachine.STATE_UNDEF;
+            bHandled = false;
+            wasHandled = false;
+            if( nCurrentState == S71Rgn1 ) { S71Rgn1_EventProc( pContextImpl, nEventId, pEventParams ); }
+            else if( nCurrentState == S7121 ) { S7121_EventProc( pContextImpl, nEventId, pEventParams ); }
+            else if( nCurrentState == S7122 ) { S7122_EventProc( pContextImpl, nEventId, pEventParams ); }
+            else {}
+            return bResult;
+        }
+        boolean Abort( ContextImpl pContextImpl ) {
+            nSourceState = MainStmTop.S71Rgn1;
+            BgnTrans( pContextImpl, StateMachine.STATE_UNDEF );
+            EndTrans( pContextImpl );
+            return true;
+        }
+        void EndTrans( ContextImpl pContextImpl ){
+            nCurrentState = nTargetState;
+            bIsExternTrans = false;
+            if( nCurrentState == S71Rgn1 ) { S71Rgn1_Entry( pContextImpl ); }
+            else if( nCurrentState == S7121 ) { S7121_Entry( pContextImpl ); }
+            else if( nCurrentState == S7122 ) { S7122_Entry( pContextImpl ); }
+            else {}
+        }
+        boolean StateDefaultTrans( ContextImpl pContextImpl ){
+            boolean bResult = false;
+            nSourceState = nCurrentState;
+            nLCAState = StateMachine.STATE_UNDEF;
+                    if ( nPseudostate == MainStmTop.S712Init  ) {
+                        bIsExternTrans = true;
+                        BgnTrans( pContextImpl, MainStmTop.S7121 );
+                        EndTrans( pContextImpl );
+                        bResult |= true;
+            }else if( nCurrentState != nPseudostate ){
+                BgnTrans( pContextImpl, nPseudostate );
+                EndTrans( pContextImpl );
+                bResult = true;
+            }else{
+            }
+            bHandled |= bResult;
+            wasHandled |= bResult;
+            ( ( MainStmTop )pMain ).lastEnteredStateRecovering = false;
+            return bResult;
+        }
+        }
+        class _MainStmTop extends StateMachine {
+        void MainStm_Entry( ContextImpl pContextImpl ){
+            if( Enterable( MainStmTop.MainStm ) ){
+                    if( !( ( MainStmTop )pMain ).lastEnteredStateRecovering && nTargetState == MainStmTop.MainStm ){
+                        nPseudostate = MainStmTop.MainStmInit;
+                    }
+                    if ( ( ( MainStmTop )pMain ).lastEnteredStateRecovering ) {
+                        nPseudostate = lastEnteredState;
+                    }
+            }
+        }
+        boolean MainStm_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
+            boolean bResult = false;
+            if( !bHandled ){
+                nSourceState = MainStmTop.MainStm;
+            }
+            bHandled |= bResult;
+            wasHandled |= bResult;
+            return bHandled;
+        }
+        void MainStm_Exit( ContextImpl pContextImpl ){
+            if( Exitable( MainStmTop.MainStm ) ){ 
+            }
+        }
+        void S1_Entry( ContextImpl pContextImpl ){
+            if( Enterable( MainStmTop.S1 ) ){
+                MainStm_Entry( pContextImpl );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	149	30	121	71	30	30	1461	931	S1" );
+            }
+        }
+        boolean S1_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
+            boolean bResult = false;
+            if( !bHandled ){
+                nSourceState = MainStmTop.S1;
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	149	30	121	71	30	30	1461	931	S1" );
+                switch( nEventId ){
+                case EventId.E1:{
+                        bIsExternTrans = true;
+                        BgnTrans( pContextImpl, MainStmTop.S2 );
+                        EndTrans( pContextImpl );
+                        bResult |= true;
+                } break;
+                case EventId.E2:{
+                        if (pContextImpl.internalAttribute == 0) {
+                            bIsExternTrans = true;
+                            BgnTrans( pContextImpl, MainStmTop.S2 );
+                            EndTrans( pContextImpl );
+                            bResult |= true;
+                        } else {
+                            if (pContextImpl.internalAttribute == 1) {
+                                BgnTrans( pContextImpl, MainStmTop.S6 );
+                                ( ( MainStmTop )pMain ).S6Hsm.Reset( pContextImpl, SubStmTop.Entry1, ( ( MainStmTop )pMain ).lastEnteredStateRecovering );
+                                EndTrans( pContextImpl );
+                                bResult |= true;
+                            } else {
+                                bIsExternTrans = true;
+                                BgnTrans( pContextImpl, MainStmTop.S7 );
+                                EndTrans( pContextImpl );
+                                bResult |= true;
+                            }
+                        }
+                } break;
+                default: break;
+                }
+            }
+            bHandled |= bResult;
+            wasHandled |= bResult;
+            return MainStm_EventProc( pContextImpl, nEventId, pEventParams );
+        }
+        void S1_Exit( ContextImpl pContextImpl ){
+            if( Exitable( MainStmTop.S1 ) ){ 
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	149	30	121	71	30	30	1461	931	S1" );
+                MainStm_Exit( pContextImpl );
+            }
+        }
+        void S2_Entry( ContextImpl pContextImpl ){
+            if( Enterable( MainStmTop.S2 ) ){
+                MainStm_Entry( pContextImpl );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	429	30	740	247	30	30	1461	931	S2" );
+                    if( !( ( MainStmTop )pMain ).lastEnteredStateRecovering && nTargetState == MainStmTop.S2 ){
+                        nPseudostate = MainStmTop.S2Init;
+                    }
+            }
+        }
+        boolean S2_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
+            boolean bResult = false;
+            if( !bHandled ){
+                nSourceState = MainStmTop.S2;
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	429	30	740	247	30	30	1461	931	S2" );
+                switch( nEventId ){
+                case EventId.E4:{
+                        bIsExternTrans = true;
+                        BgnTrans( pContextImpl, MainStmTop.S6 );
+                        EndTrans( pContextImpl );
+                        bResult |= true;
+                } break;
+                case EventId.E2:{
+                        bIsExternTrans = true;
+                        BgnTrans( pContextImpl, MainStmTop.S3 );
+                        EndTrans( pContextImpl );
+                        bResult |= true;
+                } break;
+                default: break;
+                }
+            }
+            bHandled |= bResult;
+            wasHandled |= bResult;
+            return MainStm_EventProc( pContextImpl, nEventId, pEventParams );
+        }
+        void S2_Exit( ContextImpl pContextImpl ){
+            if( Exitable( MainStmTop.S2 ) ){ 
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	429	30	740	247	30	30	1461	931	S2" );
+                MainStm_Exit( pContextImpl );
+            }
+        }
+        void S21_Entry( ContextImpl pContextImpl ){
+            if( Enterable( MainStmTop.S21 ) ){
+                S2_Entry( pContextImpl );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	199	60	120	81	30	30	1461	931	S21" );
+                    ( ( MainStmTop )pMain ).S2ShallowHist = MainStmTop.S21;
+            }
+        }
+        boolean S21_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
+            boolean bResult = false;
+            if( !bHandled ){
+                nSourceState = MainStmTop.S21;
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	199	60	120	81	30	30	1461	931	S21" );
+                switch( nEventId ){
+                case EventId.E2:{
+                        bIsExternTrans = true;
+                        BgnTrans( pContextImpl, MainStmTop.S22 );
+                        EndTrans( pContextImpl );
+                        bResult |= true;
+                } break;
+                case EventId.E1:{
+                        bIsExternTrans = true;
+                        BgnTrans( pContextImpl, MainStmTop.S3 );
+                        EndTrans( pContextImpl );
+                        bResult |= true;
+                } break;
+                default: break;
+                }
+            }
+            bHandled |= bResult;
+            wasHandled |= bResult;
+            return S2_EventProc( pContextImpl, nEventId, pEventParams );
+        }
+        void S21_Exit( ContextImpl pContextImpl ){
+            if( Exitable( MainStmTop.S21 ) ){ 
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	199	60	120	81	30	30	1461	931	S21" );
+                S2_Exit( pContextImpl );
+            }
+        }
+        void S22_Entry( ContextImpl pContextImpl ){
+            if( Enterable( MainStmTop.S22 ) ){
+                S2_Entry( pContextImpl );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	419	60	121	81	30	30	1461	931	S22" );
+                    ( ( MainStmTop )pMain ).S2ShallowHist = MainStmTop.S22;
+            }
+        }
+        boolean S22_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
+            boolean bResult = false;
+            if( !bHandled ){
+                nSourceState = MainStmTop.S22;
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	419	60	121	81	30	30	1461	931	S22" );
+                switch( nEventId ){
+                case EventId.E0:{
+                        ( ( MainStmTop )pMain ).S2ShallowHist = StateMachine.STATE_UNDEF;
+                        bIsExternTrans = true;
+                        BgnTrans( pContextImpl, MainStmTop.MainStm );
+                        EndTrans( pContextImpl );
+                        bResult |= true;
+                } break;
+                default: break;
+                }
+            }
+            bHandled |= bResult;
+            wasHandled |= bResult;
+            return S2_EventProc( pContextImpl, nEventId, pEventParams );
+        }
+        void S22_Exit( ContextImpl pContextImpl ){
+            if( Exitable( MainStmTop.S22 ) ){ 
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	419	60	121	81	30	30	1461	931	S22" );
+                S2_Exit( pContextImpl );
+            }
+        }
+        void S8_Entry( ContextImpl pContextImpl ){
+            if( Enterable( MainStmTop.S8 ) ){
+                MainStm_Entry( pContextImpl );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	429	550	741	268	30	30	1461	931	S8" );
+                    if( !( ( MainStmTop )pMain ).lastEnteredStateRecovering && nTargetState == MainStmTop.S8 ){
+                        nPseudostate = MainStmTop.S81Init;
+                    }
+                    ( ( MainStmTop )pMain ).S8Rgn1Hsm.Reset( pContextImpl );
+            }
+        }
+        boolean S8_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
+            boolean bResult = false;
+            bHandled |= ( ( MainStmTop )pMain ).S8Rgn1Hsm.EventProc( pContextImpl, nEventId, pEventParams );
+            if( !bHandled ){
+                nSourceState = MainStmTop.S8;
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	429	550	741	268	30	30	1461	931	S8" );
+                switch( nEventId ){
+                case EventId.E3:{
+                        if( ( ( MainStmTop )pMain ).S2ShallowHist != StateMachine.STATE_UNDEF ){
+                            BgnTrans( pContextImpl, ( ( MainStmTop )pMain ).S2ShallowHist );
+                            EndTrans( pContextImpl );
+                            bResult |= true;
+                        }else{
+                            bIsExternTrans = true;
+                            BgnTrans( pContextImpl, MainStmTop.MainStm );
+                            EndTrans( pContextImpl );
+                            bResult |= true;
+                        }
+                } break;
+                case EventId.E5:{
+                        bIsExternTrans = true;
+                        BgnTrans( pContextImpl, MainStmTop.S7 );
+                        EndTrans( pContextImpl );
+                        bResult |= true;
+                } break;
+                default: break;
+                }
+            }
+            bHandled |= bResult;
+            wasHandled |= bResult;
+            return MainStm_EventProc( pContextImpl, nEventId, pEventParams );
+        }
+        void S8_Exit( ContextImpl pContextImpl ){
+            if( Exitable( MainStmTop.S8 ) ){ 
+                    ( ( MainStmTop )pMain ).S8Rgn1Hsm.Abort( pContextImpl );
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	429	550	741	268	30	30	1461	931	S8" );
+                MainStm_Exit( pContextImpl );
+            }
+        }
+        void S811_Entry( ContextImpl pContextImpl ){
+            if( Enterable( MainStmTop.S811 ) ){
+                S8_Entry( pContextImpl );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	119	20	121	81	30	30	1461	931	S811" );
+            }
+        }
+        boolean S811_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
+            boolean bResult = false;
+            if( !bHandled ){
+                nSourceState = MainStmTop.S811;
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	119	20	121	81	30	30	1461	931	S811" );
+            }
+            bHandled |= bResult;
+            wasHandled |= bResult;
+            return S8_EventProc( pContextImpl, nEventId, pEventParams );
+        }
+        void S811_Exit( ContextImpl pContextImpl ){
+            if( Exitable( MainStmTop.S811 ) ){ 
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	119	20	121	81	30	30	1461	931	S811" );
+                S8_Exit( pContextImpl );
+            }
+        }
+        void S812_Entry( ContextImpl pContextImpl ){
+            if( Enterable( MainStmTop.S812 ) ){
+                S8_Entry( pContextImpl );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	479	20	121	81	30	30	1461	931	S812" );
+            }
+        }
+        boolean S812_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
+            boolean bResult = false;
+            if( !bHandled ){
+                nSourceState = MainStmTop.S812;
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	479	20	121	81	30	30	1461	931	S812" );
+            }
+            bHandled |= bResult;
+            wasHandled |= bResult;
+            return S8_EventProc( pContextImpl, nEventId, pEventParams );
+        }
+        void S812_Exit( ContextImpl pContextImpl ){
+            if( Exitable( MainStmTop.S812 ) ){ 
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	479	20	121	81	30	30	1461	931	S812" );
+                S8_Exit( pContextImpl );
+            }
+        }
+        void S7_Entry( ContextImpl pContextImpl ){
+            if( Enterable( MainStmTop.S7 ) ){
+                MainStm_Entry( pContextImpl );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	69	430	281	441	30	30	1461	931	S7" );
+                    if( !( ( MainStmTop )pMain ).lastEnteredStateRecovering && nTargetState == MainStmTop.S7 ){
+                        nPseudostate = MainStmTop.S7Init;
+                    }
+            }
+        }
+        boolean S7_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
+            boolean bResult = false;
+            if( !bHandled ){
+                nSourceState = MainStmTop.S7;
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	69	430	281	441	30	30	1461	931	S7" );
+                switch( nEventId ){
+                case EventId.E2:{
+                        BgnTrans( pContextImpl, MainStmTop.S72 );
+                        EndTrans( pContextImpl );
+                        bResult |= true;
+                } break;
+                case EventId.E1:{
+                        bIsExternTrans = true;
+                        BgnTrans( pContextImpl, MainStmTop.S71 );
+                        EndTrans( pContextImpl );
+                        bResult |= true;
+                } break;
+                default: break;
+                }
+            }
+            bHandled |= bResult;
+            wasHandled |= bResult;
+            return MainStm_EventProc( pContextImpl, nEventId, pEventParams );
+        }
+        void S7_Exit( ContextImpl pContextImpl ){
+            if( Exitable( MainStmTop.S7 ) ){ 
+                    ( ( MainStmTop )pMain ).S7DeepHist = lastEnteredState;
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	69	430	281	441	30	30	1461	931	S7" );
+                MainStm_Exit( pContextImpl );
+            }
+        }
+        void S71_Entry( ContextImpl pContextImpl ){
+            if( Enterable( MainStmTop.S71 ) ){
+                S7_Entry( pContextImpl );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	19	60	241	241	30	30	1461	931	S71" );
+                    if( !( ( MainStmTop )pMain ).lastEnteredStateRecovering && nTargetState == MainStmTop.S71 ){
+                        nPseudostate = MainStmTop.S711Init;
+                    }
+                    ( ( MainStmTop )pMain ).S71Rgn1Hsm.Reset( pContextImpl );
+            }
+        }
+        boolean S71_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
+            boolean bResult = false;
+            bHandled |= ( ( MainStmTop )pMain ).S71Rgn1Hsm.EventProc( pContextImpl, nEventId, pEventParams );
+            if( !bHandled ){
+                nSourceState = MainStmTop.S71;
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	19	60	241	241	30	30	1461	931	S71" );
+            }
+            bHandled |= bResult;
+            wasHandled |= bResult;
+            return S7_EventProc( pContextImpl, nEventId, pEventParams );
+        }
+        void S71_Exit( ContextImpl pContextImpl ){
+            if( Exitable( MainStmTop.S71 ) ){ 
+                    ( ( MainStmTop )pMain ).S71Rgn1Hsm.Abort( pContextImpl );
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	19	60	241	241	30	30	1461	931	S71" );
+                S7_Exit( pContextImpl );
+            }
+        }
+        void S7111_Entry( ContextImpl pContextImpl ){
+            if( Enterable( MainStmTop.S7111 ) ){
+                S71_Entry( pContextImpl );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	19	40	81	61	30	30	1461	931	S7111" );
+            }
+        }
+        boolean S7111_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
+            boolean bResult = false;
+            if( !bHandled ){
+                nSourceState = MainStmTop.S7111;
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	19	40	81	61	30	30	1461	931	S7111" );
+                switch( nEventId ){
+                case EventId.E0:{
+                        bIsExternTrans = true;
+                        BgnTrans( pContextImpl, MainStmTop.S7112 );
+                        EndTrans( pContextImpl );
+                        bResult |= true;
+                } break;
+                default: break;
+                }
+            }
+            bHandled |= bResult;
+            wasHandled |= bResult;
+            return S71_EventProc( pContextImpl, nEventId, pEventParams );
+        }
+        void S7111_Exit( ContextImpl pContextImpl ){
+            if( Exitable( MainStmTop.S7111 ) ){ 
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	19	40	81	61	30	30	1461	931	S7111" );
+                S71_Exit( pContextImpl );
+            }
+        }
+        void S7112_Entry( ContextImpl pContextImpl ){
+            if( Enterable( MainStmTop.S7112 ) ){
+                S71_Entry( pContextImpl );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	19	140	81	61	30	30	1461	931	S7112" );
+            }
+        }
+        boolean S7112_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
+            boolean bResult = false;
+            if( !bHandled ){
+                nSourceState = MainStmTop.S7112;
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	19	140	81	61	30	30	1461	931	S7112" );
+            }
+            bHandled |= bResult;
+            wasHandled |= bResult;
+            return S71_EventProc( pContextImpl, nEventId, pEventParams );
+        }
+        void S7112_Exit( ContextImpl pContextImpl ){
+            if( Exitable( MainStmTop.S7112 ) ){ 
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	19	140	81	61	30	30	1461	931	S7112" );
+                S71_Exit( pContextImpl );
+            }
+        }
+        void S72_Entry( ContextImpl pContextImpl ){
+            if( Enterable( MainStmTop.S72 ) ){
+                S7_Entry( pContextImpl );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	79	340	121	61	30	30	1461	931	S72" );
+            }
+        }
+        boolean S72_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
+            boolean bResult = false;
+            if( !bHandled ){
+                nSourceState = MainStmTop.S72;
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	79	340	121	61	30	30	1461	931	S72" );
+            }
+            bHandled |= bResult;
+            wasHandled |= bResult;
+            return S7_EventProc( pContextImpl, nEventId, pEventParams );
+        }
+        void S72_Exit( ContextImpl pContextImpl ){
+            if( Exitable( MainStmTop.S72 ) ){ 
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	79	340	121	61	30	30	1461	931	S72" );
+                S7_Exit( pContextImpl );
+            }
+        }
+        void S6_Entry( ContextImpl pContextImpl ){
+            if( Enterable( MainStmTop.S6 ) ){
+                MainStm_Entry( pContextImpl );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	1242	330	128	81	30	30	1461	931	S6" );
+                    ( ( MainStmTop )pMain ).S6Hsm.Reset( pContextImpl );
+            }
+        }
+        boolean S6_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
+            boolean bResult = false;
+    bHandled |= ( ( MainStmTop )pMain ).S6Hsm.EventProc( pContextImpl, nEventId, pEventParams );
+            if( !bHandled ){
+                nSourceState = MainStmTop.S6;
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	1242	330	128	81	30	30	1461	931	S6" );
+            }
+            bHandled |= bResult;
+            wasHandled |= bResult;
+            return MainStm_EventProc( pContextImpl, nEventId, pEventParams );
+        }
+        void S6_Exit( ContextImpl pContextImpl ){
+            if( Exitable( MainStmTop.S6 ) ){ 
+                    ( ( MainStmTop )pMain ).S6Hsm.Abort( pContextImpl );
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	1242	330	128	81	30	30	1461	931	S6" );
+                MainStm_Exit( pContextImpl );
+            }
+        }
+        void S3_Entry( ContextImpl pContextImpl ){
+            if( Enterable( MainStmTop.S3 ) ){
+                MainStm_Entry( pContextImpl );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	1269	50	121	81	30	30	1461	931	S3" );
+            }
+        }
+        boolean S3_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
+            boolean bResult = false;
+            if( !bHandled ){
+                nSourceState = MainStmTop.S3;
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	1269	50	121	81	30	30	1461	931	S3" );
+                switch( nEventId ){
+                case EventId.E0:{
+                        bIsExternTrans = true;
+                        BgnTrans( pContextImpl, MainStmTop.S6 );
+                        EndTrans( pContextImpl );
+                        bResult |= true;
+                } break;
+                default: break;
+                }
+            }
+            bHandled |= bResult;
+            wasHandled |= bResult;
+            return MainStm_EventProc( pContextImpl, nEventId, pEventParams );
+        }
+        void S3_Exit( ContextImpl pContextImpl ){
+            if( Exitable( MainStmTop.S3 ) ){ 
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	1269	50	121	81	30	30	1461	931	S3" );
+                MainStm_Exit( pContextImpl );
+            }
+        }
+        void S9_Entry( ContextImpl pContextImpl ){
+            if( Enterable( MainStmTop.S9 ) ){
+                MainStm_Entry( pContextImpl );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	1249	450	121	81	30	30	1461	931	S9" );
+                    ( ( MainStmTop )pMain ).S9Hsm.Reset( pContextImpl );
+            }
+        }
+        boolean S9_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
+            boolean bResult = false;
+    bHandled |= ( ( MainStmTop )pMain ).S9Hsm.EventProc( pContextImpl, nEventId, pEventParams );
+            if( !bHandled ){
+                nSourceState = MainStmTop.S9;
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	1249	450	121	81	30	30	1461	931	S9" );
+            }
+            bHandled |= bResult;
+            wasHandled |= bResult;
+            return MainStm_EventProc( pContextImpl, nEventId, pEventParams );
+        }
+        void S9_Exit( ContextImpl pContextImpl ){
+            if( Exitable( MainStmTop.S9 ) ){ 
+                    ( ( MainStmTop )pMain ).S9Hsm.Abort( pContextImpl );
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	1249	450	121	81	30	30	1461	931	S9" );
+                MainStm_Exit( pContextImpl );
+            }
+        }
+        void BgnTrans( ContextImpl pContextImpl, long targetState ){
+            nTargetState = targetState;
+            nPseudostate = targetState;
+            if( nCurrentState == MainStm ) { MainStm_Exit( pContextImpl ); }
+            else if( nCurrentState == S1 ) { S1_Exit( pContextImpl ); }
+            else if( nCurrentState == S21 ) { S21_Exit( pContextImpl ); }
+            else if( nCurrentState == S22 ) { S22_Exit( pContextImpl ); }
+            else if( nCurrentState == S2 ) { S2_Exit( pContextImpl ); }
+            else if( nCurrentState == S811 ) { S811_Exit( pContextImpl ); }
+            else if( nCurrentState == S812 ) { S812_Exit( pContextImpl ); }
+            else if( nCurrentState == S8 ) { S8_Exit( pContextImpl ); }
+            else if( nCurrentState == S7111 ) { S7111_Exit( pContextImpl ); }
+            else if( nCurrentState == S7112 ) { S7112_Exit( pContextImpl ); }
+            else if( nCurrentState == S71 ) { S71_Exit( pContextImpl ); }
+            else if( nCurrentState == S72 ) { S72_Exit( pContextImpl ); }
+            else if( nCurrentState == S7 ) { S7_Exit( pContextImpl ); }
+            else if( nCurrentState == S6 ) { S6_Exit( pContextImpl ); }
+            else if( nCurrentState == S3 ) { S3_Exit( pContextImpl ); }
+            else if( nCurrentState == S9 ) { S9_Exit( pContextImpl ); }
+            else {}
+        }
+        public boolean Reset(  ContextImpl pContextImpl ) {
+            return Reset( pContextImpl, StateMachine.STATE_UNDEF, false );
+        }
+        public boolean Reset(  ContextImpl pContextImpl, boolean lastEnteredStateRecovering ) {
+            return Reset( pContextImpl, StateMachine.STATE_UNDEF, lastEnteredStateRecovering );
+        }
+        public boolean Reset(  ContextImpl pContextImpl, long entryPt ) {
+            return Reset( pContextImpl, entryPt, false );
+        }
+        public boolean Reset( ContextImpl pContextImpl, long entryPt, boolean lastEnteredStateRecovering ) {
+            if( entryPt != StateMachine.STATE_UNDEF ){
+                Req( entryPt );
+                return false;
+            }
+            nPseudostate = MainStmTop.MainStm;
+            bIsExternTrans = true;
+            BgnTrans( pContextImpl, nPseudostate );
+            EndTrans( pContextImpl );
+            return true;
+        }
+        public boolean EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
+            boolean bResult = false;
+            nLCAState = StateMachine.STATE_UNDEF;
+            bHandled = false;
+            wasHandled = false;
+            if( nCurrentState == MainStm ) { MainStm_EventProc( pContextImpl, nEventId, pEventParams ); }
+            else if( nCurrentState == S1 ) { S1_EventProc( pContextImpl, nEventId, pEventParams ); }
+            else if( nCurrentState == S21 ) { S21_EventProc( pContextImpl, nEventId, pEventParams ); }
+            else if( nCurrentState == S22 ) { S22_EventProc( pContextImpl, nEventId, pEventParams ); }
+            else if( nCurrentState == S2 ) { S2_EventProc( pContextImpl, nEventId, pEventParams ); }
+            else if( nCurrentState == S811 ) { S811_EventProc( pContextImpl, nEventId, pEventParams ); }
+            else if( nCurrentState == S812 ) { S812_EventProc( pContextImpl, nEventId, pEventParams ); }
+            else if( nCurrentState == S8 ) { S8_EventProc( pContextImpl, nEventId, pEventParams ); }
+            else if( nCurrentState == S7111 ) { S7111_EventProc( pContextImpl, nEventId, pEventParams ); }
+            else if( nCurrentState == S7112 ) { S7112_EventProc( pContextImpl, nEventId, pEventParams ); }
+            else if( nCurrentState == S71 ) { S71_EventProc( pContextImpl, nEventId, pEventParams ); }
+            else if( nCurrentState == S72 ) { S72_EventProc( pContextImpl, nEventId, pEventParams ); }
+            else if( nCurrentState == S7 ) { S7_EventProc( pContextImpl, nEventId, pEventParams ); }
+            else if( nCurrentState == S6 ) { S6_EventProc( pContextImpl, nEventId, pEventParams ); }
+            else if( nCurrentState == S3 ) { S3_EventProc( pContextImpl, nEventId, pEventParams ); }
+            else if( nCurrentState == S9 ) { S9_EventProc( pContextImpl, nEventId, pEventParams ); }
+            else {}
+            return bResult;
+        }
+        boolean Abort( ContextImpl pContextImpl ) {
+            nSourceState = MainStmTop.MainStm;
+            BgnTrans( pContextImpl, StateMachine.STATE_UNDEF );
+            EndTrans( pContextImpl );
+            return true;
+        }
+        void EndTrans( ContextImpl pContextImpl ){
+            nCurrentState = nTargetState;
+            bIsExternTrans = false;
+            if( nCurrentState == MainStm ) { MainStm_Entry( pContextImpl ); }
+            else if( nCurrentState == S1 ) { S1_Entry( pContextImpl ); }
+            else if( nCurrentState == S21 ) { S21_Entry( pContextImpl ); }
+            else if( nCurrentState == S22 ) { S22_Entry( pContextImpl ); }
+            else if( nCurrentState == S2 ) { S2_Entry( pContextImpl ); }
+            else if( nCurrentState == S811 ) { S811_Entry( pContextImpl ); }
+            else if( nCurrentState == S812 ) { S812_Entry( pContextImpl ); }
+            else if( nCurrentState == S8 ) { S8_Entry( pContextImpl ); }
+            else if( nCurrentState == S7111 ) { S7111_Entry( pContextImpl ); }
+            else if( nCurrentState == S7112 ) { S7112_Entry( pContextImpl ); }
+            else if( nCurrentState == S71 ) { S71_Entry( pContextImpl ); }
+            else if( nCurrentState == S72 ) { S72_Entry( pContextImpl ); }
+            else if( nCurrentState == S7 ) { S7_Entry( pContextImpl ); }
+            else if( nCurrentState == S6 ) { S6_Entry( pContextImpl ); }
+            else if( nCurrentState == S3 ) { S3_Entry( pContextImpl ); }
+            else if( nCurrentState == S9 ) { S9_Entry( pContextImpl ); }
+            else {}
+        }
+        boolean StateDefaultTrans( ContextImpl pContextImpl ){
+            boolean bResult = false;
+            nSourceState = nCurrentState;
+            nLCAState = StateMachine.STATE_UNDEF;
+                    if ( nPseudostate == MainStmTop.MainStmInit  ) {
+                        bIsExternTrans = true;
+                        BgnTrans( pContextImpl, MainStmTop.S1 );
+                        EndTrans( pContextImpl );
+                        bResult |= true;
+                    } else if ( nCurrentState == MainStmTop.S6 && nPseudostate == SubStmTop.Exit1  ) {
+                        bIsExternTrans = true;
+                        BgnTrans( pContextImpl, MainStmTop.S9 );
+                        EndTrans( pContextImpl );
+                        bResult |= true;
+                    } else if ( nCurrentState == MainStmTop.S9 && nPseudostate == MainStmTop.S9 
+                     && ( ( MainStmTop )pMain ).S9Hsm.IsFinished() ) {
+                        bIsExternTrans = true;
+                        BgnTrans( pContextImpl, MainStmTop.S812 );
+                        ( ( MainStmTop )pMain ).S8Rgn1Hsm.Reset( pContextImpl, MainStmTop.S821 );
+                        EndTrans( pContextImpl );
+                        bResult |= true;
+                    } else if ( nPseudostate == MainStmTop.S2Init  ) {
+                        bIsExternTrans = true;
+                        BgnTrans( pContextImpl, MainStmTop.S21 );
+                        EndTrans( pContextImpl );
+                        bResult |= true;
+                    } else if ( nPseudostate == MainStmTop.S81Init  ) {
+                        bIsExternTrans = true;
+                        BgnTrans( pContextImpl, MainStmTop.S811 );
+                        EndTrans( pContextImpl );
+                        bResult |= true;
+                    } else if ( nPseudostate == MainStmTop.S711Init  ) {
+                        bIsExternTrans = true;
+                        BgnTrans( pContextImpl, MainStmTop.S7111 );
+                        EndTrans( pContextImpl );
+                        bResult |= true;
+                    } else if ( nPseudostate == MainStmTop.S7Init  ) {
+                        if( ( ( MainStmTop )pMain ).S7DeepHist != StateMachine.STATE_UNDEF ){
+                            BgnTrans( pContextImpl, ( ( MainStmTop )pMain ).S7DeepHist );
+                            ( ( MainStmTop )pMain ).lastEnteredStateRecovering = true;
+                            EndTrans( pContextImpl );
+                            bResult |= true;
+                        }else{
+                            bIsExternTrans = true;
+                            BgnTrans( pContextImpl, MainStmTop.S71 );
+                            EndTrans( pContextImpl );
+                            bResult |= true;
+                        }
+            }else if( nCurrentState != nPseudostate ){
+                BgnTrans( pContextImpl, nPseudostate );
+                EndTrans( pContextImpl );
+                bResult = true;
+            }else{
+            }
+            bHandled |= bResult;
+            wasHandled |= bResult;
+            ( ( MainStmTop )pMain ).lastEnteredStateRecovering = false;
+            return bResult;
+        }
+        }
+        public boolean EventProc( ContextImpl pContextImpl, EventId nEventId, EventParams pEventParams ){
+            return MainStmHsm.EventProc( pContextImpl, nEventId, pEventParams );
+        }
+        public boolean StateDefaultTrans( ContextImpl pContextImpl ){
+            boolean bResult;
+            while( true ){
+                bResult = false;
+                bResult |= S8Rgn1Hsm.StateDefaultTrans( pContextImpl );
+                bResult |= S71Rgn1Hsm.StateDefaultTrans( pContextImpl );
+                bResult |= S6Hsm.StateDefaultTrans( pContextImpl )
+                                || S9Hsm.StateDefaultTrans( pContextImpl )
+                                || MainStmHsm.StateDefaultTrans( pContextImpl );
+                if( bResult == false ){
+                    break;
+                }
+            }
+            return bResult;
+        }
+        public boolean Reset( ContextImpl pContextImpl ){
+            return MainStmHsm.Reset( pContextImpl, StateMachine.STATE_UNDEF, false );
+        }
+        public boolean Reset( ContextImpl pContextImpl, long entryPt, boolean lastEnteredStateRecovering ){
+            MainStmHsm.Abort( pContextImpl );
+            return MainStmHsm.Reset( pContextImpl, entryPt, lastEnteredStateRecovering );
+        }
+        public boolean Abort( ContextImpl pContextImpl ){
+            return MainStmHsm.Abort( pContextImpl );
+        }
+        public boolean IsFinished(){
+            return MainStmHsm.nPseudostate == MainStmTop.MainStm;
+        }
+
+        public void Prepare( StateMachine pParent ){
+            pParentStm = pParent;
+            MainStmHsm.pMain = this;
+            S2ShallowHist = StateMachine.STATE_UNDEF;
+            S8Rgn1Hsm.pMain = this;
+            S71Rgn1Hsm.pMain = this;
+            S7DeepHist = StateMachine.STATE_UNDEF;
+    S6Hsm.Prepare( MainStmHsm );
+    S9Hsm.Prepare( MainStmHsm );
+        }
+    } /* MainStmTop */
+            public  ContextImpl(
+                Integer _derivableAttribute,
+                String _publicAttribute,
+                Integer _privateAttribute,
+                Integer _internalAttribute,
+                Integer _readOnlyAttribute,
+                Aggregration[] _anAggregation,
+                Composition[] _aProtectedComposition
+            ) {
+                super( _derivableAttribute, _publicAttribute, _privateAttribute, _internalAttribute, _readOnlyAttribute, _anAggregation, _aProtectedComposition );
+    mainStm = new MainStmTop();
+
+            }                                                                                   
+    MainStmTop mainStm;                                         
+        }

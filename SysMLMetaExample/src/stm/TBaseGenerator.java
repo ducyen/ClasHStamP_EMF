@@ -19,6 +19,7 @@ import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.InterfaceRealization;
 import org.eclipse.uml2.uml.Pseudostate;
 import org.eclipse.uml2.uml.PseudostateKind;
+import org.eclipse.uml2.uml.Stereotype;
 import org.eclipse.uml2.uml.Vertex;
 import org.eclipse.uml2.uml.VisibilityKind;
 
@@ -106,7 +107,7 @@ public class TBaseGenerator {
      */
     protected boolean hasStereotype(String[] stereotypes, String targetStereotype) {
         for (String stereotype : stereotypes) {
-            if (stereotype.equalsIgnoreCase(targetStereotype)) {
+        	if (stereotype.equalsIgnoreCase(targetStereotype)) {
                 return true;
             }
         }

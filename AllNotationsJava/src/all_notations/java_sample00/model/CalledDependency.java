@@ -4,12 +4,12 @@ package all_notations.java_sample00.model;
 import java.io.*;
 import java.util.*;
 
-public  class CalledDependency
-{
-    public  CalledDependency(
-        Integer _attribute0
-    ){
-        attribute0 = _attribute0;
-    }                                                                                           
-    private Integer attribute0;                                 
-}
+        public  class CalledDependency
+        {
+            public  CalledDependency(
+                Integer _attribute0
+            ){
+                attribute0 = _attribute0;
+            }                                                                                   
+            private Integer attribute0;                         
+        }

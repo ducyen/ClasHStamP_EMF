@@ -22,7 +22,7 @@ public class TFileGenerator extends TBaseGenerator {
     private File file;
     private File inputFile;
     private ArrayList<String> m_doneList = new ArrayList<String>();
-    private ArrayList<Class> m_doneAttr = new ArrayList<Class>();
+    private ArrayList<Classifier> m_doneAttr = new ArrayList<Classifier>();
     
     public TFileGenerator(SyntaxCsv stxCsv, Classifier m_iClass) throws Exception {
         super(stxCsv, m_iClass, null);
@@ -124,7 +124,7 @@ public class TFileGenerator extends TBaseGenerator {
      * findOwner
      * If the classifier is nested inside another Class, return the outer Class.
      */
-    private Class findOwner(Class theType) {
+    private Classifier findOwner(Classifier theType) {
         // UML2: use getOwner() (returns Element) and check if it's a Class
         if (theType.getOwner() instanceof Class) {
             return (Class) theType.getOwner();
@@ -135,7 +135,7 @@ public class TFileGenerator extends TBaseGenerator {
     /**
      * printInclude
      */
-    private void printInclude(String path, Class theType, NamedElement descElem) throws IOException, Exception {
+    private void printInclude(String path, Classifier theType, NamedElement descElem) throws IOException, Exception {
         // Prepare description if any owned comment exists (skipped here)
         String desc = "";
         // Build namespace path (qualified namespace of theType)
@@ -148,7 +148,7 @@ public class TFileGenerator extends TBaseGenerator {
                 theType.getName(),
                 "",
                 namespacePath,
-                descElem.getName(),
+                descElem.getName() != null ? descElem.getName() : "",
                 "",
                 desc,
                 m_iClass.getName()
@@ -171,7 +171,7 @@ public class TFileGenerator extends TBaseGenerator {
         String impDepStx = m_stxCsv.get("file", "ext1st");
         // print superClass include if exists
         if (m_iSuperClass != null && m_iSuperClass instanceof Class) {
-            Class theType = findOwner((Class)m_iSuperClass);
+            Classifier theType = findOwner(m_iSuperClass);
             Classifier iGen = findGeneralization(m_iClass);
             if (iGen == null) {
                 // If no Astah generalization method, we skip or handle differently
@@ -185,8 +185,8 @@ public class TFileGenerator extends TBaseGenerator {
             if (dep instanceof Realization) {
                 Realization umlReal = (Realization) dep;
                 for (NamedElement supplier : umlReal.getSuppliers()) {
-                    if (supplier instanceof Class) {
-                        Class theType = findOwner((Class) supplier);
+                    if (supplier instanceof Classifier) {
+                        Classifier theType = findOwner((Classifier)supplier);
                         printInclude(impDepStx, theType, supplier);
                     }
                 }
@@ -197,8 +197,8 @@ public class TFileGenerator extends TBaseGenerator {
         if (m_iClass instanceof EncapsulatedClassifier) {
 	        for (Property iAttr : ((EncapsulatedClassifier)m_iClass).getOwnedAttributes()) {
 	            Type type = iAttr.getType();
-	            if (type instanceof Class) {
-	                Class theType = findOwner((Class) type);
+	            if (type instanceof Classifier) {
+	            	Classifier theType = findOwner((Classifier) type);
 	                // skip primitive types
 	                if (!(type instanceof PrimitiveType)
 	                        && theType != m_iClass
@@ -218,8 +218,8 @@ public class TFileGenerator extends TBaseGenerator {
         if (m_iClass instanceof EncapsulatedClassifier) {
 	        for (Property iAttr : ((EncapsulatedClassifier)m_iClass).getOwnedAttributes()) {
 	            Type type = iAttr.getType();
-	            if (type instanceof Class) {
-	                Class theType = findOwner((Class) type);
+	            if (type instanceof Classifier) {
+	            	Classifier theType = findOwner((Classifier) type);
 	                if (!(type instanceof PrimitiveType)
 	                        && theType != m_iClass
 	                        && !iAttr.getName().isEmpty()
@@ -233,9 +233,9 @@ public class TFileGenerator extends TBaseGenerator {
         // print dependencies include (other client dependencies)
         for (Dependency iDependency : m_iClass.getClientDependencies()) {
             for (NamedElement supplier : iDependency.getSuppliers()) {
-                if (supplier instanceof Class) {
-                    Class iSupplier = (Class) supplier;
-                    Class theType = findOwner(iSupplier);
+                if (supplier instanceof Classifier) {
+                	Classifier iSupplier = (Classifier) supplier;
+                	Classifier theType = findOwner(iSupplier);
                     if (!(iSupplier instanceof PrimitiveType)
                             && iSupplier != m_iSuperClass
                             && theType != m_iClass) {
@@ -276,9 +276,9 @@ public class TFileGenerator extends TBaseGenerator {
         // treat 'friend' dependencies similarly (omitting stereotype logic)
         for (Dependency iDependency : m_iClass.getClientDependencies()) {
             for (NamedElement supplier : iDependency.getSuppliers()) {
-                if (supplier instanceof Class) {
-                    Class iSupplier = (Class) supplier;
-                    Class theType = findOwner(iSupplier);
+                if (supplier instanceof Classifier) {
+                	Classifier iSupplier = (Classifier) supplier;
+                	Classifier theType = findOwner(iSupplier);
                     if (!(iSupplier instanceof PrimitiveType)
                             && iSupplier != m_iSuperClass
                             && theType != m_iClass) {
@@ -299,8 +299,8 @@ public class TFileGenerator extends TBaseGenerator {
         String impDepStx = m_stxCsv.get("friend", "name");
         String impRefStx = m_stxCsv.get("friend", "begin");
         // print superClass include
-        if (m_iSuperClass != null && m_iSuperClass instanceof Class) {
-            Class theType = findOwner((Class)m_iSuperClass);
+        if (m_iSuperClass != null) {
+        	Classifier theType = findOwner(m_iSuperClass);
             Classifier iGen = findGeneralization(m_iClass);
             if (iGen == null) {
                 iGen = m_iSuperClass;
@@ -313,8 +313,8 @@ public class TFileGenerator extends TBaseGenerator {
             if (dep instanceof Realization) {
                 Realization umlReal = (Realization) dep;
                 for (NamedElement supplier : umlReal.getSuppliers()) {
-                    if (supplier instanceof Class) {
-                        Class theType = findOwner((Class) supplier);
+                    if (supplier instanceof Classifier) {
+                    	Classifier theType = findOwner((Classifier) supplier);
                         printInclude(impDepStx, theType, supplier);
                     }
                 }
@@ -325,8 +325,8 @@ public class TFileGenerator extends TBaseGenerator {
         if (m_iClass instanceof EncapsulatedClassifier) {
 	        for (Property iAttr : ((EncapsulatedClassifier)m_iClass).getOwnedAttributes()) {
 	            Type type = iAttr.getType();
-	            if (type instanceof Class) {
-	                Class theType = findOwner((Class) type);
+	            if (type instanceof Classifier) {
+	            	Classifier theType = findOwner((Classifier) type);
 	                if (!(type instanceof PrimitiveType)
 	                        && theType != m_iClass
 	                        && !iAttr.getName().isEmpty()

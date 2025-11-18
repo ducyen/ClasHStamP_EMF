@@ -98,18 +98,18 @@ public class RStmGenerator extends TBaseGenerator {
             m_level++;
             if (vtx instanceof State) {
                 State state = (State) vtx;
+                checkStateBfr(state, container);
                 try {
-                    checkStateBfr(state, container);
                     // traverse region 0 of this composite state
                     if (!state.getRegions().isEmpty() && !state.getRegions().get(0).getSubvertices().isEmpty()) {
                         for (Vertex subVtx : state.getRegions().get(0).getSubvertices()) {
                             traverse(subVtx, state);
                         }
                     }
-                    checkState(state, container);
                 } catch (Exception e) {
                     // Handle exceptions if needed (none expected in UML2 traversal)
                 }
+                checkState(state, container);
             } else if (vtx instanceof Pseudostate) {
                 checkPseudostate((Pseudostate) vtx, container);
             } else {
@@ -138,11 +138,9 @@ public class RStmGenerator extends TBaseGenerator {
             if (vtx instanceof State) {
                 State state = (State) vtx;
                 // Loop through all regions of this state
+                checkStateBfr(state, container, rgnIndex);
                 for (int subRgnIdx = 0; subRgnIdx < state.getRegions().size(); subRgnIdx++) {
                     try {
-                        if (subRgnIdx == 0) {
-                            checkStateBfr(state, container, rgnIndex);
-                        }
                         Region subRegion = state.getRegions().get(subRgnIdx);
                         if (!subRegion.getSubvertices().isEmpty()) {
                             if (subRgnIdx > 0) {
@@ -155,14 +153,12 @@ public class RStmGenerator extends TBaseGenerator {
                                 checkRegion(state, subRgnIdx, container, rgnIndex);
                             }
                         }
-                        if (subRgnIdx == 0) {
-                            checkState(state, container, rgnIndex);
-                        }
                     } catch (Exception e) {
                         // Break out if region index out of bounds (not expected in for-loop)
                         break;
                     }
                 }
+                checkState(state, container, rgnIndex);
             } else if (vtx instanceof Pseudostate) {
                 checkPseudostate((Pseudostate) vtx, container, rgnIndex);
             } else {
@@ -175,6 +171,22 @@ public class RStmGenerator extends TBaseGenerator {
                 traverse(v, null, 0);
             }
         }
+    }
+    
+    /**
+     * getContainer
+     * @param iVtx
+     * @return
+     */
+    private State getContainer(Vertex iVtx) {
+    	if (iVtx.getContainer() != null) {
+    		return iVtx.getContainer().getState();
+    	}
+    	if (iVtx instanceof Pseudostate) {
+    		Pseudostate iPstate = (Pseudostate)iVtx;
+    		return iPstate.getState();
+    	}    	
+    	return null;
     }
     
 	/**
@@ -223,12 +235,14 @@ public class RStmGenerator extends TBaseGenerator {
     private Collection<Vertex> getSubvertexes(NamedElement stmOrState) {
     	Collection<Vertex> vtxCol = new ArrayList<Vertex>();
     	if (stmOrState instanceof StateMachine) {
-    		vtxCol = ((StateMachine)stmOrState).getRegions().get(0).getSubvertices();
+    		vtxCol.addAll(((StateMachine)stmOrState).getRegions().get(0).getSubvertices());
+    		vtxCol.addAll(((StateMachine)stmOrState).getConnectionPoints());
     	} else {
 	    	if (stmOrState instanceof State) {
 	    		for (Region rgn: ((State)stmOrState).getRegions()) {
 	    			vtxCol.addAll(rgn.getSubvertices());
 	    		}
+	    		vtxCol.addAll(((State)stmOrState).getConnectionPoints());
 	    	}
     	}
     	return vtxCol;
@@ -240,9 +254,9 @@ public class RStmGenerator extends TBaseGenerator {
      * @return
      */
     private Collection<Vertex> getSubvertexes(NamedElement stmOrState, int rgnIndex) throws IllegalArgumentException {
-    	Collection<Vertex> vtxCol = new ArrayList<Vertex>();
+    	List<Vertex> vtxCol = new ArrayList<Vertex>();
     	if (stmOrState instanceof StateMachine) {
-    		vtxCol = ((StateMachine)stmOrState).getRegions().get(rgnIndex).getSubvertices();
+    		vtxCol.addAll(((StateMachine)stmOrState).getRegions().get(rgnIndex).getSubvertices());
     	} else {
 	    	if (stmOrState instanceof State) {
 	    		if (rgnIndex > 0 && rgnIndex >= ((State)stmOrState).getRegions().size()) {
@@ -371,7 +385,19 @@ public class RStmGenerator extends TBaseGenerator {
      * @return
      */
     private Collection<Transition> getTransitions(StateMachine stm) {
-    	return stm.getRegions().get(0).getTransitions();
+    	Collection<Transition> result = new ArrayList<Transition>();
+    	result.addAll(stm.getRegions().get(0).getTransitions());
+    	new StateDeepTraverser() {
+    		protected void checkState(State state, State container, int rgnIndex) {
+    			if (state.getRegions().size() > 0) {
+    				result.addAll(state.getRegions().get(0).getTransitions());
+    			}
+			}
+    		protected void checkRegion(State state, int subRgnIndex, State container, int rgnIndex) {
+				result.addAll(state.getRegions().get(subRgnIndex).getTransitions());
+    		}
+    	}.start(getVertexes(stm));
+    	return result;
     }
     
     /**
@@ -842,9 +868,9 @@ public class RStmGenerator extends TBaseGenerator {
 				m_writer.write(Utils.get(m_stxCsv.get(indent, "region", "begin"),
 					targetStateName,								// name
 					m_iClass.getName(),								// type
-					"",												// container
+					targetMachineName,								// container
 					"",												// value
-					"",												// modifier
+					targetMachineName,								// modifier
 					getDefinition(iTrans),							// description
 					getStateMachineDiagram(stmRoot).getName()		// scope
 				));
@@ -965,8 +991,8 @@ public class RStmGenerator extends TBaseGenerator {
 						indent++;
 						targetStateName = rgnName;
 						State container = null;
-						if (iTgtVtx.getContainer() != null) {
-							container = (State)iTgtVtx.getContainer();
+						if (getContainer(iTgtVtx) != null) {
+							container = getContainer(iTgtVtx);
 							try {
 								if (!Arrays.asList(getSubvertexes(container, 0)).contains(iTgtVtx)) {	// the pseudo-state belong to a region top
 									container = null;
@@ -1014,7 +1040,7 @@ public class RStmGenerator extends TBaseGenerator {
 					// else: print subMachine.pseudoState -> entryPoint state
 					// if target belongs to this region: print curState -> entryPt's container
 					// if target belongs to other region: print targetMachine.curState -> entryPt's container
-					State targetState = (State)iPstate.getContainer();
+					State targetState = (State)getContainer(iPstate);
 					String targetMachineName = findTargetMachineName(stmRoot.getName(), getSubvertexes(stmRoot), targetState, null);
 					String targetMachineRef;
 					if (targetMachineName.equals(rgnName + "Hsm")) {
@@ -1025,7 +1051,7 @@ public class RStmGenerator extends TBaseGenerator {
 					// print BgnTrans
 					System.out.println(makeIndent(indent) + targetMachineRef + ".BgnTrans(" + getStateMachineDiagram(stmRoot).getName() + "." + targetState.getName() + ")");
 					// print Action if have
-					State container = (State)iPstate.getContainer();
+					State container = (State)getContainer(iPstate);
 					System.out.println(makeIndent(indent) + "self.main." + targetState + "Hsm.Initiate(self.lastEnteredStateRecovering, _" + container.getSubmachine().getName() + "Hsm." + iPstate.getName() + ")");
 					if (!getAction(iTrans).trim().isEmpty()) {
 						System.out.println(makeIndent(indent) + getAction(iTrans).trim());
@@ -1048,8 +1074,8 @@ public class RStmGenerator extends TBaseGenerator {
 							"",											// description 
 							getStateMachineDiagram(stmRoot).getName()	// scope
 						);
-						m_writer.write(actions);
-						/*
+						//m_writer.write(actions);						
+						//TransitionTo(iTrans, targetState.getName(), stmRoot, targetMachineName);
 						m_writer.write(Utils.get(m_stxCsv.get(indent, "trans_action", "begin"),
 							targetState.getName(),							// name
 							m_iClass.getName(),								// type
@@ -1059,8 +1085,7 @@ public class RStmGenerator extends TBaseGenerator {
 							getDefinition(iTrans),							// description
 							getStateMachineDiagram(stmRoot).getName()		// scope
 						));
-						*/
-						TransitionTo(iTrans, targetState.getName(), stmRoot, targetMachineName);
+						
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -1282,8 +1307,8 @@ public class RStmGenerator extends TBaseGenerator {
 				try {
 					String targetStateName = rgnName;
 					State container = null;
-					if (iTgtVtx.getContainer() != null) {
-						container = (State)iTgtVtx.getContainer();
+					if (getContainer(iTgtVtx) != null) {
+						container = (State)getContainer(iTgtVtx);
 						if (!Arrays.asList(getSubvertexes(container, 0)).contains(iTgtVtx)) {	// the pseudo-state belong to a region top
 							container = null;
 						}
@@ -1295,7 +1320,7 @@ public class RStmGenerator extends TBaseGenerator {
 					// if same level shallowHistory
 					// set it to Zero
 					String containingMachine = findTargetMachineName(rgnName, iVertices, iTgtVtx, null);
-					container = (State)iTgtVtx.getContainer();
+					container = (State)getContainer(iTgtVtx);
 					Vertex shallowHistPt = findShallowHistoryPseudostate(containingMachine == null || container == null ? iVertices : getSubvertexes(container, 0));
 					if (shallowHistPt != null) {
 						System.out.println(makeIndent(indent) + "self.main." + shallowHistPt.getName() + " = 0");
@@ -1349,8 +1374,8 @@ public class RStmGenerator extends TBaseGenerator {
 		if (iVertex instanceof Pseudostate) {
 			Pseudostate iPseudostate = (Pseudostate)iVertex;
 			State container = null;
-			if (iPseudostate.getContainer() != null && iPseudostate.getContainer() instanceof State) {
-				container = (State)iPseudostate.getContainer();
+			if (getContainer(iPseudostate) != null && getContainer(iPseudostate) instanceof State) {
+				container = (State)getContainer(iPseudostate);
 			}
 			if (isInitialPseudostate(iPseudostate) 
 			 || isEntryPointPseudostate(iPseudostate) && container == null
@@ -1593,6 +1618,13 @@ public class RStmGenerator extends TBaseGenerator {
 				rgnVertices
 			);
 			
+			String subStmAndRgnInitStr = printSubStmAndRgnDecls(		
+				rgnName,
+				rgnDgrName,
+				rgnDefinition,
+				rgnVertices
+			);
+			
 			m_writer = originalWriter;
 
 			// ▲ state.name
@@ -1612,13 +1644,6 @@ public class RStmGenerator extends TBaseGenerator {
 			));					
 			indent++;
 			
-			String subStmAndRgnInitStr = printSubStmAndRgnDecls(		
-				rgnName,
-				rgnDgrName,
-				rgnDefinition,
-				rgnVertices
-			);
-			
 			// list up sub-regions
 			new StateDeepTraverser() {
 				protected void checkRegion(State iState, int subRgnIndex, State container, int rgnIndex) {
@@ -1630,7 +1655,10 @@ public class RStmGenerator extends TBaseGenerator {
 						System.out.println(makeIndent(indent) + "# Region sub-class");						
 						// print state-machine sub-class
 						System.out.println(makeIndent(indent) + "class _" + rgnName + "Hsm(Statemachine):");
-						indent++;							
+						StringWriter tempWriter = new StringWriter();
+						Writer originalWriter = m_writer;  // Save the original FileWriter
+						m_writer = tempWriter;		
+						indent++;
 						printStmImpl(
 							iStm,
 							rgnName,
@@ -1639,6 +1667,17 @@ public class RStmGenerator extends TBaseGenerator {
 							rgnVertices
 						);
 						indent--;
+						m_writer = originalWriter;
+						m_writer.write(Utils.get(
+							m_stxCsv.get(indent, "region", "end"), 
+							rgnDgrName, 					// name
+							m_iClass.getName(),				// type
+							rgnName, 						// container
+							tempWriter.toString(),			// value 
+							"", 							// modifier
+							"",								// description
+							getStateMachineDiagram(iStm).getName()// scope
+						));			
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -1648,8 +1687,11 @@ public class RStmGenerator extends TBaseGenerator {
 			System.out.println(makeIndent(indent) + "# Region sub-class");						
 			// print state-machine sub-class
 			System.out.println(makeIndent(indent) + "class _" + rgnName + "Hsm(Statemachine):");
+
+			tempWriter = new StringWriter();
+			originalWriter = m_writer;  // Save the original FileWriter
+			m_writer = tempWriter;		
 			indent++;
-			
 			printStmImpl(
 				iStm,
 				rgnName,
@@ -1658,6 +1700,17 @@ public class RStmGenerator extends TBaseGenerator {
 				rgnVertices
 			);
 			indent--;
+			m_writer = originalWriter;
+			m_writer.write(Utils.get(
+				m_stxCsv.get(indent, "region", "end"), 
+				rgnDgrName, 					// name
+				m_iClass.getName(),				// type
+				rgnName, 						// container
+				tempWriter.toString(),			// value 
+				"", 							// modifier
+				"",								// description
+				getStateMachineDiagram(iStm).getName()// scope
+			));			
 			
 			printStmAPIs(iStm);
 			
@@ -1766,8 +1819,8 @@ public class RStmGenerator extends TBaseGenerator {
 			}
 			protected void checkState(State iState, State container) {
 				String containerName = rgnName;
-				if (iState.getContainer() != null) {
-					containerName = ((NamedElement)iState.getContainer()).getName();
+				if (getContainer(iState) != null) {
+					containerName = ((NamedElement)getContainer(iState)).getName();
 				}
 				if (isLeafState(iState)) {
 					// print leaf states
@@ -1838,7 +1891,7 @@ public class RStmGenerator extends TBaseGenerator {
 				m_stxCsv.get(indent, "region", "name"), 
 				rgnName + "Hsm",					// name
 				m_iClass.getName(),							// type
-				rgnName + "Hsm",						// container 
+				rgnDgrName,						// container 
 				"", 										// value
 				"",											// modifier
 				rgnDefinition,								// definition
@@ -1848,7 +1901,7 @@ public class RStmGenerator extends TBaseGenerator {
 				m_stxCsv.get(indent, "region", "ext1st"), 
 				rgnName + "Hsm",					// name
 				m_iClass.getName(),							// type
-				rgnName + "Hsm",						// container 
+				rgnDgrName,						// container 
 				"", 										// value
 				"",											// modifier
 				rgnDefinition,								// definition
@@ -2843,8 +2896,8 @@ public class RStmGenerator extends TBaseGenerator {
 					if (iSrcVtx instanceof Pseudostate) {
 						Pseudostate iPstate = (Pseudostate)iSrcVtx;
 						// check if external transition or local transition
-						if (isEntryPointPseudostate(iPstate) && iPstate.getContainer() == null/* || iPstate.isStubState()*/
-						 || isExitPointPseudostate(iPstate) && iPstate.getContainer() != null
+						if (isEntryPointPseudostate(iPstate) && getContainer(iPstate) == null/* || iPstate.isStubState()*/
+						 || isExitPointPseudostate(iPstate) && getContainer(iPstate) != null
 						 //|| isDeepHistoryPseudostate(iPstate)
 						 //|| isShallowHistoryPseudostate(iPstate)
 						 //|| isChoicePseudostate(iPstate)
@@ -2855,8 +2908,8 @@ public class RStmGenerator extends TBaseGenerator {
 						) {
 							String containerName = rgnName;
 							State container = null;
-							if (iSrcVtx.getContainer() != null && iSrcVtx.getContainer() instanceof State) {
-								container = (State)iSrcVtx.getContainer();
+							if (getContainer(iSrcVtx) != null && getContainer(iSrcVtx) instanceof State) {
+								container = (State)getContainer(iSrcVtx);
 								if (!Arrays.asList(getSubvertexes(container, 0)).contains(iSrcVtx)) {	// the pseudo-state belong to a region top
 									container = null;
 								}
@@ -2866,7 +2919,7 @@ public class RStmGenerator extends TBaseGenerator {
 							}
 							String pseudoStateName = iPstate.getName();
 							if (isInitialPseudostate(iPstate)
-							 || isEntryPointPseudostate(iPstate) && iPstate.getContainer() == null
+							 || isEntryPointPseudostate(iPstate) && getContainer(iPstate) == null
 							) {
 								String ifCondition = Utils.get(m_stxCsv.get("default_trans", "ext1st"), 
 									iSrcVtx.getName(),					// name 
@@ -2889,8 +2942,8 @@ public class RStmGenerator extends TBaseGenerator {
 										ifCondition						// name
 									));
 								}
-							} else {  // isExitPointPseudostate(iPstate) && iPstate.getContainer() != null
-								container = (State)iSrcVtx.getContainer();
+							} else {  // isExitPointPseudostate(iPstate) && getContainer(iPstate) != null
+								container = (State)getContainer(iSrcVtx);
 								containerName = container.getName();
 								String subMachineDgrName = "";
 								if (container.isSubmachineState()) {
