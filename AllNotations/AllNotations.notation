@@ -53,32 +53,6 @@
       <element xmi:type="uml:Class" href="AllNotations.uml#_tBlRcLpVEfCEnM4Nhn5qiQ"/>
       <layoutConstraint xmi:type="notation:Bounds" xmi:id="_tCDLgrpVEfCEnM4Nhn5qiQ" x="321" y="298"/>
     </children>
-    <children xmi:type="notation:Shape" xmi:id="_tCDyorpVEfCEnM4Nhn5qiQ" type="Class_Shape">
-      <children xmi:type="notation:DecorationNode" xmi:id="_tCDypLpVEfCEnM4Nhn5qiQ" type="Class_NameLabel"/>
-      <children xmi:type="notation:DecorationNode" xmi:id="_tCDypbpVEfCEnM4Nhn5qiQ" type="Class_FloatingNameLabel">
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_tCDyprpVEfCEnM4Nhn5qiQ" y="15"/>
-      </children>
-      <children xmi:type="notation:BasicCompartment" xmi:id="_tCDyp7pVEfCEnM4Nhn5qiQ" type="Class_AttributeCompartment">
-        <styles xmi:type="notation:TitleStyle" xmi:id="_tCDyqLpVEfCEnM4Nhn5qiQ"/>
-        <styles xmi:type="notation:SortingStyle" xmi:id="_tCDyqbpVEfCEnM4Nhn5qiQ"/>
-        <styles xmi:type="notation:FilteringStyle" xmi:id="_tCDyqrpVEfCEnM4Nhn5qiQ"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_tCDyq7pVEfCEnM4Nhn5qiQ"/>
-      </children>
-      <children xmi:type="notation:BasicCompartment" xmi:id="_tCDyrLpVEfCEnM4Nhn5qiQ" type="Class_OperationCompartment">
-        <styles xmi:type="notation:TitleStyle" xmi:id="_tCDyrbpVEfCEnM4Nhn5qiQ"/>
-        <styles xmi:type="notation:SortingStyle" xmi:id="_tCDyrrpVEfCEnM4Nhn5qiQ"/>
-        <styles xmi:type="notation:FilteringStyle" xmi:id="_tCDyr7pVEfCEnM4Nhn5qiQ"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_tCDysLpVEfCEnM4Nhn5qiQ"/>
-      </children>
-      <children xmi:type="notation:BasicCompartment" xmi:id="_tCDysbpVEfCEnM4Nhn5qiQ" type="Class_NestedClassifierCompartment">
-        <styles xmi:type="notation:TitleStyle" xmi:id="_tCDysrpVEfCEnM4Nhn5qiQ"/>
-        <styles xmi:type="notation:SortingStyle" xmi:id="_tCDys7pVEfCEnM4Nhn5qiQ"/>
-        <styles xmi:type="notation:FilteringStyle" xmi:id="_tCDytLpVEfCEnM4Nhn5qiQ"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_tCDytbpVEfCEnM4Nhn5qiQ"/>
-      </children>
-      <element xmi:type="uml:Class" href="AllNotations.uml#_tCCkcbpVEfCEnM4Nhn5qiQ"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_tCDyo7pVEfCEnM4Nhn5qiQ" x="341" y="318"/>
-    </children>
     <children xmi:type="notation:Shape" xmi:id="_tCDytrpVEfCEnM4Nhn5qiQ" type="Class_Shape">
       <children xmi:type="notation:DecorationNode" xmi:id="_tCEZoLpVEfCEnM4Nhn5qiQ" type="Class_NameLabel"/>
       <children xmi:type="notation:DecorationNode" xmi:id="_tCEZobpVEfCEnM4Nhn5qiQ" type="Class_FloatingNameLabel">

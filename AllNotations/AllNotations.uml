@@ -107,10 +107,6 @@
             <language>JAVA</language>
             <body>return 0;</body>
           </ownedBehavior>
-          <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_tCCkcLpVEfCEnM4Nhn5qiQ" name="IsFinished" specification="_tCB9ZLpVEfCEnM4Nhn5qiQ">
-            <language>JAVA</language>
-            <body>return 0;</body>
-          </ownedBehavior>
           <ownedOperation xmi:type="uml:Operation" xmi:id="_tCAIMrpVEfCEnM4Nhn5qiQ" name="Enterable" visibility="public" method="_tCBWULpVEfCEnM4Nhn5qiQ">
             <ownedParameter xmi:type="uml:Parameter" xmi:id="_tCAIM7pVEfCEnM4Nhn5qiQ" direction="return">
               <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
@@ -122,11 +118,6 @@
               <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
             </ownedParameter>
             <ownedParameter xmi:type="uml:Parameter" xmi:id="_tCB9YrpVEfCEnM4Nhn5qiQ" name="nThisState" type="_OS5pYL5BEfCXOImACTrF0w"/>
-          </ownedOperation>
-          <ownedOperation xmi:type="uml:Operation" xmi:id="_tCB9ZLpVEfCEnM4Nhn5qiQ" name="IsFinished" visibility="public" method="_tCCkcLpVEfCEnM4Nhn5qiQ">
-            <ownedParameter xmi:type="uml:Parameter" xmi:id="_tCB9ZbpVEfCEnM4Nhn5qiQ" direction="return">
-              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
-            </ownedParameter>
           </ownedOperation>
           <ownedOperation xmi:type="uml:Operation" xmi:id="_HBlhAL7HEfCJCfFNPN5vdQ" name="DefaultEntryAction" visibility="public">
             <ownedParameter xmi:type="uml:Parameter" xmi:id="_HBlhAb7HEfCJCfFNPN5vdQ" type="_ysTdsL14EfC7372XF4tNJw" direction="return"/>
@@ -159,8 +150,14 @@
             <ownedParameter xmi:type="uml:Parameter" xmi:id="_1SDw0cVAEfCcwJCdUe0kRg" type="_ysTdsL14EfC7372XF4tNJw" direction="return"/>
             <ownedParameter xmi:type="uml:Parameter" xmi:id="_1SDw0sVAEfCcwJCdUe0kRg" name="entryPt" type="_OS5pYL5BEfCXOImACTrF0w"/>
           </ownedOperation>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_zlZhEMVIEfCcwJCdUe0kRg" name="isIn" visibility="private" isStatic="true">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_zlZhEcVIEfCcwJCdUe0kRg" direction="return">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+            </ownedParameter>
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_zlZhEsVIEfCcwJCdUe0kRg" name="leaf" type="_OS5pYL5BEfCXOImACTrF0w"/>
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_FB6bQMVJEfCcwJCdUe0kRg" name="composite" type="_OS5pYL5BEfCXOImACTrF0w"/>
+          </ownedOperation>
         </packagedElement>
-        <packagedElement xmi:type="uml:Class" xmi:id="_tCCkcbpVEfCEnM4Nhn5qiQ" name="Main" visibility="public"/>
         <packagedElement xmi:type="uml:Class" xmi:id="_tCDLgLpVEfCEnM4Nhn5qiQ" name="EventParams" visibility="public"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Package" xmi:id="_uQn3cLpVEfCEnM4Nhn5qiQ" name="Interfaces">
