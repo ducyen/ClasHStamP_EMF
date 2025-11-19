@@ -29,6 +29,7 @@ public  class Context extends BaseClass implements Interface2, Interface1
     } /* Context.methodWithParams */
     public UsedDependency methodReturnsSomething(
     ){
+    	return null;
     } /* Context.methodReturnsSomething */
     public void methodThrowsException(
     ){

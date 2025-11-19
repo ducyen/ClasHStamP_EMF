@@ -267,7 +267,7 @@ public  class ContextImpl extends Context
                 DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	479	16	121	81	30	30	1461	931	S821" );
                 switch( nEventId ){
                 case EventId.E2:{
-                        if (( ( MainStmTop )pMain ).MainStmHsm.IsIn( MainStmTop_S812 )) {
+                        if (( ( MainStmTop )pMain ).MainStmHsm.IsIn( MainStmTop.S812 )) {
                             ( ( MainStmTop )pMain ).MainStmHsm.Reset( pContextImpl, MainStmTop.S811 );
                         }
                 } break;
