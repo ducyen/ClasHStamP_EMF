@@ -346,6 +346,14 @@
             <region xmi:type="uml:Region" xmi:id="_BjeasL6UEfCkNc0kfmkBvw" name="MainStmTop">
               <transition xmi:type="uml:Transition" xmi:id="_3ANzIL6aEfCMrO0Z3MZOuA" name="" source="_z_3nkL6aEfCMrO0Z3MZOuA" target="_EV--kL6UEfCkNc0kfmkBvw"/>
               <transition xmi:type="uml:Transition" xmi:id="_m-kfAL6bEfCMrO0Z3MZOuA" name="" source="_EV--kL6UEfCkNc0kfmkBvw" target="_GL224L6bEfCMrO0Z3MZOuA">
+                <effect xmi:type="uml:OpaqueBehavior" xmi:id="_wPb9gMXaEfC6w-m-aYb_qQ" name="">
+                  <language>JAVA</language>
+                  <language>C</language>
+                  <language>C++</language>
+                  <body>System.out.println(&quot;Hello, World!&quot;);</body>
+                  <body>printf(&quot;Hello, World!&quot;);</body>
+                  <body>std::out &lt;&lt; &quot;Hello, World!&quot; &lt;&lt; std::endln;</body>
+                </effect>
                 <trigger xmi:type="uml:Trigger" xmi:id="_b-BQwL6dEfCJCfFNPN5vdQ" name="" event="_wfkpQL6dEfCJCfFNPN5vdQ"/>
               </transition>
               <transition xmi:type="uml:Transition" xmi:id="_FWAOYMCHEfC3V-UbsE4d9A" name="" source="_GL224L6bEfCMrO0Z3MZOuA" target="_nh9YgMHTEfCpHfwTBA0bGw">
