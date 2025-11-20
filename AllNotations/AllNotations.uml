@@ -344,11 +344,11 @@
           </ownedBehavior>
           <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_9yUdQL6TEfCkNc0kfmkBvw" name="MainStm">
             <region xmi:type="uml:Region" xmi:id="_BjeasL6UEfCkNc0kfmkBvw" name="MainStmTop">
-              <transition xmi:type="uml:Transition" xmi:id="_3ANzIL6aEfCMrO0Z3MZOuA" name="tr1" source="_z_3nkL6aEfCMrO0Z3MZOuA" target="_EV--kL6UEfCkNc0kfmkBvw"/>
-              <transition xmi:type="uml:Transition" xmi:id="_m-kfAL6bEfCMrO0Z3MZOuA" name="tr2" source="_EV--kL6UEfCkNc0kfmkBvw" target="_GL224L6bEfCMrO0Z3MZOuA">
+              <transition xmi:type="uml:Transition" xmi:id="_3ANzIL6aEfCMrO0Z3MZOuA" name="" source="_z_3nkL6aEfCMrO0Z3MZOuA" target="_EV--kL6UEfCkNc0kfmkBvw"/>
+              <transition xmi:type="uml:Transition" xmi:id="_m-kfAL6bEfCMrO0Z3MZOuA" name="" source="_EV--kL6UEfCkNc0kfmkBvw" target="_GL224L6bEfCMrO0Z3MZOuA">
                 <trigger xmi:type="uml:Trigger" xmi:id="_b-BQwL6dEfCJCfFNPN5vdQ" name="" event="_wfkpQL6dEfCJCfFNPN5vdQ"/>
               </transition>
-              <transition xmi:type="uml:Transition" xmi:id="_FWAOYMCHEfC3V-UbsE4d9A" name="tr3" source="_GL224L6bEfCMrO0Z3MZOuA" target="_nh9YgMHTEfCpHfwTBA0bGw">
+              <transition xmi:type="uml:Transition" xmi:id="_FWAOYMCHEfC3V-UbsE4d9A" name="" source="_GL224L6bEfCMrO0Z3MZOuA" target="_nh9YgMHTEfCpHfwTBA0bGw">
                 <trigger xmi:type="uml:Trigger" xmi:id="_TqUBgMCHEfC3V-UbsE4d9A" name="" event="_bpF18MCHEfC3V-UbsE4d9A"/>
               </transition>
               <transition xmi:type="uml:Transition" xmi:id="_tAZsIMDsEfC3V-UbsE4d9A" source="_IxCAQMCGEfC3V-UbsE4d9A" target="_YVm4EMDsEfC3V-UbsE4d9A">
@@ -484,11 +484,11 @@
                 <connectionPoint xmi:type="uml:Pseudostate" xmi:id="_aEpUQMHSEfCpHfwTBA0bGw" name="Entry1" kind="entryPoint"/>
                 <connectionPoint xmi:type="uml:Pseudostate" xmi:id="_exdBoMHSEfCpHfwTBA0bGw" name="Exit1" kind="exitPoint"/>
               </subvertex>
-              <subvertex xmi:type="uml:Pseudostate" xmi:id="_nh9YgMHTEfCpHfwTBA0bGw" name="Junction" kind="junction"/>
+              <subvertex xmi:type="uml:Pseudostate" xmi:id="_nh9YgMHTEfCpHfwTBA0bGw" name="" kind="junction"/>
               <subvertex xmi:type="uml:State" xmi:id="_sUf6cMHTEfCpHfwTBA0bGw" name="S3"/>
               <subvertex xmi:type="uml:State" xmi:id="_X842MMHVEfCpHfwTBA0bGw" name="S9" submachine="_29uN0MHREfCpHfwTBA0bGw"/>
               <subvertex xmi:type="uml:Pseudostate" xmi:id="_NLGPIMH3EfCpHfwTBA0bGw" name="" kind="choice"/>
-              <subvertex xmi:type="uml:Pseudostate" xmi:id="_xy3QwMO5EfCnMtYhl6TD5w" name="Fork28" kind="fork"/>
+              <subvertex xmi:type="uml:Pseudostate" xmi:id="_xy3QwMO5EfCnMtYhl6TD5w" name="" kind="fork"/>
             </region>
           </ownedBehavior>
           <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_29uN0MHREfCpHfwTBA0bGw" name="SubStm" submachineState="_-Rad4MHREfCpHfwTBA0bGw _X842MMHVEfCpHfwTBA0bGw">
