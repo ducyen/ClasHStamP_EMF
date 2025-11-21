@@ -346,7 +346,7 @@
             <region xmi:type="uml:Region" xmi:id="_BjeasL6UEfCkNc0kfmkBvw" name="MainStmTop">
               <transition xmi:type="uml:Transition" xmi:id="_3ANzIL6aEfCMrO0Z3MZOuA" name="" source="_z_3nkL6aEfCMrO0Z3MZOuA" target="_EV--kL6UEfCkNc0kfmkBvw"/>
               <transition xmi:type="uml:Transition" xmi:id="_m-kfAL6bEfCMrO0Z3MZOuA" name="" source="_EV--kL6UEfCkNc0kfmkBvw" target="_GL224L6bEfCMrO0Z3MZOuA">
-                <effect xmi:type="uml:OpaqueBehavior" xmi:id="_wPb9gMXaEfC6w-m-aYb_qQ" name="">
+                <effect xmi:type="uml:OpaqueBehavior" xmi:id="_wPb9gMXaEfC6w-m-aYb_qQ" name="printHelloWorld">
                   <language>JAVA</language>
                   <language>C</language>
                   <language>C++</language>
@@ -396,7 +396,12 @@
               <transition xmi:type="uml:Transition" xmi:id="_IDqwMMHUEfCpHfwTBA0bGw" source="_sUf6cMHTEfCpHfwTBA0bGw" target="_nh9YgMHTEfCpHfwTBA0bGw">
                 <trigger xmi:type="uml:Trigger" xmi:id="_KZMAoMHVEfCpHfwTBA0bGw" name="" event="_AaHGoMFMEfCvssN6lsBRhw"/>
               </transition>
-              <transition xmi:type="uml:Transition" xmi:id="_FBtloMHVEfCpHfwTBA0bGw" source="_nh9YgMHTEfCpHfwTBA0bGw" target="_-Rad4MHREfCpHfwTBA0bGw"/>
+              <transition xmi:type="uml:Transition" xmi:id="_FBtloMHVEfCpHfwTBA0bGw" source="_nh9YgMHTEfCpHfwTBA0bGw" target="_-Rad4MHREfCpHfwTBA0bGw">
+                <effect xmi:type="uml:OpaqueBehavior" xmi:id="_N4sD4MXnEfC6w-m-aYb_qQ" name="OpaqueBehavior1">
+                  <language>JAVA</language>
+                  <body>System.out.println(&quot;Do Something&quot;);</body>
+                </effect>
+              </transition>
               <transition xmi:type="uml:Transition" xmi:id="_gXMJAMHVEfCpHfwTBA0bGw" source="_exdBoMHSEfCpHfwTBA0bGw" target="_X842MMHVEfCpHfwTBA0bGw"/>
               <transition xmi:type="uml:Transition" xmi:id="_Vrb4gMH3EfCpHfwTBA0bGw" guard="_cYBsUMH3EfCpHfwTBA0bGw" source="_NLGPIMH3EfCpHfwTBA0bGw" target="_aEpUQMHSEfCpHfwTBA0bGw">
                 <ownedRule xmi:type="uml:Constraint" xmi:id="_cYBsUMH3EfCpHfwTBA0bGw" name="">
@@ -504,8 +509,13 @@
             <connectionPoint xmi:type="uml:Pseudostate" xmi:id="_HZpNsMHSEfCpHfwTBA0bGw" name="Exit1" kind="exitPoint"/>
             <region xmi:type="uml:Region" xmi:id="_54mqkMHREfCpHfwTBA0bGw" name="SubStmTop">
               <transition xmi:type="uml:Transition" xmi:id="_qykRAMH8EfCpHfwTBA0bGw" source="_oR5rEMH8EfCpHfwTBA0bGw" target="_kpO7QMH8EfCpHfwTBA0bGw"/>
-              <subvertex xmi:type="uml:State" xmi:id="_kpO7QMH8EfCpHfwTBA0bGw" name="S1"/>
+              <transition xmi:type="uml:Transition" xmi:id="_ovdEMMamEfC6w-m-aYb_qQ" source="_kpO7QMH8EfCpHfwTBA0bGw" target="_fXHb0MamEfC6w-m-aYb_qQ">
+                <trigger xmi:type="uml:Trigger" xmi:id="_ru8UIMamEfC6w-m-aYb_qQ" name="" event="_DldBQMFMEfCvssN6lsBRhw"/>
+              </transition>
+              <transition xmi:type="uml:Transition" xmi:id="_2UUXYMamEfC6w-m-aYb_qQ" source="_fXHb0MamEfC6w-m-aYb_qQ" target="_HZpNsMHSEfCpHfwTBA0bGw"/>
+              <subvertex xmi:type="uml:State" xmi:id="_kpO7QMH8EfCpHfwTBA0bGw" name="S101"/>
               <subvertex xmi:type="uml:Pseudostate" xmi:id="_oR5rEMH8EfCpHfwTBA0bGw" name="SubStmInit"/>
+              <subvertex xmi:type="uml:State" xmi:id="_fXHb0MamEfC6w-m-aYb_qQ" name="S102"/>
             </region>
           </ownedBehavior>
           <ownedOperation xmi:type="uml:Operation" xmi:id="_vGqHkLpVEfCEnM4Nhn5qiQ" name="protectedMethod" visibility="protected" method="_vGqHkbpVEfCEnM4Nhn5qiQ">

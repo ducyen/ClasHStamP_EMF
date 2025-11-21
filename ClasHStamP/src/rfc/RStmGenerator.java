@@ -44,6 +44,7 @@ import org.eclipse.gmf.runtime.notation.Node;
 import org.eclipse.gmf.runtime.notation.Edge;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.notation.Bounds;
+import org.eclipse.gmf.runtime.notation.Connector;
 import org.eclipse.gmf.runtime.notation.RelativeBendpoints;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.gmf.runtime.notation.datatype.RelativeBendpoint;
@@ -220,9 +221,150 @@ public class RStmGenerator extends TBaseGenerator {
      * Determine if a transition is external (exits the least common ancestor state).
      * Uses GMF Notation to check if transition points lie outside the LCA state's bounds.
      */
-    private boolean checkIfExternalTrans(Transition lastTrans) {
-    	return lastTrans.getKind() == TransitionKind.EXTERNAL_LITERAL;
-    }
+	private boolean checkIfExternalTrans(Transition lastTrans) {
+	    try {
+	        Vertex commonState = null;
+	        Transition originTrans = m_originTrans;
+	        Vertex targetState = lastTrans.getTarget();
+	        StateMachine stmRoot = m_stmRoot;
+
+			Vertex traversingVertex = targetState;
+			// find least common ancestor
+			while (traversingVertex != m_originTrans.getSource()) {
+				if (getContainer(traversingVertex) != null) {
+					traversingVertex = (State)getContainer(traversingVertex);
+					if (traversingVertex == m_originTrans.getSource()) {
+						commonState = traversingVertex;
+						break;
+					}
+				} else {
+					break;
+				}
+			}
+			traversingVertex = m_originTrans.getSource();
+			while (traversingVertex != targetState) {
+				if (getContainer(traversingVertex) != null) {
+					traversingVertex = (State)getContainer(traversingVertex);
+					if (traversingVertex == targetState) {
+						commonState = traversingVertex;
+						break;
+					}
+				} else {
+					break;
+				}
+			}
+
+	        if (commonState != null) {
+	            // find rectangle of the common state
+	            Rectangle2D rect = findStateRectangle(stmRoot, commonState);
+	            if (rect == null) return false;
+
+	            boolean isExternal = false;
+	            isExternal |= checkTransitionOutside(originTrans, stmRoot, rect);
+	            isExternal |= checkTransitionOutside(lastTrans, stmRoot, rect);
+	            return isExternal;
+	        }
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	    }
+	    return false;
+	}
+
+	/**
+	 * Finds the rectangle (absolute Bounds) of a UML state in the notation model.
+	 */
+	private Rectangle2D findStateRectangle(StateMachine stmRoot, Vertex state) {
+	    for (EObject eObj : stm.TMain.notationResource.getContents()) {
+	        if (eObj instanceof Diagram) {
+	            Diagram diagram = (Diagram) eObj;
+	            if (diagram.getElement() == stmRoot) {
+	                Node node = findNodeForElement(diagram, state);
+	                if (node != null) {
+	                    Rectangle2D r = getAbsoluteBounds(node);
+	                    return r;
+	                }
+	            }
+	        }
+	    }
+	    return null;
+	}
+
+	/**
+	 * Check if any bendpoint of transition lies outside the given rectangle.
+	 */
+	private boolean checkTransitionOutside(Transition transition, StateMachine stmRoot, Rectangle2D rect) {
+	    for (EObject eObj : stm.TMain.notationResource.getContents()) {
+	        if (eObj instanceof Diagram) {
+	            Diagram diagram = (Diagram) eObj;
+	            if (diagram.getElement() == stmRoot) {
+	                for (Object child : diagram.getEdges()) {
+	                    if (child instanceof Connector) {
+	                        Connector conn = (Connector) child;
+	                        if (conn.getElement() == transition) {
+	                            Object bp = conn.getBendpoints();
+	                            if (bp instanceof RelativeBendpoints) {
+	                                @SuppressWarnings("unchecked")
+	                                List<RelativeBendpoint> points = ((RelativeBendpoints) bp).getPoints();
+	                                for (RelativeBendpoint p : points) {
+	                                    if (p.getSourceX() < rect.getMinX()-1 || p.getSourceX() > rect.getMaxX()+1
+	                                            || p.getSourceY() < rect.getMinY()-1 || p.getSourceY() > rect.getMaxY()+1) {
+	                                        return true; // external
+	                                    }
+	                                }
+	                            }
+	                        }
+	                    }
+	                }
+	            }
+	        }
+	    }
+	    return false;
+	}
+
+	/**
+	 * getAbsoluteBounds
+	 * @param view
+	 * @return
+	 */
+	private Rectangle2D getAbsoluteBounds(Node view) {
+	    double x = 0;
+	    double y = 0;
+	    double w = 0;
+	    double h = 0;
+
+	    //
+	    // 1) Start with this view's own local bounds (if any)
+	    //
+	    if (view.getLayoutConstraint() instanceof Bounds) {
+	        Bounds b = (Bounds) view.getLayoutConstraint();
+	        x = b.getX();
+	        y = b.getY();
+	        w = b.getWidth();
+	        h = b.getHeight();
+	    }
+
+	    //
+	    // 2) Climb the GMF Notation containment hierarchy
+	    //    adding all parent Bounds (local offsets)
+	    //
+	    EObject container = view.eContainer();
+	    while (container instanceof Node) {
+	        Node parentView = (Node) container;
+
+	        if (parentView.getLayoutConstraint() instanceof Bounds) {
+	            Bounds pb = (Bounds) parentView.getLayoutConstraint();
+	            x += pb.getX();
+	            y += pb.getY();
+	        }
+
+	        container = parentView.eContainer();
+	    }
+
+	    //
+	    // The returned rectangle is now in absolute diagram coordinates
+	    //
+	    return new Rectangle2D.Double(x, y, w, h);
+	}	
     
     /**
      * getSubvertexes
@@ -461,8 +603,19 @@ public class RStmGenerator extends TBaseGenerator {
         String actionText = "";
         if (trans.getEffect() instanceof OpaqueBehavior) {
             OpaqueBehavior effect = (OpaqueBehavior) trans.getEffect();
-            if (effect != null && !effect.getBodies().isEmpty()) {
-                actionText = effect.getBodies().get(0);
+            if (effect != null) {
+	            int languageIndex = -1;
+	            int i = 0;
+	            for (String language: effect.getLanguages()) {
+	            	if (language.equalsIgnoreCase(m_language)) {
+	            		languageIndex = i;
+	            		break;
+	            	}
+	            	i++;
+	            }
+	            if (languageIndex >= 0) {
+	            	actionText = effect.getBodies().get(languageIndex);
+	            }
             }
         }
         // If the effect is another kind of behavior, we could handle accordingly (not needed if not present).
