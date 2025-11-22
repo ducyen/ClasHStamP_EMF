@@ -40,7 +40,7 @@
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.acceleo.engine_3.7.15.202402190857.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.emf.codegen.ecore_2.42.0.v20250415-0852.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.emf.codegen_2.26.0.v20250329-0911.jar"/>
-        <pathelement location="${ECLIPSE_HOME}/plugins/com.google.guava_33.4.8.jre.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/com.google.guava_33.5.0.jre.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.papyrus.sysml16.validation_2.3.0.202505231451.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.papyrus.sysml16.ui_2.3.0.202505231451.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.papyrus.sysml16.service.types_2.3.0.202505231451.jar"/>
