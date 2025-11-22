@@ -8,6 +8,7 @@
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
     "module": "nodenext",
+    "moduleResolution": "nodenext",
     "target": "esnext",
     "types": [],
     // For nodejs:
@@ -40,6 +41,9 @@
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true,
-	"baseUrl": "./src"	
+    "baseUrl": "./src",
+    "paths": {
+      "#all_notations/*": ["./all_notations/*"]
+    }
   }
 }

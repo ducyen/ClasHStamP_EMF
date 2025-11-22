@@ -9,5 +9,8 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs"
+  "type": "module",
+  "imports": {
+    "#all_notations/*": "./src/all_notations/*.js"
+  }
 }
