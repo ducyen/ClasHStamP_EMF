@@ -12,6 +12,7 @@ import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.Generalization;
 import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Namespace;
+import org.eclipse.uml2.uml.OpaqueExpression;
 import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.PrimitiveType;
@@ -20,6 +21,7 @@ import org.eclipse.uml2.uml.InterfaceRealization;
 import org.eclipse.uml2.uml.Pseudostate;
 import org.eclipse.uml2.uml.PseudostateKind;
 import org.eclipse.uml2.uml.Stereotype;
+import org.eclipse.uml2.uml.ValueSpecification;
 import org.eclipse.uml2.uml.Vertex;
 import org.eclipse.uml2.uml.VisibilityKind;
 
@@ -266,6 +268,25 @@ public class TBaseGenerator {
             }
         }
 
+        if (result == null) {
+        	ValueSpecification valueSpec = attr.getDefaultValue();
+        	if (valueSpec instanceof OpaqueExpression) {
+        		OpaqueExpression expr = (OpaqueExpression)valueSpec;
+	            int languageIndex = -1;
+	            int i = 0;
+	            for (String language: expr.getLanguages()) {
+	            	if (language.equalsIgnoreCase(m_language)) {
+	            		languageIndex = i;
+	            		break;
+	            	}
+	            	i++;
+	            }
+	            if (languageIndex >= 0) {
+	            	result = expr.getBodies().get(languageIndex);
+	            }
+        	}
+        }
+        
         if (result == null) {
             result = attr.getDefault();
             if (result != null) {

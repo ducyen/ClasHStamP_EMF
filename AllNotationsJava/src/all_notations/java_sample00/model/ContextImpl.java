@@ -36,7 +36,7 @@ public  class ContextImpl extends Context
         EventParams e
     ){
     } /* ContextImpl.checkE1Params */
-    protected class SubStmTop {
+    protected class SubStmTop extends BaseStmTop {
         protected StateMachine pParentStm = null;
         protected boolean lastEnteredStateRecovering = false;
 /* states' declaration */
@@ -235,7 +235,7 @@ public  class ContextImpl extends Context
             SubStmHsm.pMain = this;
         }
     } /* SubStmTop */
-    protected class MainStmTop {
+    protected class MainStmTop extends BaseStmTop {
         protected StateMachine pParentStm = null;
         protected boolean lastEnteredStateRecovering = false;
 /* states' declaration */

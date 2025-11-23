@@ -24,49 +24,64 @@
             <ownedParameter xmi:type="uml:Parameter" xmi:id="_R9xjEL1ZEfC7372XF4tNJw" name="" type="_ysTdsL14EfC7372XF4tNJw" direction="return"/>
           </ownedOperation>
         </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_oGibYMhZEfCoJtnL9JKJ1w" name="BaseStmTop"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Package" xmi:id="_tBkDULpVEfCEnM4Nhn5qiQ" name="Base">
         <packagedElement xmi:type="uml:Class" xmi:id="_tBlRcLpVEfCEnM4Nhn5qiQ" name="StateMachine" visibility="public">
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_tBlRcbpVEfCEnM4Nhn5qiQ" name="pParentStm" visibility="public" type="_tBlRcLpVEfCEnM4Nhn5qiQ" isUnique="false">
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_tBlRcbpVEfCEnM4Nhn5qiQ" name="pParentStm" visibility="public" type="_tBlRcLpVEfCEnM4Nhn5qiQ" isUnique="false" aggregation="shared">
             <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_tBmfkLpVEfCEnM4Nhn5qiQ" name="defaultValue">
               <language>JAVA</language>
+              <language>TypeScript</language>
               <body>null</body>
+              <body>undefined</body>
             </defaultValue>
           </ownedAttribute>
           <ownedAttribute xmi:type="uml:Property" xmi:id="_tBw3oLpVEfCEnM4Nhn5qiQ" name="nCurrentState" visibility="public" type="_OS5pYL5BEfCXOImACTrF0w" isUnique="false">
             <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_tBxesLpVEfCEnM4Nhn5qiQ" name="defaultValue">
               <language>JAVA</language>
+              <language>TypeScript</language>
               <body>STATE_UNDEF</body>
+              <body>StateMachine.STATE_UNDEF</body>
             </defaultValue>
           </ownedAttribute>
           <ownedAttribute xmi:type="uml:Property" xmi:id="_tBxesbpVEfCEnM4Nhn5qiQ" name="nLCAState" visibility="public" type="_OS5pYL5BEfCXOImACTrF0w" isUnique="false">
             <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_tBxesrpVEfCEnM4Nhn5qiQ" name="defaultValue">
               <language>JAVA</language>
+              <language>TypeScript</language>
               <body>STATE_UNDEF</body>
+              <body>StateMachine.STATE_UNDEF</body>
             </defaultValue>
           </ownedAttribute>
           <ownedAttribute xmi:type="uml:Property" xmi:id="_tByFwLpVEfCEnM4Nhn5qiQ" name="nTargetState" visibility="public" type="_OS5pYL5BEfCXOImACTrF0w" isUnique="false">
             <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_tByFwbpVEfCEnM4Nhn5qiQ" name="defaultValue">
               <language>JAVA</language>
+              <language>TypeScript</language>
               <body>STATE_UNDEF</body>
+              <body>StateMachine.STATE_UNDEF</body>
             </defaultValue>
           </ownedAttribute>
           <ownedAttribute xmi:type="uml:Property" xmi:id="_tByFwrpVEfCEnM4Nhn5qiQ" name="nSourceState" visibility="public" type="_OS5pYL5BEfCXOImACTrF0w" isUnique="false">
             <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_tByFw7pVEfCEnM4Nhn5qiQ" name="defaultValue">
               <language>JAVA</language>
+              <language>TypeScript</language>
               <body>STATE_UNDEF</body>
+              <body>StateMachine.STATE_UNDEF</body>
             </defaultValue>
           </ownedAttribute>
           <ownedAttribute xmi:type="uml:Property" xmi:id="_tBys0LpVEfCEnM4Nhn5qiQ" name="nPseudostate" visibility="public" type="_OS5pYL5BEfCXOImACTrF0w" isUnique="false">
             <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_tBys0bpVEfCEnM4Nhn5qiQ" name="defaultValue">
               <language>JAVA</language>
+              <language>TypeScript</language>
               <body>STATE_UNDEF</body>
+              <body>StateMachine.STATE_UNDEF</body>
             </defaultValue>
           </ownedAttribute>
           <ownedAttribute xmi:type="uml:Property" xmi:id="_tBz68LpVEfCEnM4Nhn5qiQ" name="bIsExternTrans" visibility="public" isUnique="false">
             <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
             <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_tBz68bpVEfCEnM4Nhn5qiQ" name="defaultValue">
               <language>JAVA</language>
+              <language>TypeScript</language>
+              <body>false</body>
               <body>false</body>
             </defaultValue>
           </ownedAttribute>
@@ -74,6 +89,8 @@
             <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
             <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_B0vHQb47EfCXOImACTrF0w" name="defaultValue">
               <language>JAVA</language>
+              <language>TypeScript</language>
+              <body>false</body>
               <body>false</body>
             </defaultValue>
           </ownedAttribute>
@@ -81,22 +98,28 @@
             <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
             <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_l-zugb7EEfCJCfFNPN5vdQ" name="defaultValue">
               <language>JAVA</language>
+              <language>TypeScript</language>
+              <body>false</body>
               <body>false</body>
             </defaultValue>
           </ownedAttribute>
           <ownedAttribute xmi:type="uml:Property" xmi:id="_8Nz7AL46EfCXOImACTrF0w" name="lastEnteredState" visibility="public" type="_OS5pYL5BEfCXOImACTrF0w" isUnique="false">
             <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_8Nz7Ab46EfCXOImACTrF0w" name="defaultValue">
               <language>JAVA</language>
+              <language>TypeScript</language>
               <body>STATE_UNDEF</body>
+              <body>StateMachine.STATE_UNDEF</body>
             </defaultValue>
           </ownedAttribute>
           <ownedAttribute xmi:type="uml:Property" xmi:id="_KsPlYL45EfCXOImACTrF0w" name="STATE_UNDEF" isStatic="true" type="_OS5pYL5BEfCXOImACTrF0w" isReadOnly="true">
             <defaultValue xmi:type="uml:LiteralString" xmi:id="__nUC4L45EfCXOImACTrF0w" value="0"/>
           </ownedAttribute>
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_lejAQL6nEfCJCfFNPN5vdQ" name="pMain" visibility="public" type="_KDhYIMVCEfCcwJCdUe0kRg" isUnique="false">
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_lejAQL6nEfCJCfFNPN5vdQ" name="pMain" visibility="public" type="_oGibYMhZEfCoJtnL9JKJ1w" isUnique="false" aggregation="shared">
             <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_lejAQb6nEfCJCfFNPN5vdQ" name="defaultValue">
               <language>JAVA</language>
+              <language>TypeScript</language>
               <body>null</body>
+              <body>undefined</body>
             </defaultValue>
           </ownedAttribute>
           <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_tCBWULpVEfCEnM4Nhn5qiQ" name="Enterable" specification="_tCAIMrpVEfCEnM4Nhn5qiQ">
