@@ -27,3 +27,8 @@ replay_pid*
 
 # Backup Files #
 *.bak
+
+# JavaScript
+*.js
+*.map
+*.d.ts
