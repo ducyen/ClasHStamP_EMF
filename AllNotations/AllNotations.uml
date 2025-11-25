@@ -572,6 +572,8 @@
         <packagedElement xmi:type="uml:CallEvent" xmi:id="_bpF18MCHEfC3V-UbsE4d9A" name="E4"/>
         <packagedElement xmi:type="uml:CallEvent" xmi:id="_DldBQMFMEfCvssN6lsBRhw" name="E5"/>
         <packagedElement xmi:type="uml:Usage" xmi:id="_vxK7AMk5EfCoJtnL9JKJ1w" client="_vGLmcLpVEfCEnM4Nhn5qiQ" supplier="_vGa3BLpVEfCEnM4Nhn5qiQ"/>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_XCQ9wMnoEfCoJtnL9JKJ1w" client="_vGpggLpVEfCEnM4Nhn5qiQ" supplier="_vGERsLpVEfCEnM4Nhn5qiQ"/>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_airwgMnoEfCoJtnL9JKJ1w" client="_vGpggLpVEfCEnM4Nhn5qiQ" supplier="_vGJKMLpVEfCEnM4Nhn5qiQ"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Usage" xmi:id="_kYYVkL37EfCKKN8gm6yjbQ" client="_vGpggLpVEfCEnM4Nhn5qiQ" supplier="_tCDLgLpVEfCEnM4Nhn5qiQ"/>
       <packagedElement xmi:type="uml:Dependency" xmi:id="_QF_ZYL7KEfCJCfFNPN5vdQ" client="_tBlRcLpVEfCEnM4Nhn5qiQ" supplier="_sJOGELpVEfCEnM4Nhn5qiQ"/>
