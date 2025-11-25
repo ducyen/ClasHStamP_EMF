@@ -228,7 +228,7 @@ public class TBaseGenerator {
      */
     protected String findMultiplicity(Property iAttr) {
         int upper = iAttr.getUpper();
-        if (upper > 1) {
+        if (upper > 1 || upper == -1) {
             return String.valueOf(upper);
         } else {
             return "";

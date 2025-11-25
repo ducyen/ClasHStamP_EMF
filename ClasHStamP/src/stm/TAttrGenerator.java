@@ -455,6 +455,7 @@ public class TAttrGenerator extends TBaseGenerator {
      * (Replaces IAttribute.getTypeModifier in Astah.)
      */
     protected String getTypeModifier(Property attr) {
+    	/* TODO 
         // Pointer indicator for non-composite association ends; array indicator for multi-valued attributes
         if (attr.getAssociation() != null) {
             // If this attribute is an association end
@@ -475,6 +476,7 @@ public class TAttrGenerator extends TBaseGenerator {
             // multi-valued attribute (unlimited or upper bound > 1) -> use array indicator (e.g., "[]")
             return "[]";
         }
+        */
         return "";
     }
 

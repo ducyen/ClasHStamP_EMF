@@ -194,10 +194,6 @@ public class TMain {
                         ...
                     }
                     */
-                    if (mainStateMachine != null) {
-                        _stmGen.printStmImpls();
-                    }
-
                     TCtorGenerator ctorGen = new TCtorGenerator(stxCsv, umlClass, writer);
                     ctorGen.printConstructor(attrGen, operGen.hasVFunc(), _stmGen);
                     operGen.printVirtualTbl();
@@ -205,6 +201,10 @@ public class TMain {
                     attrGen.printAttrDeclarations(operGen.hasVFunc(), _stmGen);
 
                     classGen.printClassFooter();
+
+                    if (mainStateMachine != null) {
+                        _stmGen.printStmImpls();
+                    }
 
                     fileGen.printFooter();
                     fileGen.closeFile();

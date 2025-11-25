@@ -246,7 +246,9 @@
             <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_vGYaw7pVEfCEnM4Nhn5qiQ" value="*"/>
             <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_vGYaxLpVEfCEnM4Nhn5qiQ" name="defaultValue">
               <language>JAVA</language>
+              <language>TypeScript</language>
               <body>{ 1, 2, 3 }</body>
+              <body>[1, 2, 3]</body>
             </defaultValue>
           </ownedAttribute>
           <ownedAttribute xmi:type="uml:Property" xmi:id="_vGZB0LpVEfCEnM4Nhn5qiQ" name="finalConstantAttribute" visibility="private" isLeaf="true" isStatic="true" isUnique="false">
@@ -569,6 +571,7 @@
         <packagedElement xmi:type="uml:CallEvent" xmi:id="_h32qYMDsEfC3V-UbsE4d9A" name="E3"/>
         <packagedElement xmi:type="uml:CallEvent" xmi:id="_bpF18MCHEfC3V-UbsE4d9A" name="E4"/>
         <packagedElement xmi:type="uml:CallEvent" xmi:id="_DldBQMFMEfCvssN6lsBRhw" name="E5"/>
+        <packagedElement xmi:type="uml:Usage" xmi:id="_vxK7AMk5EfCoJtnL9JKJ1w" client="_vGLmcLpVEfCEnM4Nhn5qiQ" supplier="_vGa3BLpVEfCEnM4Nhn5qiQ"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Usage" xmi:id="_kYYVkL37EfCKKN8gm6yjbQ" client="_vGpggLpVEfCEnM4Nhn5qiQ" supplier="_tCDLgLpVEfCEnM4Nhn5qiQ"/>
       <packagedElement xmi:type="uml:Dependency" xmi:id="_QF_ZYL7KEfCJCfFNPN5vdQ" client="_tBlRcLpVEfCEnM4Nhn5qiQ" supplier="_sJOGELpVEfCEnM4Nhn5qiQ"/>

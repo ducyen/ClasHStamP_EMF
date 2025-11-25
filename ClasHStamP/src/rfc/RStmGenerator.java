@@ -1624,9 +1624,18 @@ public class RStmGenerator extends TBaseGenerator {
 		System.out.println(makeIndent(indent) + "class Events(Enum):");
 		indent++;
 		String path = m_stxCsv.get(indent, "event_decl", "ext1st");
+		int nIndex = 0;
 		for (String key: uniqueSortedEvents) {
 			System.out.println(makeIndent(indent) + key + " = auto()");
-			m_writer.write(Utils.get(path, key, m_iClass.getName(), m_iClass.getName(), "", "", ""));
+			m_writer.write(Utils.get(path, 
+				key, 
+				m_iClass.getName(), 
+				m_iClass.getName(), 
+				String.valueOf(nIndex), 
+				"", 
+				""
+			));
+			nIndex++;
 			path = m_stxCsv.get(indent, "event_decl", "extnxt");
 		}
 		indent--;
@@ -1727,6 +1736,81 @@ public class RStmGenerator extends TBaseGenerator {
 	 * @throws Exception
 	 */
 	public void printStmImpls() throws IOException, Exception {		
+		for (StateMachine iStm: m_sortedStmDgrs) {
+			m_stmRoot = iStm;
+			String rgnName = iStm.getName();
+			String rgnDgrName = getStateMachineDiagram(iStm).getName();
+			String rgnDefinition = getDefinition(iStm);
+			Collection<Vertex> rgnVertices = getVertexes(iStm);
+			// list up sub-regions
+			new StateDeepTraverser() {
+				protected void checkRegion(State iState, int subRgnIndex, State container, int rgnIndex) {
+					try {
+						String rgnName = makeRgnName(iState, subRgnIndex);
+						String rgnDgrName = makeRgnName(iState, subRgnIndex) + "Hsm";
+						String rgnDefinition = getDefinition(iState);
+						Collection<Vertex> rgnVertices = getSubvertexes(iState, subRgnIndex);
+						System.out.println(makeIndent(indent) + "# Region sub-class");						
+						// print state-machine sub-class
+						System.out.println(makeIndent(indent) + "class _" + rgnName + "Hsm(Statemachine):");
+						StringWriter tempWriter = new StringWriter();
+						Writer originalWriter = m_writer;  // Save the original FileWriter
+						m_writer = tempWriter;		
+						indent++;
+						printStmImpl(
+							iStm,
+							rgnName,
+							rgnDgrName,
+							rgnDefinition,
+							rgnVertices
+						);
+						indent--;
+						m_writer = originalWriter;
+						m_writer.write(Utils.get(
+							m_stxCsv.get(indent, "region", "end"), 
+							rgnDgrName, 					// name
+							m_iClass.getName(),				// type
+							rgnName, 						// container
+							tempWriter.toString(),			// value 
+							"", 							// modifier
+							"",								// description
+							getStateMachineDiagram(iStm).getName()// scope
+						));			
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}.start(getVertexes(iStm));
+			
+			System.out.println(makeIndent(indent) + "# Region sub-class");						
+			// print state-machine sub-class
+			System.out.println(makeIndent(indent) + "class _" + rgnName + "Hsm(Statemachine):");
+
+			StringWriter tempWriter = new StringWriter();
+			Writer originalWriter = m_writer;  // Save the original FileWriter
+			m_writer = tempWriter;		
+			indent++;
+			printStmImpl(
+				iStm,
+				rgnName,
+				rgnDgrName,
+				rgnDefinition,
+				rgnVertices
+			);
+			indent--;
+			m_writer = originalWriter;
+			m_writer.write(Utils.get(
+				m_stxCsv.get(indent, "region", "end"), 
+				rgnDgrName, 					// name
+				m_iClass.getName(),				// type
+				rgnName, 						// container
+				tempWriter.toString(),			// value 
+				"", 							// modifier
+				"",								// description
+				getStateMachineDiagram(iStm).getName()// scope
+			));			
+			
+		}
 		// list up state-machines
 		for (StateMachine iStm: m_sortedStmDgrs) {
 			m_stmRoot = iStm;
@@ -1796,74 +1880,6 @@ public class RStmGenerator extends TBaseGenerator {
 				getStateMachineDiagram(iStm).getName()// scope				
 			));					
 			indent++;
-			
-			// list up sub-regions
-			new StateDeepTraverser() {
-				protected void checkRegion(State iState, int subRgnIndex, State container, int rgnIndex) {
-					try {
-						String rgnName = makeRgnName(iState, subRgnIndex);
-						String rgnDgrName = makeRgnName(iState, subRgnIndex) + "Hsm";
-						String rgnDefinition = getDefinition(iState);
-						Collection<Vertex> rgnVertices = getSubvertexes(iState, subRgnIndex);
-						System.out.println(makeIndent(indent) + "# Region sub-class");						
-						// print state-machine sub-class
-						System.out.println(makeIndent(indent) + "class _" + rgnName + "Hsm(Statemachine):");
-						StringWriter tempWriter = new StringWriter();
-						Writer originalWriter = m_writer;  // Save the original FileWriter
-						m_writer = tempWriter;		
-						indent++;
-						printStmImpl(
-							iStm,
-							rgnName,
-							rgnDgrName,
-							rgnDefinition,
-							rgnVertices
-						);
-						indent--;
-						m_writer = originalWriter;
-						m_writer.write(Utils.get(
-							m_stxCsv.get(indent, "region", "end"), 
-							rgnDgrName, 					// name
-							m_iClass.getName(),				// type
-							rgnName, 						// container
-							tempWriter.toString(),			// value 
-							"", 							// modifier
-							"",								// description
-							getStateMachineDiagram(iStm).getName()// scope
-						));			
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			}.start(getVertexes(iStm));
-			
-			System.out.println(makeIndent(indent) + "# Region sub-class");						
-			// print state-machine sub-class
-			System.out.println(makeIndent(indent) + "class _" + rgnName + "Hsm(Statemachine):");
-
-			tempWriter = new StringWriter();
-			originalWriter = m_writer;  // Save the original FileWriter
-			m_writer = tempWriter;		
-			indent++;
-			printStmImpl(
-				iStm,
-				rgnName,
-				rgnDgrName,
-				rgnDefinition,
-				rgnVertices
-			);
-			indent--;
-			m_writer = originalWriter;
-			m_writer.write(Utils.get(
-				m_stxCsv.get(indent, "region", "end"), 
-				rgnDgrName, 					// name
-				m_iClass.getName(),				// type
-				rgnName, 						// container
-				tempWriter.toString(),			// value 
-				"", 							// modifier
-				"",								// description
-				getStateMachineDiagram(iStm).getName()// scope
-			));			
 			
 			printStmAPIs(iStm);
 			

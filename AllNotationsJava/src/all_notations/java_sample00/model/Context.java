@@ -51,8 +51,8 @@ public  class Context extends BaseClass implements Interface2, Interface1
         Integer _privateAttribute,
         Integer _internalAttribute,
         Integer _readOnlyAttribute,
-        Aggregration[] _anAggregation,
-        Composition[] _aProtectedComposition
+        ArrayList<Aggregration> _anAggregation,
+        ArrayList<Composition> _aProtectedComposition
     ) {
         super( _derivableAttribute );
 
@@ -69,6 +69,6 @@ public  class Context extends BaseClass implements Interface2, Interface1
     Integer internalAttribute;                                  
     private Boolean isInitializedAttribute;                     
     private Integer readOnlyAttribute;                          
-    private Aggregration[] anAggregation;                         
-    protected Composition[] aProtectedComposition;                
+    private ArrayList<Aggregration> anAggregation;                 
+    protected ArrayList<Composition> aProtectedComposition;        
 }
