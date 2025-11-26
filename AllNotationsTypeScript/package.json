@@ -1,7 +1,7 @@
 {
-    "name": "typecript-node-starter",
+    "name": "all-notations-typescript-starter",
     "version": "1.0.0",
-    "description": "A node/typescript starter with Live-reloading, absolute path imports and incremental compilation built-in",
+    "description": "A demo of ClasHStamP for generating TypeScript code with absolute import paths.",
     "main": "index.js",
     "scripts": {
         "dev": "tsc-watch --onSuccess \"node dist/main.js\"",
@@ -15,10 +15,10 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/binura-g/typecript-node-starter.git"
+        "url": "git+github.com:ducyen/ClasHStamP_EMF.git"
     },
-    "author": "Binura Gunasekara",
-    "homepage": "https://bgxcode.com/posts/typescript/ts-absolute-import-paths",
+    "author": "Duc Hoang",
+    "homepage": "https://ducyen.github.io/ClasHStamP/",
     "devDependencies": {
         "tsc-watch": "^4.2.8",
         "typescript": "^3.9.5"
