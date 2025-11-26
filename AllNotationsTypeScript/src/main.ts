@@ -20,3 +20,6 @@ new Server().doSomething();
 let context = new ContextImpl(0, "Sample Context", 0, 0, 0, undefined, undefined);
 context.Start();
 context.EventProc(ContextImpl.E1, undefined);
+context.EventProc(ContextImpl.E1, undefined);
+context.EventProc(ContextImpl.E0, undefined);
+context.EventProc(ContextImpl.E5, undefined);

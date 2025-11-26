@@ -12,3 +12,6 @@ export interface ResetArgs {
 export class BaseStmTop {
 	
 }
+export function orAssign( a: boolean, b: boolean ): boolean {
+    return a || b;
+}
