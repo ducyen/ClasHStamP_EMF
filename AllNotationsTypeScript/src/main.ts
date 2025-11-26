@@ -11,7 +11,12 @@ import 'source-map-support/register';
 import { User } from '@common/user';
 import { Post } from '@common/post';
 import Server from '@server/server';
+import { ContextImpl } from '@all_notations/java_sample00/model/ContextImpl';
 
 new User();
 new Post();
 new Server().doSomething();
+
+let context = new ContextImpl(0, "Sample Context", 0, 0, 0, undefined, undefined);
+context.Start();
+context.EventProc(ContextImpl.E1, undefined);

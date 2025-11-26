@@ -10,7 +10,8 @@
     },
     "_moduleAliases": {
         "@server": "dist/server",
-        "@common": "dist/common"
+        "@common": "dist/common",
+        "@all_notations": "dist/all_notations"
     },
     "repository": {
         "type": "git",

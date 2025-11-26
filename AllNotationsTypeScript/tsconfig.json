@@ -14,7 +14,8 @@
         "outDir": "dist",
         "paths": {
             "@server/*": ["src/server/*"],
-            "@common/*": ["src/common/*"]
+            "@common/*": ["src/common/*"],
+            "@all_notations/*": ["src/all_notations/*"]
         }
     },
 }
