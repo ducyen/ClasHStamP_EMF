@@ -15,7 +15,7 @@
         <mapEntry key="OUTPUT" value="..\AllNotationsTypeScript\src"/>
         <mapEntry key="PACKAGE" value="AllNotations::JavaSample00::Model"/>
         <mapEntry key="PATH_DBG" value="OFF"/>
-        <mapEntry key="PROJECT" value="..\AllNotations\AllNotations.uml"/>
+        <mapEntry key="PROJECT" value="C:\Workspace\DucHM28_\ClasHStamP_EMF\AllNotations\AllNotations.uml"/>
         <mapEntry key="SYNTAX" value="release\Syntax_TypeScript.csv"/>
         <mapEntry key="TOOL_DIR" value="release"/>
         <mapEntry key="WORKING_DIR" value="."/>

@@ -1,0 +1,242 @@
+﻿item,name,ext1st,extnxt,begin,end
+file,[cONTAINER]/[nAME].h,"#include ""[nAME].h""
+",,"#ifndef __[nAME]_H__
+#define __[nAME]_H__
+","#endif//__[nAME]_INTERNAL__
+"
+class,"typedef struct tag[nAME] [nAME];
+",,,,
+b_enum,"typedef enum tag[nAME] {
+","    [nAME],[->64][dESC]
+","    [nAME],[->64][dESC]
+",,"    [nAME]_NUM
+}[nAME];
+const TCHAR* [nAME]_toString( [nAME] value );
+"
+c_enum,"typedef enum tag[nAME] {
+","    [nAME],[->64][dESC]
+","    [nAME],[->64][dESC]
+",,"    [nAME]_NUM
+}[nAME];
+const TCHAR* [nAME]_toString( [nAME] value );
+"
+i_enum,,,,,
+b_struct,"typedef struct tag[nAME] {
+","    [tYPE] [nAME][mODIFIER];[->64][dESC]
+","    [tYPE] [nAME][mODIFIER];[->64][dESC]
+","typedef struct tag[nAME] {
+    [tYPE] base;
+","}[nAME];
+"
+c_struct,"typedef struct tag[nAME] {
+","    [tYPE] [nAME][mODIFIER];[->64][dESC]
+","    [tYPE] [nAME][mODIFIER];[->64][dESC]
+","typedef struct tag[nAME] {
+    [tYPE] base;
+","}[nAME];
+"
+i_struct,,,,,
+constructor,"
+/** @memberof [nAME]
+ * @brief [nAME] auto-generated constructor
+ */
+#define [nAME]_Init(",,"    .vTbl = &g[nAME]Vtbl,\
+",")\
+","
+#define [nAME]_Ctor( [vALUE] )    ( [nAME] ){ \
+    [nAME]_Init( [mODIFIER] ) \
+}
+"
+attr_group,"[cONTAINER]* [nAME]_Copy( [nAME]* p[nAME], const [nAME]* pSource );
+/** @class [nAME]
+ * @extends [tYPE]
+ */
+struct tag[nAME]{
+#define [nAME]_CLASS[->96]\
+","    const [cONTAINER]Vtbl* const vTbl;[->96]\
+    size_t cbSize;[->96]\
+","    [cONTAINER]_CLASS[->96]\
+","    size_t cbSize;[->96]\
+","
+    [nAME]_CLASS    
+};
+"
+ctor_call,")\
+    [cONTAINER]_Init( [vALUE] )\
+",P( [vALUE] ),", P( [vALUE] )",_[nAME],[nAME]
+__s_attr,"    [tYPE][mODIFIER] [nAME];[->64][dESC][->96]\
+",_[nAME],", _[nAME]","    .[nAME] = [vALUE],\
+","    .[nAME] = [vALUE],\
+"
+__o_attr,"    [tYPE][mODIFIER] [nAME];[->64][dESC]\
+",_[nAME],", _[nAME]","    .[nAME] = P( [vALUE] ),\
+","    .[nAME] = P( [vALUE] ),\
+"
+__r_attr,"    [tYPE][mODIFIER]* [nAME];[->64][dESC]\
+",_[nAME],", _[nAME]","    .[nAME] = [vALUE],\
+","    .[nAME] = [vALUE],\
+"
+_ms_attr,"    [tYPE] [nAME][ [mODIFIER] ];[->64][dESC]\
+",_[nAME],", _[nAME]","    .[nAME] = P( [vALUE] ),\
+","    .[nAME] = P( [vALUE] ),\
+"
+_mo_attr,"    [tYPE] [nAME][ [mODIFIER] ];[->64][dESC]\
+",_[nAME],", _[nAME]","    .[nAME] = P( [vALUE] ),\
+","    .[nAME] = P( [vALUE] ),\
+"
+_mr_attr,"    [tYPE]* [nAME][ [mODIFIER] ];[->64][dESC]\
+",_[nAME],", _[nAME]","    .[nAME] = P( [vALUE] ),\
+","    .[nAME] = P( [vALUE] ),\
+"
+c_s_attr,"    const [tYPE][mODIFIER] [nAME];[->64][dESC]\
+",_[nAME],", _[nAME]","    .[nAME] = [vALUE],\
+","    .[nAME] = [vALUE],\
+"
+c_o_attr,"    const [tYPE][mODIFIER] [nAME];[->64][dESC]\
+",_[nAME],", _[nAME]","    .[nAME] = [vALUE],\
+","    .[nAME] = [vALUE],\
+"
+c_r_attr,"    const [tYPE][mODIFIER]* p[nAME];[->64][dESC]\
+",_[nAME],", _[nAME]","    .[nAME] = [vALUE],\
+","    .[nAME] = [vALUE],\
+"
+cms_attr,"    const [tYPE] [nAME][ [mODIFIER] ];[->64][dESC]\
+",_[nAME],", _[nAME]","    .[nAME] = P( [vALUE] ),\
+","    .[nAME] = P( [vALUE] ),\
+"
+cmo_attr,"    const [tYPE] [nAME][ [mODIFIER] ];[->64][dESC]\
+",_[nAME],", _[nAME]","    .[nAME] = P( [vALUE] ),\
+","    .[nAME] = P( [vALUE] ),\
+"
+cmr_attr,"    const [tYPE]* [nAME][ [mODIFIER] ];[->64][dESC]\
+",_[nAME],", _[nAME]","    .[nAME] = P( [vALUE] ),\
+","    .[nAME] = P( [vALUE] ),\
+"
+s_s_attr,,,,,
+s_o_attr,,,,,
+s_r_attr,,,,,
+sms_attr,,,,,
+smo_attr,,,,,
+smr_attr,,,,,
+p_s_attr,,"[tYPE][mODIFIER] [cONTAINER]_Get[Name]( const [cONTAINER]* p[cONTAINER] );
+","void [cONTAINER]_Set[Name]( [cONTAINER]* p[cONTAINER], [tYPE][mODIFIER] value );
+",,
+p_o_attr,,"[tYPE]* [cONTAINER]_Get[Name]( [cONTAINER]* p[cONTAINER] );
+","void [cONTAINER]_Set[Name]( [cONTAINER]* p[cONTAINER], const [tYPE]* value );
+",,
+p_r_attr,,"[tYPE]* [cONTAINER]_Get[Name]( const [cONTAINER]* p[cONTAINER] );
+","void [cONTAINER]_Set[Name]( [cONTAINER]* p[cONTAINER], [tYPE]* value );
+",,
+pms_attr,,"const [tYPE][mODIFIER]* [cONTAINER]_Get[Name]( const [cONTAINER]* p[cONTAINER] );
+","void [cONTAINER]_Set[Name]( [cONTAINER]* p[cONTAINER], const [tYPE][mODIFIER]* value );
+",,
+pmo_attr,,"[tYPE]* [cONTAINER]_Get[Name]( [cONTAINER]* p[cONTAINER], UINT32 index );
+","void [cONTAINER]_Set[Name]( [cONTAINER]* p[cONTAINER], const [tYPE]* value, UINT32 index );
+",,
+pmr_attr,,"[tYPE]* [cONTAINER]_Get[Name]( const [cONTAINER]* p[cONTAINER], UINT32 index );
+","void [cONTAINER]_Set[Name]( [cONTAINER]* p[cONTAINER], [tYPE]* value, UINT32 index  );
+",,
+vptr_impl,"extern const [cONTAINER]Vtbl g[tYPE]Vtbl;
+",,,,
+__c_oper,,,,,
+__b_oper,,,,,
+vptr_decl,"typedef struct tag[tYPE]Vtbl{
+[nAME]}[tYPE]Vtbl;
+",", [tYPE][mODIFIER]",", [tYPE][mODIFIER]",    [tYPE] ( * const p[nAME] )( [cONTAINER]*," );
+"
+_ac_oper,[tYPE][mODIFIER] [cONTAINER]_[nAME]( [cONTAINER]* p[cONTAINER],", [tYPE][mODIFIER] [nAME]",", [tYPE][mODIFIER] [nAME]"," );
+",
+_ab_oper,[tYPE][mODIFIER] [cONTAINER]_[nAME]( [cONTAINER]* p[cONTAINER],", [tYPE][mODIFIER] [nAME]",", [tYPE][mODIFIER] [nAME]"," );
+",
+l_i_oper,,,,,
+l_c_oper,[tYPE][mODIFIER] [cONTAINER]_[nAME]( [cONTAINER]* p[cONTAINER],", [tYPE][mODIFIER] [nAME]",", [tYPE][mODIFIER] [nAME]"," );
+",
+l_b_oper,[tYPE][mODIFIER] [cONTAINER]_[nAME]( [cONTAINER]* p[cONTAINER],", [tYPE][mODIFIER] [nAME]",", [tYPE][mODIFIER] [nAME]"," );
+",
+lai_oper,,,,,
+vptr_call,,,,,
+s_i_oper,,,,,
+s_c_oper,[tYPE][mODIFIER] [cONTAINER]_[nAME]( ,[tYPE][mODIFIER] [nAME],", [tYPE][mODIFIER] [nAME]"," );
+",
+s_b_oper,[tYPE][mODIFIER] [cONTAINER]_[nAME]( ,[tYPE][mODIFIER] [nAME],", [tYPE][mODIFIER] [nAME]"," );
+",
+sai_oper,,,,,
+sab_oper,[tYPE][mODIFIER] [cONTAINER]_[nAME]( ,[tYPE][mODIFIER] [nAME],", [tYPE][mODIFIER] [nAME]"," );
+",
+event_decl,"typedef enum tag[nAME]Event {
+","    [tYPE]_[nAME],[->64][dESC]
+","    [tYPE]_[nAME],[->64][dESC]
+",,"    [nAME]_EVENT_NUM
+}[nAME]_EVENT;
+const TCHAR* [nAME]Event_toString( [nAME]_EVENT value );
+BOOL [tYPE]_Start( [tYPE]* p[tYPE] );
+BOOL [tYPE]_EventProc( [tYPE]* p[tYPE], [tYPE]_EVENT nEventId, void* pEventParams );
+void [tYPE]_printTestCases( [tYPE]* p[tYPE], int eventId, void* pParams );
+"
+state_decl,"#define [sCOPE]_[nAME] [->48]( 1ULL << [vALUE] )
+",#define [sCOPE]_[nAME] [->48]( [sCOPE]_[vALUE], | [sCOPE]_[vALUE],"/* states' declaration */
+[vALUE]"," )
+"
+state_entry,,,,,
+state_exit,,,,,
+state_impl,,,,,
+transition,,,,,
+trans_top,,,,,
+branch,,,,,
+comment,/**< [nAME] [->32]*/," * [nAME]
+"," * [nAME]
+","/**
+"," */
+"
+action,,,[->][nAME],,
+param_dir,,,,-1,
+inheritance,,,,,
+template,,,,,
+statemachine,"#define __HdStateMachine_INTERNAL__
+#include ""HdStateMachine.h""
+","    [tYPE][mODIFIER] mainStm;[->64][dESC]
+","    .mainStm = [tYPE]_Init(),\
+","[vALUE]/** @class [nAME]
+ * @extends HdStateMachine
+ */
+typedef struct tag[nAME] {
+","    HdStateMachine* pParentStm;
+    BOOL lastEnteredStateRecovering;
+}[nAME];
+#define [nAME]_Init() {\
+    .pParentStm = NULL,\
+    .lastEnteredStateRecovering = FALSE,\
+[vALUE]}
+"
+default_trans,,,,,
+substm,"    [cONTAINER] [nAME];[->64][dESC]
+","    .[nAME] = [cONTAINER]_Init(),\
+",,,
+region,"    HdStateMachine [nAME];[->64][dESC]
+","    .[nAME] = { HdStateMachine_Init() },\
+",,,[vALUE]
+state_action,,,,,
+trans_action,,,,,
+history,"    uint64_t [nAME];
+","    .[nAME] = STATE_UNDEF,\
+",,,
+deep_hist,"    uint64_t [nAME];
+","    .[nAME] = STATE_UNDEF,\
+",,,
+stm_api,,,,,
+api_call,,,#error XXXX,#error XXXX,
+friend,"#define __[nAME]_INTERNAL__
+#include ""[nAME].h""
+","#endif//__[nAME]_H__
+#if !defined( [nAME]_Init ) && ( defined( __[nAME]_INTERNAL__ ) ", || defined( __[nAME]_INTERNAL__ ) ,"#include ""[nAME].h""
+"," )
+"
+visibility,,,,,
+object,"extern Sprite* g_objects[];
+enum {
+[vALUE]
+};
+",,,"#define [nAME][->32]( g_objects[ _[nAME] ] )
+    _[nAME]",",
+#define [nAME][->32]( g_objects[ _[nAME] ] )
+    _[nAME]"
