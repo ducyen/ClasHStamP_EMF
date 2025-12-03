@@ -346,6 +346,10 @@ public class RStmGenerator extends TBaseGenerator {
 	    //
 	    // 2) Climb the GMF Notation containment hierarchy
 	    //    adding all parent Bounds (local offsets)
+	    //    NOTE: skip "compartment" views (they represent internal layout
+	    //    offsets such as the state-machine name label) because exported
+	    //    images/layouts do not include those offsets. Always include the
+	    //    top-level StateMachine bounds.
 	    //
 	    EObject container = view.eContainer();
 	    while (container instanceof Node) {
@@ -353,8 +357,14 @@ public class RStmGenerator extends TBaseGenerator {
 
 	        if (parentView.getLayoutConstraint() instanceof Bounds) {
 	            Bounds pb = (Bounds) parentView.getLayoutConstraint();
-	            x += pb.getX();
-	            y += pb.getY();
+	            String ptype = parentView.getType();
+	            boolean isCompartment = ptype != null && ptype.toLowerCase().contains("compartment");
+	            // include parent offset when it's not a compartment OR when the
+	            // parent represents the StateMachine shape itself (top-level)
+	            if (!isCompartment || parentView.getElement() instanceof StateMachine) {
+	                x += pb.getX();
+	                y += pb.getY();
+	            }
 	        }
 
 	        container = parentView.eContainer();
@@ -2522,42 +2532,21 @@ public class RStmGenerator extends TBaseGenerator {
 					
 					if (_iState != null) {
 						// Iterate over the notation model to find the View corresponding to this UML State
-						Rectangle2D rect = null;
+						Rectangle2D rect = findStateRectangle(stmRoot, _iState);
 						Rectangle2D localStmRect = null;
 
-						for (EObject eObj : stm.TMain.notationResource.getContents()) {
-						    if (eObj instanceof Diagram) {
-						        Diagram diagram = (Diagram) eObj;
-
-						        if (diagram.getElement() == stmRoot) {
-						            // Find the node for the state
-						            Node stateNode = findNodeForElement(diagram, _iState);
-						            if (stateNode != null && stateNode.getLayoutConstraint() instanceof Bounds) {
-						                Bounds bounds = (Bounds) stateNode.getLayoutConstraint();
-						                rect = new Rectangle2D.Double(
-						                        bounds.getX(),
-						                        bounds.getY(),
-						                        bounds.getWidth(),
-						                        bounds.getHeight()
-						                );
-						            }
-
-						            // Find the node for the state machine itself
-						            Node rootNode = findNodeForElement(diagram, stmRoot);
-						            if (rootNode != null && rootNode.getLayoutConstraint() instanceof Bounds) {
-						                Bounds bounds = (Bounds) rootNode.getLayoutConstraint();
-						                localStmRect = new Rectangle2D.Double(
-						                        bounds.getX(),
-						                        bounds.getY(),
-						                        bounds.getWidth(),
-						                        bounds.getHeight()
-						                );
-						            }
-
-						            break; // Done with this diagram
-						        }
-						    }
-						}
+					    for (EObject eObj : stm.TMain.notationResource.getContents()) {
+					        if (eObj instanceof Diagram) {
+					            Diagram diagram = (Diagram) eObj;
+					            if (diagram.getElement() == stmRoot) {
+					                Node node = findNodeForElement(diagram, stmRoot);
+					                if (node != null) {
+					                	localStmRect = getAbsoluteBounds(node);
+					                    break;
+					                }
+					            }
+					        }
+					    }
 
 						// Output ratio
 						if (rect != null && localStmRect != null) {
