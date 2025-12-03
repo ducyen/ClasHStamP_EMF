@@ -12,13 +12,13 @@
         <mapEntry key="EXT_CODE_OPT" value="y"/>
         <mapEntry key="LANGUAGE" value="TypeScript"/>
         <mapEntry key="NEWLINE_LF" value="1"/>
-        <mapEntry key="OUTPUT" value="C:\Workspace\EclipseWsp\papyrus202506\AllNotationsTypeScript\src"/>
+        <mapEntry key="OUTPUT" value="..\AllNotationsTypeScript\src"/>
         <mapEntry key="PACKAGE" value="AllNotations::JavaSample00::Model"/>
         <mapEntry key="PATH_DBG" value="OFF"/>
-        <mapEntry key="PROJECT" value="C:\Workspace\EclipseWsp\papyrus202506\AllNotations\AllNotations.uml"/>
-        <mapEntry key="SYNTAX" value="C:\Workspace\DucHM28_\ClasHStamP_Online\release\Syntax_TypeScript.csv"/>
-        <mapEntry key="TOOL_DIR" value="C:\Workspace\DucHM28_\ClasHStamP_Online\release"/>
-        <mapEntry key="WORKING_DIR" value="C:\Workspace\DucHM28_\ClasHStamP_Online"/>
+        <mapEntry key="PROJECT" value="..\AllNotations\AllNotations.uml"/>
+        <mapEntry key="SYNTAX" value="release\Syntax_TypeScript.csv"/>
+        <mapEntry key="TOOL_DIR" value="release"/>
+        <mapEntry key="WORKING_DIR" value="."/>
     </mapAttribute>
     <booleanAttribute key="org.eclipse.jdt.launching.ATTR_ATTR_USE_ARGFILE" value="false"/>
     <booleanAttribute key="org.eclipse.jdt.launching.ATTR_EXCLUDE_TEST_CODE" value="true"/>
