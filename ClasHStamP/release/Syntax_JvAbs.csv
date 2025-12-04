@@ -442,7 +442,7 @@ substm,"    [cONTAINER] [nAME] = new [cONTAINER]();[->64][dESC]
 region,"        _[cONTAINER] [nAME] = new _[cONTAINER]();[->64][dESC]
 ","            [nAME].pMain = this;
 ","
-[->] && ( ( [sCOPE] )pMain ).[cONTAINER].nPseudostate == [sCOPE]_[vALUE]","[->]( ( [sCOPE] )pMain ).[mODIFIER].Reset( p[tYPE], [sCOPE].[nAME] );
+[->] && ( ( [sCOPE] )pMain ).[cONTAINER].nPseudostate == [sCOPE].[vALUE]","[->]( ( [sCOPE] )pMain ).[mODIFIER].Reset( p[tYPE], [sCOPE].[nAME] );
 ","class _[nAME] extends StateMachine {
 [vALUE]}
 "

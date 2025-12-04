@@ -420,14 +420,22 @@ class _S71Rgn1Hsm extends StateMachine {
         void S7122_Entry( ContextImpl pContextImpl ){
             if( Enterable( MainStmTop.S7122 ) ){
                 S71Rgn1_Entry( pContextImpl );
-                DefaultEntryAction( pContextImpl, "257	680	81	61	30	30	1461	931	S7122" );
+                DefaultEntryAction( pContextImpl, "257	660	81	61	30	30	1461	931	S7122" );
             }
         }
         boolean S7122_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
             boolean bResult = false;
             if( !bHandled ){
                 nSourceState = MainStmTop.S7122;
-                DefaultDoingAction( pContextImpl, "257	680	81	61	30	30	1461	931	S7122" );
+                DefaultDoingAction( pContextImpl, "257	660	81	61	30	30	1461	931	S7122" );
+                switch( nEventId ){
+                case ContextImpl.EventId.E4:{
+            BgnTrans( pContextImpl, MainStmTop.S71Rgn1 );
+            EndTrans( pContextImpl );
+            bResult |= true;
+                } break;
+                default: break;
+                }
             }
             bHandled |= bResult;
             wasHandled |= bResult;
@@ -435,7 +443,7 @@ class _S71Rgn1Hsm extends StateMachine {
         }
         void S7122_Exit( ContextImpl pContextImpl ){
             if( Exitable( MainStmTop.S7122 ) ){ 
-                 DefaultExitAction( pContextImpl, "State_Machine_MainStm_MainStmTop	257	680	81	61	30	30	1461	931	S7122" );
+                 DefaultExitAction( pContextImpl, "State_Machine_MainStm_MainStmTop	257	660	81	61	30	30	1461	931	S7122" );
                 S71Rgn1_Exit( pContextImpl );
             }
         }
@@ -675,7 +683,7 @@ class _MainStmTop extends StateMachine {
                 switch( nEventId ){
                 case ContextImpl.EventId.E0:{
             ( ( MainStmTop )pMain ).S2ShallowHist = StateMachine.STATE_UNDEF;
-            BgnTrans( pContextImpl, MainStmTop.MainStm );
+            BgnTrans( pContextImpl, MainStmTop.S2 );
             EndTrans( pContextImpl );
             bResult |= true;
                 } break;
@@ -715,7 +723,7 @@ class _MainStmTop extends StateMachine {
                 EndTrans( pContextImpl );
                 bResult |= true;
             }else{
-                BgnTrans( pContextImpl, MainStmTop.MainStm );
+                BgnTrans( pContextImpl, MainStmTop.S2 );
                 EndTrans( pContextImpl );
                 bResult |= true;
             }
@@ -809,6 +817,11 @@ class _MainStmTop extends StateMachine {
             EndTrans( pContextImpl );
             bResult |= true;
                 } break;
+                case ContextImpl.EventId.E3:{
+            BgnTrans( pContextImpl, MainStmTop.S8 );
+            EndTrans( pContextImpl );
+            bResult |= true;
+                } break;
                 default: break;
                 }
             }
@@ -826,7 +839,7 @@ class _MainStmTop extends StateMachine {
         void S71_Entry( ContextImpl pContextImpl ){
             if( Enterable( MainStmTop.S71 ) ){
                 S7_Entry( pContextImpl );
-                DefaultEntryAction( pContextImpl, "118	540	241	241	30	30	1461	931	S71" );
+                DefaultEntryAction( pContextImpl, "118	540	241	261	30	30	1461	931	S71" );
         if( !( ( MainStmTop )pMain ).lastEnteredStateRecovering && nTargetState == MainStmTop.S71 ){
             nPseudostate = MainStmTop.S711Init;
         }
@@ -838,7 +851,7 @@ class _MainStmTop extends StateMachine {
             bHandled |= ( ( MainStmTop )pMain ).S71Rgn1Hsm.EventProc( pContextImpl, nEventId, pEventParams );
             if( !bHandled ){
                 nSourceState = MainStmTop.S71;
-                DefaultDoingAction( pContextImpl, "118	540	241	241	30	30	1461	931	S71" );
+                DefaultDoingAction( pContextImpl, "118	540	241	261	30	30	1461	931	S71" );
             }
             bHandled |= bResult;
             wasHandled |= bResult;
@@ -847,7 +860,7 @@ class _MainStmTop extends StateMachine {
         void S71_Exit( ContextImpl pContextImpl ){
             if( Exitable( MainStmTop.S71 ) ){ 
         ( ( MainStmTop )pMain ).S71Rgn1Hsm.Abort( pContextImpl );
-                 DefaultExitAction( pContextImpl, "State_Machine_MainStm_MainStmTop	118	540	241	241	30	30	1461	931	S71" );
+                 DefaultExitAction( pContextImpl, "State_Machine_MainStm_MainStmTop	118	540	241	261	30	30	1461	931	S71" );
                 S7_Exit( pContextImpl );
             }
         }
@@ -884,14 +897,22 @@ class _MainStmTop extends StateMachine {
         void S7112_Entry( ContextImpl pContextImpl ){
             if( Enterable( MainStmTop.S7112 ) ){
                 S71_Entry( pContextImpl );
-                DefaultEntryAction( pContextImpl, "137	680	81	61	30	30	1461	931	S7112" );
+                DefaultEntryAction( pContextImpl, "137	660	81	61	30	30	1461	931	S7112" );
             }
         }
         boolean S7112_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
             boolean bResult = false;
             if( !bHandled ){
                 nSourceState = MainStmTop.S7112;
-                DefaultDoingAction( pContextImpl, "137	680	81	61	30	30	1461	931	S7112" );
+                DefaultDoingAction( pContextImpl, "137	660	81	61	30	30	1461	931	S7112" );
+                switch( nEventId ){
+                case ContextImpl.EventId.E3:{
+            BgnTrans( pContextImpl, MainStmTop.S71 );
+            EndTrans( pContextImpl );
+            bResult |= true;
+                } break;
+                default: break;
+                }
             }
             bHandled |= bResult;
             wasHandled |= bResult;
@@ -899,7 +920,7 @@ class _MainStmTop extends StateMachine {
         }
         void S7112_Exit( ContextImpl pContextImpl ){
             if( Exitable( MainStmTop.S7112 ) ){ 
-                 DefaultExitAction( pContextImpl, "State_Machine_MainStm_MainStmTop	137	680	81	61	30	30	1461	931	S7112" );
+                 DefaultExitAction( pContextImpl, "State_Machine_MainStm_MainStmTop	137	660	81	61	30	30	1461	931	S7112" );
                 S71_Exit( pContextImpl );
             }
         }
@@ -1139,6 +1160,11 @@ class _MainStmTop extends StateMachine {
                 EndTrans( pContextImpl );
                 bResult |= true;
             }
+        } else if ( nCurrentState == MainStmTop.S71 && nPseudostate == MainStmTop.S71 
+         && ( ( MainStmTop )pMain ).S71Rgn1Hsm.nPseudostate == MainStmTop.S71Rgn1 ) {
+            BgnTrans( pContextImpl, MainStmTop.S72 );
+            EndTrans( pContextImpl );
+            bResult |= true;
             }else if( nCurrentState != nPseudostate ){
                 BgnTrans( pContextImpl, nPseudostate );
                 EndTrans( pContextImpl );

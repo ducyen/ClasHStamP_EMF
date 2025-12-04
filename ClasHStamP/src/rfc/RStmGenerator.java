@@ -1157,7 +1157,7 @@ public class RStmGenerator extends TBaseGenerator {
 						if (getContainer(iTgtVtx) != null) {
 							container = getContainer(iTgtVtx);
 							try {
-								if (!Arrays.asList(getSubvertexes(container, 0)).contains(iTgtVtx)) {	// the pseudo-state belong to a region top
+								if (!getSubvertexes(container, 0).contains(iTgtVtx)) {	// the pseudo-state belong to a region top
 									container = null;
 								}
 							} catch (Exception e) {
@@ -1472,7 +1472,7 @@ public class RStmGenerator extends TBaseGenerator {
 					State container = null;
 					if (getContainer(iTgtVtx) != null) {
 						container = (State)getContainer(iTgtVtx);
-						if (!Arrays.asList(getSubvertexes(container, 0)).contains(iTgtVtx)) {	// the pseudo-state belong to a region top
+						if (!getSubvertexes(container, 0).contains(iTgtVtx)) {	// the pseudo-state belong to a region top
 							container = null;
 						}
 					}
@@ -3068,7 +3068,7 @@ public class RStmGenerator extends TBaseGenerator {
 							State container = null;
 							if (getContainer(iSrcVtx) != null && getContainer(iSrcVtx) instanceof State) {
 								container = (State)getContainer(iSrcVtx);
-								if (!Arrays.asList(getSubvertexes(container, 0)).contains(iSrcVtx)) {	// the pseudo-state belong to a region top
+								if (!getSubvertexes(container, 0).contains(iSrcVtx)) {	// the pseudo-state belong to a region top
 									container = null;
 								}
 							}

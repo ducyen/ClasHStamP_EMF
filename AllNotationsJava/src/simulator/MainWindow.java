@@ -65,7 +65,7 @@ public class MainWindow extends JFrame {
 
     private void onStart() {
         // instantiate context with nulls as allowed
-        context = new ContextImpl(null, null, null, null, null, null, null);
+        context = new ContextImpl(0, "pubAttr", 0, 2, 0, null, null);
         context.Start();
         // enable event buttons
         for (JButton b : eventButtons) b.setEnabled(true);
