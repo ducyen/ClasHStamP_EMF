@@ -1900,7 +1900,7 @@ public class RStmGenerator extends TBaseGenerator {
 				m_iClass.getName(),				// type
 				rgnName, 						// container
 				subStmAndRgnInitStr,			// value 
-				"", 							// modifier
+				getFullName(getStateMachineDiagram(iStm)),// modifier
 				"",								// description
 				getStateMachineDiagram(iStm).getName()// scope
 			));			
@@ -2572,7 +2572,7 @@ public class RStmGenerator extends TBaseGenerator {
 							containerName, 						// container
 							actions, 							// value
 							modifier,							// modifier
-							getFullName(getStateMachineDiagram(stmRoot)).replace("::", "/") + "\t" + rectRatio,// description 
+							rectRatio,// description 
 							getStateMachineDiagram(stmRoot).getName()// scope
 						));
 					} else {

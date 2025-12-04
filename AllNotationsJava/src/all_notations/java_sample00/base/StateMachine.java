@@ -4,6 +4,8 @@ package all_notations.java_sample00.base;
 import java.io.*;
 import java.util.*;
 import all_notations.java_sample00.abstracts.*;
+import simulator.SimulatorManager;
+import java.awt.Rectangle;
 
 public  class StateMachine
 {
@@ -55,6 +57,23 @@ public  class StateMachine
 
         // pHdStateMachine->nDepth++;   // nDepth was not in Java skeleton, so omitted.
         System.out.println("Enter " + pMsg.substring(pMsg.lastIndexOf('\t')));
+        try {
+            // Message format: "...\tX\tY\tW\tH\t...\tStateName" or sometimes starts with diagram name
+            String[] parts = pMsg.split("\t");
+            String stateName = parts[parts.length - 1];
+            int len = parts.length;
+            int x = Integer.parseInt(parts[len-9]);
+            int y = Integer.parseInt(parts[len-8]);
+            int w = Integer.parseInt(parts[len-7]);
+            int h = Integer.parseInt(parts[len-6]);
+            // Determine diagram and instance using this.pMain (owner) when available
+            String diagram = (this.pMain != null && this.pMain.dgrName != null && !this.pMain.dgrName.isEmpty()) ? this.pMain.dgrName : (parts.length>0 ? parts[0] : "State_Machine");
+            String instance = (this.pMain != null && this.pMain.instanceName != null) ? this.pMain.instanceName : "";
+            // Add rectangle to simulator
+            SimulatorManager.getInstance().addRect(diagram, instance, stateName, new Rectangle(x,y,w,h));
+        } catch (Exception e) {
+            // best-effort only
+        }
     } /* StateMachine.DefaultEntryAction */
 
     public void DefaultExitAction(
@@ -62,12 +81,38 @@ public  class StateMachine
         String pMsg
     ){
         System.out.println("Exit" + pMsg.substring(pMsg.lastIndexOf('\t')));
+        try {
+            String[] parts = pMsg.split("\t");
+            String stateName = parts[parts.length - 1];
+            String instance = (this.pMain != null && this.pMain.instanceName != null) ? this.pMain.instanceName : "";
+            SimulatorManager.getInstance().removeRect(instance, stateName);
+        } catch (Exception e) {
+        }
     } /* StateMachine.DefaultExitAction */
 
     public void DefaultDoingAction(
         BaseClass pObj,
         String pMsg
     ){
+        // show rectangle for a short duration (100ms)
+        try {
+            String[] parts = pMsg.split("\t");
+            String stateName = parts[parts.length - 1];
+            int len = parts.length;
+            int x = Integer.parseInt(parts[len-9]);
+            int y = Integer.parseInt(parts[len-8]);
+            int w = Integer.parseInt(parts[len-7]);
+            int h = Integer.parseInt(parts[len-6]);
+            String instance = (this.pMain != null && this.pMain.instanceName != null) ? this.pMain.instanceName : "";
+            String diagram = (this.pMain != null && this.pMain.dgrName != null && !this.pMain.dgrName.isEmpty()) ? this.pMain.dgrName : (parts.length>0 ? parts[0] : "State_Machine");
+            SimulatorManager.getInstance().addRect(diagram, instance, stateName, new Rectangle(x,y,w,h));
+            // schedule removal after 100ms
+            new Thread(() -> {
+                try { Thread.sleep(100); } catch (InterruptedException ignored) {}
+                SimulatorManager.getInstance().removeRect(instance, stateName);
+            }).start();
+        } catch (Exception e) {
+        }
 
     } /* StateMachine.DefaultDoingAction */
 

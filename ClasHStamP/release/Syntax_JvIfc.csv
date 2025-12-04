@@ -196,7 +196,7 @@ event_decl,"[->]public enum EventId {
 ",,"[->]    Num
 [->]};
 [->]public boolean Start(){
-[->]    mainStm.Prepare( null );
+[->]    mainStm.Prepare( null, ""mainStm"" );
 [->]    boolean bResult = mainStm.Reset( this );
 [->]    bResult |= mainStm.StateDefaultTrans( this );
 [->]    return bResult;
@@ -339,8 +339,8 @@ statemachine,,"    [tYPE][mODIFIER] mainStm;[->64][dESC]
 ","class [nAME] extends BaseStmTop {
 [vALUE]
 ","
-        public void Prepare( StateMachine pParent ){
-            super.Prepare( pParent );
+        public void Prepare( StateMachine pParent, String instanceName ){
+            super.Prepare( pParent, ""[mODIFIER]"", instanceName );
 [vALUE]        }
 } /* [nAME] */
 "
@@ -361,7 +361,7 @@ default_trans,"        boolean StateDefaultTrans( [tYPE] p[tYPE] ){
         }
 "
 substm,"    [cONTAINER] [nAME] = new [cONTAINER]();[->64][dESC]
-","    [nAME].Prepare( [mODIFIER] );
+","    [nAME].Prepare( [mODIFIER], ""[nAME]"" );
 ","
 [->] && ( ( [sCOPE] )pMain ).[mODIFIER].IsFinished()","[->]( ( [sCOPE] )pMain ).[mODIFIER].Reset( p[tYPE], [cONTAINER].[nAME], ( ( [sCOPE] )pMain ).lastEnteredStateRecovering );
 ","[->]( ( [sCOPE] )pMain ).pParentStm.Req( [sCOPE].[nAME] );

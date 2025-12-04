@@ -1,0 +1,13 @@
+For the AllNotationsJava project, please do like this:
+1. The MainWindow will have a Start button, when click on in, a ContextImpl will be instantiated (parameters all null are OK), and Start()
+2. The MainWIndow also have a buttons array, with the number is EventId.Num
+     If click on the Button[0], the  context.EventProc(EventId.E0, null) will be called.
+     If click on the Button[1], the  context.EventProc(EventId.E1, null) will be called.
+     And so on...
+3. Each time BaseStmTop::Prepare(...) is called, if the same title Window has not existed, a new child Window will popup.
+   a. The pop up window is non-modal.
+   b. The window content is an image specified by _dgrName
+   c. The window Title is instanceName
+3. Each time DefaultEntryAction is called, a red rectangle will be drawn on the corresponding Diagram.
+4. Each time DefaultDoingAction is called, the above rectangle will stay 100msec.
+5. Each time DefaultExitAction is called, the red rectangle will be removed from the corresponding Diagram.
