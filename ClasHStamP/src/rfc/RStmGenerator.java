@@ -672,15 +672,15 @@ public class RStmGenerator extends TBaseGenerator {
      * @param stm
      * @return
      */
-    private Region getStateMachineDiagram(StateMachine stm) {
-        Iterator<EObject> contents = stm.eAllContents();
-        while (contents.hasNext()) {
-            EObject obj = contents.next();
-            // Check if this EObject is a GMF Diagram and has type StateMachine
-            if (obj instanceof Region) {
-            	return (Region)obj;
-            }
-        }
+    private Diagram getStateMachineDiagram(StateMachine iStm) {
+	    for (EObject eObj : stm.TMain.notationResource.getContents()) {
+	        if (eObj instanceof Diagram) {
+	            Diagram diagram = (Diagram) eObj;
+	            if (diagram.getElement() == iStm) {
+	            	return diagram;
+	            }
+	        }
+	    }
         return null;
     }    
     
@@ -2151,7 +2151,7 @@ public class RStmGenerator extends TBaseGenerator {
 			}
 			protected void checkState(State iState, State container, int rgnIndex) {
 				if (iState.isSubmachineState()) {
-					Region iSubStmDgr = getStateMachineDiagram(iState.getSubmachine());
+					Diagram iSubStmDgr = getStateMachineDiagram(iState.getSubmachine());
 					String targetMachineName = findTargetMachineName(rgnName, rgnVertices, iState, null);
 					System.out.println(makeIndent(indent) + "self." + iState.getName() + "Hsm = " + iSubStmDgr.getName() + "(self, self." + targetMachineName + ")");
 					try {
@@ -2572,7 +2572,7 @@ public class RStmGenerator extends TBaseGenerator {
 							containerName, 						// container
 							actions, 							// value
 							modifier,							// modifier
-							getFullNamespace(getStateMachineDiagram(stmRoot)).replace("::", "/") + "\t" + rectRatio,// description 
+							getFullName(getStateMachineDiagram(stmRoot)).replace("::", "/") + "\t" + rectRatio,// description 
 							getStateMachineDiagram(stmRoot).getName()// scope
 						));
 					} else {
@@ -2783,7 +2783,7 @@ public class RStmGenerator extends TBaseGenerator {
 								containerName, 						// container
 								actions, 							// value
 								"", 								// modifier
-								getFullNamespace(getStateMachineDiagram(stmRoot)).replace("::", "/") + "\t" + rectRatio,// description 
+								getFullName(getStateMachineDiagram(stmRoot)).replace("::", "/") + "\t" + rectRatio,// description 
 								getStateMachineDiagram(stmRoot).getName()// scope
 							));
 						} else {

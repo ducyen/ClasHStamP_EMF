@@ -413,12 +413,10 @@ param_dir,,,,0,.
 statemachine,,"    [tYPE][mODIFIER] mainStm;[->64][dESC]
 ","    mainStm = new [tYPE]();
 ","class [nAME] extends BaseStmTop {
-        protected StateMachine pParentStm = null;
-        protected boolean lastEnteredStateRecovering = false;
 [vALUE]
 ","
         public void Prepare( StateMachine pParent ){
-            pParentStm = pParent;
+            super.Prepare( pParent );
 [vALUE]        }
 } /* [nAME] */
 "

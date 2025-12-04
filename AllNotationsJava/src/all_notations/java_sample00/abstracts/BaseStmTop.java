@@ -9,6 +9,8 @@ import all_notations.java_sample00.base.StateMachine;
 public  class BaseStmTop
 {
     public StateMachine pParentStm = null;
+    public boolean lastEnteredStateRecovering = false;
+    
     public void Prepare( StateMachine pParent ){
         pParentStm = pParent;
 	} /* StateMachine.Prepare */

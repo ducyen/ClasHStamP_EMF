@@ -4,6 +4,9 @@ import java.io.Writer;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.gmf.runtime.notation.Diagram;
+import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.uml2.uml.Association;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Classifier;
@@ -681,6 +684,11 @@ public class TBaseGenerator {
         }
     }
     
+    /**
+	 * getFullNamespace
+	 * @param cls
+	 * @return
+	 */
     public static String getFullNamespace(NamedElement cls) {
         StringBuilder ns = new StringBuilder();
         for (Namespace namespace : cls.allNamespaces()) {
@@ -691,6 +699,25 @@ public class TBaseGenerator {
         return ns.toString();
     }    
 
+    /**
+	 * getFullNamespace
+	 * @param cls
+	 * @return
+	 */
+    public static String getFullName(Diagram dgr) {
+        StringBuilder ns = new StringBuilder();
+        ns.append(dgr.getName());
+        EObject element = dgr.getElement();
+        if (element instanceof NamedElement) {
+			NamedElement ne = (NamedElement) element;
+			ns.insert(0, ne.getName() + "_");
+		}
+        if (dgr.getType() != null && dgr.getType().contains("StateMachine")) {
+			ns.insert(0, "State_Machine_");
+        }
+        return ns.toString();
+    }    
+    
     /**
      * getDefinition
      * @param e
