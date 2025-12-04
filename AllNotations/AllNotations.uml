@@ -537,10 +537,16 @@
               <transition xmi:type="uml:Transition" xmi:id="_ovdEMMamEfC6w-m-aYb_qQ" source="_kpO7QMH8EfCpHfwTBA0bGw" target="_fXHb0MamEfC6w-m-aYb_qQ">
                 <trigger xmi:type="uml:Trigger" xmi:id="_ru8UIMamEfC6w-m-aYb_qQ" name="" event="_DldBQMFMEfCvssN6lsBRhw"/>
               </transition>
-              <transition xmi:type="uml:Transition" xmi:id="_2UUXYMamEfC6w-m-aYb_qQ" source="_fXHb0MamEfC6w-m-aYb_qQ" target="_HZpNsMHSEfCpHfwTBA0bGw"/>
+              <transition xmi:type="uml:Transition" xmi:id="_2UUXYMamEfC6w-m-aYb_qQ" source="_fXHb0MamEfC6w-m-aYb_qQ" target="_HZpNsMHSEfCpHfwTBA0bGw">
+                <trigger xmi:type="uml:Trigger" xmi:id="_x43jsNECEfCdvIvPnuLjcQ" name="" event="_bpF18MCHEfC3V-UbsE4d9A"/>
+              </transition>
+              <transition xmi:type="uml:Transition" xmi:id="_NN37ENEFEfCdvIvPnuLjcQ" source="_fXHb0MamEfC6w-m-aYb_qQ" target="_JI8tENEFEfCdvIvPnuLjcQ">
+                <trigger xmi:type="uml:Trigger" xmi:id="_QDgrcNEFEfCdvIvPnuLjcQ" name="" event="_h32qYMDsEfC3V-UbsE4d9A"/>
+              </transition>
               <subvertex xmi:type="uml:State" xmi:id="_kpO7QMH8EfCpHfwTBA0bGw" name="S101"/>
               <subvertex xmi:type="uml:Pseudostate" xmi:id="_oR5rEMH8EfCpHfwTBA0bGw" name="SubStmInit"/>
               <subvertex xmi:type="uml:State" xmi:id="_fXHb0MamEfC6w-m-aYb_qQ" name="S102"/>
+              <subvertex xmi:type="uml:FinalState" xmi:id="_JI8tENEFEfCdvIvPnuLjcQ" name=""/>
             </region>
           </ownedBehavior>
           <ownedOperation xmi:type="uml:Operation" xmi:id="_vGqHkLpVEfCEnM4Nhn5qiQ" name="protectedMethod" visibility="protected" method="_vGqHkbpVEfCEnM4Nhn5qiQ">

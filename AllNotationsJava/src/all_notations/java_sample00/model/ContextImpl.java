@@ -116,6 +116,20 @@ class _SubStmTop extends StateMachine {
             if( !bHandled ){
                 nSourceState = SubStmTop.S102;
                 DefaultDoingAction( pContextImpl, "479	140	121	81	30	30	700	300	S102" );
+                switch( nEventId ){
+                case ContextImpl.EventId.E4:{
+            BgnTrans( pContextImpl, SubStmTop.SubStm );
+            ( ( SubStmTop )pMain ).pParentStm.Req( SubStmTop.Exit1 );
+            EndTrans( pContextImpl );
+            bResult |= true;
+                } break;
+                case ContextImpl.EventId.E3:{
+            BgnTrans( pContextImpl, SubStmTop.SubStm );
+            EndTrans( pContextImpl );
+            bResult |= true;
+                } break;
+                default: break;
+                }
             }
             bHandled |= bResult;
             wasHandled |= bResult;
@@ -186,11 +200,6 @@ class _SubStmTop extends StateMachine {
             nLCAState = StateMachine.STATE_UNDEF;
         if ( nPseudostate == SubStmTop.SubStmInit  ) {
             BgnTrans( pContextImpl, SubStmTop.S101 );
-            EndTrans( pContextImpl );
-            bResult |= true;
-        } else if ( nCurrentState == SubStmTop.S102 && nPseudostate == SubStmTop.S102  ) {
-            BgnTrans( pContextImpl, SubStmTop.SubStm );
-            ( ( SubStmTop )pMain ).pParentStm.Req( SubStmTop.Exit1 );
             EndTrans( pContextImpl );
             bResult |= true;
             }else if( nCurrentState != nPseudostate ){
