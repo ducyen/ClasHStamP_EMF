@@ -4,8 +4,16 @@ package all_notations.java_sample00.abstracts;
 import java.io.*;
 import java.util.*;
 
+import all_notations.java_sample00.base.StateMachine;
+
 public  class BaseStmTop
 {
+    public StateMachine pParentStm = null;
+    public void Prepare( StateMachine pParent ){
+        pParentStm = pParent;
+	} /* StateMachine.Prepare */
+
+	
     public  BaseStmTop(
     ){
     }                                                                                           

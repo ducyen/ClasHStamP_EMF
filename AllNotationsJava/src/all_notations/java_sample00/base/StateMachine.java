@@ -87,7 +87,7 @@ public  class StateMachine
 
         // NOTE: C version forgot to return a bool; Java version is void, so this matches better.
     } /* StateMachine.Req */
-
+    
     private static Boolean isIn(
         long leaf,
         long composite

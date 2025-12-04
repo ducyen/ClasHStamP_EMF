@@ -78,14 +78,14 @@ class _SubStmTop extends StateMachine {
         void S101_Entry( ContextImpl pContextImpl ){
             if( Enterable( SubStmTop.S101 ) ){
                 SubStm_Entry( pContextImpl );
-                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/SubStm/	209	30	121	81	30	30	700	300	S101" );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/SubStm/	239	80	121	81	30	30	700	300	S101" );
             }
         }
         boolean S101_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
             boolean bResult = false;
             if( !bHandled ){
                 nSourceState = SubStmTop.S101;
-                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/SubStm/	209	30	121	81	30	30	700	300	S101" );
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/SubStm/	239	80	121	81	30	30	700	300	S101" );
                 switch( nEventId ){
                 case ContextImpl.EventId.E5:{
             BgnTrans( pContextImpl, SubStmTop.S102 );
@@ -101,21 +101,21 @@ class _SubStmTop extends StateMachine {
         }
         void S101_Exit( ContextImpl pContextImpl ){
             if( Exitable( SubStmTop.S101 ) ){ 
-                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/SubStm/	209	30	121	81	30	30	700	300	S101" );
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/SubStm/	239	80	121	81	30	30	700	300	S101" );
                 SubStm_Exit( pContextImpl );
             }
         }
         void S102_Entry( ContextImpl pContextImpl ){
             if( Enterable( SubStmTop.S102 ) ){
                 SubStm_Entry( pContextImpl );
-                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/SubStm/	449	90	121	81	30	30	700	300	S102" );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/SubStm/	479	140	121	81	30	30	700	300	S102" );
             }
         }
         boolean S102_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
             boolean bResult = false;
             if( !bHandled ){
                 nSourceState = SubStmTop.S102;
-                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/SubStm/	449	90	121	81	30	30	700	300	S102" );
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/SubStm/	479	140	121	81	30	30	700	300	S102" );
             }
             bHandled |= bResult;
             wasHandled |= bResult;
@@ -123,7 +123,7 @@ class _SubStmTop extends StateMachine {
         }
         void S102_Exit( ContextImpl pContextImpl ){
             if( Exitable( SubStmTop.S102 ) ){ 
-                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/SubStm/	449	90	121	81	30	30	700	300	S102" );
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/SubStm/	479	140	121	81	30	30	700	300	S102" );
                 SubStm_Exit( pContextImpl );
             }
         }
@@ -232,14 +232,14 @@ class _S8Rgn1Hsm extends StateMachine {
         void S821_Entry( ContextImpl pContextImpl ){
             if( Enterable( MainStmTop.S821 ) ){
                 S8Rgn1_Entry( pContextImpl );
-                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	479	16	121	81	30	30	1461	931	S821" );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	938	740	121	81	30	30	1461	931	S821" );
             }
         }
         boolean S821_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
             boolean bResult = false;
             if( !bHandled ){
                 nSourceState = MainStmTop.S821;
-                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	479	16	121	81	30	30	1461	931	S821" );
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	938	740	121	81	30	30	1461	931	S821" );
                 switch( nEventId ){
                 case ContextImpl.EventId.E2:{
             if (( ( MainStmTop )pMain ).MainStmHsm.IsIn( MainStmTop.S812 )) {
@@ -255,21 +255,21 @@ class _S8Rgn1Hsm extends StateMachine {
         }
         void S821_Exit( ContextImpl pContextImpl ){
             if( Exitable( MainStmTop.S821 ) ){ 
-                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	479	16	121	81	30	30	1461	931	S821" );
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	938	740	121	81	30	30	1461	931	S821" );
                 S8Rgn1_Exit( pContextImpl );
             }
         }
         void S822_Entry( ContextImpl pContextImpl ){
             if( Enterable( MainStmTop.S822 ) ){
                 S8Rgn1_Entry( pContextImpl );
-                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	119	16	121	81	30	30	1461	931	S822" );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	578	740	121	81	30	30	1461	931	S822" );
             }
         }
         boolean S822_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
             boolean bResult = false;
             if( !bHandled ){
                 nSourceState = MainStmTop.S822;
-                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	119	16	121	81	30	30	1461	931	S822" );
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	578	740	121	81	30	30	1461	931	S822" );
             }
             bHandled |= bResult;
             wasHandled |= bResult;
@@ -277,7 +277,7 @@ class _S8Rgn1Hsm extends StateMachine {
         }
         void S822_Exit( ContextImpl pContextImpl ){
             if( Exitable( MainStmTop.S822 ) ){ 
-                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	119	16	121	81	30	30	1461	931	S822" );
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	578	740	121	81	30	30	1461	931	S822" );
                 S8Rgn1_Exit( pContextImpl );
             }
         }
@@ -381,14 +381,14 @@ class _S71Rgn1Hsm extends StateMachine {
         void S7121_Entry( ContextImpl pContextImpl ){
             if( Enterable( MainStmTop.S7121 ) ){
                 S71Rgn1_Entry( pContextImpl );
-                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	19	40	81	61	30	30	1461	931	S7121" );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	257	580	81	61	30	30	1461	931	S7121" );
             }
         }
         boolean S7121_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
             boolean bResult = false;
             if( !bHandled ){
                 nSourceState = MainStmTop.S7121;
-                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	19	40	81	61	30	30	1461	931	S7121" );
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	257	580	81	61	30	30	1461	931	S7121" );
                 switch( nEventId ){
                 case ContextImpl.EventId.E5:{
             BgnTrans( pContextImpl, MainStmTop.S7122 );
@@ -404,21 +404,21 @@ class _S71Rgn1Hsm extends StateMachine {
         }
         void S7121_Exit( ContextImpl pContextImpl ){
             if( Exitable( MainStmTop.S7121 ) ){ 
-                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	19	40	81	61	30	30	1461	931	S7121" );
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	257	580	81	61	30	30	1461	931	S7121" );
                 S71Rgn1_Exit( pContextImpl );
             }
         }
         void S7122_Entry( ContextImpl pContextImpl ){
             if( Enterable( MainStmTop.S7122 ) ){
                 S71Rgn1_Entry( pContextImpl );
-                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	19	140	81	61	30	30	1461	931	S7122" );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	257	680	81	61	30	30	1461	931	S7122" );
             }
         }
         boolean S7122_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
             boolean bResult = false;
             if( !bHandled ){
                 nSourceState = MainStmTop.S7122;
-                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	19	140	81	61	30	30	1461	931	S7122" );
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	257	680	81	61	30	30	1461	931	S7122" );
             }
             bHandled |= bResult;
             wasHandled |= bResult;
@@ -426,7 +426,7 @@ class _S71Rgn1Hsm extends StateMachine {
         }
         void S7122_Exit( ContextImpl pContextImpl ){
             if( Exitable( MainStmTop.S7122 ) ){ 
-                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	19	140	81	61	30	30	1461	931	S7122" );
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	257	680	81	61	30	30	1461	931	S7122" );
                 S71Rgn1_Exit( pContextImpl );
             }
         }
@@ -530,14 +530,14 @@ class _MainStmTop extends StateMachine {
         void S1_Entry( ContextImpl pContextImpl ){
             if( Enterable( MainStmTop.S1 ) ){
                 MainStm_Entry( pContextImpl );
-                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	149	30	121	71	30	30	1461	931	S1" );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	179	80	121	71	30	30	1461	931	S1" );
             }
         }
         boolean S1_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
             boolean bResult = false;
             if( !bHandled ){
                 nSourceState = MainStmTop.S1;
-                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	149	30	121	71	30	30	1461	931	S1" );
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	179	80	121	71	30	30	1461	931	S1" );
                 switch( nEventId ){
                 case ContextImpl.EventId.E1:{
             BgnTrans( pContextImpl, MainStmTop.S2 );
@@ -572,14 +572,14 @@ class _MainStmTop extends StateMachine {
         }
         void S1_Exit( ContextImpl pContextImpl ){
             if( Exitable( MainStmTop.S1 ) ){ 
-                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	149	30	121	71	30	30	1461	931	S1" );
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	179	80	121	71	30	30	1461	931	S1" );
                 MainStm_Exit( pContextImpl );
             }
         }
         void S2_Entry( ContextImpl pContextImpl ){
             if( Enterable( MainStmTop.S2 ) ){
                 MainStm_Entry( pContextImpl );
-                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	429	30	740	247	30	30	1461	931	S2" );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	459	80	740	247	30	30	1461	931	S2" );
         if( !( ( MainStmTop )pMain ).lastEnteredStateRecovering && nTargetState == MainStmTop.S2 ){
             nPseudostate = MainStmTop.S2Init;
         }
@@ -589,7 +589,7 @@ class _MainStmTop extends StateMachine {
             boolean bResult = false;
             if( !bHandled ){
                 nSourceState = MainStmTop.S2;
-                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	429	30	740	247	30	30	1461	931	S2" );
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	459	80	740	247	30	30	1461	931	S2" );
                 switch( nEventId ){
                 case ContextImpl.EventId.E4:{
             BgnTrans( pContextImpl, MainStmTop.S6 );
@@ -611,14 +611,14 @@ class _MainStmTop extends StateMachine {
         }
         void S2_Exit( ContextImpl pContextImpl ){
             if( Exitable( MainStmTop.S2 ) ){ 
-                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	429	30	740	247	30	30	1461	931	S2" );
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	459	80	740	247	30	30	1461	931	S2" );
                 MainStm_Exit( pContextImpl );
             }
         }
         void S21_Entry( ContextImpl pContextImpl ){
             if( Enterable( MainStmTop.S21 ) ){
                 S2_Entry( pContextImpl );
-                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	199	60	120	81	30	30	1461	931	S21" );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	658	140	120	81	30	30	1461	931	S21" );
         ( ( MainStmTop )pMain ).S2ShallowHist = MainStmTop.S21;
             }
         }
@@ -626,7 +626,7 @@ class _MainStmTop extends StateMachine {
             boolean bResult = false;
             if( !bHandled ){
                 nSourceState = MainStmTop.S21;
-                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	199	60	120	81	30	30	1461	931	S21" );
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	658	140	120	81	30	30	1461	931	S21" );
                 switch( nEventId ){
                 case ContextImpl.EventId.E2:{
             BgnTrans( pContextImpl, MainStmTop.S22 );
@@ -647,14 +647,14 @@ class _MainStmTop extends StateMachine {
         }
         void S21_Exit( ContextImpl pContextImpl ){
             if( Exitable( MainStmTop.S21 ) ){ 
-                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	199	60	120	81	30	30	1461	931	S21" );
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	658	140	120	81	30	30	1461	931	S21" );
                 S2_Exit( pContextImpl );
             }
         }
         void S22_Entry( ContextImpl pContextImpl ){
             if( Enterable( MainStmTop.S22 ) ){
                 S2_Entry( pContextImpl );
-                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	419	60	121	81	30	30	1461	931	S22" );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	878	140	121	81	30	30	1461	931	S22" );
         ( ( MainStmTop )pMain ).S2ShallowHist = MainStmTop.S22;
             }
         }
@@ -662,7 +662,7 @@ class _MainStmTop extends StateMachine {
             boolean bResult = false;
             if( !bHandled ){
                 nSourceState = MainStmTop.S22;
-                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	419	60	121	81	30	30	1461	931	S22" );
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	878	140	121	81	30	30	1461	931	S22" );
                 switch( nEventId ){
                 case ContextImpl.EventId.E0:{
             ( ( MainStmTop )pMain ).S2ShallowHist = StateMachine.STATE_UNDEF;
@@ -679,14 +679,14 @@ class _MainStmTop extends StateMachine {
         }
         void S22_Exit( ContextImpl pContextImpl ){
             if( Exitable( MainStmTop.S22 ) ){ 
-                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	419	60	121	81	30	30	1461	931	S22" );
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	878	140	121	81	30	30	1461	931	S22" );
                 S2_Exit( pContextImpl );
             }
         }
         void S8_Entry( ContextImpl pContextImpl ){
             if( Enterable( MainStmTop.S8 ) ){
                 MainStm_Entry( pContextImpl );
-                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	429	550	741	268	30	30	1461	931	S8" );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	459	600	741	268	30	30	1461	931	S8" );
         if( !( ( MainStmTop )pMain ).lastEnteredStateRecovering && nTargetState == MainStmTop.S8 ){
             nPseudostate = MainStmTop.S81Init;
         }
@@ -698,7 +698,7 @@ class _MainStmTop extends StateMachine {
             bHandled |= ( ( MainStmTop )pMain ).S8Rgn1Hsm.EventProc( pContextImpl, nEventId, pEventParams );
             if( !bHandled ){
                 nSourceState = MainStmTop.S8;
-                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	429	550	741	268	30	30	1461	931	S8" );
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	459	600	741	268	30	30	1461	931	S8" );
                 switch( nEventId ){
                 case ContextImpl.EventId.E3:{
             if( ( ( MainStmTop )pMain ).S2ShallowHist != StateMachine.STATE_UNDEF ){
@@ -726,21 +726,21 @@ class _MainStmTop extends StateMachine {
         void S8_Exit( ContextImpl pContextImpl ){
             if( Exitable( MainStmTop.S8 ) ){ 
         ( ( MainStmTop )pMain ).S8Rgn1Hsm.Abort( pContextImpl );
-                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	429	550	741	268	30	30	1461	931	S8" );
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	459	600	741	268	30	30	1461	931	S8" );
                 MainStm_Exit( pContextImpl );
             }
         }
         void S811_Entry( ContextImpl pContextImpl ){
             if( Enterable( MainStmTop.S811 ) ){
                 S8_Entry( pContextImpl );
-                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	119	20	121	81	30	30	1461	931	S811" );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	578	620	121	81	30	30	1461	931	S811" );
             }
         }
         boolean S811_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
             boolean bResult = false;
             if( !bHandled ){
                 nSourceState = MainStmTop.S811;
-                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	119	20	121	81	30	30	1461	931	S811" );
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	578	620	121	81	30	30	1461	931	S811" );
             }
             bHandled |= bResult;
             wasHandled |= bResult;
@@ -748,21 +748,21 @@ class _MainStmTop extends StateMachine {
         }
         void S811_Exit( ContextImpl pContextImpl ){
             if( Exitable( MainStmTop.S811 ) ){ 
-                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	119	20	121	81	30	30	1461	931	S811" );
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	578	620	121	81	30	30	1461	931	S811" );
                 S8_Exit( pContextImpl );
             }
         }
         void S812_Entry( ContextImpl pContextImpl ){
             if( Enterable( MainStmTop.S812 ) ){
                 S8_Entry( pContextImpl );
-                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	479	20	121	81	30	30	1461	931	S812" );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	938	620	121	81	30	30	1461	931	S812" );
             }
         }
         boolean S812_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
             boolean bResult = false;
             if( !bHandled ){
                 nSourceState = MainStmTop.S812;
-                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	479	20	121	81	30	30	1461	931	S812" );
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	938	620	121	81	30	30	1461	931	S812" );
             }
             bHandled |= bResult;
             wasHandled |= bResult;
@@ -770,14 +770,14 @@ class _MainStmTop extends StateMachine {
         }
         void S812_Exit( ContextImpl pContextImpl ){
             if( Exitable( MainStmTop.S812 ) ){ 
-                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	479	20	121	81	30	30	1461	931	S812" );
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	938	620	121	81	30	30	1461	931	S812" );
                 S8_Exit( pContextImpl );
             }
         }
         void S7_Entry( ContextImpl pContextImpl ){
             if( Enterable( MainStmTop.S7 ) ){
                 MainStm_Entry( pContextImpl );
-                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	69	430	281	441	30	30	1461	931	S7" );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	99	480	281	441	30	30	1461	931	S7" );
         if( !( ( MainStmTop )pMain ).lastEnteredStateRecovering && nTargetState == MainStmTop.S7 ){
             nPseudostate = MainStmTop.S7Init;
         }
@@ -787,7 +787,7 @@ class _MainStmTop extends StateMachine {
             boolean bResult = false;
             if( !bHandled ){
                 nSourceState = MainStmTop.S7;
-                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	69	430	281	441	30	30	1461	931	S7" );
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	99	480	281	441	30	30	1461	931	S7" );
                 switch( nEventId ){
                 case ContextImpl.EventId.E2:{
             BgnTrans( pContextImpl, MainStmTop.S72 );
@@ -810,14 +810,14 @@ class _MainStmTop extends StateMachine {
         void S7_Exit( ContextImpl pContextImpl ){
             if( Exitable( MainStmTop.S7 ) ){ 
         ( ( MainStmTop )pMain ).S7DeepHist = lastEnteredState;
-                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	69	430	281	441	30	30	1461	931	S7" );
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	99	480	281	441	30	30	1461	931	S7" );
                 MainStm_Exit( pContextImpl );
             }
         }
         void S71_Entry( ContextImpl pContextImpl ){
             if( Enterable( MainStmTop.S71 ) ){
                 S7_Entry( pContextImpl );
-                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	19	60	241	241	30	30	1461	931	S71" );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	118	540	241	241	30	30	1461	931	S71" );
         if( !( ( MainStmTop )pMain ).lastEnteredStateRecovering && nTargetState == MainStmTop.S71 ){
             nPseudostate = MainStmTop.S711Init;
         }
@@ -829,7 +829,7 @@ class _MainStmTop extends StateMachine {
             bHandled |= ( ( MainStmTop )pMain ).S71Rgn1Hsm.EventProc( pContextImpl, nEventId, pEventParams );
             if( !bHandled ){
                 nSourceState = MainStmTop.S71;
-                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	19	60	241	241	30	30	1461	931	S71" );
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	118	540	241	241	30	30	1461	931	S71" );
             }
             bHandled |= bResult;
             wasHandled |= bResult;
@@ -838,21 +838,21 @@ class _MainStmTop extends StateMachine {
         void S71_Exit( ContextImpl pContextImpl ){
             if( Exitable( MainStmTop.S71 ) ){ 
         ( ( MainStmTop )pMain ).S71Rgn1Hsm.Abort( pContextImpl );
-                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	19	60	241	241	30	30	1461	931	S71" );
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	118	540	241	241	30	30	1461	931	S71" );
                 S7_Exit( pContextImpl );
             }
         }
         void S7111_Entry( ContextImpl pContextImpl ){
             if( Enterable( MainStmTop.S7111 ) ){
                 S71_Entry( pContextImpl );
-                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	19	40	81	61	30	30	1461	931	S7111" );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	137	580	81	61	30	30	1461	931	S7111" );
             }
         }
         boolean S7111_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
             boolean bResult = false;
             if( !bHandled ){
                 nSourceState = MainStmTop.S7111;
-                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	19	40	81	61	30	30	1461	931	S7111" );
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	137	580	81	61	30	30	1461	931	S7111" );
                 switch( nEventId ){
                 case ContextImpl.EventId.E0:{
             BgnTrans( pContextImpl, MainStmTop.S7112 );
@@ -868,21 +868,21 @@ class _MainStmTop extends StateMachine {
         }
         void S7111_Exit( ContextImpl pContextImpl ){
             if( Exitable( MainStmTop.S7111 ) ){ 
-                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	19	40	81	61	30	30	1461	931	S7111" );
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	137	580	81	61	30	30	1461	931	S7111" );
                 S71_Exit( pContextImpl );
             }
         }
         void S7112_Entry( ContextImpl pContextImpl ){
             if( Enterable( MainStmTop.S7112 ) ){
                 S71_Entry( pContextImpl );
-                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	19	140	81	61	30	30	1461	931	S7112" );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	137	680	81	61	30	30	1461	931	S7112" );
             }
         }
         boolean S7112_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
             boolean bResult = false;
             if( !bHandled ){
                 nSourceState = MainStmTop.S7112;
-                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	19	140	81	61	30	30	1461	931	S7112" );
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	137	680	81	61	30	30	1461	931	S7112" );
             }
             bHandled |= bResult;
             wasHandled |= bResult;
@@ -890,21 +890,21 @@ class _MainStmTop extends StateMachine {
         }
         void S7112_Exit( ContextImpl pContextImpl ){
             if( Exitable( MainStmTop.S7112 ) ){ 
-                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	19	140	81	61	30	30	1461	931	S7112" );
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	137	680	81	61	30	30	1461	931	S7112" );
                 S71_Exit( pContextImpl );
             }
         }
         void S72_Entry( ContextImpl pContextImpl ){
             if( Enterable( MainStmTop.S72 ) ){
                 S7_Entry( pContextImpl );
-                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	79	340	121	61	30	30	1461	931	S72" );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	178	820	121	61	30	30	1461	931	S72" );
             }
         }
         boolean S72_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
             boolean bResult = false;
             if( !bHandled ){
                 nSourceState = MainStmTop.S72;
-                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	79	340	121	61	30	30	1461	931	S72" );
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	178	820	121	61	30	30	1461	931	S72" );
             }
             bHandled |= bResult;
             wasHandled |= bResult;
@@ -912,14 +912,14 @@ class _MainStmTop extends StateMachine {
         }
         void S72_Exit( ContextImpl pContextImpl ){
             if( Exitable( MainStmTop.S72 ) ){ 
-                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	79	340	121	61	30	30	1461	931	S72" );
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	178	820	121	61	30	30	1461	931	S72" );
                 S7_Exit( pContextImpl );
             }
         }
         void S6_Entry( ContextImpl pContextImpl ){
             if( Enterable( MainStmTop.S6 ) ){
                 MainStm_Entry( pContextImpl );
-                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	1242	330	128	81	30	30	1461	931	S6" );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	1272	380	128	81	30	30	1461	931	S6" );
         ( ( MainStmTop )pMain ).S6Hsm.Reset( pContextImpl );
             }
         }
@@ -928,7 +928,7 @@ class _MainStmTop extends StateMachine {
     bHandled |= ( ( MainStmTop )pMain ).S6Hsm.EventProc( pContextImpl, nEventId, pEventParams );
             if( !bHandled ){
                 nSourceState = MainStmTop.S6;
-                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	1242	330	128	81	30	30	1461	931	S6" );
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	1272	380	128	81	30	30	1461	931	S6" );
             }
             bHandled |= bResult;
             wasHandled |= bResult;
@@ -937,21 +937,21 @@ class _MainStmTop extends StateMachine {
         void S6_Exit( ContextImpl pContextImpl ){
             if( Exitable( MainStmTop.S6 ) ){ 
         ( ( MainStmTop )pMain ).S6Hsm.Abort( pContextImpl );
-                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	1242	330	128	81	30	30	1461	931	S6" );
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	1272	380	128	81	30	30	1461	931	S6" );
                 MainStm_Exit( pContextImpl );
             }
         }
         void S3_Entry( ContextImpl pContextImpl ){
             if( Enterable( MainStmTop.S3 ) ){
                 MainStm_Entry( pContextImpl );
-                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	1269	50	121	81	30	30	1461	931	S3" );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	1299	100	121	81	30	30	1461	931	S3" );
             }
         }
         boolean S3_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
             boolean bResult = false;
             if( !bHandled ){
                 nSourceState = MainStmTop.S3;
-                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	1269	50	121	81	30	30	1461	931	S3" );
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	1299	100	121	81	30	30	1461	931	S3" );
                 switch( nEventId ){
                 case ContextImpl.EventId.E0:{
             BgnTrans( pContextImpl, MainStmTop.S6 );
@@ -968,14 +968,14 @@ class _MainStmTop extends StateMachine {
         }
         void S3_Exit( ContextImpl pContextImpl ){
             if( Exitable( MainStmTop.S3 ) ){ 
-                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	1269	50	121	81	30	30	1461	931	S3" );
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	1299	100	121	81	30	30	1461	931	S3" );
                 MainStm_Exit( pContextImpl );
             }
         }
         void S9_Entry( ContextImpl pContextImpl ){
             if( Enterable( MainStmTop.S9 ) ){
                 MainStm_Entry( pContextImpl );
-                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	1249	450	121	81	30	30	1461	931	S9" );
+                DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	1279	500	121	81	30	30	1461	931	S9" );
         ( ( MainStmTop )pMain ).S9Hsm.Reset( pContextImpl );
             }
         }
@@ -984,7 +984,7 @@ class _MainStmTop extends StateMachine {
     bHandled |= ( ( MainStmTop )pMain ).S9Hsm.EventProc( pContextImpl, nEventId, pEventParams );
             if( !bHandled ){
                 nSourceState = MainStmTop.S9;
-                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	1249	450	121	81	30	30	1461	931	S9" );
+                DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	1279	500	121	81	30	30	1461	931	S9" );
             }
             bHandled |= bResult;
             wasHandled |= bResult;
@@ -993,7 +993,7 @@ class _MainStmTop extends StateMachine {
         void S9_Exit( ContextImpl pContextImpl ){
             if( Exitable( MainStmTop.S9 ) ){ 
         ( ( MainStmTop )pMain ).S9Hsm.Abort( pContextImpl );
-                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	1249	450	121	81	30	30	1461	931	S9" );
+                 DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	1279	500	121	81	30	30	1461	931	S9" );
                 MainStm_Exit( pContextImpl );
             }
         }
@@ -1143,7 +1143,6 @@ class _MainStmTop extends StateMachine {
         }
 }
 class SubStmTop extends BaseStmTop {
-        protected StateMachine pParentStm = null;
         protected boolean lastEnteredStateRecovering = false;
 /* states' declaration */
         public static final long S101            = ( 1 <<  0 );
@@ -1183,12 +1182,11 @@ class SubStmTop extends BaseStmTop {
         }
 
         public void Prepare( StateMachine pParent ){
-            pParentStm = pParent;
+        	super.Prepare( pParent );
             SubStmHsm.pMain = this;
         }
 } /* SubStmTop */
 class MainStmTop extends BaseStmTop {
-        protected StateMachine pParentStm = null;
         protected boolean lastEnteredStateRecovering = false;
 /* states' declaration */
         public static final long S821            = ( 1 <<  0 );
@@ -1263,7 +1261,7 @@ class MainStmTop extends BaseStmTop {
         }
 
         public void Prepare( StateMachine pParent ){
-            pParentStm = pParent;
+            super.Prepare( pParent );
             MainStmHsm.pMain = this;
             S2ShallowHist = StateMachine.STATE_UNDEF;
             S8Rgn1Hsm.pMain = this;
