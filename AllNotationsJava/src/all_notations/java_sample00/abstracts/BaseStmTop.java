@@ -2,12 +2,12 @@
 package all_notations.java_sample00.abstracts;
 
 import java.awt.Rectangle;
-import simulator.SimulatorManager;
 
 import java.io.*;
 import java.util.*;
 
 import all_notations.java_sample00.base.StateMachine;
+import simulator.ModelExecutor;
 
 public  class BaseStmTop
 {
@@ -21,17 +21,8 @@ public  class BaseStmTop
         dgrName = _dgrName;
         instanceName = _instanceName;
         // Ensure a non-modal diagram window exists for this state machine
-        try {
-            SimulatorManager.getInstance().ensureWindow(dgrName, instanceName);
-        } catch (Exception e) {
-            // swallow — simulator is optional
-            e.printStackTrace();
-        }
-        
-        
-	} /* StateMachine.Prepare */
-
-	
+		ModelExecutor.getInstance().createWindow(instanceName, instanceName, "../AllNotations/image/" + _dgrName + ".PNG");        
+	} /* StateMachine.Prepare */	
     
     public  BaseStmTop(
     ){

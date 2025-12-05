@@ -4,6 +4,7 @@ package all_notations.java_sample00.base;
 import java.io.*;
 import java.util.*;
 import all_notations.java_sample00.abstracts.*;
+import simulator.ModelExecutor;
 import simulator.SimulatorManager;
 import java.awt.Rectangle;
 
@@ -91,8 +92,7 @@ public  class StateMachine
             System.out.println("Parsed: diagramFull='"+diagramFull+"' diagramShort='"+diagramShort+"' instance='"+instance+"' regionKey='"+regionKey+"' state='"+stateName+"' rect=("+x+","+y+","+w+","+h+")");
             // Add rectangle to simulator using entry policy (delays child entries).
             // Map by [instance, StmName-or-RgnName, stateName]. Use diagramShort for image lookup.
-            //SimulatorManager.getInstance().addRectWithEntryPolicy(diagramShort, instance, regionKey, stateName, new Rectangle(x,y,w,h));
-            SimulatorManager.getInstance().addRectWithEntryPolicy(diagramShort, instance, stateName, new Rectangle(x,y,w,h));
+            ModelExecutor.getInstance().addRect(instance, regionKey, stateName, new Rectangle(x, y, w, h));
          } catch (Exception e) {
              // best-effort only
          }
@@ -123,8 +123,7 @@ public  class StateMachine
             System.out.println("DefaultExitAction: rawMsg='" + pMsg + "'");
             System.out.println("Parsed: diagramFull='"+diagramFull+"' diagramShort='"+diagramShort+"' instance='"+instance+"' regionKey='"+regionKey+"' state='"+stateName+"'");
             // Remove rectangle using exit policy (delays parent removals). Use diagramShort for lookup to match entry.
-            //SimulatorManager.getInstance().removeRectWithExitPolicy(diagramShort, instance, regionKey, stateName);
-            SimulatorManager.getInstance().removeRectWithExitPolicy(instance, stateName);
+            ModelExecutor.getInstance().removeRect(instance, regionKey, stateName);
          } catch (Exception e) {
          }
      } /* StateMachine.DefaultExitAction */
@@ -133,7 +132,6 @@ public  class StateMachine
         BaseClass pObj,
         String pMsg
     ){
-        // No-op per updated requirement: DefaultDoingAction does nothing.
     } /* StateMachine.DefaultDoingAction */
 
     public Boolean IsIn(

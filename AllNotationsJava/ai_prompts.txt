@@ -11,3 +11,46 @@ For the AllNotationsJava project, please do like this:
 3. Each time DefaultEntryAction is called, a red rectangle will be drawn on the corresponding Diagram.
 4. Each time DefaultDoingAction is called, the above rectangle will stay 100msec.
 5. Each time DefaultExitAction is called, the red rectangle will be removed from the corresponding Diagram.
+
+
+
+
+
+context = new ContextImpl(0, "pubAttr", 0, 2, 0, null, null);
+
+
+
+I have recover the AllNotationsJava, and now it can open drawing window.
+So, please attentionly understand this for me:
+1) The Prepare() function will provide a StateMachine with name State_Machine_<ItsName>_<ItsDiagramName>, separated by underscores.
+2) The DefaultEntryAction will provide a State rectangle's  containing diagram name, region name, coordinations and its name, separated by tabs.
+3) The DefaultExitAction will also do that
+So, do this, please:
+Each time DefaultEntryAction is called , a red rectangle with key [diagram name, region name, stateName] will be drawn on the corresponding Diagram.
+Delay 500msec before the next same-region state's DefaultEntryAction is called.
+The same level other orthogonal states' DefaultEntryAction can be called without the above delay.
+But, in that orthogonal region, if two same-region states' DefaultEntryAction are called one by one, the above delay is needed again.
+Each time DefaultExitAction is called, the red rectangle with key [diagram name, region name, stateName] will be removed from the corresponding Diagram.
+Delay 500msec before the next same-region state's DefaultExitAction is called.
+The same level other orthogonal states' DefaultExitAction can be called without the above delay.
+But, in that orthogonal region, if two same-region states' DefaultExitAction are called one by one, the above delay is needed again.
+
+You can run ContextImpl in a separate Thread from the MainWindow if you like.
+
+
+Could you draw each region's states' red rectangles in a different thread to avoid blocking each other?
+One region for one thread.
+MainWindow run in the main thread.
+MainWindow(MainThread)
+├ MainStm(Thread0)
+│	├ StateX (Thread0)
+│	└ StateY (Thread0)
+├ Region1 (Thread1)
+│   ├ StateA (Thread1)
+│   └ StateB (Thread1)
+└ Region2 (Thread2)
+    ├ StateC (Thread2)
+    └ StateD (Thread2)
+SubStm also work like that (on thread 3, 4...).
+
+So that, when StateA is doing its DefaultEntryAction delay, StateC can do its DefaultEntryAction without waiting.

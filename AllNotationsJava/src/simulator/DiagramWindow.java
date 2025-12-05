@@ -29,7 +29,7 @@ public class DiagramWindow extends JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
-    public void addNamedRect(String stateName, Rectangle r) {
+	public void addNamedRect(String stateName, Rectangle r) {
         if (stateName == null || r == null) return;
         rects.put(stateName, new Rectangle(r));
         repaint();
