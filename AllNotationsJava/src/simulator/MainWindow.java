@@ -4,13 +4,20 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import all_notations.java_sample00.model.ContextImpl;
 
 public class MainWindow extends JFrame {
     private static final long serialVersionUID = 1L;
 
-    private ContextImpl context;
+    // Context lives on the worker thread
+    private volatile ContextImpl context;
+
+    // Worker that owns the context thread
+    private ContextWorker contextWorker;
+
     private JButton startButton;
     private JButton[] eventButtons;
 
@@ -35,6 +42,7 @@ public class MainWindow extends JFrame {
         JPanel eventsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 6, 6));
         int numEvents = ContextImpl.EventId.Num.ordinal();
         eventButtons = new JButton[numEvents];
+
         for (int i = 0; i < numEvents; i++) {
             final int idx = i;
             ContextImpl.EventId eid = ContextImpl.EventId.values()[i];
@@ -43,8 +51,14 @@ public class MainWindow extends JFrame {
             b.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (context != null) {
-                        context.EventProc(ContextImpl.EventId.values()[idx], null);
+                    // send event to context worker thread
+                    if (contextWorker != null) {
+                        contextWorker.post(() -> {
+                            ContextImpl ctx = context;
+                            if (ctx != null) {
+                                ctx.EventProc(ContextImpl.EventId.values()[idx], null);
+                            }
+                        });
                     }
                 }
             });
@@ -61,13 +75,35 @@ public class MainWindow extends JFrame {
         pack();
         setLocationByPlatform(true);
     }
-    
+
     private void onStart() {
-        // instantiate context with nulls as allowed
-        context = new ContextImpl(0, "pubAttr", 0, 2, 0, null, null);
-        context.Start();
-        // enable event buttons
+        // Create worker thread if not created yet
+        if (contextWorker == null) {
+            contextWorker = new ContextWorker();
+            Thread t = new Thread(contextWorker, "ContextWorkerThread");
+            t.setDaemon(true);
+            t.start();
+        }
+
+        // Post context creation + Start() to the worker thread
+        contextWorker.post(() -> {
+            // You can recreate context each time Start is pressed,
+            // or guard it with a null check if you want only once.
+            context = new ContextImpl(0, "pubAttr", 0, 2, 0, null, null);
+            context.Start();
+        });
+
+        // Enable event buttons on UI thread
         for (JButton b : eventButtons) b.setEnabled(true);
+    }
+
+    // Optional: shutdown hook if you want to stop the worker explicitly
+    @Override
+    public void dispose() {
+        if (contextWorker != null) {
+            contextWorker.shutdown();
+        }
+        super.dispose();
     }
 
     public static void main(String[] args) {
@@ -75,5 +111,42 @@ public class MainWindow extends JFrame {
             MainWindow w = new MainWindow();
             w.setVisible(true);
         });
+    }
+
+    // -------------------------------------------------------
+    //            Worker thread that owns ContextImpl
+    // -------------------------------------------------------
+    private static class ContextWorker implements Runnable {
+        private final BlockingQueue<Runnable> queue = new LinkedBlockingQueue<>();
+        private volatile boolean running = true;
+
+        void post(Runnable task) {
+            if (!running) return;
+            queue.offer(task);
+        }
+
+        void shutdown() {
+            running = false;
+            // push a dummy to unblock take()
+            queue.offer(() -> {});
+        }
+
+        @Override
+        public void run() {
+            try {
+                while (running) {
+                    Runnable r = queue.take();
+                    if (!running) break;
+                    try {
+                        r.run();
+                    } catch (Throwable t) {
+                        t.printStackTrace();
+                    }
+                }
+            } catch (InterruptedException e) {
+                // exit gracefully
+                Thread.currentThread().interrupt();
+            }
+        }
     }
 }

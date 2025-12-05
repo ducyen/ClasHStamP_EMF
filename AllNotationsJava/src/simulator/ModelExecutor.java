@@ -169,8 +169,7 @@ public class ModelExecutor {
                         case REMOVE -> handleRemove(cmd.stateName);
                     }
                     
-                    Thread.sleep(500);
-                }
+                 }
             } catch (InterruptedException ignored) {}
         }
 

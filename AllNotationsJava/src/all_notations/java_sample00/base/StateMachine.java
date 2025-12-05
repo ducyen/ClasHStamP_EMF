@@ -92,6 +92,7 @@ public  class StateMachine
             // Add rectangle to simulator using entry policy (delays child entries).
             // Map by [instance, StmName-or-RgnName, stateName]. Use diagramShort for image lookup.
             ModelExecutor.getInstance().addRect(instance, regionKey, stateName, new Rectangle(x, y, w, h));
+            Thread.sleep(500);
          } catch (Exception e) {
              // best-effort only
          }
@@ -123,6 +124,7 @@ public  class StateMachine
             //System.out.println("Parsed: diagramFull='"+diagramFull+"' diagramShort='"+diagramShort+"' instance='"+instance+"' regionKey='"+regionKey+"' state='"+stateName+"'");
             // Remove rectangle using exit policy (delays parent removals). Use diagramShort for lookup to match entry.
             ModelExecutor.getInstance().removeRect(instance, regionKey, stateName);
+            Thread.sleep(500);
          } catch (Exception e) {
          }
      } /* StateMachine.DefaultExitAction */
