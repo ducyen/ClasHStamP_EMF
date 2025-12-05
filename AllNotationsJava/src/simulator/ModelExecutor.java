@@ -123,6 +123,7 @@ public class ModelExecutor {
             Thread t = new Thread(worker, "RegionWorker-" + key);
             workerMap.put(key, worker);
             threadMap.put(key, t);
+            t.setDaemon(true);
             t.start();
             return worker;
         }
@@ -168,10 +169,7 @@ public class ModelExecutor {
                         case REMOVE -> handleRemove(cmd.stateName);
                     }
                     
-                    // ----------------------------------------
-                    //   ADD 500ms delay BEFORE next command
-                    // ----------------------------------------
-                    Thread.sleep(500);                    
+                    Thread.sleep(500);
                 }
             } catch (InterruptedException ignored) {}
         }
@@ -211,45 +209,4 @@ public class ModelExecutor {
         }
     }
 
-    public static void main(String[] args) {
-        // Create ModelExecutor
-        ModelExecutor executor = ModelExecutor.getInstance();
-
-        // Create a window
-        executor.createWindow(
-                "mainStm",
-                "Main STM",
-                "../AllNotations/image/State_Machine_MainStm_MainStmTop.png"
-        );
-
-
-        // Simulate from another thread
-        try { Thread.sleep(1000); } catch (InterruptedException ignored) {}
-
-        // FIRST time: provide the Rectangle so it can auto-register
-        executor.addRect(
-                "mainStm",
-                "RegionA",
-                "State1",
-                new Rectangle(50, 50, 200, 100)
-        );
-
-        try { Thread.sleep(1500); } catch (InterruptedException ignored) {}
-
-        executor.removeRect("mainStm", "RegionA", "State1");
-
-        // FIRST time for State2: also provide the Rectangle
-        executor.addRect(
-                "mainStm",
-                "RegionA",
-                "State2",
-                new Rectangle(300, 200, 150, 120)
-        );
-
-        try { Thread.sleep(1500); } catch (InterruptedException ignored) {}
-
-        executor.removeRect("mainStm", "RegionA", "State2");
-        executor.shutdownAll();
-    }
-    
 }

@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import all_notations.java_sample00.model.ContextImpl;
-import all_notations.java_sample00.model.ContextImpl.EventId;
 
 public class MainWindow extends JFrame {
     private static final long serialVersionUID = 1L;
@@ -62,7 +61,7 @@ public class MainWindow extends JFrame {
         pack();
         setLocationByPlatform(true);
     }
-
+    
     private void onStart() {
         // instantiate context with nulls as allowed
         context = new ContextImpl(0, "pubAttr", 0, 2, 0, null, null);

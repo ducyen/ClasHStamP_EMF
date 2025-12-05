@@ -5,7 +5,6 @@ import java.io.*;
 import java.util.*;
 import all_notations.java_sample00.abstracts.*;
 import simulator.ModelExecutor;
-import simulator.SimulatorManager;
 import java.awt.Rectangle;
 
 public  class StateMachine
@@ -88,8 +87,8 @@ public  class StateMachine
             String instance = (this.pMain != null && this.pMain.instanceName != null) ? this.pMain.instanceName : "";
             // Prefer the region token emitted by generator; if missing, use the StmName extracted from diagram full name
             String regionKey = (regionQualified != null && !regionQualified.isEmpty()) ? ("RGN:" + regionQualified) : ("STM:" + stmNameFromFull);
-            System.out.println("DefaultEntryAction: rawMsg='" + pMsg + "'");
-            System.out.println("Parsed: diagramFull='"+diagramFull+"' diagramShort='"+diagramShort+"' instance='"+instance+"' regionKey='"+regionKey+"' state='"+stateName+"' rect=("+x+","+y+","+w+","+h+")");
+            //System.out.println("DefaultEntryAction: rawMsg='" + pMsg + "'");
+            //System.out.println("Parsed: diagramFull='"+diagramFull+"' diagramShort='"+diagramShort+"' instance='"+instance+"' regionKey='"+regionKey+"' state='"+stateName+"' rect=("+x+","+y+","+w+","+h+")");
             // Add rectangle to simulator using entry policy (delays child entries).
             // Map by [instance, StmName-or-RgnName, stateName]. Use diagramShort for image lookup.
             ModelExecutor.getInstance().addRect(instance, regionKey, stateName, new Rectangle(x, y, w, h));
@@ -120,8 +119,8 @@ public  class StateMachine
             } catch (Exception ex) {}
             String instance = (this.pMain != null && this.pMain.instanceName != null) ? this.pMain.instanceName : "";
             String regionKey = (regionQualified != null && !regionQualified.isEmpty()) ? ("RGN:" + regionQualified) : ("STM:" + stmNameFromFull);
-            System.out.println("DefaultExitAction: rawMsg='" + pMsg + "'");
-            System.out.println("Parsed: diagramFull='"+diagramFull+"' diagramShort='"+diagramShort+"' instance='"+instance+"' regionKey='"+regionKey+"' state='"+stateName+"'");
+            //System.out.println("DefaultExitAction: rawMsg='" + pMsg + "'");
+            //System.out.println("Parsed: diagramFull='"+diagramFull+"' diagramShort='"+diagramShort+"' instance='"+instance+"' regionKey='"+regionKey+"' state='"+stateName+"'");
             // Remove rectangle using exit policy (delays parent removals). Use diagramShort for lookup to match entry.
             ModelExecutor.getInstance().removeRect(instance, regionKey, stateName);
          } catch (Exception e) {

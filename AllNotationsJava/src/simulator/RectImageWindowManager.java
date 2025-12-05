@@ -81,25 +81,4 @@ public class RectImageWindowManager {
         windowMap.clear();
     }
     
-    public static void main(String[] args) {
-        RectImageWindowManager manager = new RectImageWindowManager();
-
-        // Create two windows
-        manager.createWindow("mainStm", "Main STM",
-                "../AllNotations/image/State_Machine_MainStm_MainStmTop.png");
-        manager.createWindow("subStm", "Sub STM",
-                "../AllNotations/image/State_Machine_SubStm_SubStmTop.png");
-
-        // Add rectangles from any thread
-        new Thread(() -> {
-            try { Thread.sleep(1000); } catch (InterruptedException ignored) {}
-
-            manager.addRect("mainStm", "r1", new Rectangle(50, 50, 200, 100));
-            manager.addRect("subStm", "r2", new Rectangle(30, 80, 150, 120));
-
-            try { Thread.sleep(2000); } catch (InterruptedException ignored) {}
-            manager.removeRect("mainStm", "r1");
-        }).start();
-    }
-    
 }

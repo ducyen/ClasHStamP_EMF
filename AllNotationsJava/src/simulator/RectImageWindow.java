@@ -109,32 +109,4 @@ public class RectImageWindow extends JFrame {
             }
         }
     }
-
-    // Demo usage
-    public static void main(String[] args) {
-        // Change this path to an image on your machine
-        final String IMAGE_PATH = "../AllNotations/image/State_Machine_MainStm_MainStmTop.png";
-
-        SwingUtilities.invokeLater(() -> {
-            RectImageWindow window = new RectImageWindow("Rect Demo", IMAGE_PATH);
-            window.setVisible(true);
-
-            // Example: add some rectangles
-            window.addRect("rect1", new Rectangle(50, 50, 200, 100));
-            window.addRect("rect2", new Rectangle(300, 200, 150, 150));
-
-            // Example: remove rect2 after 3 seconds (Swing Timer runs on EDT)
-            new Timer(3000, e -> window.removeRect("rect2")).start();
-
-            // Example: call from another thread (just to show it works)
-            new Thread(() -> {
-                try {
-                    Thread.sleep(1500);
-                } catch (InterruptedException ignored) {}
-                window.addRect("rectFromOtherThread", new Rectangle(100, 300, 120, 80));
-                // Example: remove rect2 after 3 seconds (Swing Timer runs on EDT)
-                new Timer(3000, e -> window.removeRect("rectFromOtherThread")).start();
-            }).start();
-        });
-    }
 }
