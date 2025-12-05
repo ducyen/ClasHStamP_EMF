@@ -58,23 +58,45 @@ public  class StateMachine
         // pHdStateMachine->nDepth++;   // nDepth was not in Java skeleton, so omitted.
         System.out.println("Enter " + pMsg.substring(pMsg.lastIndexOf('\t')));
         try {
-            // Message format: "...\tX\tY\tW\tH\t...\tStateName" or sometimes starts with diagram name
+            // New Message format from generator:
+            // DiagramOrStmName\tRegionQualified\tX\tY\tW\tH\t...\tStateName
             String[] parts = pMsg.split("\t");
             String stateName = parts[parts.length - 1];
+            // regionQualified is expected at parts[1] per new generator changes
+            String regionQualified = parts.length > 1 ? parts[1] : "";
             int len = parts.length;
             int x = Integer.parseInt(parts[len-9]);
             int y = Integer.parseInt(parts[len-8]);
             int w = Integer.parseInt(parts[len-7]);
             int h = Integer.parseInt(parts[len-6]);
             // Determine diagram and instance using this.pMain (owner) when available
-            String diagram = (this.pMain != null && this.pMain.dgrName != null && !this.pMain.dgrName.isEmpty()) ? this.pMain.dgrName : (parts.length>0 ? parts[0] : "State_Machine");
+            // The Prepare(...) stores Diagram Full Name like "State_Machine_StmName_DgrName" in pMain.dgrName.
+            // Extract short DgrName (last token after '_') to resolve the image file, and StmName (the token before last).
+            String diagramFull = (this.pMain != null && this.pMain.dgrName != null && !this.pMain.dgrName.isEmpty()) ? this.pMain.dgrName : (parts.length>0 ? parts[0] : "State_Machine");
+            String diagramShort = diagramFull;
+            String stmNameFromFull = "";
+            try {
+                String[] toks = diagramFull.split("_");
+                if (toks.length >= 2) {
+                    diagramShort = toks[toks.length-1];
+                    stmNameFromFull = toks[toks.length-2];
+                }
+            } catch (Exception ex) {
+                // fallback to provided part
+            }
             String instance = (this.pMain != null && this.pMain.instanceName != null) ? this.pMain.instanceName : "";
-            // Add rectangle to simulator using entry policy (delays child entries)
-            SimulatorManager.getInstance().addRectWithEntryPolicy(diagram, instance, stateName, new Rectangle(x,y,w,h));
-        } catch (Exception e) {
-            // best-effort only
-        }
-    } /* StateMachine.DefaultEntryAction */
+            // Prefer the region token emitted by generator; if missing, use the StmName extracted from diagram full name
+            String regionKey = (regionQualified != null && !regionQualified.isEmpty()) ? ("RGN:" + regionQualified) : ("STM:" + stmNameFromFull);
+            System.out.println("DefaultEntryAction: rawMsg='" + pMsg + "'");
+            System.out.println("Parsed: diagramFull='"+diagramFull+"' diagramShort='"+diagramShort+"' instance='"+instance+"' regionKey='"+regionKey+"' state='"+stateName+"' rect=("+x+","+y+","+w+","+h+")");
+            // Add rectangle to simulator using entry policy (delays child entries).
+            // Map by [instance, StmName-or-RgnName, stateName]. Use diagramShort for image lookup.
+            //SimulatorManager.getInstance().addRectWithEntryPolicy(diagramShort, instance, regionKey, stateName, new Rectangle(x,y,w,h));
+            SimulatorManager.getInstance().addRectWithEntryPolicy(diagramShort, instance, stateName, new Rectangle(x,y,w,h));
+         } catch (Exception e) {
+             // best-effort only
+         }
+     } /* StateMachine.DefaultEntryAction */
 
     public void DefaultExitAction(
         BaseClass pObj,
@@ -84,12 +106,28 @@ public  class StateMachine
         try {
             String[] parts = pMsg.split("\t");
             String stateName = parts[parts.length - 1];
+            String regionQualified = parts.length > 1 ? parts[1] : "";
+            // Use same diagramShort/stmName extraction as DefaultEntryAction so keys match
+            String diagramFull = (this.pMain != null && this.pMain.dgrName != null && !this.pMain.dgrName.isEmpty()) ? this.pMain.dgrName : (parts.length>0 ? parts[0] : "State_Machine");
+            String diagramShort = diagramFull;
+            String stmNameFromFull = "";
+            try {
+                String[] toks = diagramFull.split("_");
+                if (toks.length >= 2) {
+                    diagramShort = toks[toks.length-1];
+                    stmNameFromFull = toks[toks.length-2];
+                }
+            } catch (Exception ex) {}
             String instance = (this.pMain != null && this.pMain.instanceName != null) ? this.pMain.instanceName : "";
-            // Remove rectangle using exit policy (delays parent removals)
+            String regionKey = (regionQualified != null && !regionQualified.isEmpty()) ? ("RGN:" + regionQualified) : ("STM:" + stmNameFromFull);
+            System.out.println("DefaultExitAction: rawMsg='" + pMsg + "'");
+            System.out.println("Parsed: diagramFull='"+diagramFull+"' diagramShort='"+diagramShort+"' instance='"+instance+"' regionKey='"+regionKey+"' state='"+stateName+"'");
+            // Remove rectangle using exit policy (delays parent removals). Use diagramShort for lookup to match entry.
+            //SimulatorManager.getInstance().removeRectWithExitPolicy(diagramShort, instance, regionKey, stateName);
             SimulatorManager.getInstance().removeRectWithExitPolicy(instance, stateName);
-        } catch (Exception e) {
-        }
-    } /* StateMachine.DefaultExitAction */
+         } catch (Exception e) {
+         }
+     } /* StateMachine.DefaultExitAction */
 
     public void DefaultDoingAction(
         BaseClass pObj,
