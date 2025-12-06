@@ -2,50 +2,38 @@ package simulator;
 
 import java.awt.Rectangle;
 import java.util.Map;
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.LinkedBlockingQueue;
 
 public class ModelExecutor {
 
-    // ---------------------------------------------------------
-    //                 SINGLETON INSTANCE
-    // ---------------------------------------------------------
+    // -------------------- Singleton --------------------
     private static final ModelExecutor instance = new ModelExecutor();
 
     public static ModelExecutor getInstance() {
         return instance;
     }
 
-    // PRIVATE constructor → prevents external creation
     private ModelExecutor() {
         this.windowManager = new RectImageWindowManager();
     }
 
-    // ---------------------------------------------------------
-    //                 FIELDS
-    // ---------------------------------------------------------
+    // -------------------- Fields --------------------
     private final RectImageWindowManager windowManager;
-
-    // [windowName|regionName] -> Thread
-    private final Map<String, Thread> threadMap = new ConcurrentHashMap<>();
-
-    // [windowName|regionName] -> RegionWorker
-    private final Map<String, RegionWorker> workerMap = new ConcurrentHashMap<>();
 
     // [windowName|regionName|stateName] -> Rectangle
     private final Map<String, Rectangle> stateRectMap = new ConcurrentHashMap<>();
 
-    // ---------------------------------------------------------
-    //                 WINDOW CREATION WRAPPER
-    // ---------------------------------------------------------
+    // -------------------- Helper keys --------------------
+    private static String stateKey(String windowName, String regionName, String stateName) {
+        return windowName + "|" + regionName + "|" + stateName;
+    }
+
+    // -------------------- Window wrapper --------------------
     public void createWindow(String windowName, String title, String imagePath) {
         windowManager.createWindow(windowName, title, imagePath);
     }
 
-    // ---------------------------------------------------------
-    //           Register rectangle (optional)
-    // ---------------------------------------------------------
+    // -------------------- State rect registration --------------------
     public void registerStateRect(String windowName,
                                   String regionName,
                                   String stateName,
@@ -53,11 +41,11 @@ public class ModelExecutor {
         stateRectMap.put(stateKey(windowName, regionName, stateName), rect);
     }
 
-    // ---------------------------------------------------------
-    //        PUBLIC API — ADD / REMOVE RECTANGLES
-    // ---------------------------------------------------------
+    // -------------------- Public API: add/remove rect --------------------
 
-    // automatic registration is supported
+    /**
+     * Auto-register rect if not already registered, then show it.
+     */
     public void addRect(String windowName,
                         String regionName,
                         String stateName,
@@ -67,145 +55,37 @@ public class ModelExecutor {
         addRect(windowName, regionName, stateName);
     }
 
-    public void addRect(String windowName, String regionName, String stateName) {
-        RegionWorker worker = ensureWorker(windowName, regionName);
-        worker.enqueueAdd(stateName);
-    }
-
-    public void removeRect(String windowName, String regionName, String stateName) {
-        RegionWorker worker = ensureWorker(windowName, regionName);
-        worker.enqueueRemove(stateName);
-    }
-
-    // ---------------------------------------------------------
-    //             SHUTDOWN CONTROL
-    // ---------------------------------------------------------
-    public void shutdownRegion(String windowName, String regionName) {
-        String key = regionKey(windowName, regionName);
-        RegionWorker worker = workerMap.remove(key);
-        Thread t = threadMap.remove(key);
-        if (worker != null) worker.shutdown();
-        if (t != null) t.interrupt();
-    }
-
-    public void shutdownAll() {
-        for (RegionWorker w : workerMap.values()) w.shutdown();
-        for (Thread t : threadMap.values()) t.interrupt();
-        workerMap.clear();
-        threadMap.clear();
-    }
-
-    // ---------------------------------------------------------
-    //                INTERNAL HELPERS
-    // ---------------------------------------------------------
-
-    private static String regionKey(String windowName, String regionName) {
-        return windowName + "|" + regionName;
-    }
-
-    private static String stateKey(String windowName, String regionName, String stateName) {
-        return windowName + "|" + regionName + "|" + stateName;
-    }
-
-    private RegionWorker ensureWorker(String windowName, String regionName) {
-        String key = regionKey(windowName, regionName);
-
-        RegionWorker existing = workerMap.get(key);
-        if (existing != null)
-            return existing;
-
-        synchronized (this) {
-            existing = workerMap.get(key);
-            if (existing != null)
-                return existing;
-
-            RegionWorker worker = new RegionWorker(windowName, regionName);
-            Thread t = new Thread(worker, "RegionWorker-" + key);
-            workerMap.put(key, worker);
-            threadMap.put(key, t);
-            t.setDaemon(true);
-            t.start();
-            return worker;
-        }
-    }
-
-    // ---------------------------------------------------------
-    //                  REGION WORKER THREAD
-    // ---------------------------------------------------------
-    private class RegionWorker implements Runnable {
-
-        private final String windowName;
-        private final String regionName;
-        private final BlockingQueue<Command> queue = new LinkedBlockingQueue<>();
-        private volatile boolean running = true;
-
-        RegionWorker(String windowName, String regionName) {
-            this.windowName = windowName;
-            this.regionName = regionName;
+    /**
+     * Show rect for a previously registered (windowName, regionName, stateName).
+     */
+    public void addRect(String windowName,
+                        String regionName,
+                        String stateName) {
+        String key = stateKey(windowName, regionName, stateName);
+        Rectangle rect = stateRectMap.get(key);
+        if (rect == null) {
+            System.err.println("No rect registered for "
+                    + windowName + "/" + regionName + "/" + stateName);
+            return;
         }
 
-        void enqueueAdd(String stateName) {
-            queue.offer(new Command(CommandType.ADD, stateName));
-        }
-
-        void enqueueRemove(String stateName) {
-            queue.offer(new Command(CommandType.REMOVE, stateName));
-        }
-
-        void shutdown() {
-            running = false;
-            queue.offer(new Command(CommandType.SHUTDOWN, null));
-        }
-
-        @Override
-        public void run() {
-            try {
-                while (running) {
-                    Command cmd = queue.take();
-                    if (!running || cmd.type == CommandType.SHUTDOWN) break;
-
-                    switch (cmd.type) {
-                        case ADD -> handleAdd(cmd.stateName);
-                        case REMOVE -> handleRemove(cmd.stateName);
-                    }
-                    
-                 }
-            } catch (InterruptedException ignored) {}
-        }
-
-        private void handleAdd(String stateName) {
-            Rectangle rect = stateRectMap.get(
-                    stateKey(windowName, regionName, stateName));
-
-            if (rect == null) {
-                System.err.println("No rect registered for "
-                        + windowName + "/" + regionName + "/" + stateName);
-                return;
-            }
-
-            String rectName = regionName + ":" + stateName;
-            windowManager.addRect(windowName, rectName, rect);
-        }
-
-        private void handleRemove(String stateName) {
-            String rectName = regionName + ":" + stateName;
-            windowManager.removeRect(windowName, rectName);
-        }
+        String rectName = regionName + ":" + stateName;
+        windowManager.addRect(windowName, rectName, rect);
     }
 
-    // ---------------------------------------------------------
-    //                  COMMAND STRUCTURE
-    // ---------------------------------------------------------
-    private enum CommandType { ADD, REMOVE, SHUTDOWN }
-
-    private static class Command {
-        final CommandType type;
-        final String stateName;
-
-        Command(CommandType type, String stateName) {
-            this.type = type;
-            this.stateName = stateName;
-        }
+    public void removeRect(String windowName,
+                           String regionName,
+                           String stateName) {
+        String rectName = regionName + ":" + stateName;
+        windowManager.removeRect(windowName, rectName);
     }
 
+    // Optional: shutdown helpers
+    public void closeWindow(String windowName) {
+        windowManager.closeWindow(windowName);
+    }
+
+    public void closeAllWindows() {
+        windowManager.closeAll();
+    }
 }

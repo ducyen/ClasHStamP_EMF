@@ -1,4 +1,5 @@
 package simulator;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -16,7 +17,7 @@ public class RectImageWindow extends JFrame {
         super(title);
         this.imagePanel = new ImagePanel(imagePath);
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setContentPane(imagePanel);
         pack(); // size based on image / preferred size
         setLocationRelativeTo(null); // center on screen
@@ -24,9 +25,7 @@ public class RectImageWindow extends JFrame {
 
     /**
      * Add or update a red rectangle with a given name.
-     * This method is safe to call from any thread.
-     * @param rectName unique rectangle name
-     * @param rect     rectangle coordinates (x, y, width, height)
+     * Safe to call from any thread: it marshals to EDT.
      */
     public void addRect(String rectName, Rectangle rect) {
         if (SwingUtilities.isEventDispatchThread()) {
@@ -38,8 +37,7 @@ public class RectImageWindow extends JFrame {
 
     /**
      * Remove a rectangle by its name.
-     * This method is safe to call from any thread.
-     * @param rectName name used in addRect
+     * Safe to call from any thread: it marshals to EDT.
      */
     public void removeRect(String rectName) {
         if (SwingUtilities.isEventDispatchThread()) {
@@ -73,7 +71,6 @@ public class RectImageWindow extends JFrame {
             }
         }
 
-        // These are only called from EDT (enforced by RectImageWindow)
         public void addRect(String name, Rectangle rect) {
             rectMap.put(name, rect);
             repaint();
@@ -91,13 +88,10 @@ public class RectImageWindow extends JFrame {
 
             Graphics2D g2 = (Graphics2D) g.create();
             try {
-                // Draw background image
                 if (backgroundImage != null) {
-                    // Draw at (0,0) with original size; adjust if you want scaling
                     g2.drawImage(backgroundImage, 0, 0, this);
                 }
 
-                // Draw red rectangles
                 g2.setColor(Color.RED);
                 g2.setStroke(new BasicStroke(2.0f));
 
