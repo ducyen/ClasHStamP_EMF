@@ -89,7 +89,9 @@ public class MainWindow extends JFrame {
         contextWorker.post(() -> {
             // You can recreate context each time Start is pressed,
             // or guard it with a null check if you want only once.
-            context = new ContextImpl(0, "pubAttr", 0, 2, 0, null, null);
+        	if (context == null) {
+        		context = new ContextImpl(0, "pubAttr", 0, 2, 0, null, null);
+        	}
             context.Start();
         });
 

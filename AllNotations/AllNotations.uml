@@ -510,7 +510,7 @@
                       <subvertex xmi:type="uml:State" xmi:id="_EAaUYMFLEfCvssN6lsBRhw" name="S7111"/>
                       <subvertex xmi:type="uml:State" xmi:id="_G9tzAMFLEfCvssN6lsBRhw" name="S7112"/>
                       <subvertex xmi:type="uml:Pseudostate" xmi:id="_sB3bIMFLEfCvssN6lsBRhw" name="S711Init"/>
-                      <subvertex xmi:type="uml:FinalState" xmi:id="_r6liMNEUEfCdvIvPnuLjcQ" name="FinalState6"/>
+                      <subvertex xmi:type="uml:FinalState" xmi:id="_r6liMNEUEfCdvIvPnuLjcQ" name=""/>
                     </region>
                     <region xmi:type="uml:Region" xmi:id="_7yCkwMFKEfCvssN6lsBRhw" name="Region2">
                       <transition xmi:type="uml:Transition" xmi:id="_0YJwoMFLEfCvssN6lsBRhw" source="_v2_5oMFLEfCvssN6lsBRhw" target="_FhiI4MFLEfCvssN6lsBRhw"/>
@@ -525,7 +525,7 @@
                       <subvertex xmi:type="uml:State" xmi:id="_FhiI4MFLEfCvssN6lsBRhw" name="S7121"/>
                       <subvertex xmi:type="uml:State" xmi:id="_Ju120MFLEfCvssN6lsBRhw" name="S7122"/>
                       <subvertex xmi:type="uml:Pseudostate" xmi:id="_v2_5oMFLEfCvssN6lsBRhw" name="S712Init"/>
-                      <subvertex xmi:type="uml:FinalState" xmi:id="_tHZ6oNEUEfCdvIvPnuLjcQ" name="FinalState6"/>
+                      <subvertex xmi:type="uml:FinalState" xmi:id="_tHZ6oNEUEfCdvIvPnuLjcQ" name=""/>
                     </region>
                   </subvertex>
                   <subvertex xmi:type="uml:Pseudostate" xmi:id="_LnPi4MFLEfCvssN6lsBRhw" name="S7DeepHist" kind="deepHistory"/>

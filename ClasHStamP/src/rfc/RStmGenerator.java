@@ -357,14 +357,8 @@ public class RStmGenerator extends TBaseGenerator {
 
 	        if (parentView.getLayoutConstraint() instanceof Bounds) {
 	            Bounds pb = (Bounds) parentView.getLayoutConstraint();
-	            String ptype = parentView.getType();
-	            boolean isCompartment = ptype != null && ptype.toLowerCase().contains("compartment");
-	            // include parent offset when it's not a compartment OR when the
-	            // parent represents the StateMachine shape itself (top-level)
-	            if (!isCompartment || parentView.getElement() instanceof StateMachine) {
-	                x += pb.getX();
-	                y += pb.getY();
-	            }
+                x += pb.getX();
+                y += pb.getY();
 	        }
 
 	        container = parentView.eContainer();
