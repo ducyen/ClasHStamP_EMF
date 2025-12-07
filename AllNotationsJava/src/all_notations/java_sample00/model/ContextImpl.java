@@ -89,6 +89,7 @@ class _SubStmTop extends StateMachine {
                 switch( nEventId ){
                 case ContextImpl.EventId.E5:{
             BgnTrans( pContextImpl, SubStmTop.S102 );
+                DefaultTransAction("361	120	480	220");
             EndTrans( pContextImpl );
             bResult |= true;
                 } break;
@@ -119,12 +120,14 @@ class _SubStmTop extends StateMachine {
                 switch( nEventId ){
                 case ContextImpl.EventId.E4:{
             BgnTrans( pContextImpl, SubStmTop.SubStm );
+                DefaultTransAction("601	180	720	190");
             ( ( SubStmTop )pMain ).pParentStm.Req( SubStmTop.Exit1 );
             EndTrans( pContextImpl );
             bResult |= true;
                 } break;
                 case ContextImpl.EventId.E3:{
             BgnTrans( pContextImpl, SubStmTop.SubStm );
+                DefaultTransAction("540	221	398	286");
             EndTrans( pContextImpl );
             bResult |= true;
                 } break;
@@ -200,6 +203,7 @@ class _SubStmTop extends StateMachine {
             nLCAState = StateMachine.STATE_UNDEF;
         if ( nPseudostate == SubStmTop.SubStmInit  ) {
             BgnTrans( pContextImpl, SubStmTop.S101 );
+                DefaultTransAction("178	89	260	140");
             EndTrans( pContextImpl );
             bResult |= true;
             }else if( nCurrentState != nPseudostate ){
@@ -349,6 +353,7 @@ class _S8Rgn1Hsm extends StateMachine {
             nLCAState = StateMachine.STATE_UNDEF;
         if ( nPseudostate == MainStmTop.S82Init  ) {
             BgnTrans( pContextImpl, MainStmTop.S821 );
+                DefaultTransAction("1112	778	1112	780	1061	780");
             EndTrans( pContextImpl );
             bResult |= true;
             }else if( nCurrentState != nPseudostate ){
@@ -401,6 +406,7 @@ class _S71Rgn1Hsm extends StateMachine {
                 switch( nEventId ){
                 case ContextImpl.EventId.E5:{
             BgnTrans( pContextImpl, MainStmTop.S7122 );
+                DefaultTransAction("300	681	300	720");
             EndTrans( pContextImpl );
             bResult |= true;
                 } break;
@@ -431,6 +437,7 @@ class _S71Rgn1Hsm extends StateMachine {
                 switch( nEventId ){
                 case ContextImpl.EventId.E4:{
             BgnTrans( pContextImpl, MainStmTop.S71Rgn1 );
+                DefaultTransAction("300	761	323	783");
             EndTrans( pContextImpl );
             bResult |= true;
                 } break;
@@ -506,6 +513,7 @@ class _S71Rgn1Hsm extends StateMachine {
             nLCAState = StateMachine.STATE_UNDEF;
         if ( nPseudostate == MainStmTop.S712Init  ) {
             BgnTrans( pContextImpl, MainStmTop.S7121 );
+                DefaultTransAction("276	594	300	620");
             EndTrans( pContextImpl );
             bResult |= true;
             }else if( nCurrentState != nPseudostate ){
@@ -558,6 +566,7 @@ class _MainStmTop extends StateMachine {
                 switch( nEventId ){
                 case ContextImpl.EventId.E1:{
             BgnTrans( pContextImpl, MainStmTop.S2 );
+                DefaultTransAction("300	120	460	120");
                 System.out.println("Hello, World!");
             EndTrans( pContextImpl );
             bResult |= true;
@@ -610,12 +619,15 @@ class _MainStmTop extends StateMachine {
                 switch( nEventId ){
                 case ContextImpl.EventId.E4:{
             BgnTrans( pContextImpl, MainStmTop.S6 );
+                DefaultTransAction("");
+                DefaultTransAction("1340	253	1360	380");
                 System.out.println("Do Something");
             EndTrans( pContextImpl );
             bResult |= true;
                 } break;
                 case ContextImpl.EventId.E2:{
             BgnTrans( pContextImpl, MainStmTop.S3 );
+                DefaultTransAction("1200	140	1300	140");
             EndTrans( pContextImpl );
             bResult |= true;
                 } break;
@@ -647,11 +659,13 @@ class _MainStmTop extends StateMachine {
                 switch( nEventId ){
                 case ContextImpl.EventId.E2:{
             BgnTrans( pContextImpl, MainStmTop.S22 );
+                DefaultTransAction("780	200	880	200");
             EndTrans( pContextImpl );
             bResult |= true;
                 } break;
                 case ContextImpl.EventId.E1:{
             BgnTrans( pContextImpl, MainStmTop.S3 );
+                DefaultTransAction("720	160	720	60	1360	60	1360	100");
             EndTrans( pContextImpl );
             bResult |= true;
                 } break;
@@ -684,6 +698,7 @@ class _MainStmTop extends StateMachine {
                 case ContextImpl.EventId.E0:{
             ( ( MainStmTop )pMain ).S2ShallowHist = StateMachine.STATE_UNDEF;
             BgnTrans( pContextImpl, MainStmTop.S2 );
+                DefaultTransAction("1001	200	1081	192");
             EndTrans( pContextImpl );
             bResult |= true;
                 } break;
@@ -724,12 +739,14 @@ class _MainStmTop extends StateMachine {
                 bResult |= true;
             }else{
                 BgnTrans( pContextImpl, MainStmTop.S2 );
+                DefaultTransAction("680	380	680	340	571	340	571	279");
                 EndTrans( pContextImpl );
                 bResult |= true;
             }
                 } break;
                 case ContextImpl.EventId.E5:{
             BgnTrans( pContextImpl, MainStmTop.S7 );
+                DefaultTransAction("460	420	381	420");
             EndTrans( pContextImpl );
             bResult |= true;
                 } break;
@@ -808,17 +825,20 @@ class _MainStmTop extends StateMachine {
                 switch( nEventId ){
                 case ContextImpl.EventId.E2:{
             BgnTrans( pContextImpl, MainStmTop.S72 );
+                DefaultTransAction("381	880	301	880");
             EndTrans( pContextImpl );
             bResult |= true;
                 } break;
                 case ContextImpl.EventId.E1:{
             bIsExternTrans = true;
             BgnTrans( pContextImpl, MainStmTop.S71 );
+                DefaultTransAction("100	640	60	640	60	700	120	700");
             EndTrans( pContextImpl );
             bResult |= true;
                 } break;
                 case ContextImpl.EventId.E3:{
             BgnTrans( pContextImpl, MainStmTop.S8 );
+                DefaultTransAction("381	820	460	820");
             EndTrans( pContextImpl );
             bResult |= true;
                 } break;
@@ -878,6 +898,7 @@ class _MainStmTop extends StateMachine {
                 switch( nEventId ){
                 case ContextImpl.EventId.E0:{
             BgnTrans( pContextImpl, MainStmTop.S7112 );
+                DefaultTransAction("180	681	180	720");
             EndTrans( pContextImpl );
             bResult |= true;
                 } break;
@@ -908,6 +929,7 @@ class _MainStmTop extends StateMachine {
                 switch( nEventId ){
                 case ContextImpl.EventId.E3:{
             BgnTrans( pContextImpl, MainStmTop.S71 );
+                DefaultTransAction("180	761	204	782");
             EndTrans( pContextImpl );
             bResult |= true;
                 } break;
@@ -985,6 +1007,8 @@ class _MainStmTop extends StateMachine {
                 switch( nEventId ){
                 case ContextImpl.EventId.E0:{
             BgnTrans( pContextImpl, MainStmTop.S6 );
+                DefaultTransAction("1360	181	1367	260");
+                DefaultTransAction("1340	253	1360	380");
                 System.out.println("Do Something");
             EndTrans( pContextImpl );
             bResult |= true;
@@ -1125,28 +1149,35 @@ class _MainStmTop extends StateMachine {
             nLCAState = StateMachine.STATE_UNDEF;
         if ( nPseudostate == MainStmTop.MainStmInit  ) {
             BgnTrans( pContextImpl, MainStmTop.S1 );
+                DefaultTransAction("70	80	70	120	180	120");
             EndTrans( pContextImpl );
             bResult |= true;
         } else if ( nCurrentState == MainStmTop.S6 && nPseudostate == SubStmTop.Exit1  ) {
             BgnTrans( pContextImpl, MainStmTop.S9 );
+                DefaultTransAction("1411	420	1440	420	1440	540	1401	540");
             EndTrans( pContextImpl );
             bResult |= true;
         } else if ( nCurrentState == MainStmTop.S9 && nPseudostate == MainStmTop.S9 
          && ( ( MainStmTop )pMain ).S9Hsm.IsFinished() ) {
             BgnTrans( pContextImpl, MainStmTop.S812 );
+                DefaultTransAction("1340	581	1270	740");
+                DefaultTransAction("1260	800	1061	800");
             ( ( MainStmTop )pMain ).S8Rgn1Hsm.Reset( pContextImpl, MainStmTop.S821 );
             EndTrans( pContextImpl );
             bResult |= true;
         } else if ( nPseudostate == MainStmTop.S2Init  ) {
             BgnTrans( pContextImpl, MainStmTop.S21 );
+                DefaultTransAction("538	191	600	191	600	200	660	200");
             EndTrans( pContextImpl );
             bResult |= true;
         } else if ( nPseudostate == MainStmTop.S81Init  ) {
             BgnTrans( pContextImpl, MainStmTop.S811 );
+                DefaultTransAction("518	649	540	649	540	680	580	680");
             EndTrans( pContextImpl );
             bResult |= true;
         } else if ( nPseudostate == MainStmTop.S711Init  ) {
             BgnTrans( pContextImpl, MainStmTop.S7111 );
+                DefaultTransAction("157	593	180	620");
             EndTrans( pContextImpl );
             bResult |= true;
         } else if ( nPseudostate == MainStmTop.S7Init  ) {
@@ -1157,12 +1188,15 @@ class _MainStmTop extends StateMachine {
                 bResult |= true;
             }else{
                 BgnTrans( pContextImpl, MainStmTop.S71 );
+                DefaultTransAction("138	533	200	532");
+                    DefaultTransAction("217	534	240	560");
                 EndTrans( pContextImpl );
                 bResult |= true;
             }
         } else if ( nCurrentState == MainStmTop.S71 && nPseudostate == MainStmTop.S71 
          && ( ( MainStmTop )pMain ).S71Rgn1Hsm.nPseudostate == MainStmTop.S71Rgn1 ) {
             BgnTrans( pContextImpl, MainStmTop.S72 );
+                DefaultTransAction("240	821	240	840");
             EndTrans( pContextImpl );
             bResult |= true;
             }else if( nCurrentState != nPseudostate ){

@@ -33,14 +33,6 @@ public class ModelExecutor {
         windowManager.createWindow(windowName, title, imagePath);
     }
 
-    // -------------------- State rect registration --------------------
-    public void registerStateRect(String windowName,
-                                  String regionName,
-                                  String stateName,
-                                  Rectangle rect) {
-        stateRectMap.put(stateKey(windowName, regionName, stateName), rect);
-    }
-
     // -------------------- Public API: add/remove rect --------------------
 
     /**
@@ -88,4 +80,24 @@ public class ModelExecutor {
     public void closeAllWindows() {
         windowManager.closeAll();
     }
+    
+    /**
+     * Show a single active polyline on the given window.
+     * Any previously drawn polyline on that window is overwritten.
+     */
+    public void addPolyline(String windowName, int[] coords) {
+        if (coords == null || coords.length < 4) {
+            System.err.println("ModelExecutor.addPolyline: invalid coords");
+            return;
+        }
+        windowManager.addPolyline(windowName, coords);
+    }
+
+    /**
+     * Optional: clear current polyline on a window.
+     */
+    public void clearPolyline(String windowName) {
+        windowManager.clearPolyline(windowName);
+    }
+    
 }

@@ -78,4 +78,21 @@ public class RectImageWindowManager {
         }
         windowMap.clear();
     }
+    
+    public void addPolyline(String windowName, int[] coords) {
+        RectImageWindow window = windowMap.get(windowName);
+        if (window != null) {
+            window.addPolyline(coords);
+        } else {
+            System.err.println("No window named: " + windowName);
+        }
+    }
+
+    public void clearPolyline(String windowName) {
+        RectImageWindow window = windowMap.get(windowName);
+        if (window != null) {
+            window.clearPolyline();
+        }
+    }
+    
 }

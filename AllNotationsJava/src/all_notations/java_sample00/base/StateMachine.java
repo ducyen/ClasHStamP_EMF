@@ -48,6 +48,51 @@ public  class StateMachine
         }
         return Boolean.FALSE;
     } /* StateMachine.Exitable */
+
+    public void DefaultTransAction(String pMsg) {
+
+        // pMsg example: "100\t120\t140\t160\t200\t220"
+        if (pMsg == null || pMsg.isEmpty()) {
+            System.err.println("DefaultTransAction: empty polyline message");
+            return;
+        }
+
+        // Convert tab-separated into int[]
+        String[] toks = pMsg.split("\\t+");
+        if (toks.length < 4) { // at least 2 points
+            System.err.println("DefaultTransAction: polyline too short: " + pMsg);
+            return;
+        }
+
+        int[] coords = new int[toks.length];
+        for (int i = 0; i < toks.length; i++) {
+            try {
+                coords[i] = Integer.parseInt(toks[i]);
+            } catch (NumberFormatException ex) {
+                System.err.println("DefaultTransAction: invalid number: " + toks[i]);
+                return;
+            }
+        }
+
+        // Build a unique polyline name (can be changed if needed)
+        String lineName = "trans_" + System.nanoTime();
+
+        // Call Executor singleton
+        ModelExecutor exec = ModelExecutor.getInstance();
+        exec.clearPolyline(pMain.instanceName);
+        exec.addPolyline(
+            pMain.instanceName,   // You may replace this with your dynamic diagram name
+            coords          // The raw polyline string
+        );
+
+        try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
     public void DefaultEntryAction(
         BaseClass pObj,
         String pMsg
