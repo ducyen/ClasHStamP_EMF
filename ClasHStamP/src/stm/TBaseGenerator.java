@@ -39,6 +39,7 @@ public class TBaseGenerator {
     public static String m_pkgPathSeparator;
     protected static String m_language = null;
     protected static int indent = 0;
+    protected String m_actions = "";
     /**
      * Constructor
      * @param stxCsv
@@ -628,8 +629,8 @@ public class TBaseGenerator {
      * @return
      * @throws Exception
      */
-    protected String collectActions(int level, String routine) throws Exception {
-        String actions = "";
+    protected String appendActions(int level, String routine) throws Exception {
+        String actions = m_actions;
         int adjust = 1;
         try {
             if (Integer.parseInt(m_stxCsv.get("param_dir", "begin")) < 0) {
@@ -647,8 +648,17 @@ public class TBaseGenerator {
             actionName = actionName.replaceAll("\\s+$", ""); // trim right
             actions = actions.concat(Utils.get(m_stxCsv.get(/*indent +*/ level + adjust, "action", "extnxt"), actionName));
         }
+        m_actions = actions;
         return actions;
     }
+    protected void resetActions() {
+		m_actions = "";
+	}
+    protected String collectActions(int level, String routine) throws Exception {
+		String actions = appendActions(level, routine);
+		resetActions();
+		return actions;
+	}
 
     /**
      * isJoinBar

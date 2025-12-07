@@ -408,7 +408,8 @@ comment,/**< [nAME] [->32]*/," * [nAME]
 action,"[->][nAME]Params* e = ( [nAME]Params* )pEventParams;
 ","[->][nAME]
 ","[->][nAME]
-",,
+","DefaultTransAction(""[vALUE]"");
+",
 param_dir,,,,0,.
 statemachine,,"    [tYPE][mODIFIER] mainStm;[->64][dESC]
 ","    mainStm = new [tYPE]();

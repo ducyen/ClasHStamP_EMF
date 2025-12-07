@@ -320,6 +320,54 @@ public class RStmGenerator extends TBaseGenerator {
 	    }
 	    return false;
 	}
+	
+	/**
+	 * Get the polyline of a Transition as a string of (x,y) points.
+	 * Format example: "10,20;30,40;50,60"
+	 *
+	 * Points are taken from RelativeBendpoint.getSourceX()/getSourceY(),
+	 * same style as used in checkTransitionOutside().
+	 */
+	private String getTransitionPolyline(StateMachine stmRoot, Transition transition) {
+	    StringBuilder sb = new StringBuilder();
+
+	    for (EObject eObj : stm.TMain.notationResource.getContents()) {
+	        if (eObj instanceof Diagram) {
+	            Diagram diagram = (Diagram) eObj;
+	            if (diagram.getElement() == stmRoot) {
+	                for (Object edge : diagram.getEdges()) {
+	                    if (edge instanceof Connector) {
+	                        Connector conn = (Connector) edge;
+	                        if (conn.getElement() == transition) {
+	                            Object bp = conn.getBendpoints();
+	                            if (bp instanceof RelativeBendpoints) {
+	                                @SuppressWarnings("unchecked")
+	                                List<RelativeBendpoint> points =
+	                                        ((RelativeBendpoints) bp).getPoints();
+
+	                                boolean first = true;
+	                                for (RelativeBendpoint p : points) {
+	                                    int x = p.getSourceX();
+	                                    int y = p.getSourceY();
+
+	                                    if (!first) {
+	                                        sb.append('\t');
+	                                    }
+	                                    sb.append(x).append('\t').append(y);
+	                                    first = false;
+	                                }
+	                            }
+	                            // We found our connector, no need to continue
+	                            return sb.toString();
+	                        }
+	                    }
+	                }
+	            }
+	        }
+	    }
+
+	    return sb.toString(); // "" if not found
+	}
 
 	/**
 	 * getAbsoluteBounds
@@ -818,6 +866,23 @@ public class RStmGenerator extends TBaseGenerator {
 	 * @param iTrans
 	 */
 	private void printTransition(StateMachine stmRoot, String rgnName, Collection<Vertex> iVertices, Transition iTrans) {
+	    // --- New: get transition polyline string ---
+	    String transPolyline = getTransitionPolyline(stmRoot, iTrans);
+	    try {
+			appendActions(indent, Utils.get(m_stxCsv.get("action", "begin"),
+				"",							        // name
+			    m_iClass.getName(),                 // type
+			    "",                                 // container
+			    transPolyline,                      // value (polyline points)
+			    "",             		         	// modifier
+			    "",                                 // description
+			    getStateMachineDiagram(stmRoot).getName() // scope
+			));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		// ■ branch.name
 		// ■ branch.ext1st
 		// ■ branch.extnxt
@@ -2599,6 +2664,7 @@ public class RStmGenerator extends TBaseGenerator {
 						}
 					}	
 					for (Transition iTrans: _iState.getOutgoings()) {
+						resetActions();
 						if (internalEvents.contains(getEvent(iTrans).trim())) {
 							m_bIsInternalTrans = true;
 						}
@@ -3039,6 +3105,7 @@ public class RStmGenerator extends TBaseGenerator {
 		System.out.println(makeIndent(indent) + "self.lcaState = 0");
 		boolean firstRound = true;
 		for (Transition iTrans: getTransitions(stmRoot)) {
+			resetActions();
 			Vertex iSrcVtx = iTrans.getSource();
 			// find all transitions originated from a vertex belong to this region only
 			String targetMachineName = findTargetMachineName(rgnName, rgnVertices, iSrcVtx, null);
