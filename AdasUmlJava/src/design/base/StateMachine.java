@@ -67,7 +67,7 @@ public  class StateMachine
         int[] coords = new int[toks.length];
         for (int i = 0; i < toks.length; i++) {
             try {
-                coords[i] = Integer.parseInt(toks[i]);
+                coords[i] = Integer.parseInt(toks[i]) - 20;
             } catch (NumberFormatException ex) {
                 System.err.println("DefaultTransAction: invalid number: " + toks[i]);
                 return;
@@ -110,8 +110,8 @@ public  class StateMachine
             // regionQualified is expected at parts[1] per new generator changes
             String regionQualified = parts.length > 1 ? parts[1] : "";
             int len = parts.length;
-            int x = Integer.parseInt(parts[len-9]);
-            int y = Integer.parseInt(parts[len-8]);
+            int x = Integer.parseInt(parts[len-9]) - 20;
+            int y = Integer.parseInt(parts[len-8]) - 20;
             int w = Integer.parseInt(parts[len-7]);
             int h = Integer.parseInt(parts[len-6]);
             // Determine diagram and instance using this.pMain (owner) when available

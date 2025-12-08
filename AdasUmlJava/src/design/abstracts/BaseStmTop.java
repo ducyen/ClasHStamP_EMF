@@ -21,7 +21,7 @@ public  class BaseStmTop
         dgrName = _dgrName;
         instanceName = _instanceName;
         // Ensure a non-modal diagram window exists for this state machine
-		ModelExecutor.getInstance().createWindow(instanceName, instanceName, "../AllNotations/image/" + _dgrName + ".PNG");        
+		ModelExecutor.getInstance().createWindow(instanceName, instanceName, "../AdasUml/image/" + _dgrName + ".PNG");        
 	} /* StateMachine.Prepare */	
     
     public  BaseStmTop(

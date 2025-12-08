@@ -131,7 +131,7 @@ public class RectImageWindow extends JFrame {
                 g2.setColor(Color.RED);
                 g2.setStroke(new BasicStroke(2.0f));
                 for (Rectangle r : rectMap.values()) {
-                    g2.drawRect(r.x, r.y, r.width, r.height);
+                    g2.drawRoundRect(r.x, r.y, r.width, r.height, 20, 20);
                 }
 
                 // Single polyline

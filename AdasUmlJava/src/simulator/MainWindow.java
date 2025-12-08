@@ -84,6 +84,7 @@ public class MainWindow extends JFrame {
 						ContextImpl ctx = context;
 						if (ctx != null) {
 							ctx.methodWithParams("internalAttribute", value);
+                            ctx.EventProc(ContextImpl.EventId.onSpeedChange, null);							
 						}
 					});
 				}
