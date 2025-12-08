@@ -207,6 +207,30 @@ public class RStmGenerator extends TBaseGenerator {
 		return collection.toArray(new Transition[0]);
 	}
 	
+    /**
+     * collectActions
+     * @param level
+     * @param routine
+     * @return
+     * @throws Exception
+     */
+    protected String collectActions(int level, Transition iTrans) throws Exception {
+	    // --- New: get transition polyline string ---
+	    String transPolyline = getTransitionPolyline(m_stmRoot, iTrans);
+	    String routine = Utils.get(m_stxCsv.get("action", "begin"),
+			"",							        // name
+		    m_iClass.getName(),                 // type
+		    "",                                 // container
+		    transPolyline,                      // value (polyline points)
+		    "",             		         	// modifier
+		    "",                                 // description
+		    getStateMachineDiagram(m_stmRoot).getName() // scope
+		);
+		routine += getAction(iTrans).trim();
+        
+        return collectActions(level, routine);
+    }	
+	
 	/**
 	 * makeRegionName
 	 * @param iState
@@ -866,23 +890,6 @@ public class RStmGenerator extends TBaseGenerator {
 	 * @param iTrans
 	 */
 	private void printTransition(StateMachine stmRoot, String rgnName, Collection<Vertex> iVertices, Transition iTrans) {
-	    // --- New: get transition polyline string ---
-	    String transPolyline = getTransitionPolyline(stmRoot, iTrans);
-	    try {
-			appendActions(indent, Utils.get(m_stxCsv.get("action", "begin"),
-				"",							        // name
-			    m_iClass.getName(),                 // type
-			    "",                                 // container
-			    transPolyline,                      // value (polyline points)
-			    "",             		         	// modifier
-			    "",                                 // description
-			    getStateMachineDiagram(stmRoot).getName() // scope
-			));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 		// ■ branch.name
 		// ■ branch.ext1st
 		// ■ branch.extnxt
@@ -902,7 +909,7 @@ public class RStmGenerator extends TBaseGenerator {
 							m_iClass.getName(), 				// type
 							"", 								// container
 							getGuardText(iTrans),		 		// value
-							collectActions(indent, getActionText(iTrans)),// modifier
+							collectActions(indent, iTrans),// modifier
 							"",									// description 
 							getStateMachineDiagram(stmRoot).getName()// scope
 						));
@@ -912,7 +919,7 @@ public class RStmGenerator extends TBaseGenerator {
 							m_iClass.getName(), 				// type
 							"", 								// container
 							getGuardText(iTrans),		 			// value
-							collectActions(indent, getActionText(iTrans)),// modifier
+							collectActions(indent, iTrans),// modifier
 							"",									// description 
 							getStateMachineDiagram(stmRoot).getName()// scope
 						));
@@ -940,7 +947,7 @@ public class RStmGenerator extends TBaseGenerator {
 							m_iClass.getName(), 				// type
 							"", 								// container
 							getGuard(iTrans),		 			// value
-							collectActions(indent, getAction(iTrans)),// modifier
+							collectActions(indent, iTrans),// modifier
 							"",									// description 
 							getStateMachineDiagram(stmRoot).getName()// scope
 						));
@@ -950,7 +957,7 @@ public class RStmGenerator extends TBaseGenerator {
 							m_iClass.getName(), 				// type
 							"", 								// container
 							getGuard(iTrans),		 			// value
-							collectActions(indent, getAction(iTrans)),// modifier
+							collectActions(indent, iTrans),// modifier
 							"",									// description 
 							getStateMachineDiagram(stmRoot).getName()// scope
 						));
@@ -964,7 +971,7 @@ public class RStmGenerator extends TBaseGenerator {
 				if (!getAction(iTrans).trim().isEmpty()) {
 					System.out.println(makeIndent(indent) + getAction(iTrans).trim());
 					try {
-						String actions = collectActions(indent, getAction(iTrans).trim());
+						String actions = collectActions(indent, iTrans);
 						System.out.println(actions);
 						m_writer.write(actions);
 					} catch (IOException e) {
@@ -984,7 +991,7 @@ public class RStmGenerator extends TBaseGenerator {
 				if (!getAction(iTrans).trim().isEmpty()) {
 					System.out.println(makeIndent(indent) + getAction(iTrans).trim());
 					try {
-						String actions = collectActions(indent, getAction(iTrans).trim());
+						String actions = collectActions(indent, iTrans);
 						System.out.println(actions);
 						m_writer.write(actions);
 					} catch (IOException e) {
@@ -1060,7 +1067,7 @@ public class RStmGenerator extends TBaseGenerator {
 						m_iClass.getName(),								// type
 						targetMachineName,								// container
 						"",												// value
-						collectActions(indent, getAction(iTrans)),		// modifier
+						collectActions(indent, iTrans),		// modifier
 						getDefinition(iTrans),							// description
 						getStateMachineDiagram(stmRoot).getName()		// scope
 					));
@@ -1070,7 +1077,7 @@ public class RStmGenerator extends TBaseGenerator {
 						m_iClass.getName(),								// type
 						targetMachineName,								// container
 						"",												// value
-						collectActions(indent, getAction(iTrans)),		// modifier
+						collectActions(indent, iTrans),		// modifier
 						getDefinition(iTrans),							// description
 						getStateMachineDiagram(stmRoot).getName()		// scope
 					));
@@ -1084,6 +1091,16 @@ public class RStmGenerator extends TBaseGenerator {
 			/**
 			 * ▲ substm.begin
 			 */
+			// print Action if have
+			System.out.println(makeIndent(indent) + getAction(iTrans).trim());
+			try {
+				String actions = collectActions(indent, iTrans);
+				System.out.println(actions);
+				m_writer.write(actions);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			String targetMachineRef = "self.main." + targetMachineName;
 			System.out.println(makeIndent(indent) + targetMachineRef + "Hsm.Initiate(" + getStateMachineDiagram(stmRoot).getName() + "." + targetStateName + ")");
 			try {
@@ -1142,7 +1159,7 @@ public class RStmGenerator extends TBaseGenerator {
 									m_iClass.getName(), 				// type
 									"", 								// container
 									getGuard(iTrans),		 			// value
-									collectActions(indent, getAction(iTrans)),// modifier
+									collectActions(indent, iTrans),// modifier
 									"",									// description 
 									getStateMachineDiagram(stmRoot).getName()// scope
 								));
@@ -1164,7 +1181,7 @@ public class RStmGenerator extends TBaseGenerator {
 									m_iClass.getName(), 				// type
 									"", 								// container
 									getGuard(iTrans),		 			// value
-									collectActions(indent, getAction(iTrans)),// modifier
+									collectActions(indent, iTrans),// modifier
 									"",									// description 
 									getStateMachineDiagram(stmRoot).getName()// scope
 								));
@@ -1178,6 +1195,16 @@ public class RStmGenerator extends TBaseGenerator {
 					}
 				}else if (isJunctionPseudostate(iPstate)) {
 					// traverse junction's outgoing
+					// print Action if have
+					System.out.println(makeIndent(indent) + getAction(iTrans).trim());
+					try {
+						String actions = collectActions(indent, iTrans);
+						System.out.println(actions);
+						m_writer.write(actions);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					if (outgoings.size() == 1) {
 						printTransition(stmRoot, rgnName, iVertices, toArray(outgoings)[0]);
 					} else {
@@ -1249,7 +1276,7 @@ public class RStmGenerator extends TBaseGenerator {
 							m_iClass.getName(), 				// type
 							targetHsm,							// container
 							tempWriter.toString(),	 			// value
-							collectActions(indent, getAction(iTrans).trim()),// modifier
+							collectActions(indent, iTrans),// modifier
 							"",									// description 
 							getStateMachineDiagram(stmRoot).getName()// scope
 						));
@@ -1281,7 +1308,7 @@ public class RStmGenerator extends TBaseGenerator {
 					System.out.println(makeIndent(indent) + targetMachineRef + ".EndTrans()");
 					String actions = "";
 					try {
-						actions = collectActions(indent, getAction(iTrans));
+						actions = collectActions(indent, iTrans);
 					} catch (Exception e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -1331,7 +1358,7 @@ public class RStmGenerator extends TBaseGenerator {
 					System.out.println(makeIndent(indent) + targetMachineRef + ".EndTrans()");
 					String actions = "";
 					try {
-						actions = collectActions(indent, getAction(iTrans));
+						actions = collectActions(indent, iTrans);
 					} catch (Exception e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -1389,6 +1416,16 @@ public class RStmGenerator extends TBaseGenerator {
 					
 					for (Transition outgoing: outgoings) {
 						if (outgoing != mainTrans) {
+							// print Action if have
+							System.out.println(makeIndent(indent) + getAction(outgoing).trim());
+							try {
+								String actions = collectActions(indent, outgoing);
+								System.out.println(actions);
+								m_writer.write(actions);
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}					
 							printTransition(stmRoot, rgnName, iVertices, outgoing);
 						}
 					}
@@ -1398,7 +1435,8 @@ public class RStmGenerator extends TBaseGenerator {
 					System.out.println(makeIndent(indent) + "# end forking");
 					String actions = "";
 					try {
-						actions = collectActions(indent, getAction(iTrans));
+						actions = collectActions(indent, iTrans);
+						actions += collectActions(indent, mainTrans);
 					} catch (Exception e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -1476,6 +1514,21 @@ public class RStmGenerator extends TBaseGenerator {
 							}
 						}						
 					}					
+					// print Action  from incoming transitions.
+					for (Transition incoming: iPstate.getIncomings()) {
+						System.out.println(makeIndent(indent) + getAction(incoming).trim());
+						try {
+							String actions = collectActions(indent, incoming);
+							System.out.println(actions);
+							m_writer.write(actions);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}					
 					if (outgoings.size() == 1) {
 						System.out.println(makeIndent(indent) + ":");
 						try {
@@ -1484,7 +1537,7 @@ public class RStmGenerator extends TBaseGenerator {
 								m_iClass.getName(), 				// type
 								"", 								// container
 								isInConditions,			 			// value
-								collectActions(indent, getAction(iTrans)),// modifier
+								collectActions(indent, iTrans),// modifier
 								"",									// description 
 								getStateMachineDiagram(stmRoot).getName()// scope
 							));
@@ -1505,7 +1558,7 @@ public class RStmGenerator extends TBaseGenerator {
 									m_iClass.getName(), 				// type
 									"", 								// container
 									isInConditions,			 			// value
-									collectActions(indent, getAction(iTrans)),// modifier
+									collectActions(indent, iTrans),// modifier
 									"",									// description 
 									getStateMachineDiagram(stmRoot).getName()// scope
 								));
@@ -2664,7 +2717,6 @@ public class RStmGenerator extends TBaseGenerator {
 						}
 					}	
 					for (Transition iTrans: _iState.getOutgoings()) {
-						resetActions();
 						if (internalEvents.contains(getEvent(iTrans).trim())) {
 							m_bIsInternalTrans = true;
 						}
@@ -2717,7 +2769,7 @@ public class RStmGenerator extends TBaseGenerator {
 										m_iClass.getName(), 				// type
 										"", 								// container
 										getGuard(iTrans),		 			// value
-										collectActions(indent, getAction(iTrans)),// modifier
+										collectActions(indent, iTrans),// modifier
 										"",									// description 
 										getStateMachineDiagram(stmRoot).getName()// scope
 									));
@@ -3105,7 +3157,6 @@ public class RStmGenerator extends TBaseGenerator {
 		System.out.println(makeIndent(indent) + "self.lcaState = 0");
 		boolean firstRound = true;
 		for (Transition iTrans: getTransitions(stmRoot)) {
-			resetActions();
 			Vertex iSrcVtx = iTrans.getSource();
 			// find all transitions originated from a vertex belong to this region only
 			String targetMachineName = findTargetMachineName(rgnName, rgnVertices, iSrcVtx, null);
@@ -3203,7 +3254,7 @@ public class RStmGenerator extends TBaseGenerator {
 										m_iClass.getName(), 				// type
 										"", 								// container
 										getGuard(iTrans),		 			// value
-										collectActions(indent, getAction(iTrans)),// modifier
+										collectActions(indent, iTrans),// modifier
 										"",									// description 
 										getStateMachineDiagram(stmRoot).getName()// scope
 									));
@@ -3294,7 +3345,7 @@ public class RStmGenerator extends TBaseGenerator {
 									m_iClass.getName(), 				// type
 									"", 								// container
 									getGuard(iTrans),		 			// value
-									collectActions(indent, getAction(iTrans)),// modifier
+									collectActions(indent, iTrans),// modifier
 									"",									// description 
 									getStateMachineDiagram(stmRoot).getName()// scope
 								));
@@ -3378,7 +3429,7 @@ public class RStmGenerator extends TBaseGenerator {
 										m_iClass.getName(), 				// type
 										"", 								// container
 										isInConditions,			 			// value
-										collectActions(indent, getAction(iTrans)),// modifier
+										collectActions(indent, iTrans),// modifier
 										"",									// description 
 										getStateMachineDiagram(stmRoot).getName()// scope
 									));
