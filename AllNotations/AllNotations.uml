@@ -397,6 +397,14 @@
                 <trigger xmi:type="uml:Trigger" xmi:id="_mJZhAMFNEfCvssN6lsBRhw" name="" event="_DldBQMFMEfCvssN6lsBRhw"/>
               </transition>
               <transition xmi:type="uml:Transition" xmi:id="_r2CTsMFNEfCvssN6lsBRhw" source="_EV--kL6UEfCkNc0kfmkBvw" target="_b6kOIMFQEfCvssN6lsBRhw">
+                <effect xmi:type="uml:OpaqueBehavior" xmi:id="_Q-Z38NMqEfCfp514O78V2A" name="printWhenE2">
+                  <language>JAVA</language>
+                  <language>C</language>
+                  <language>C++</language>
+                  <body>System.out.println(&quot;Do something when E2&quot;);</body>
+                  <body>printf(&quot;Hello, World!&quot;);</body>
+                  <body>std::out &lt;&lt; &quot;Hello, World!&quot; &lt;&lt; std::endln;</body>
+                </effect>
                 <trigger xmi:type="uml:Trigger" xmi:id="_vbdiQMFNEfCvssN6lsBRhw" name="" event="_fEFiQMDsEfC3V-UbsE4d9A"/>
               </transition>
               <transition xmi:type="uml:Transition" xmi:id="_iqKSoMFQEfCvssN6lsBRhw" guard="_Xhg4UMFSEfCvssN6lsBRhw" source="_b6kOIMFQEfCvssN6lsBRhw" target="_NLGPIMH3EfCpHfwTBA0bGw">
@@ -406,6 +414,14 @@
                     <body>else</body>
                   </specification>
                 </ownedRule>
+                <effect xmi:type="uml:OpaqueBehavior" xmi:id="_WV5hENMqEfCfp514O78V2A" name="printWhenElse">
+                  <language>JAVA</language>
+                  <language>C</language>
+                  <language>C++</language>
+                  <body>System.out.println(&quot;Do something when else&quot;);</body>
+                  <body>printf(&quot;Hello, World!&quot;);</body>
+                  <body>std::out &lt;&lt; &quot;Hello, World!&quot; &lt;&lt; std::endln;</body>
+                </effect>
               </transition>
               <transition xmi:type="uml:Transition" xmi:id="_lZlGQMFQEfCvssN6lsBRhw" name="" guard="_dUFJUMFREfCvssN6lsBRhw" source="_b6kOIMFQEfCvssN6lsBRhw" target="_GL224L6bEfCMrO0Z3MZOuA">
                 <ownedRule xmi:type="uml:Constraint" xmi:id="_dUFJUMFREfCvssN6lsBRhw" name="">
@@ -414,6 +430,14 @@
                     <body>pContextImpl.internalAttribute == 0</body>
                   </specification>
                 </ownedRule>
+                <effect xmi:type="uml:OpaqueBehavior" xmi:id="_e6FRANMcEfCfp514O78V2A" name="printWhen0">
+                  <language>JAVA</language>
+                  <language>C</language>
+                  <language>C++</language>
+                  <body>System.out.println(&quot;Do something when 0&quot;);</body>
+                  <body>printf(&quot;Hello, World!&quot;);</body>
+                  <body>std::out &lt;&lt; &quot;Hello, World!&quot; &lt;&lt; std::endln;</body>
+                </effect>
               </transition>
               <transition xmi:type="uml:Transition" xmi:id="_Bc20QMHUEfCpHfwTBA0bGw" source="_GL224L6bEfCMrO0Z3MZOuA" target="_sUf6cMHTEfCpHfwTBA0bGw">
                 <trigger xmi:type="uml:Trigger" xmi:id="_C3MEQMHUEfCpHfwTBA0bGw" name="" event="_fEFiQMDsEfC3V-UbsE4d9A"/>
@@ -435,6 +459,14 @@
                     <body>pContextImpl.internalAttribute == 1</body>
                   </specification>
                 </ownedRule>
+                <effect xmi:type="uml:OpaqueBehavior" xmi:id="_bgwcYNMqEfCfp514O78V2A" name="printWhen1">
+                  <language>JAVA</language>
+                  <language>C</language>
+                  <language>C++</language>
+                  <body>System.out.println(&quot;Do something when 1&quot;);</body>
+                  <body>printf(&quot;Hello, World!&quot;);</body>
+                  <body>std::out &lt;&lt; &quot;Hello, World!&quot; &lt;&lt; std::endln;</body>
+                </effect>
               </transition>
               <transition xmi:type="uml:Transition" xmi:id="_JU6LQMH4EfCpHfwTBA0bGw" guard="_NKQFIMH4EfCpHfwTBA0bGw" source="_NLGPIMH3EfCpHfwTBA0bGw" target="_e6GJEMFKEfCvssN6lsBRhw">
                 <ownedRule xmi:type="uml:Constraint" xmi:id="_NKQFIMH4EfCpHfwTBA0bGw" name="">
@@ -443,6 +475,14 @@
                     <body>else</body>
                   </specification>
                 </ownedRule>
+                <effect xmi:type="uml:OpaqueBehavior" xmi:id="_ejPV8NMqEfCfp514O78V2A" name="printWhen2ndElse">
+                  <language>JAVA</language>
+                  <language>C</language>
+                  <language>C++</language>
+                  <body>System.out.println(&quot;Do something when 2nd else&quot;);</body>
+                  <body>printf(&quot;Hello, World!&quot;);</body>
+                  <body>std::out &lt;&lt; &quot;Hello, World!&quot; &lt;&lt; std::endln;</body>
+                </effect>
               </transition>
               <transition xmi:type="uml:Transition" xmi:id="_185oQMO5EfCnMtYhl6TD5w" source="_xy3QwMO5EfCnMtYhl6TD5w" target="_bVjX8MHREfCpHfwTBA0bGw"/>
               <transition xmi:type="uml:Transition" xmi:id="_4YIUkMO5EfCnMtYhl6TD5w" source="_xy3QwMO5EfCnMtYhl6TD5w" target="_jU3EQMCGEfC3V-UbsE4d9A"/>

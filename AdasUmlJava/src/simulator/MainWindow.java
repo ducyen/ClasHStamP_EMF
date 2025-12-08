@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import all_notations.java_sample00.model.ContextImpl;
+import design.model.ContextImpl;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 
