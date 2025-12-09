@@ -39,6 +39,7 @@ import org.eclipse.uml2.uml.SignalEvent;
 import org.eclipse.uml2.uml.Region;
 import org.eclipse.uml2.uml.Signal;
 import org.eclipse.uml2.uml.Vertex;
+import org.eclipse.uml2.uml.Class;
 import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.gmf.runtime.notation.Node;
 import org.eclipse.gmf.runtime.notation.Edge;
@@ -774,6 +775,43 @@ public class RStmGenerator extends TBaseGenerator {
         }.start(vertices);
         return m_bResult;
     }
+    
+    /**
+     * Find an event-parameter class following ClasHStamP naming rule:
+     * For event "<eventName>", the params class is "<eventName>Params".
+     *
+     * @param iClass the ContextImpl class (the owner)
+     * @param eventName the event name (e.g., "E1")
+     * @return the UML Class representing "<eventName>Params", or null if not exists
+     */
+    private Classifier findEventParamsClass(Classifier iClass_, String eventName) {
+    	if (iClass_ instanceof Class) {
+    		Class iClass = (Class)iClass_;
+	    	
+	        if (iClass == null || eventName == null || eventName.isEmpty()) {
+	            return null;
+	        }
+	
+	        String paramsClassName = eventName + "Params";
+	
+	        //
+	        // Scan nested classifiers of ContextImpl
+	        //
+	        for (Classifier classifier : iClass.getNestedClassifiers()) {
+	
+	            // We only care about UML Class
+	            if (classifier instanceof Class) {
+	                Class nestedClass = (Class) classifier;
+	
+	                if (paramsClassName.equals(nestedClass.getName())) {
+	                    return nestedClass;
+	                }
+	            }
+	        }
+    	}
+        // Not found
+        return null;
+    }    
     
     /**
      * findNodeForElement
@@ -2757,6 +2795,34 @@ public class RStmGenerator extends TBaseGenerator {
 								}
 							}
 							indent++;
+
+							// Declare parameters
+							Classifier eventParams = findEventParamsClass(m_iClass, getEvent(iTrans));
+							if (eventParams != null && getGuard(iTrans).equalsIgnoreCase("else") == false) {
+								String ownerName = "";
+								if (eventParams.getOwner() instanceof NamedElement) {
+									ownerName = ((NamedElement)eventParams.getOwner()).getName();
+									try {
+										m_writer.write(Utils.get(m_stxCsv.get(indent, "trans_action", "name"), 
+											getEvent(iTrans), 
+											m_iClass.getName(), 
+											ownerName,
+											"",
+											"",
+											"",
+											getFullNamespace((NamedElement)eventParams.getOwner()).replace("::", m_pkgPathSeparator)
+										));
+									} catch (IOException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									} catch (Exception e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+								}
+								
+							}
+							
 							if (!getGuard(iTrans).isEmpty()) {
 								// print if
 								printTransition(stmRoot, rgnName, rgnVertices, iTrans);

@@ -9,6 +9,9 @@ import design.abstracts.*;
 
 public  class ContextImpl extends Context
 {
+    public static class onSpeedChangeParams extends EventParams{
+        public Integer nKmPerHour;                              
+    };
     public enum EventId {
         onAdasSwitch,
         onSpeedChange,
@@ -74,14 +77,14 @@ class _MainStmTop extends StateMachine {
         void Off_Entry( ContextImpl pContextImpl ){
             if( Enterable( MainStmTop.Off ) ){
                 MainStm_Entry( pContextImpl );
-                DefaultEntryAction( pContextImpl, "MainStmTop	MainStm	239	100	221	61	30	30	1461	931	Off" );
+                DefaultEntryAction( pContextImpl, "MainStmTop	MainStm	239	100	221	61	30	30	1411	811	Off" );
             }
         }
         boolean Off_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
             boolean bResult = false;
             if( !bHandled ){
                 nSourceState = MainStmTop.Off;
-                DefaultDoingAction( pContextImpl, "MainStmTop	MainStm	239	100	221	61	30	30	1461	931	Off" );
+                DefaultDoingAction( pContextImpl, "MainStmTop	MainStm	239	100	221	61	30	30	1411	811	Off" );
                 switch( nEventId ){
                 case ContextImpl.EventId.onAdasSwitch:{
             BgnTrans( pContextImpl, MainStmTop.On );
@@ -98,14 +101,14 @@ class _MainStmTop extends StateMachine {
         }
         void Off_Exit( ContextImpl pContextImpl ){
             if( Exitable( MainStmTop.Off ) ){ 
-                 DefaultExitAction( pContextImpl, "MainStmTop	MainStm	239	100	221	61	30	30	1461	931	Off" );
+                 DefaultExitAction( pContextImpl, "MainStmTop	MainStm	239	100	221	61	30	30	1411	811	Off" );
                 MainStm_Exit( pContextImpl );
             }
         }
         void On_Entry( ContextImpl pContextImpl ){
             if( Enterable( MainStmTop.On ) ){
                 MainStm_Entry( pContextImpl );
-                DefaultEntryAction( pContextImpl, "MainStmTop	MainStm	99	240	521	228	30	30	1461	931	On" );
+                DefaultEntryAction( pContextImpl, "MainStmTop	MainStm	99	240	521	228	30	30	1411	811	On" );
         if( !( ( MainStmTop )pMain ).lastEnteredStateRecovering && nTargetState == MainStmTop.On ){
             nPseudostate = MainStmTop.OnInit;
         }
@@ -115,7 +118,7 @@ class _MainStmTop extends StateMachine {
             boolean bResult = false;
             if( !bHandled ){
                 nSourceState = MainStmTop.On;
-                DefaultDoingAction( pContextImpl, "MainStmTop	MainStm	99	240	521	228	30	30	1461	931	On" );
+                DefaultDoingAction( pContextImpl, "MainStmTop	MainStm	99	240	521	228	30	30	1411	811	On" );
                 switch( nEventId ){
                 case ContextImpl.EventId.onAdasSwitch:{
             BgnTrans( pContextImpl, MainStmTop.Off );
@@ -132,24 +135,25 @@ class _MainStmTop extends StateMachine {
         }
         void On_Exit( ContextImpl pContextImpl ){
             if( Exitable( MainStmTop.On ) ){ 
-                 DefaultExitAction( pContextImpl, "MainStmTop	MainStm	99	240	521	228	30	30	1461	931	On" );
+                 DefaultExitAction( pContextImpl, "MainStmTop	MainStm	99	240	521	228	30	30	1411	811	On" );
                 MainStm_Exit( pContextImpl );
             }
         }
         void Deactive_Entry( ContextImpl pContextImpl ){
             if( Enterable( MainStmTop.Deactive ) ){
                 On_Entry( pContextImpl );
-                DefaultEntryAction( pContextImpl, "MainStmTop	MainStm	138	340	141	61	30	30	1461	931	Deactive" );
+                DefaultEntryAction( pContextImpl, "MainStmTop	MainStm	138	340	141	61	30	30	1411	811	Deactive" );
             }
         }
         boolean Deactive_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
             boolean bResult = false;
             if( !bHandled ){
                 nSourceState = MainStmTop.Deactive;
-                DefaultDoingAction( pContextImpl, "MainStmTop	MainStm	138	340	141	61	30	30	1461	931	Deactive" );
+                DefaultDoingAction( pContextImpl, "MainStmTop	MainStm	138	340	141	61	30	30	1411	811	Deactive" );
                 switch( nEventId ){
                 case ContextImpl.EventId.onSpeedChange:{
-            if (pContextImpl.internalAttribute > 10) {
+            design.model.ContextImpl.onSpeedChangeParams e = ( design.model.ContextImpl.onSpeedChangeParams )pEventParams; // need merge from "action" ★
+            if (e.nKmPerHour > 10) {
                 BgnTrans( pContextImpl, MainStmTop.Active );
                     DefaultTransAction("240	340	240	300	420	300	420	340");
                 EndTrans( pContextImpl );
@@ -165,24 +169,25 @@ class _MainStmTop extends StateMachine {
         }
         void Deactive_Exit( ContextImpl pContextImpl ){
             if( Exitable( MainStmTop.Deactive ) ){ 
-                 DefaultExitAction( pContextImpl, "MainStmTop	MainStm	138	340	141	61	30	30	1461	931	Deactive" );
+                 DefaultExitAction( pContextImpl, "MainStmTop	MainStm	138	340	141	61	30	30	1411	811	Deactive" );
                 On_Exit( pContextImpl );
             }
         }
         void Active_Entry( ContextImpl pContextImpl ){
             if( Enterable( MainStmTop.Active ) ){
                 On_Entry( pContextImpl );
-                DefaultEntryAction( pContextImpl, "MainStmTop	MainStm	378	340	141	61	30	30	1461	931	Active" );
+                DefaultEntryAction( pContextImpl, "MainStmTop	MainStm	378	340	141	61	30	30	1411	811	Active" );
             }
         }
         boolean Active_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){
             boolean bResult = false;
             if( !bHandled ){
                 nSourceState = MainStmTop.Active;
-                DefaultDoingAction( pContextImpl, "MainStmTop	MainStm	378	340	141	61	30	30	1461	931	Active" );
+                DefaultDoingAction( pContextImpl, "MainStmTop	MainStm	378	340	141	61	30	30	1411	811	Active" );
                 switch( nEventId ){
                 case ContextImpl.EventId.onSpeedChange:{
-            if (pContextImpl.internalAttribute <= 10) {
+            design.model.ContextImpl.onSpeedChangeParams e = ( design.model.ContextImpl.onSpeedChangeParams )pEventParams; // need merge from "action" ★
+            if (e.nKmPerHour <= 10) {
                 BgnTrans( pContextImpl, MainStmTop.Deactive );
                     DefaultTransAction("420	401	420	440	240	440	240	401");
                 EndTrans( pContextImpl );
@@ -198,7 +203,7 @@ class _MainStmTop extends StateMachine {
         }
         void Active_Exit( ContextImpl pContextImpl ){
             if( Exitable( MainStmTop.Active ) ){ 
-                 DefaultExitAction( pContextImpl, "MainStmTop	MainStm	378	340	141	61	30	30	1461	931	Active" );
+                 DefaultExitAction( pContextImpl, "MainStmTop	MainStm	378	340	141	61	30	30	1411	811	Active" );
                 On_Exit( pContextImpl );
             }
         }

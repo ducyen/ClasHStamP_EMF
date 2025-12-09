@@ -391,10 +391,8 @@
                   <ownedRule xmi:type="uml:Constraint" xmi:id="_ofMa8NPpEfCtGJfb3T-6EA">
                     <name xsi:nil="true"/>
                     <specification xmi:type="uml:OpaqueExpression" xmi:id="_ofMa8dPpEfCtGJfb3T-6EA" name="">
-                      <language>OCL</language>
                       <language>Java</language>
-                      <body>pContextImpl.internalAttribute &lt;= 10</body>
-                      <body>pContextImpl.internalAttribute &lt;= 10</body>
+                      <body>e.nKmPerHour &lt;= 10</body>
                     </specification>
                   </ownedRule>
                   <trigger xmi:type="uml:Trigger" xmi:id="_ofNCANPpEfCtGJfb3T-6EA" event="_wfkpQL6dEfCJCfFNPN5vdQ">
@@ -405,10 +403,8 @@
                   <ownedRule xmi:type="uml:Constraint" xmi:id="_Vx9VMNPoEfCtGJfb3T-6EA">
                     <name xsi:nil="true"/>
                     <specification xmi:type="uml:OpaqueExpression" xmi:id="_Vx9VMdPoEfCtGJfb3T-6EA" name="">
-                      <language>OCL</language>
                       <language>Java</language>
-                      <body>pContextImpl.internalAttribute > 10</body>
-                      <body>pContextImpl.internalAttribute > 10</body>
+                      <body>e.nKmPerHour > 10</body>
                     </specification>
                   </ownedRule>
                   <trigger xmi:type="uml:Trigger" xmi:id="_PfpNINPpEfCtGJfb3T-6EA" event="_wfkpQL6dEfCJCfFNPN5vdQ">
@@ -433,6 +429,12 @@
             <name xsi:nil="true"/>
           </ownedParameter>
         </ownedOperation>
+        <nestedClassifier xmi:type="uml:Class" xmi:id="__GUlUNSYEfCtGJfb3T-6EA" name="onSpeedChangeParams">
+          <generalization xmi:type="uml:Generalization" xmi:id="_c1cM4NTWEfCtGJfb3T-6EA" general="_tCDLgLpVEfCEnM4Nhn5qiQ"/>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_EhplkNSZEfCtGJfb3T-6EA" name="nKmPerHour" visibility="public">
+            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+          </ownedAttribute>
+        </nestedClassifier>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_vG3i87pVEfCEnM4Nhn5qiQ" name="CalledDependency" visibility="public">
         <ownedAttribute xmi:type="uml:Property" xmi:id="_vG3i9LpVEfCEnM4Nhn5qiQ" name="attribute0" visibility="private" isUnique="false">

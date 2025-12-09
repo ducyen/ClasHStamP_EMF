@@ -7,6 +7,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Classifier;
+import org.eclipse.uml2.uml.DataType;
+import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Generalization;
 import org.eclipse.uml2.uml.Stereotype;
@@ -75,10 +77,8 @@ public class TNestedClsGenerator extends TBaseGenerator {
     public void printNestedClasses() throws IOException, Exception {
         for (Class nestedClass : m_nestedClasses) {
             // Only process if a stereotype is applied
-            if (!nestedClass.getAppliedStereotypes().isEmpty()) {
-                // Get the first applied stereotype's name
-                Stereotype umlStereo = nestedClass.getAppliedStereotypes().get(0);
-                String stereotype = umlStereo.getName();
+            String stereotype = nestedClass instanceof DataType ? "struct" : nestedClass instanceof Enumeration ? "enum" : "struct";
+            if (stereotype != null) {
                 // Prefix based on visibility
                 VisibilityKind vis = nestedClass.getVisibility();
                 if (vis == VisibilityKind.PUBLIC_LITERAL) {

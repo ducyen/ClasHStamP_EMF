@@ -14,40 +14,40 @@ class,"
 [vALUE]",,,"[->]{
 ","[->]}
 "
-b_enum,"[->]public  enum [Name] {
+b_enum,"[->]public  enum [nAME] {
 ","[->][nAME],[->64][dESC]
 ","[->][nAME],[->64][dESC]
 ",,"[->]    [nAME]_NUM
 [->]};
 "
-c_enum,"[->]protected  enum [Name] {
+c_enum,"[->]protected  enum [nAME] {
 ","[->][nAME],[->64][dESC]
 ","[->][nAME],[->64][dESC]
 ",,"[->]    [nAME]_NUM
 [->]};
 "
-i_enum,"[->]private enum [Name] {
+i_enum,"[->]private enum [nAME] {
 ","[->][nAME],[->64][dESC]
 ","[->][nAME],[->64][dESC]
 ",,"[->]    [nAME]_NUM
 [->]};
 "
-b_struct,"[->]public static class [Name] {
+b_struct,"[->]public static class [nAME] {
 ","[->]public [tYPE] [nAME][mODIFIER];[->64][dESC]
 ","[->]public [tYPE] [nAME][mODIFIER];[->64][dESC]
-","[->]public static class [Name] extends [tYPE]{
+","[->]public static class [nAME] extends [tYPE]{
 ","[->]};
 "
-c_struct,"[->]protected static class [Name] {
+c_struct,"[->]protected static class [nAME] {
 ","[->]public [tYPE] [nAME][mODIFIER];[->64][dESC]
 ","[->]public [tYPE] [nAME][mODIFIER];[->64][dESC]
-","[->]protected static class [Name] extends [tYPE]{
+","[->]protected static class [nAME] extends [tYPE]{
 ","[->]};
 "
-i_struct,"[->]private static class [Name] {
+i_struct,"[->]private static class [nAME] {
 ","[->]public [tYPE] [nAME][mODIFIER];[->64][dESC]
 ","[->]public [tYPE] [nAME][mODIFIER];[->64][dESC]
-","[->]private static class [Name] extends [tYPE]{
+","[->]private static class [nAME] extends [tYPE]{
 ","[->]};
 "
 constructor,,,,,
@@ -381,7 +381,7 @@ state_action,"[->]if( !( ( [sCOPE] )pMain ).lastEnteredStateRecovering && nTarge
 ",[->][nAME],"[->]( ( [sCOPE] )pMain ).[mODIFIER].Reset( p[tYPE] );
 ","[->]( ( [sCOPE] )pMain ).[mODIFIER].Abort( p[tYPE] );
 "
-trans_action,"[->][nAME]Params* e = ( [nAME]Params* )pEventParams; // need merge from ""action"" ★
+trans_action,"[->][scope][cONTAINER].[nAME]Params e = ( [scope][cONTAINER].[nAME]Params )pEventParams; // need merge from ""action"" ★
 ",( ( [sCOPE] )pMain ).[mODIFIER].IsIn( [sCOPE].[vALUE] ),"
 [->] && HdStateMachine_IsIn( &( ( [sCOPE] )pMain ).[mODIFIER], [sCOPE].[vALUE] )","[->]BgnTrans( p[tYPE], [sCOPE].[nAME] );
 [mODIFIER][->]EndTrans( p[tYPE] );

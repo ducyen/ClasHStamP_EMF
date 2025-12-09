@@ -8,6 +8,8 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import design.model.ContextImpl;
+import design.model.ContextImpl.onSpeedChangeParams;
+
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 
@@ -83,8 +85,9 @@ public class MainWindow extends JFrame {
 					contextWorker.post(() -> {
 						ContextImpl ctx = context;
 						if (ctx != null) {
-							ctx.methodWithParams("internalAttribute", value);
-                            ctx.EventProc(ContextImpl.EventId.onSpeedChange, null);							
+							onSpeedChangeParams params = new onSpeedChangeParams();
+							params.nKmPerHour = value;
+                            ctx.EventProc(ContextImpl.EventId.onSpeedChange, params);							
 						}
 					});
 				}
