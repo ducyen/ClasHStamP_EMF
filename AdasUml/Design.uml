@@ -386,34 +386,31 @@
             <subvertex xmi:type="uml:Pseudostate" xmi:id="_z5liANPmEfCtGJfb3T-6EA" name="MainStmInit"/>
             <subvertex xmi:type="uml:State" xmi:id="_2DUOoNPmEfCtGJfb3T-6EA" name="On">
               <region xmi:type="uml:Region" xmi:id="_HCHcoNPoEfCtGJfb3T-6EA" name="Region1">
-                <transition xmi:type="uml:Transition" xmi:id="_PzJNYNPoEfCtGJfb3T-6EA" source="_N2-boNPoEfCtGJfb3T-6EA" target="_HCKf8NPoEfCtGJfb3T-6EA"/>
-                <transition xmi:type="uml:Transition" xmi:id="_g5gb8NPpEfCtGJfb3T-6EA" guard="_ofMa8NPpEfCtGJfb3T-6EA" source="_Jl8EQNPoEfCtGJfb3T-6EA" target="_HCKf8NPoEfCtGJfb3T-6EA">
-                  <ownedRule xmi:type="uml:Constraint" xmi:id="_ofMa8NPpEfCtGJfb3T-6EA">
-                    <name xsi:nil="true"/>
-                    <specification xmi:type="uml:OpaqueExpression" xmi:id="_ofMa8dPpEfCtGJfb3T-6EA" name="">
+                <transition xmi:type="uml:Transition" xmi:id="_RUWHcNUGEfCtGJfb3T-6EA" guard="_fQFpkNUGEfCtGJfb3T-6EA" source="_HCKf8NPoEfCtGJfb3T-6EA" target="_Jl8EQNPoEfCtGJfb3T-6EA">
+                  <ownedRule xmi:type="uml:Constraint" xmi:id="_fQFpkNUGEfCtGJfb3T-6EA" name="">
+                    <specification xmi:type="uml:OpaqueExpression" xmi:id="_fQLJINUGEfCtGJfb3T-6EA" name="constraintSpec">
                       <language>Java</language>
-                      <body>e.nKmPerHour &lt;= 10</body>
+                      <body>e.weatherType == ContextImpl.WeatherType.Sunny &amp;&amp; e.nKmPerHour > 10</body>
                     </specification>
                   </ownedRule>
-                  <trigger xmi:type="uml:Trigger" xmi:id="_ofNCANPpEfCtGJfb3T-6EA" event="_wfkpQL6dEfCJCfFNPN5vdQ">
+                  <trigger xmi:type="uml:Trigger" xmi:id="_mlnawNUIEfCtGJfb3T-6EA" name="" event="_wfkpQL6dEfCJCfFNPN5vdQ"/>
+                </transition>
+                <transition xmi:type="uml:Transition" xmi:id="_xClS0NVeEfCtGJfb3T-6EA" guard="_3QdKUNVeEfCtGJfb3T-6EA" source="_Jl8EQNPoEfCtGJfb3T-6EA" target="_HCKf8NPoEfCtGJfb3T-6EA">
+                  <ownedRule xmi:type="uml:Constraint" xmi:id="_3QdKUNVeEfCtGJfb3T-6EA">
+                    <name xsi:nil="true"/>
+                    <specification xmi:type="uml:OpaqueExpression" xmi:id="_3QdKUdVeEfCtGJfb3T-6EA" name="constraintSpec">
+                      <language>Java</language>
+                      <body>!( e.weatherType == ContextImpl.WeatherType.Sunny &amp;&amp; e.nKmPerHour > 10 )</body>
+                    </specification>
+                  </ownedRule>
+                  <trigger xmi:type="uml:Trigger" xmi:id="_3QeYcNVeEfCtGJfb3T-6EA" event="_wfkpQL6dEfCJCfFNPN5vdQ">
                     <name xsi:nil="true"/>
                   </trigger>
                 </transition>
-                <transition xmi:type="uml:Transition" xmi:id="_RFF9cNPoEfCtGJfb3T-6EA" guard="_Vx9VMNPoEfCtGJfb3T-6EA" source="_HCKf8NPoEfCtGJfb3T-6EA" target="_Jl8EQNPoEfCtGJfb3T-6EA">
-                  <ownedRule xmi:type="uml:Constraint" xmi:id="_Vx9VMNPoEfCtGJfb3T-6EA">
-                    <name xsi:nil="true"/>
-                    <specification xmi:type="uml:OpaqueExpression" xmi:id="_Vx9VMdPoEfCtGJfb3T-6EA" name="">
-                      <language>Java</language>
-                      <body>e.nKmPerHour > 10</body>
-                    </specification>
-                  </ownedRule>
-                  <trigger xmi:type="uml:Trigger" xmi:id="_PfpNINPpEfCtGJfb3T-6EA" event="_wfkpQL6dEfCJCfFNPN5vdQ">
-                    <name xsi:nil="true"/>
-                  </trigger>
-                </transition>
+                <transition xmi:type="uml:Transition" xmi:id="_GGP54NVfEfCtGJfb3T-6EA" source="_ESJfANVfEfCtGJfb3T-6EA" target="_HCKf8NPoEfCtGJfb3T-6EA"/>
                 <subvertex xmi:type="uml:State" xmi:id="_HCKf8NPoEfCtGJfb3T-6EA" name="Deactive"/>
                 <subvertex xmi:type="uml:State" xmi:id="_Jl8EQNPoEfCtGJfb3T-6EA" name="Active"/>
-                <subvertex xmi:type="uml:Pseudostate" xmi:id="_N2-boNPoEfCtGJfb3T-6EA" name="OnInit"/>
+                <subvertex xmi:type="uml:Pseudostate" xmi:id="_ESJfANVfEfCtGJfb3T-6EA" name="OnInit"/>
               </region>
             </subvertex>
           </region>
@@ -434,6 +431,13 @@
           <ownedAttribute xmi:type="uml:Property" xmi:id="_EhplkNSZEfCtGJfb3T-6EA" name="nKmPerHour" visibility="public">
             <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
           </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_n2zdMNUFEfCtGJfb3T-6EA" name="weatherType" visibility="public" type="_MRddYNT7EfCtGJfb3T-6EA"/>
+        </nestedClassifier>
+        <nestedClassifier xmi:type="uml:Enumeration" xmi:id="_MRddYNT7EfCtGJfb3T-6EA" name="WeatherType">
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_SeUoQNT7EfCtGJfb3T-6EA" name="Sunny" visibility="public"/>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_XqbgwNT7EfCtGJfb3T-6EA" name="Rainy" visibility="public"/>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_aC1ikNT7EfCtGJfb3T-6EA" name="Cloudy" visibility="public"/>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_coBcINT7EfCtGJfb3T-6EA" name="Snowy" visibility="public"/>
         </nestedClassifier>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_vG3i87pVEfCEnM4Nhn5qiQ" name="CalledDependency" visibility="public">

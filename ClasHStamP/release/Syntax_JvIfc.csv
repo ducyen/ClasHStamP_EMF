@@ -17,19 +17,19 @@ class,"
 b_enum,"[->]public  enum [nAME] {
 ","[->][nAME],[->64][dESC]
 ","[->][nAME],[->64][dESC]
-",,"[->]    [nAME]_NUM
+",,"[->]    Num
 [->]};
 "
 c_enum,"[->]protected  enum [nAME] {
 ","[->][nAME],[->64][dESC]
 ","[->][nAME],[->64][dESC]
-",,"[->]    [nAME]_NUM
+",,"[->]    Num
 [->]};
 "
 i_enum,"[->]private enum [nAME] {
 ","[->][nAME],[->64][dESC]
 ","[->][nAME],[->64][dESC]
-",,"[->]    [nAME]_NUM
+",,"[->]    Num
 [->]};
 "
 b_struct,"[->]public static class [nAME] {
@@ -381,7 +381,7 @@ state_action,"[->]if( !( ( [sCOPE] )pMain ).lastEnteredStateRecovering && nTarge
 ",[->][nAME],"[->]( ( [sCOPE] )pMain ).[mODIFIER].Reset( p[tYPE] );
 ","[->]( ( [sCOPE] )pMain ).[mODIFIER].Abort( p[tYPE] );
 "
-trans_action,"[->][scope][cONTAINER].[nAME]Params e = ( [scope][cONTAINER].[nAME]Params )pEventParams; // need merge from ""action"" ★
+trans_action,"[->][cONTAINER].[nAME]Params e = ( [cONTAINER].[nAME]Params )pEventParams;
 ",( ( [sCOPE] )pMain ).[mODIFIER].IsIn( [sCOPE].[vALUE] ),"
 [->] && HdStateMachine_IsIn( &( ( [sCOPE] )pMain ).[mODIFIER], [sCOPE].[vALUE] )","[->]BgnTrans( p[tYPE], [sCOPE].[nAME] );
 [mODIFIER][->]EndTrans( p[tYPE] );

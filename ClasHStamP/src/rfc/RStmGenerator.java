@@ -1006,39 +1006,34 @@ public class RStmGenerator extends TBaseGenerator {
 				}
 				indent++;
 				// print Action if have
-				if (!getAction(iTrans).trim().isEmpty()) {
-					System.out.println(makeIndent(indent) + getAction(iTrans).trim());
-					try {
-						String actions = collectActions(indent, iTrans);
-						System.out.println(actions);
-						m_writer.write(actions);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
+				System.out.println(makeIndent(indent) + getAction(iTrans).trim());
+				try {
+					String actions = collectActions(indent, iTrans);
+					System.out.println(actions);
+					m_writer.write(actions);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 
 				TraverseTransition(stmRoot, rgnName, iVertices, iTrans);
 				indent--;
 			} else {// else (does have Guard)
 				// print Action if have
-				if (!getAction(iTrans).trim().isEmpty()) {
-					System.out.println(makeIndent(indent) + getAction(iTrans).trim());
-					try {
-						String actions = collectActions(indent, iTrans);
-						System.out.println(actions);
-						m_writer.write(actions);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+				System.out.println(makeIndent(indent) + getAction(iTrans).trim());
+				try {
+					String actions = collectActions(indent, iTrans);
+					System.out.println(actions);
+					m_writer.write(actions);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 				TraverseTransition(stmRoot, rgnName, iVertices, iTrans);
 			}

@@ -9,8 +9,16 @@ import design.abstracts.*;
 
 public  class ContextImpl extends Context
 {
+    public  enum WeatherType {
+        Sunny,                                                  
+        Rainy,                                                  
+        Cloudy,                                                 
+        Snowy,                                                  
+        Num
+    };
     public static class onSpeedChangeParams extends EventParams{
         public Integer nKmPerHour;                              
+        public WeatherType weatherType;                         
     };
     public enum EventId {
         onAdasSwitch,
@@ -108,7 +116,7 @@ class _MainStmTop extends StateMachine {
         void On_Entry( ContextImpl pContextImpl ){
             if( Enterable( MainStmTop.On ) ){
                 MainStm_Entry( pContextImpl );
-                DefaultEntryAction( pContextImpl, "MainStmTop	MainStm	99	240	521	228	30	30	1411	811	On" );
+                DefaultEntryAction( pContextImpl, "MainStmTop	MainStm	99	240	521	321	30	30	1411	811	On" );
         if( !( ( MainStmTop )pMain ).lastEnteredStateRecovering && nTargetState == MainStmTop.On ){
             nPseudostate = MainStmTop.OnInit;
         }
@@ -118,7 +126,7 @@ class _MainStmTop extends StateMachine {
             boolean bResult = false;
             if( !bHandled ){
                 nSourceState = MainStmTop.On;
-                DefaultDoingAction( pContextImpl, "MainStmTop	MainStm	99	240	521	228	30	30	1411	811	On" );
+                DefaultDoingAction( pContextImpl, "MainStmTop	MainStm	99	240	521	321	30	30	1411	811	On" );
                 switch( nEventId ){
                 case ContextImpl.EventId.onAdasSwitch:{
             BgnTrans( pContextImpl, MainStmTop.Off );
@@ -135,7 +143,7 @@ class _MainStmTop extends StateMachine {
         }
         void On_Exit( ContextImpl pContextImpl ){
             if( Exitable( MainStmTop.On ) ){ 
-                 DefaultExitAction( pContextImpl, "MainStmTop	MainStm	99	240	521	228	30	30	1411	811	On" );
+                 DefaultExitAction( pContextImpl, "MainStmTop	MainStm	99	240	521	321	30	30	1411	811	On" );
                 MainStm_Exit( pContextImpl );
             }
         }
@@ -152,10 +160,10 @@ class _MainStmTop extends StateMachine {
                 DefaultDoingAction( pContextImpl, "MainStmTop	MainStm	138	340	141	61	30	30	1411	811	Deactive" );
                 switch( nEventId ){
                 case ContextImpl.EventId.onSpeedChange:{
-            design.model.ContextImpl.onSpeedChangeParams e = ( design.model.ContextImpl.onSpeedChangeParams )pEventParams; // need merge from "action" ★
-            if (e.nKmPerHour > 10) {
+            ContextImpl.onSpeedChangeParams e = ( ContextImpl.onSpeedChangeParams )pEventParams; // need merge from "action" ★
+            if (e.weatherType == ContextImpl.WeatherType.Sunny && e.nKmPerHour > 10) {
                 BgnTrans( pContextImpl, MainStmTop.Active );
-                    DefaultTransAction("240	340	240	300	420	300	420	340");
+                    DefaultTransAction("220	340	220	300	460	300	460	340");
                 EndTrans( pContextImpl );
                 bResult |= true;
             }
@@ -186,10 +194,10 @@ class _MainStmTop extends StateMachine {
                 DefaultDoingAction( pContextImpl, "MainStmTop	MainStm	378	340	141	61	30	30	1411	811	Active" );
                 switch( nEventId ){
                 case ContextImpl.EventId.onSpeedChange:{
-            design.model.ContextImpl.onSpeedChangeParams e = ( design.model.ContextImpl.onSpeedChangeParams )pEventParams; // need merge from "action" ★
-            if (e.nKmPerHour <= 10) {
+            ContextImpl.onSpeedChangeParams e = ( ContextImpl.onSpeedChangeParams )pEventParams; // need merge from "action" ★
+            if (!( e.weatherType == ContextImpl.WeatherType.Sunny && e.nKmPerHour > 10 )) {
                 BgnTrans( pContextImpl, MainStmTop.Deactive );
-                    DefaultTransAction("420	401	420	440	240	440	240	401");
+                    DefaultTransAction("460	401	460	460	200	460	200	401");
                 EndTrans( pContextImpl );
                 bResult |= true;
             }
@@ -277,7 +285,7 @@ class _MainStmTop extends StateMachine {
             bResult |= true;
         } else if ( nPseudostate == MainStmTop.OnInit  ) {
             BgnTrans( pContextImpl, MainStmTop.Deactive );
-                DefaultTransAction("153	297	180	340");
+                DefaultTransAction("150	298	180	340");
             EndTrans( pContextImpl );
             bResult |= true;
             }else if( nCurrentState != nPseudostate ){
