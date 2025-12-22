@@ -386,31 +386,23 @@
             <subvertex xmi:type="uml:Pseudostate" xmi:id="_z5liANPmEfCtGJfb3T-6EA" name="MainStmInit"/>
             <subvertex xmi:type="uml:State" xmi:id="_2DUOoNPmEfCtGJfb3T-6EA" name="On">
               <region xmi:type="uml:Region" xmi:id="_HCHcoNPoEfCtGJfb3T-6EA" name="Region1">
-                <transition xmi:type="uml:Transition" xmi:id="_RUWHcNUGEfCtGJfb3T-6EA" guard="_fQFpkNUGEfCtGJfb3T-6EA" source="_HCKf8NPoEfCtGJfb3T-6EA" target="_Jl8EQNPoEfCtGJfb3T-6EA">
-                  <ownedRule xmi:type="uml:Constraint" xmi:id="_fQFpkNUGEfCtGJfb3T-6EA" name="">
-                    <specification xmi:type="uml:OpaqueExpression" xmi:id="_fQLJINUGEfCtGJfb3T-6EA" name="constraintSpec">
-                      <language>Java</language>
-                      <body>e.weatherType == ContextImpl.WeatherType.Sunny &amp;&amp; e.nKmPerHour > 10</body>
-                    </specification>
-                  </ownedRule>
-                  <trigger xmi:type="uml:Trigger" xmi:id="_mlnawNUIEfCtGJfb3T-6EA" name="" event="_wfkpQL6dEfCJCfFNPN5vdQ"/>
-                </transition>
-                <transition xmi:type="uml:Transition" xmi:id="_xClS0NVeEfCtGJfb3T-6EA" guard="_3QdKUNVeEfCtGJfb3T-6EA" source="_Jl8EQNPoEfCtGJfb3T-6EA" target="_HCKf8NPoEfCtGJfb3T-6EA">
-                  <ownedRule xmi:type="uml:Constraint" xmi:id="_3QdKUNVeEfCtGJfb3T-6EA">
-                    <name xsi:nil="true"/>
-                    <specification xmi:type="uml:OpaqueExpression" xmi:id="_3QdKUdVeEfCtGJfb3T-6EA" name="constraintSpec">
-                      <language>Java</language>
-                      <body>!( e.weatherType == ContextImpl.WeatherType.Sunny &amp;&amp; e.nKmPerHour > 10 )</body>
-                    </specification>
-                  </ownedRule>
-                  <trigger xmi:type="uml:Trigger" xmi:id="_3QeYcNVeEfCtGJfb3T-6EA" event="_wfkpQL6dEfCJCfFNPN5vdQ">
-                    <name xsi:nil="true"/>
-                  </trigger>
-                </transition>
                 <transition xmi:type="uml:Transition" xmi:id="_GGP54NVfEfCtGJfb3T-6EA" source="_ESJfANVfEfCtGJfb3T-6EA" target="_HCKf8NPoEfCtGJfb3T-6EA"/>
+                <transition xmi:type="uml:Transition" xmi:id="_se2pgNXNEfCtGJfb3T-6EA" source="_HCKf8NPoEfCtGJfb3T-6EA" target="_STq7YNp1EfCdcv-WE9nh9w">
+                  <trigger xmi:type="uml:Trigger" xmi:id="_yTbQMNXNEfCtGJfb3T-6EA" name="" event="_DldBQMFMEfCvssN6lsBRhw"/>
+                </transition>
+                <transition xmi:type="uml:Transition" xmi:id="_06ZScNXNEfCtGJfb3T-6EA" source="_cuE5MNp_EfCdcv-WE9nh9w" target="_op6_UNXNEfCtGJfb3T-6EA"/>
+                <transition xmi:type="uml:Transition" xmi:id="_hQiXwNp_EfCdcv-WE9nh9w" source="_STq7YNp1EfCdcv-WE9nh9w" target="_cuE5MNp_EfCdcv-WE9nh9w"/>
                 <subvertex xmi:type="uml:State" xmi:id="_HCKf8NPoEfCtGJfb3T-6EA" name="Deactive"/>
-                <subvertex xmi:type="uml:State" xmi:id="_Jl8EQNPoEfCtGJfb3T-6EA" name="Active"/>
                 <subvertex xmi:type="uml:Pseudostate" xmi:id="_ESJfANVfEfCtGJfb3T-6EA" name="OnInit"/>
+                <subvertex xmi:type="uml:Pseudostate" xmi:id="_STq7YNp1EfCdcv-WE9nh9w" name="Join7" kind="join"/>
+                <subvertex xmi:type="uml:Pseudostate" xmi:id="_cuE5MNp_EfCdcv-WE9nh9w" name="Fork7" kind="fork"/>
+              </region>
+              <region xmi:type="uml:Region" xmi:id="_l_63MNXNEfCtGJfb3T-6EA" name="Region2">
+                <transition xmi:type="uml:Transition" xmi:id="_tZ2SINXNEfCtGJfb3T-6EA" source="_mpnUcNXNEfCtGJfb3T-6EA" target="_STq7YNp1EfCdcv-WE9nh9w"/>
+                <transition xmi:type="uml:Transition" xmi:id="_DYJvkNp7EfCdcv-WE9nh9w" source="_CVbHQNp7EfCdcv-WE9nh9w" target="_mpnUcNXNEfCtGJfb3T-6EA"/>
+                <subvertex xmi:type="uml:State" xmi:id="_mpnUcNXNEfCtGJfb3T-6EA" name="State1"/>
+                <subvertex xmi:type="uml:FinalState" xmi:id="_op6_UNXNEfCtGJfb3T-6EA" name="FinalState4"/>
+                <subvertex xmi:type="uml:Pseudostate" xmi:id="_CVbHQNp7EfCdcv-WE9nh9w" name="Initial4"/>
               </region>
             </subvertex>
           </region>

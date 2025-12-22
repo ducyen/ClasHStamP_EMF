@@ -1432,7 +1432,7 @@ public class RStmGenerator extends TBaseGenerator {
 							break;
 						}
 					}
-					if (checkIfExternalTrans(mainTrans)) {
+					if (mainTrans != null && checkIfExternalTrans(mainTrans)) {
 						System.out.println(makeIndent(indent) + "self.isExternalTrans = True");
 						try {
 							m_writer.write(Utils.get(m_stxCsv.get(indent, "state_action", "ext1st"), ""));
@@ -1440,8 +1440,8 @@ public class RStmGenerator extends TBaseGenerator {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
+						System.out.println(makeIndent(indent) + "self.BgnTrans(" + getStateMachineDiagram(stmRoot).getName() + "." + mainTrans.getTarget().getName() + ")");
 					}
-					System.out.println(makeIndent(indent) + "self.BgnTrans(" + getStateMachineDiagram(stmRoot).getName() + "." + mainTrans.getTarget().getName() + ")");
 					
 					StringWriter tempWriter = new StringWriter();
 					Writer originalWriter = m_writer;  // Save the original FileWriter
@@ -1468,23 +1468,23 @@ public class RStmGenerator extends TBaseGenerator {
 					System.out.println(makeIndent(indent) + "# end forking");
 					String actions = "";
 					try {
-						actions = collectActions(indent, iTrans);
-						actions += collectActions(indent, mainTrans);
-					} catch (Exception e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					try {
-						actions += tempWriter;
-						m_writer.write(Utils.get(m_stxCsv.get(indent, "trans_action", "begin"),
-							mainTrans.getTarget().getName(),				// name
-							m_iClass.getName(),								// type
-							rgnName + "Hsm",								// container
-							"",												// value
-							actions,										// modifier
-							getDefinition(iTrans),							// description
-							getStateMachineDiagram(stmRoot).getName()		// scope
-						));
+						if (mainTrans != null) {
+							actions = collectActions(indent, iTrans);
+							actions += collectActions(indent, mainTrans);
+							actions += tempWriter;
+							m_writer.write(Utils.get(m_stxCsv.get(indent, "trans_action", "begin"),
+								mainTrans.getTarget().getName(),				// name
+								m_iClass.getName(),								// type
+								rgnName + "Hsm",								// container
+								"",												// value
+								actions,										// modifier
+								getDefinition(iTrans),							// description
+								getStateMachineDiagram(stmRoot).getName()		// scope
+							));
+						} else {
+							actions += tempWriter;
+							m_writer.write(actions);
+						}
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -1613,7 +1613,9 @@ public class RStmGenerator extends TBaseGenerator {
 				}
 			}else if (iTgtVtx instanceof FinalState) {
 				try {
-					String targetStateName = rgnName;
+					StringBuilder targetRgnName = new StringBuilder();
+					String containingMachine = findTargetMachineName(rgnName, iVertices, iTgtVtx, targetRgnName);
+					String targetStateName = targetRgnName.toString();
 					State container = null;
 					if (getContainer(iTgtVtx) != null) {
 						container = (State)getContainer(iTgtVtx);
@@ -1627,7 +1629,6 @@ public class RStmGenerator extends TBaseGenerator {
 					
 					// if same level shallowHistory
 					// set it to Zero
-					String containingMachine = findTargetMachineName(rgnName, iVertices, iTgtVtx, null);
 					container = (State)getContainer(iTgtVtx);
 					Vertex shallowHistPt = findShallowHistoryPseudostate(containingMachine == null || container == null ? iVertices : getSubvertexes(container, 0));
 					if (shallowHistPt != null) {
