@@ -197,7 +197,7 @@ event_decl,"[->]public enum EventId {
 [->]};
 [->]public boolean Start(){
 [->]    mainStm.Prepare( null, ""mainStm"" );
-[->]    boolean bResult = mainStm.Reset( this );
+[->]    boolean bResult = mainStm.Reset( this, StateMachine.STATE_UNDEF, false );
 [->]    bResult |= mainStm.StateDefaultTrans( this );
 [->]    return bResult;
 [->]}
@@ -237,10 +237,11 @@ state_impl,"        public boolean Reset(  [tYPE] p[tYPE] ) {
         }
         public boolean Reset( [tYPE] p[tYPE], long entryPt, boolean lastEnteredStateRecovering ) {
             if( entryPt != StateMachine.STATE_UNDEF ){
-                Req( entryPt );
-                return false;
+                return Req( entryPt );
             }
-            nPseudostate = [sCOPE].[nAME];
+            if (nPseudostate == StateMachine.STATE_UNDEF ) {
+                nPseudostate = [sCOPE].[nAME];
+            }
             bIsExternTrans = true;
             BgnTrans( p[tYPE], nPseudostate );
             EndTrans( p[tYPE] );
@@ -364,13 +365,13 @@ default_trans,"        boolean StateDefaultTrans( [tYPE] p[tYPE] ){
 substm,"    [cONTAINER] [nAME] = new [cONTAINER]();[->64][dESC]
 ","    [nAME].Prepare( [mODIFIER], ""[nAME]"" );
 ","
-[->] && ( ( [sCOPE] )pMain ).[mODIFIER].IsFinished()","[->]( ( [sCOPE] )pMain ).[mODIFIER].Reset( p[tYPE], [cONTAINER].[nAME], ( ( [sCOPE] )pMain ).lastEnteredStateRecovering );
+[->] && ( ( [sCOPE] )pMain ).[mODIFIER].IsFinished()","[->]bResult |= ( ( [sCOPE] )pMain ).[mODIFIER].Reset( p[tYPE], [cONTAINER].[nAME], ( ( [sCOPE] )pMain ).lastEnteredStateRecovering );
 ","[->]( ( [sCOPE] )pMain ).pParentStm.Req( [sCOPE].[nAME] );
 "
 region,"        _[cONTAINER] [nAME] = new _[cONTAINER]();[->64][dESC]
 ","            [nAME].pMain = this;
 ","
-[->] && ( ( [sCOPE] )pMain ).[cONTAINER].nPseudostate == [sCOPE].[vALUE]","[->]( ( [sCOPE] )pMain ).[mODIFIER].Reset( p[tYPE], [sCOPE].[nAME] );
+[->] && ( ( [sCOPE] )pMain ).[cONTAINER].nPseudostate == [sCOPE].[vALUE]","[->]bResult |= ( ( [sCOPE] )pMain ).[mODIFIER].Reset( p[tYPE], [sCOPE].[nAME] );
 ","class _[nAME] extends StateMachine {
 [vALUE]}
 "
@@ -382,8 +383,8 @@ state_action,"[->]if( !( ( [sCOPE] )pMain ).lastEnteredStateRecovering && nTarge
 ","[->]( ( [sCOPE] )pMain ).[mODIFIER].Abort( p[tYPE] );
 "
 trans_action,"[->][cONTAINER].[nAME]Params e = ( [cONTAINER].[nAME]Params )pEventParams;
-",( ( [sCOPE] )pMain ).[mODIFIER].IsIn( [sCOPE].[vALUE] ),"
-[->] && HdStateMachine_IsIn( &( ( [sCOPE] )pMain ).[mODIFIER], [sCOPE].[vALUE] )","[->]BgnTrans( p[tYPE], [sCOPE].[nAME] );
+",( ( [sCOPE] )pMain ).[mODIFIER].IsIn( [cONTAINER].[vALUE] ),"
+[->] && ( ( [sCOPE] )pMain ).[mODIFIER].IsIn( [cONTAINER].[vALUE] )","[->]BgnTrans( p[tYPE], [sCOPE].[nAME] );
 [mODIFIER][->]EndTrans( p[tYPE] );
 [->]bResult |= true;
 ","[mODIFIER][->]bResult |= true; // internal transition
@@ -435,6 +436,9 @@ stm_api,"        public boolean EventProc( [tYPE] p[tYPE], [tYPE].EventId nEvent
         }
         public boolean Abort( [tYPE] p[tYPE] ){
             return [cONTAINER].Abort( p[tYPE] );
+        }
+        public boolean IsIn( long nState ){
+            return [cONTAINER].IsIn( nState );
         }
         public boolean IsFinished(){
             return [cONTAINER].nPseudostate == [sCOPE].[nAME];

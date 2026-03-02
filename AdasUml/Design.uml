@@ -382,7 +382,12 @@
                 <name xsi:nil="true"/>
               </trigger>
             </transition>
-            <subvertex xmi:type="uml:State" xmi:id="_wSuwENPmEfCtGJfb3T-6EA" name="Off"/>
+            <subvertex xmi:type="uml:State" xmi:id="_wSuwENPmEfCtGJfb3T-6EA" name="Off">
+              <entry xmi:type="uml:OpaqueBehavior" xmi:id="__cVOYA8sEfGXUPnebEVKfA" name="show(&quot;Off&quot;)">
+                <language>Java</language>
+                <body>System.out.println(&quot;Off&quot;);</body>
+              </entry>
+            </subvertex>
             <subvertex xmi:type="uml:Pseudostate" xmi:id="_z5liANPmEfCtGJfb3T-6EA" name="MainStmInit"/>
             <subvertex xmi:type="uml:State" xmi:id="_2DUOoNPmEfCtGJfb3T-6EA" name="On">
               <region xmi:type="uml:Region" xmi:id="_HCHcoNPoEfCtGJfb3T-6EA" name="Region1">

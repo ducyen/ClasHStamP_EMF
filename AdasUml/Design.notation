@@ -462,6 +462,14 @@
               <children xmi:type="notation:BasicCompartment" xmi:id="_wS5vMNPmEfCtGJfb3T-6EA" type="State_RegionCompartment">
                 <layoutConstraint xmi:type="notation:Bounds" xmi:id="_wS5vMdPmEfCtGJfb3T-6EA" y="-1" width="221"/>
               </children>
+              <children xmi:type="notation:BasicCompartment" xmi:id="_RpEL8A8qEfGXUPnebEVKfA" type="compartment_shape_display">
+                <styles xmi:type="notation:TitleStyle" xmi:id="_RpEL8Q8qEfGXUPnebEVKfA"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_RpEL8g8qEfGXUPnebEVKfA"/>
+              </children>
+              <children xmi:type="notation:Shape" xmi:id="_EY2ywA8tEfGXUPnebEVKfA" type="Behavior_EntryBehaviorLabel">
+                <element xmi:type="uml:OpaqueBehavior" href="Design.uml#__cVOYA8sEfGXUPnebEVKfA"/>
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_EY2ywQ8tEfGXUPnebEVKfA" x="-10" y="-10"/>
+              </children>
               <element xmi:type="uml:State" href="Design.uml#_wSuwENPmEfCtGJfb3T-6EA"/>
               <layoutConstraint xmi:type="notation:Bounds" xmi:id="_wS36AdPmEfCtGJfb3T-6EA" x="209" y="50" width="221" height="61"/>
             </children>
