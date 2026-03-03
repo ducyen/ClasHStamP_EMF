@@ -9,6 +9,9 @@ import all_notations.java_sample00.abstracts.*;
 
 public  class ContextImpl extends Context
 {
+    public static class E2Params extends EventParams{
+        public long Property1;                                  
+    };
     public enum EventId {
         E0,
         E1,
@@ -88,6 +91,7 @@ class _SubStmTop extends StateMachine {
                 DefaultDoingAction( pContextImpl, "SubStmTop	SubStm	239	80	121	81	30	30	700	300	S101" );
                 switch( nEventId ){
                 case ContextImpl.EventId.E2:{
+            ContextImpl.E2Params e = ( ContextImpl.E2Params )pEventParams;
             BgnTrans( pContextImpl, SubStmTop.S102 );
                 DefaultTransAction("361	120	480	220");
             EndTrans( pContextImpl );
@@ -282,7 +286,7 @@ class _S8Rgn1Hsm extends StateMachine {
         void S821_Entry( ContextImpl pContextImpl ){
             if( Enterable( MainStmTop.S821 ) ){
                 S8Rgn1_Entry( pContextImpl );
-                DefaultEntryAction( pContextImpl, "MainStmTop	S8Rgn1	878	760	121	81	30	30	1461	931	S821" );
+                DefaultEntryAction( pContextImpl, "MainStmTop	S8Rgn1	858	760	181	81	30	30	1461	931	S821" );
         ( ( MainStmTop )pMain ).S821Hsm.Reset( pContextImpl );
             }
         }
@@ -291,7 +295,7 @@ class _S8Rgn1Hsm extends StateMachine {
     bHandled |= ( ( MainStmTop )pMain ).S821Hsm.EventProc( pContextImpl, nEventId, pEventParams );
             if( !bHandled ){
                 nSourceState = MainStmTop.S821;
-                DefaultDoingAction( pContextImpl, "MainStmTop	S8Rgn1	878	760	121	81	30	30	1461	931	S821" );
+                DefaultDoingAction( pContextImpl, "MainStmTop	S8Rgn1	858	760	181	81	30	30	1461	931	S821" );
             }
             bHandled |= bResult;
             wasHandled |= bResult;
@@ -300,7 +304,7 @@ class _S8Rgn1Hsm extends StateMachine {
         void S821_Exit( ContextImpl pContextImpl ){
             if( Exitable( MainStmTop.S821 ) ){ 
         ( ( MainStmTop )pMain ).S821Hsm.Abort( pContextImpl );
-                 DefaultExitAction( pContextImpl, "MainStmTop	S8Rgn1	878	760	121	81	30	30	1461	931	S821" );
+                 DefaultExitAction( pContextImpl, "MainStmTop	S8Rgn1	858	760	181	81	30	30	1461	931	S821" );
                 S8Rgn1_Exit( pContextImpl );
             }
         }
@@ -386,7 +390,7 @@ class _S8Rgn1Hsm extends StateMachine {
             nLCAState = StateMachine.STATE_UNDEF;
         if ( nPseudostate == MainStmTop.S82Init  ) {
             BgnTrans( pContextImpl, MainStmTop.S822 );
-                DefaultTransAction("1120	768	1120	780	1100	780	701	780");
+                DefaultTransAction("509	780	580	780");
             EndTrans( pContextImpl );
             bResult |= true;
         } else if ( nCurrentState == MainStmTop.S821 && nPseudostate == MainStmTop.S821 
@@ -612,6 +616,7 @@ class _MainStmTop extends StateMachine {
             bResult |= true;
                 } break;
                 case ContextImpl.EventId.E2:{
+            ContextImpl.E2Params e = ( ContextImpl.E2Params )pEventParams;
                 DefaultTransAction("240	151	240	260");
                 System.out.println("Do something when E2");
             if (pContextImpl.internalAttribute == 0) {
@@ -679,6 +684,7 @@ class _MainStmTop extends StateMachine {
             bResult |= true;
                 } break;
                 case ContextImpl.EventId.E2:{
+            ContextImpl.E2Params e = ( ContextImpl.E2Params )pEventParams;
             BgnTrans( pContextImpl, MainStmTop.S3 );
                 DefaultTransAction("1200	140	1300	140");
             EndTrans( pContextImpl );
@@ -711,6 +717,7 @@ class _MainStmTop extends StateMachine {
                 DefaultDoingAction( pContextImpl, "MainStmTop	MainStm	658	160	120	81	30	30	1461	931	S21" );
                 switch( nEventId ){
                 case ContextImpl.EventId.E2:{
+            ContextImpl.E2Params e = ( ContextImpl.E2Params )pEventParams;
             BgnTrans( pContextImpl, MainStmTop.S22 );
                 DefaultTransAction("780	200	880	200");
             EndTrans( pContextImpl );
@@ -882,6 +889,7 @@ class _MainStmTop extends StateMachine {
                 DefaultDoingAction( pContextImpl, "MainStmTop	MainStm	99	480	281	441	30	30	1461	931	S7" );
                 switch( nEventId ){
                 case ContextImpl.EventId.E2:{
+            ContextImpl.E2Params e = ( ContextImpl.E2Params )pEventParams;
             BgnTrans( pContextImpl, MainStmTop.S72 );
                 DefaultTransAction("381	880	301	880");
             EndTrans( pContextImpl );
@@ -1215,7 +1223,7 @@ class _MainStmTop extends StateMachine {
         } else if ( nCurrentState == MainStmTop.S812 && nPseudostate == SubStmTop.Exit1  ) {
                 DefaultTransAction("940	660	880	660	880	780	830	780");
                 DefaultTransAction("940	660	880	660	880	780	830	780");
-                DefaultTransAction("940	820	820	820");
+                DefaultTransAction("940	800	880	700	830	700");
             if (( ( MainStmTop )pMain ).S821Hsm.IsIn( SubStmTop.S103 )) {
                     DefaultTransAction("820	680	760	680	760	820	701	820");
                 bResult |= ( ( MainStmTop )pMain ).S8Rgn1Hsm.Reset( pContextImpl, MainStmTop.S822 );
@@ -1230,9 +1238,9 @@ class _MainStmTop extends StateMachine {
                 DefaultTransAction("1340	581	1340	740	1270	740");
                 DefaultTransAction("1340	581	1340	740	1270	740");
                 DefaultTransAction("1270	680	1061	680");
-                DefaultTransAction("1260	800	1006	811");
-                DefaultTransAction("1260	800	1006	811");
-                DefaultTransAction("1260	800	1006	811");
+                DefaultTransAction("1260	800	1046	820");
+                DefaultTransAction("1260	800	1046	820");
+                DefaultTransAction("1260	800	1046	820");
             bResult |= ( ( MainStmTop )pMain ).S821Hsm.Reset( pContextImpl, SubStmTop.Entry2, ( ( MainStmTop )pMain ).lastEnteredStateRecovering );
             bResult |= ( ( MainStmTop )pMain ).S8Rgn1Hsm.Reset( pContextImpl, MainStmTop.S821 );
             BgnTrans( pContextImpl, MainStmTop.S812 );

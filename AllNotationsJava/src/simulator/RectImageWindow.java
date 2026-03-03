@@ -71,7 +71,9 @@ public class RectImageWindow extends JFrame {
         private BufferedImage backgroundImage;
         private final Map<String, Rectangle> rectMap = new LinkedHashMap<>();
         private int[] activePolyline;   // single active polyline
-
+        private int overlayDx = 20;
+        private int overlayDy = 20;
+        
         public ImagePanel(String imagePath) {
             loadImage(imagePath);
         }
@@ -82,6 +84,7 @@ public class RectImageWindow extends JFrame {
                 setPreferredSize(new Dimension(
                         backgroundImage.getWidth(),
                         backgroundImage.getHeight()));
+                
             } catch (IOException e) {
                 System.err.println("Could not load image: " + path);
                 backgroundImage = null;
@@ -123,15 +126,21 @@ public class RectImageWindow extends JFrame {
                 if (backgroundImage != null) {
                     g2.drawImage(backgroundImage, 0, 0, this);
                 }
-
+                
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                         RenderingHints.VALUE_ANTIALIAS_ON);
+
+                // ===== ADD THIS (overlay offset) =====
+                final int dx = -overlayDx;   // <- tune here
+                final int dy = -overlayDy;  // <- tune here
+                g2.translate(dx, dy);
+                // ====================================
 
                 // Rectangles
                 g2.setColor(Color.RED);
                 g2.setStroke(new BasicStroke(2.0f));
                 for (Rectangle r : rectMap.values()) {
-                    g2.drawRect(r.x, r.y, r.width, r.height);
+                    g2.drawRoundRect(r.x, r.y, r.width, r.height, 20, 20);
                 }
 
                 // Single polyline
@@ -149,5 +158,6 @@ public class RectImageWindow extends JFrame {
                 g2.dispose();
             }
         }
+        
     }
 }

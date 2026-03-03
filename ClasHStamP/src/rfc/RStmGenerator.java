@@ -101,15 +101,17 @@ public class RStmGenerator extends TBaseGenerator {
             if (vtx instanceof State) {
                 State state = (State) vtx;
                 checkStateBfr(state, container);
-                try {
-                    // traverse region 0 of this composite state
-                    if (!state.getRegions().isEmpty() && !state.getRegions().get(0).getSubvertices().isEmpty()) {
-                        for (Vertex subVtx : state.getRegions().get(0).getSubvertices()) {
-                            traverse(subVtx, state);
-                        }
-                    }
-                } catch (Exception e) {
-                    // Handle exceptions if needed (none expected in UML2 traversal)
+                if (!state.isSubmachineState()) {
+	                try {
+	                    // traverse region 0 of this composite state
+	                    if (!state.getRegions().isEmpty() && !state.getRegions().get(0).getSubvertices().isEmpty()) {
+	                        for (Vertex subVtx : state.getRegions().get(0).getSubvertices()) {
+	                            traverse(subVtx, state);
+	                        }
+	                    }
+	                } catch (Exception e) {
+	                    // Handle exceptions if needed (none expected in UML2 traversal)
+	                }
                 }
                 checkState(state, container);
             } else if (vtx instanceof Pseudostate) {
@@ -141,7 +143,7 @@ public class RStmGenerator extends TBaseGenerator {
                 State state = (State) vtx;
                 // Loop through all regions of this state
                 checkStateBfr(state, container, rgnIndex);
-                for (int subRgnIdx = 0; subRgnIdx < state.getRegions().size(); subRgnIdx++) {
+                for (int subRgnIdx = 0; subRgnIdx < state.getRegions().size() && !state.isSubmachineState(); subRgnIdx++) {
                     try {
                         Region subRegion = state.getRegions().get(subRgnIdx);
                         if (!subRegion.getSubvertices().isEmpty()) {
@@ -531,7 +533,7 @@ public class RStmGenerator extends TBaseGenerator {
      * @return
      */
     private boolean isEntryPointPseudostate(Pseudostate iPst) {
-    	return iPst.getKind() == PseudostateKind.ENTRY_POINT_LITERAL;
+    	return iPst.getKind() == PseudostateKind.ENTRY_POINT_LITERAL || isStubstate(iPst);
     }
 
     /**
@@ -540,12 +542,12 @@ public class RStmGenerator extends TBaseGenerator {
      * @return
      */
     private boolean isExitPointPseudostate(Pseudostate iPst) {
-    	return iPst.getKind() == PseudostateKind.EXIT_POINT_LITERAL;
+    	return iPst.getKind() == PseudostateKind.EXIT_POINT_LITERAL || isStubstate(iPst);
     }
     private boolean isStubstate(Vertex vtx) {
     	if (vtx instanceof Pseudostate) {
 			Pseudostate iPst = (Pseudostate)vtx;
-			return isExitPointPseudostate(iPst);
+			return (iPst.getKind() == PseudostateKind.FORK_LITERAL || iPst.getKind() == PseudostateKind.JOIN_LITERAL) && !iPst.getName().isBlank();
     	}
     	return false;
     }
@@ -556,7 +558,7 @@ public class RStmGenerator extends TBaseGenerator {
      * @return
      */
     private boolean isForkPseudostate(Pseudostate iPst) {
-    	return iPst.getKind() == PseudostateKind.FORK_LITERAL;
+    	return iPst.getKind() == PseudostateKind.FORK_LITERAL && iPst.getName().isBlank();
     }
 
     /**
@@ -565,7 +567,7 @@ public class RStmGenerator extends TBaseGenerator {
      * @return
      */
     private boolean isJoinPseudostate(Pseudostate iPst) {
-    	return iPst.getKind() == PseudostateKind.JOIN_LITERAL;
+    	return iPst.getKind() == PseudostateKind.JOIN_LITERAL && iPst.getName().isBlank();
     }
     
     /**
@@ -631,7 +633,7 @@ public class RStmGenerator extends TBaseGenerator {
         for (Transition t : result) {
             if (t.getSource() instanceof Pseudostate) {
                 Pseudostate ps = (Pseudostate) t.getSource();
-                if (ps.getKind() == PseudostateKind.EXIT_POINT_LITERAL) {
+                if (isExitPointPseudostate(ps)) {
                 	sortedResult.add(t);
                 }
             }
@@ -640,7 +642,7 @@ public class RStmGenerator extends TBaseGenerator {
         // Then: all others
         for (Transition t : result) {
             if (!(t.getSource() instanceof Pseudostate) ||
-                ((Pseudostate) t.getSource()).getKind() != PseudostateKind.EXIT_POINT_LITERAL) {
+                !isExitPointPseudostate((Pseudostate) t.getSource())) {
             	sortedResult.add(t);
             }
         }
@@ -910,7 +912,7 @@ public class RStmGenerator extends TBaseGenerator {
 		}
 		protected void checkState(State iState, State container, int rgnIndex) {
 			if (iState.isSubmachineState()) {
-				for (Pseudostate subVertex: iState.getConnectionPoints()) {
+				for (Vertex subVertex: getSubvertexes(iState)) {
 					if (m_targetVertex == subVertex) {
 						m_found = true;
 						m_containingState = iState;

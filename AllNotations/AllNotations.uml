@@ -491,7 +491,7 @@
                 <trigger xmi:type="uml:Trigger" xmi:id="_1TZngNEbEfCdvIvPnuLjcQ" name="" event="_h32qYMDsEfC3V-UbsE4d9A"/>
               </transition>
               <transition xmi:type="uml:Transition" xmi:id="_pUvUcBR3EfG2PoulsE5B_A" source="_X842MMHVEfCpHfwTBA0bGw" target="_xy3QwMO5EfCnMtYhl6TD5w"/>
-              <transition xmi:type="uml:Transition" xmi:id="_hePb0BSDEfG2PoulsE5B_A" source="_xy3QwMO5EfCnMtYhl6TD5w" target="_31WPcBR9EfG2PoulsE5B_A"/>
+              <transition xmi:type="uml:Transition" xmi:id="_yy7TwBYEEfGRZIR1HlthgA" source="_xy3QwMO5EfCnMtYhl6TD5w" target="_vk4DYBYEEfGRZIR1HlthgA"/>
               <subvertex xmi:type="uml:State" xmi:id="_EV--kL6UEfCkNc0kfmkBvw" name="S1"/>
               <subvertex xmi:type="uml:Pseudostate" xmi:id="_z_3nkL6aEfCMrO0Z3MZOuA" name="MainStmInit"/>
               <subvertex xmi:type="uml:State" xmi:id="_GL224L6bEfCMrO0Z3MZOuA" name="S2">
@@ -522,16 +522,18 @@
                   <subvertex xmi:type="uml:State" xmi:id="_bVjX8MHREfCpHfwTBA0bGw" name="S812" submachine="_29uN0MHREfCpHfwTBA0bGw">
                     <connectionPoint xmi:type="uml:Pseudostate" xmi:id="_5s8-MBRlEfG2PoulsE5B_A" name="Exit1" kind="exitPoint"/>
                   </subvertex>
-                  <subvertex xmi:type="uml:Pseudostate" xmi:id="_VaovkMO8EfCnMtYhl6TD5w" name="Join5" kind="join"/>
+                  <subvertex xmi:type="uml:Pseudostate" xmi:id="_VaovkMO8EfCnMtYhl6TD5w" name="" kind="join"/>
                 </region>
                 <region xmi:type="uml:Region" xmi:id="_ioWjkMCGEfC3V-UbsE4d9A" name="Region2">
                   <transition xmi:type="uml:Transition" xmi:id="_BqmToMCHEfC3V-UbsE4d9A" name="" source="_k9o_8MCGEfC3V-UbsE4d9A" target="_erNFIMHREfCpHfwTBA0bGw"/>
                   <transition xmi:type="uml:Transition" xmi:id="_iN9REMO8EfCnMtYhl6TD5w" source="_VaovkMO8EfCnMtYhl6TD5w" target="_erNFIMHREfCpHfwTBA0bGw"/>
-                  <transition xmi:type="uml:Transition" xmi:id="_T18hgBIPEfGz5-Gjq8PMIA" source="_pFmYEBK9EfGz5-Gjq8PMIA" target="_VaovkMO8EfCnMtYhl6TD5w"/>
                   <transition xmi:type="uml:Transition" xmi:id="_j5j0MBLBEfGz5-Gjq8PMIA" source="_jU3EQMCGEfC3V-UbsE4d9A" target="_erNFIMHREfCpHfwTBA0bGw"/>
                   <subvertex xmi:type="uml:State" xmi:id="_jU3EQMCGEfC3V-UbsE4d9A" name="S821" submachine="_29uN0MHREfCpHfwTBA0bGw">
-                    <connectionPoint xmi:type="uml:Pseudostate" xmi:id="_pFmYEBK9EfGz5-Gjq8PMIA" name="S103" kind="exitPoint"/>
-                    <connectionPoint xmi:type="uml:Pseudostate" xmi:id="_31WPcBR9EfG2PoulsE5B_A" name="Entry2" kind="entryPoint"/>
+                    <connectionPoint xmi:type="uml:Pseudostate" xmi:id="_vk4DYBYEEfGRZIR1HlthgA" name="Entry2" kind="entryPoint"/>
+                    <region xmi:type="uml:Region" xmi:id="_sEqsABYEEfGRZIR1HlthgA" name="Region1">
+                      <transition xmi:type="uml:Transition" xmi:id="_1cD5MBYEEfGRZIR1HlthgA" source="_s0FWwBYEEfGRZIR1HlthgA" target="_VaovkMO8EfCnMtYhl6TD5w"/>
+                      <subvertex xmi:type="uml:Pseudostate" xmi:id="_s0FWwBYEEfGRZIR1HlthgA" name="S103" kind="fork"/>
+                    </region>
                   </subvertex>
                   <subvertex xmi:type="uml:Pseudostate" xmi:id="_k9o_8MCGEfC3V-UbsE4d9A" name="S82Init"/>
                   <subvertex xmi:type="uml:State" xmi:id="_erNFIMHREfCpHfwTBA0bGw" name="S822"/>
@@ -591,7 +593,7 @@
               <subvertex xmi:type="uml:Pseudostate" xmi:id="_xy3QwMO5EfCnMtYhl6TD5w" name="" kind="fork"/>
             </region>
           </ownedBehavior>
-          <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_29uN0MHREfCpHfwTBA0bGw" name="SubStm" submachineState="_-Rad4MHREfCpHfwTBA0bGw _X842MMHVEfCpHfwTBA0bGw _jU3EQMCGEfC3V-UbsE4d9A _bVjX8MHREfCpHfwTBA0bGw">
+          <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_29uN0MHREfCpHfwTBA0bGw" name="SubStm" submachineState="_-Rad4MHREfCpHfwTBA0bGw _X842MMHVEfCpHfwTBA0bGw _bVjX8MHREfCpHfwTBA0bGw _jU3EQMCGEfC3V-UbsE4d9A">
             <connectionPoint xmi:type="uml:Pseudostate" xmi:id="_GH88UMHSEfCpHfwTBA0bGw" name="Entry1" kind="entryPoint"/>
             <connectionPoint xmi:type="uml:Pseudostate" xmi:id="_HZpNsMHSEfCpHfwTBA0bGw" name="Exit1" kind="exitPoint"/>
             <connectionPoint xmi:type="uml:Pseudostate" xmi:id="_najEUBVWEfG2PoulsE5B_A" name="Entry2" kind="entryPoint"/>
@@ -626,6 +628,10 @@
               <name xsi:nil="true"/>
             </ownedParameter>
           </ownedOperation>
+          <nestedClassifier xmi:type="uml:Class" xmi:id="_a3NRsBbZEfGRZIR1HlthgA" name="E2Params">
+            <generalization xmi:type="uml:Generalization" xmi:id="_jS4BABbaEfGRZIR1HlthgA" general="_tCDLgLpVEfCEnM4Nhn5qiQ"/>
+            <ownedAttribute xmi:type="uml:Property" xmi:id="_dCdoUBbZEfGRZIR1HlthgA" name="Property1" visibility="public" type="_OS5pYL5BEfCXOImACTrF0w"/>
+          </nestedClassifier>
         </packagedElement>
         <packagedElement xmi:type="uml:Class" xmi:id="_vG3i87pVEfCEnM4Nhn5qiQ" name="CalledDependency" visibility="public">
           <ownedAttribute xmi:type="uml:Property" xmi:id="_vG3i9LpVEfCEnM4Nhn5qiQ" name="attribute0" visibility="private" isUnique="false">
