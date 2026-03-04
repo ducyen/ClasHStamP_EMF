@@ -7,7 +7,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import javax.imageio.ImageIO;
+
+import javax.imageio.*;
 
 public class RectImageWindow extends JFrame {
 
@@ -21,6 +22,11 @@ public class RectImageWindow extends JFrame {
         setContentPane(imagePanel);
         pack();
         setLocationRelativeTo(null);
+        
+		int[] off = readOverlayIni(imagePanel.getBackgroundImageFile());
+		if (off != null) {
+		    imagePanel.setOverlayOffset(off[0], off[1]);
+		}
     }
 
     // ---------------- Rectangles (unchanged) ----------------
@@ -63,6 +69,46 @@ public class RectImageWindow extends JFrame {
             SwingUtilities.invokeLater(imagePanel::clearPolyline);
         }
     }
+    
+	private static File iniFileOf(File pngFile) {
+	    return new File(pngFile.getParentFile(), pngFile.getName() + ".ini");
+	}
+	
+	private static int[] readOverlayIni(File pngFile) {
+	    File ini = iniFileOf(pngFile);
+	    if (!ini.exists()) return null;
+	
+	    int dx = 0, dy = 0;
+	    boolean hasDx = false, hasDy = false;
+	
+	    try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader(ini))) {
+	        String line;
+	        while ((line = br.readLine()) != null) {
+	            line = line.trim();
+	            if (line.isEmpty() || line.startsWith(";") || line.startsWith("#")) continue;
+	            if (line.startsWith("[") && line.endsWith("]")) continue; // ignore section name
+	
+	            int eq = line.indexOf('=');
+	            if (eq <= 0) continue;
+	
+	            String key = line.substring(0, eq).trim();
+	            String val = line.substring(eq + 1).trim();
+	
+	            if (key.equalsIgnoreCase("dx")) {
+	                dx = Integer.parseInt(val);
+	                hasDx = true;
+	            } else if (key.equalsIgnoreCase("dy")) {
+	                dy = Integer.parseInt(val);
+	                hasDy = true;
+	            }
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return null;
+	    }
+	
+	    return (hasDx || hasDy) ? new int[]{dx, dy} : null;
+	}
 
     // ---------------- ImagePanel ----------------
 
@@ -71,16 +117,28 @@ public class RectImageWindow extends JFrame {
         private BufferedImage backgroundImage;
         private final Map<String, Rectangle> rectMap = new LinkedHashMap<>();
         private int[] activePolyline;   // single active polyline
-        private int overlayDx = 20;
-        private int overlayDy = 20;
+        private int overlayDx = 0;
+        private int overlayDy = 0;
+        private File backgroundImageFile; // for saving metadata
         
         public ImagePanel(String imagePath) {
             loadImage(imagePath);
         }
 
+        public void setOverlayOffset(int dx, int dy) {
+            this.overlayDx = dx;
+            this.overlayDy = dy;
+            repaint();
+        }
+        
+        public File getBackgroundImageFile() {
+			return backgroundImageFile;
+		}
+        
         private void loadImage(String path) {
             try {
-                backgroundImage = ImageIO.read(new File(path));
+            	backgroundImageFile = new File(path);
+                backgroundImage = ImageIO.read(backgroundImageFile);
                 setPreferredSize(new Dimension(
                         backgroundImage.getWidth(),
                         backgroundImage.getHeight()));
