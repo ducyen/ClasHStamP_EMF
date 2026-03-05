@@ -23,7 +23,8 @@ public  class ContextImpl extends Context
     };
     public boolean Start(){
         mainStm.Prepare( null, "mainStm" );
-        boolean bResult = mainStm.Reset( this, StateMachine.STATE_UNDEF, false );
+        mainStm.Abort( this );
+        boolean bResult = mainStm.Reset( this );
         bResult |= mainStm.StateDefaultTrans( this );
         return bResult;
     }
@@ -1324,7 +1325,6 @@ class SubStmTop extends BaseStmTop {
             return SubStmHsm.Reset( pContextImpl, StateMachine.STATE_UNDEF, false );
         }
         public boolean Reset( ContextImpl pContextImpl, long entryPt, boolean lastEnteredStateRecovering ){
-            SubStmHsm.Abort( pContextImpl );
             return SubStmHsm.Reset( pContextImpl, entryPt, lastEnteredStateRecovering );
         }
         public boolean Abort( ContextImpl pContextImpl ){
@@ -1409,7 +1409,6 @@ class MainStmTop extends BaseStmTop {
             return MainStmHsm.Reset( pContextImpl, StateMachine.STATE_UNDEF, false );
         }
         public boolean Reset( ContextImpl pContextImpl, long entryPt, boolean lastEnteredStateRecovering ){
-            MainStmHsm.Abort( pContextImpl );
             return MainStmHsm.Reset( pContextImpl, entryPt, lastEnteredStateRecovering );
         }
         public boolean Abort( ContextImpl pContextImpl ){

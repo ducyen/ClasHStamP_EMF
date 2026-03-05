@@ -270,7 +270,8 @@ event_decl,"[->]public enum EventId {
 [->]};
 [->]public boolean Start(){
 [->]    mainStm.Prepare( null, ""mainStm"" );
-[->]    boolean bResult = mainStm.Reset( this, StateMachine.STATE_UNDEF, false );
+[->]    mainStm.Abort( this );
+[->]    boolean bResult = mainStm.Reset( this );
 [->]    bResult |= mainStm.StateDefaultTrans( this );
 [->]    return bResult;
 [->]}
@@ -504,7 +505,6 @@ stm_api,"        public boolean EventProc( [tYPE] p[tYPE], [tYPE].EventId nEvent
             return [cONTAINER].Reset( p[tYPE], StateMachine.STATE_UNDEF, false );
         }
         public boolean Reset( [tYPE] p[tYPE], long entryPt, boolean lastEnteredStateRecovering ){
-            [cONTAINER].Abort( p[tYPE] );
             return [cONTAINER].Reset( p[tYPE], entryPt, lastEnteredStateRecovering );
         }
         public boolean Abort( [tYPE] p[tYPE] ){

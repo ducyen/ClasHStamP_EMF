@@ -11,7 +11,14 @@ import { ContextImpl } from '@all_notations/java_sample00/model/ContextImpl';
 
 let context = new ContextImpl(0, "Sample Context", 0, 0, 0, undefined, undefined);
 context.Start();
+console.log("Started");
 context.EventProc(ContextImpl.E1, undefined);
 context.EventProc(ContextImpl.E1, undefined);
 context.EventProc(ContextImpl.E0, undefined);
-context.EventProc(ContextImpl.E5, undefined);
+context.EventProc(ContextImpl.E2, undefined);
+context.EventProc(ContextImpl.E4, undefined);
+context.EventProc(ContextImpl.E2, undefined);
+context.EventProc(ContextImpl.E1, undefined);
+context.EventProc(ContextImpl.E2, undefined);
+context.EventProc(ContextImpl.E4, undefined);
+console.log("Ended");

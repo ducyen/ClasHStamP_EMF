@@ -269,6 +269,7 @@ event_decl,,"[->]public static readonly [nAME] = [vALUE];
 ","[->]public static readonly [nAME] = [vALUE];
 ",,"[->]public Start(): boolean{
 [->]    this.mainStm.Prepare( undefined );
+[->]    this.mainStm.Abort( this );
 [->]    let bResult: boolean = this.mainStm.Reset( this );
 [->]    bResult = orAssign( bResult, this.mainStm.StateDefaultTrans( this ) );
 [->]    return bResult;
@@ -304,7 +305,9 @@ state_impl,"        public Reset( p[tYPE]: [tYPE], args: ResetArgs = {} ): boole
             if( entryPt != StateMachine.STATE_UNDEF ){
                 return this.Req( entryPt );
             }
-            this.nPseudostate = [sCOPE].[nAME];
+            if (this.nPseudostate == StateMachine.STATE_UNDEF ) {
+                this.nPseudostate = [sCOPE].[nAME];
+            }
             this.bIsExternTrans = true;
             this.BgnTrans( p[tYPE], this.nPseudostate );
             this.EndTrans( p[tYPE] );
@@ -431,13 +434,13 @@ default_trans,"        StateDefaultTrans( p[tYPE]: [tYPE] ): boolean{
 substm,"    [nAME]: [cONTAINER] = new [cONTAINER]();[->64][dESC]
 ","    this.[nAME].Prepare( this.[mODIFIER] );
 ","
-[->] && ( this.pMain as [sCOPE] ).[mODIFIER].IsFinished()","[->]( this.pMain as [sCOPE] ).[mODIFIER].Reset( p[tYPE], { entryPt: [cONTAINER].[nAME], lastEnteredStateRecovering: ( this.pMain as [sCOPE] ).lastEnteredStateRecovering } );
+[->] && ( this.pMain as [sCOPE] ).[mODIFIER].IsFinished()","[->]bResult = orAssign(bResult, ( this.pMain as [sCOPE] ).[mODIFIER].Reset( p[tYPE], { entryPt: [cONTAINER].[nAME], lastEnteredStateRecovering: ( this.pMain as [sCOPE] ).lastEnteredStateRecovering } ));
 ","[->]( this.pMain as [sCOPE] ).pParentStm?.Req( [sCOPE].[nAME] );
 "
 region,"        [nAME]: _[cONTAINER] = new _[cONTAINER]();[->64][dESC]
 ","            this.[nAME].pMain = this;
 ","
-[->] && ( this.pMain as [sCOPE] ).[cONTAINER].nPseudostate == [sCOPE].[vALUE]","[->]( this.pMain as [sCOPE] ).[mODIFIER].Reset( p[tYPE], { entryPt: [sCOPE].[nAME] } );
+[->] && ( this.pMain as [sCOPE] ).[cONTAINER].nPseudostate == [sCOPE].[vALUE]","[->]bResult = orAssign(bResult, ( this.pMain as [sCOPE] ).[mODIFIER].Reset( p[tYPE], { entryPt: [sCOPE].[nAME] } ));
 ","class _[nAME] extends StateMachine {
 [vALUE]}
 "
@@ -494,7 +497,6 @@ stm_api,"        public EventProc( p[tYPE]: [tYPE], nEventId: number, pEventPara
             return bResult;
         }
         public Reset( p[tYPE]: [tYPE], args: ResetArgs = {}): boolean {
-            this.[cONTAINER].Abort( p[tYPE] );
             return this.[cONTAINER].Reset( p[tYPE], { entryPt: args.entryPt ?? StateMachine.STATE_UNDEF,
                 lastEnteredStateRecovering: args.lastEnteredStateRecovering ?? false } );
         }

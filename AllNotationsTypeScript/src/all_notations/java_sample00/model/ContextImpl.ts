@@ -23,6 +23,7 @@ export class ContextImpl extends Context
         public static readonly E5 = 5;
     public Start(): boolean{
         this.mainStm.Prepare( undefined );
+        this.mainStm.Abort( this );
         let bResult: boolean = this.mainStm.Reset( this );
         bResult = orAssign( bResult, this.mainStm.StateDefaultTrans( this ) );
         return bResult;
@@ -182,7 +183,9 @@ class _SubStmTop extends StateMachine {
             if( entryPt != StateMachine.STATE_UNDEF ){
                 return this.Req( entryPt );
             }
-            this.nPseudostate = SubStmTop.SubStm;
+            if (this.nPseudostate == StateMachine.STATE_UNDEF ) {
+                this.nPseudostate = SubStmTop.SubStm;
+            }
             this.bIsExternTrans = true;
             this.BgnTrans( pContextImpl, this.nPseudostate );
             this.EndTrans( pContextImpl );
@@ -328,7 +331,9 @@ class _S8Rgn1Hsm extends StateMachine {
             if( entryPt != StateMachine.STATE_UNDEF ){
                 return this.Req( entryPt );
             }
-            this.nPseudostate = MainStmTop.S8Rgn1;
+            if (this.nPseudostate == StateMachine.STATE_UNDEF ) {
+                this.nPseudostate = MainStmTop.S8Rgn1;
+            }
             this.bIsExternTrans = true;
             this.BgnTrans( pContextImpl, this.nPseudostate );
             this.EndTrans( pContextImpl );
@@ -482,7 +487,9 @@ class _S71Rgn1Hsm extends StateMachine {
             if( entryPt != StateMachine.STATE_UNDEF ){
                 return this.Req( entryPt );
             }
-            this.nPseudostate = MainStmTop.S71Rgn1;
+            if (this.nPseudostate == StateMachine.STATE_UNDEF ) {
+                this.nPseudostate = MainStmTop.S71Rgn1;
+            }
             this.bIsExternTrans = true;
             this.BgnTrans( pContextImpl, this.nPseudostate );
             this.EndTrans( pContextImpl );
@@ -583,7 +590,7 @@ class _MainStmTop extends StateMachine {
             } else {
                 if (pContextImpl.internalAttribute == 1) {
                     this.BgnTrans( pContextImpl, MainStmTop.S6 );
-                    ( this.pMain as MainStmTop ).S6Hsm.Reset( pContextImpl, { entryPt: SubStmTop.Entry1, lastEnteredStateRecovering: ( this.pMain as MainStmTop ).lastEnteredStateRecovering } );
+                    bResult = orAssign(bResult, ( this.pMain as MainStmTop ).S6Hsm.Reset( pContextImpl, { entryPt: SubStmTop.Entry1, lastEnteredStateRecovering: ( this.pMain as MainStmTop ).lastEnteredStateRecovering } ));
                     this.EndTrans( pContextImpl );
                     bResult = orAssign( bResult, true );
                 } else {
@@ -1071,7 +1078,9 @@ class _MainStmTop extends StateMachine {
             if( entryPt != StateMachine.STATE_UNDEF ){
                 return this.Req( entryPt );
             }
-            this.nPseudostate = MainStmTop.MainStm;
+            if (this.nPseudostate == StateMachine.STATE_UNDEF ) {
+                this.nPseudostate = MainStmTop.MainStm;
+            }
             this.bIsExternTrans = true;
             this.BgnTrans( pContextImpl, this.nPseudostate );
             this.EndTrans( pContextImpl );
@@ -1138,7 +1147,7 @@ class _MainStmTop extends StateMachine {
             bResult = orAssign( bResult, true );
         } else if ( this.nCurrentState == MainStmTop.S812 && this.nPseudostate == SubStmTop.Exit1  ) {
             if (( this.pMain as MainStmTop ).S821Hsm.IsIn( SubStmTop.S103 )) {
-                ( this.pMain as MainStmTop ).S8Rgn1Hsm.Reset( pContextImpl, { entryPt: MainStmTop.S822 } );
+                bResult = orAssign(bResult, ( this.pMain as MainStmTop ).S8Rgn1Hsm.Reset( pContextImpl, { entryPt: MainStmTop.S822 } ));
             }
         } else if ( this.nPseudostate == MainStmTop.MainStmInit  ) {
             this.BgnTrans( pContextImpl, MainStmTop.S1 );
@@ -1146,8 +1155,8 @@ class _MainStmTop extends StateMachine {
             bResult = orAssign( bResult, true );
         } else if ( this.nCurrentState == MainStmTop.S9 && this.nPseudostate == MainStmTop.S9 
          && ( this.pMain as MainStmTop ).S9Hsm.IsFinished() ) {
-            ( this.pMain as MainStmTop ).S821Hsm.Reset( pContextImpl, { entryPt: SubStmTop.Entry2, lastEnteredStateRecovering: ( this.pMain as MainStmTop ).lastEnteredStateRecovering } );
-            ( this.pMain as MainStmTop ).S8Rgn1Hsm.Reset( pContextImpl, { entryPt: MainStmTop.S821 } );
+            bResult = orAssign(bResult, ( this.pMain as MainStmTop ).S821Hsm.Reset( pContextImpl, { entryPt: SubStmTop.Entry2, lastEnteredStateRecovering: ( this.pMain as MainStmTop ).lastEnteredStateRecovering } ));
+            bResult = orAssign(bResult, ( this.pMain as MainStmTop ).S8Rgn1Hsm.Reset( pContextImpl, { entryPt: MainStmTop.S821 } ));
             this.BgnTrans( pContextImpl, MainStmTop.S812 );
             this.EndTrans( pContextImpl );
             bResult = orAssign( bResult, true );
@@ -1220,7 +1229,6 @@ class SubStmTop extends BaseStmTop {
             return bResult;
         }
         public Reset( pContextImpl: ContextImpl, args: ResetArgs = {}): boolean {
-            this.SubStmHsm.Abort( pContextImpl );
             return this.SubStmHsm.Reset( pContextImpl, { entryPt: args.entryPt ?? StateMachine.STATE_UNDEF,
                 lastEnteredStateRecovering: args.lastEnteredStateRecovering ?? false } );
         }
@@ -1305,7 +1313,6 @@ class MainStmTop extends BaseStmTop {
             return bResult;
         }
         public Reset( pContextImpl: ContextImpl, args: ResetArgs = {}): boolean {
-            this.MainStmHsm.Abort( pContextImpl );
             return this.MainStmHsm.Reset( pContextImpl, { entryPt: args.entryPt ?? StateMachine.STATE_UNDEF,
                 lastEnteredStateRecovering: args.lastEnteredStateRecovering ?? false } );
         }
