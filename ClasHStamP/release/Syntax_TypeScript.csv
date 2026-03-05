@@ -31,10 +31,10 @@ i_enum,"[->]private enum [Name] {
 ",,"[->]    [nAME]_NUM
 [->]};
 "
-b_struct,"[->]public static class [Name] {
+b_struct,"[->]public static [Name] = class {
 ","[->]public [nAME]: [tYPE][mODIFIER];[->64][dESC]
 ","[->]public [nAME]: [tYPE][mODIFIER];[->64][dESC]
-","[->]public static class [Name] extends [tYPE]{
+","[->]public static [Name] = class extends [tYPE]{
 ","[->]};
 "
 c_struct,"[->]protected static class [Name] {
@@ -302,8 +302,7 @@ state_impl,"        public Reset( p[tYPE]: [tYPE], args: ResetArgs = {} ): boole
             const entryPt = args.entryPt ?? StateMachine.STATE_UNDEF;
             const lastEnteredStateRecovering = args.lastEnteredStateRecovering ?? false;
             if( entryPt != StateMachine.STATE_UNDEF ){
-                this.Req( entryPt );
-                return false;
+                return this.Req( entryPt );
             }
             this.nPseudostate = [sCOPE].[nAME];
             this.bIsExternTrans = true;
@@ -438,7 +437,7 @@ substm,"    [nAME]: [cONTAINER] = new [cONTAINER]();[->64][dESC]
 region,"        [nAME]: _[cONTAINER] = new _[cONTAINER]();[->64][dESC]
 ","            this.[nAME].pMain = this;
 ","
-[->] && ( this.pMain as [sCOPE] ).[cONTAINER].nPseudostate == [sCOPE]_[vALUE]","[->]( this.pMain as [sCOPE] ).[mODIFIER].Reset( p[tYPE], { entryPt: [sCOPE].[nAME] } );
+[->] && ( this.pMain as [sCOPE] ).[cONTAINER].nPseudostate == [sCOPE].[vALUE]","[->]( this.pMain as [sCOPE] ).[mODIFIER].Reset( p[tYPE], { entryPt: [sCOPE].[nAME] } );
 ","class _[nAME] extends StateMachine {
 [vALUE]}
 "
@@ -449,9 +448,9 @@ state_action,"[->]if( !( this.pMain as [sCOPE] ).lastEnteredStateRecovering && t
 ",[->][nAME],"[->]( this.pMain as [sCOPE] ).[mODIFIER].Reset( p[tYPE] );
 ","[->]( this.pMain as [sCOPE] ).[mODIFIER].Abort( p[tYPE] );
 "
-trans_action,"[->][nAME]Params* e = ( [nAME]Params* )pEventParams; // need merge from ""action"" ★
-",( this.pMain as [sCOPE] ).[mODIFIER].IsIn( [sCOPE].[vALUE] ),"
-[->] && HdStateMachine_IsIn( &( this.pMain as [sCOPE] ).[mODIFIER], [sCOPE].[vALUE] )","[->]this.BgnTrans( p[tYPE], [sCOPE].[nAME] );
+trans_action,"[->]let e = pEventParams as InstanceType<typeof [cONTAINER].[nAME]Params>; // need merge from ""action"" ★
+",( this.pMain as [sCOPE] ).[mODIFIER].IsIn( [cONTAINER].[vALUE] ),"
+[->] && ( this.pMain as [sCOPE] ).[mODIFIER].IsIn( [cONTAINER].[vALUE] )","[->]this.BgnTrans( p[tYPE], [sCOPE].[nAME] );
 [mODIFIER][->]this.EndTrans( p[tYPE] );
 [->]bResult = orAssign( bResult, true );
 ","[mODIFIER][->]bResult = orAssign( bResult, true ); // internal transition
@@ -499,6 +498,9 @@ stm_api,"        public EventProc( p[tYPE]: [tYPE], nEventId: number, pEventPara
             return this.[cONTAINER].Reset( p[tYPE], { entryPt: args.entryPt ?? StateMachine.STATE_UNDEF,
                 lastEnteredStateRecovering: args.lastEnteredStateRecovering ?? false } );
         }
+        public IsIn( nState: number ): boolean {
+            return this.[cONTAINER].IsIn( nState );
+        } 
         public Abort( p[tYPE]: [tYPE] ): boolean{
             return this.[cONTAINER].Abort( p[tYPE] );
         }

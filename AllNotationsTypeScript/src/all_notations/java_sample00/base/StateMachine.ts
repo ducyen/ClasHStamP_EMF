@@ -79,8 +79,10 @@ export class StateMachine {
 
     public Req(
         entryPt: long
-    ): void {
+    ): boolean {
         this.nPseudostate = entryPt;
+		
+		return this.nPseudostate != this.nCurrentState;
         // NOTE: C version forgot to return a bool; Java version is void, so this matches better.
     } /* StateMachine.Req */
 
