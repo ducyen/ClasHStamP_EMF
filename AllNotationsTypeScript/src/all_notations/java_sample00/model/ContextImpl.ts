@@ -12,6 +12,9 @@ import { StateMachine } from "@all_notations/java_sample00/base/StateMachine";
 
 export class ContextImpl extends Context
 {
+    public static E2Params = class extends EventParams{
+        public Property1: long;                                 
+    };
         public static readonly E0 = 0;
         public static readonly E1 = 1;
         public static readonly E2 = 2;
@@ -78,16 +81,17 @@ class _SubStmTop extends StateMachine {
         S101_Entry( pContextImpl: ContextImpl ): void{
             if( this.Enterable( SubStmTop.S101 ) ){
                 this.SubStm_Entry( pContextImpl );
-                this.DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/SubStm/	" );
+                this.DefaultEntryAction( pContextImpl, "SubStmTop	SubStm	239	80	121	81	30	30	700	300	S101" );
             }
         }
         S101_EventProc( pContextImpl: ContextImpl, nEventId: number, pEventParams: EventParams ): boolean{
             let bResult: boolean = false;
             if( !this.bHandled ){
                 this.nSourceState = SubStmTop.S101;
-                this.DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/SubStm/	" );
+                this.DefaultDoingAction( pContextImpl, "SubStmTop	SubStm	239	80	121	81	30	30	700	300	S101" );
                 switch( nEventId ){
-                case ContextImpl.E5:{
+                case ContextImpl.E2:{
+            let e = pEventParams as InstanceType<typeof ContextImpl.E2Params>; // need merge from "action" ★
             this.BgnTrans( pContextImpl, SubStmTop.S102 );
             this.EndTrans( pContextImpl );
             bResult = orAssign( bResult, true );
@@ -101,21 +105,35 @@ class _SubStmTop extends StateMachine {
         }
         S101_Exit( pContextImpl: ContextImpl ): void{
             if( this.Exitable( SubStmTop.S101 ) ){ 
-                 this.DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/SubStm/	" );
+                 this.DefaultExitAction( pContextImpl, "SubStmTop	SubStm	239	80	121	81	30	30	700	300	S101" );
                 this.SubStm_Exit( pContextImpl );
             }
         }
         S102_Entry( pContextImpl: ContextImpl ): void{
             if( this.Enterable( SubStmTop.S102 ) ){
                 this.SubStm_Entry( pContextImpl );
-                this.DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/SubStm/	" );
+                this.DefaultEntryAction( pContextImpl, "SubStmTop	SubStm	479	140	121	81	30	30	700	300	S102" );
             }
         }
         S102_EventProc( pContextImpl: ContextImpl, nEventId: number, pEventParams: EventParams ): boolean{
             let bResult: boolean = false;
             if( !this.bHandled ){
                 this.nSourceState = SubStmTop.S102;
-                this.DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/SubStm/	" );
+                this.DefaultDoingAction( pContextImpl, "SubStmTop	SubStm	479	140	121	81	30	30	700	300	S102" );
+                switch( nEventId ){
+                case ContextImpl.E4:{
+            this.BgnTrans( pContextImpl, SubStmTop.SubStm );
+            ( this.pMain as SubStmTop ).pParentStm?.Req( SubStmTop.Exit1 );
+            this.EndTrans( pContextImpl );
+            bResult = orAssign( bResult, true );
+                } break;
+                case ContextImpl.E1:{
+            this.BgnTrans( pContextImpl, SubStmTop.SubStm );
+            this.EndTrans( pContextImpl );
+            bResult = orAssign( bResult, true );
+                } break;
+                default: break;
+                }
             }
             this.bHandled = orAssign( this.bHandled, bResult );
             this.wasHandled = orAssign( this.wasHandled, bResult );
@@ -123,7 +141,29 @@ class _SubStmTop extends StateMachine {
         }
         S102_Exit( pContextImpl: ContextImpl ): void{
             if( this.Exitable( SubStmTop.S102 ) ){ 
-                 this.DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/SubStm/	" );
+                 this.DefaultExitAction( pContextImpl, "SubStmTop	SubStm	479	140	121	81	30	30	700	300	S102" );
+                this.SubStm_Exit( pContextImpl );
+            }
+        }
+        S103_Entry( pContextImpl: ContextImpl ): void{
+            if( this.Enterable( SubStmTop.S103 ) ){
+                this.SubStm_Entry( pContextImpl );
+                this.DefaultEntryAction( pContextImpl, "SubStmTop	SubStm	159	240	-1	-1	30	30	700	300	S103" );
+            }
+        }
+        S103_EventProc( pContextImpl: ContextImpl, nEventId: number, pEventParams: EventParams ): boolean{
+            let bResult: boolean = false;
+            if( !this.bHandled ){
+                this.nSourceState = SubStmTop.S103;
+                this.DefaultDoingAction( pContextImpl, "SubStmTop	SubStm	159	240	-1	-1	30	30	700	300	S103" );
+            }
+            this.bHandled = orAssign( this.bHandled, bResult );
+            this.wasHandled = orAssign( this.wasHandled, bResult );
+            return this.SubStm_EventProc( pContextImpl, nEventId, pEventParams );
+        }
+        S103_Exit( pContextImpl: ContextImpl ): void{
+            if( this.Exitable( SubStmTop.S103 ) ){ 
+                 this.DefaultExitAction( pContextImpl, "SubStmTop	SubStm	159	240	-1	-1	30	30	700	300	S103" );
                 this.SubStm_Exit( pContextImpl );
             }
         }
@@ -133,14 +173,14 @@ class _SubStmTop extends StateMachine {
             if( this.nCurrentState == SubStmTop.SubStm ) { this.SubStm_Exit( pContextImpl ); }
             else if( this.nCurrentState == SubStmTop.S101 ) { this.S101_Exit( pContextImpl ); }
             else if( this.nCurrentState == SubStmTop.S102 ) { this.S102_Exit( pContextImpl ); }
+            else if( this.nCurrentState == SubStmTop.S103 ) { this.S103_Exit( pContextImpl ); }
             else {}
         }
         public Reset( pContextImpl: ContextImpl, args: ResetArgs = {} ): boolean {
             const entryPt = args.entryPt ?? StateMachine.STATE_UNDEF;
             const lastEnteredStateRecovering = args.lastEnteredStateRecovering ?? false;
             if( entryPt != StateMachine.STATE_UNDEF ){
-                this.Req( entryPt );
-                return false;
+                return this.Req( entryPt );
             }
             this.nPseudostate = SubStmTop.SubStm;
             this.bIsExternTrans = true;
@@ -156,6 +196,7 @@ class _SubStmTop extends StateMachine {
             if( this.nCurrentState == SubStmTop.SubStm ) { this.SubStm_EventProc( pContextImpl, nEventId, pEventParams ); }
             else if( this.nCurrentState == SubStmTop.S101 ) { this.S101_EventProc( pContextImpl, nEventId, pEventParams ); }
             else if( this.nCurrentState == SubStmTop.S102 ) { this.S102_EventProc( pContextImpl, nEventId, pEventParams ); }
+            else if( this.nCurrentState == SubStmTop.S103 ) { this.S103_EventProc( pContextImpl, nEventId, pEventParams ); }
             else {}
             return bResult;
         }
@@ -171,6 +212,7 @@ class _SubStmTop extends StateMachine {
             if( this.nCurrentState == SubStmTop.SubStm ) { this.SubStm_Entry( pContextImpl ); }
             else if( this.nCurrentState == SubStmTop.S101 ) { this.S101_Entry( pContextImpl ); }
             else if( this.nCurrentState == SubStmTop.S102 ) { this.S102_Entry( pContextImpl ); }
+            else if( this.nCurrentState == SubStmTop.S103 ) { this.S103_Entry( pContextImpl ); }
             else {}
         }
         StateDefaultTrans( pContextImpl: ContextImpl ): boolean{
@@ -181,9 +223,12 @@ class _SubStmTop extends StateMachine {
             this.BgnTrans( pContextImpl, SubStmTop.S101 );
             this.EndTrans( pContextImpl );
             bResult = orAssign( bResult, true );
-        } else if ( this.nCurrentState == SubStmTop.S102 && this.nPseudostate == SubStmTop.S102  ) {
-            this.BgnTrans( pContextImpl, SubStmTop.SubStm );
-            ( this.pMain as SubStmTop ).pParentStm?.Req( SubStmTop.Exit1 );
+        } else if ( this.nPseudostate == SubStmTop.Entry1  ) {
+            this.BgnTrans( pContextImpl, SubStmTop.S102 );
+            this.EndTrans( pContextImpl );
+            bResult = orAssign( bResult, true );
+        } else if ( this.nPseudostate == SubStmTop.Entry2  ) {
+            this.BgnTrans( pContextImpl, SubStmTop.S103 );
             this.EndTrans( pContextImpl );
             bResult = orAssign( bResult, true );
             }else if( this.nCurrentState != this.nPseudostate ){
@@ -225,22 +270,16 @@ class _S8Rgn1Hsm extends StateMachine {
         S821_Entry( pContextImpl: ContextImpl ): void{
             if( this.Enterable( MainStmTop.S821 ) ){
                 this.S8Rgn1_Entry( pContextImpl );
-                this.DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                this.DefaultEntryAction( pContextImpl, "MainStmTop	S8Rgn1	848	750	181	81	20	20	1461	931	S821" );
+        ( this.pMain as MainStmTop ).S821Hsm.Reset( pContextImpl );
             }
         }
         S821_EventProc( pContextImpl: ContextImpl, nEventId: number, pEventParams: EventParams ): boolean{
             let bResult: boolean = false;
+    this.bHandled = orAssign( this.bHandled, ( this.pMain as MainStmTop ).S821Hsm.EventProc( pContextImpl, nEventId, pEventParams ) );
             if( !this.bHandled ){
                 this.nSourceState = MainStmTop.S821;
-                this.DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
-                switch( nEventId ){
-                case ContextImpl.E2:{
-            if (( this.pMain as MainStmTop ).MainStmHsm.IsIn( MainStmTop.S812 )) {
-                ( this.pMain as MainStmTop ).MainStmHsm.Reset( pContextImpl, { entryPt: MainStmTop.S811 } );
-            }
-                } break;
-                default: break;
-                }
+                this.DefaultDoingAction( pContextImpl, "MainStmTop	S8Rgn1	848	750	181	81	20	20	1461	931	S821" );
             }
             this.bHandled = orAssign( this.bHandled, bResult );
             this.wasHandled = orAssign( this.wasHandled, bResult );
@@ -248,21 +287,22 @@ class _S8Rgn1Hsm extends StateMachine {
         }
         S821_Exit( pContextImpl: ContextImpl ): void{
             if( this.Exitable( MainStmTop.S821 ) ){ 
-                 this.DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+        ( this.pMain as MainStmTop ).S821Hsm.Abort( pContextImpl );
+                 this.DefaultExitAction( pContextImpl, "MainStmTop	S8Rgn1	848	750	181	81	20	20	1461	931	S821" );
                 this.S8Rgn1_Exit( pContextImpl );
             }
         }
         S822_Entry( pContextImpl: ContextImpl ): void{
             if( this.Enterable( MainStmTop.S822 ) ){
                 this.S8Rgn1_Entry( pContextImpl );
-                this.DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                this.DefaultEntryAction( pContextImpl, "MainStmTop	S8Rgn1	568	750	121	81	20	20	1461	931	S822" );
             }
         }
         S822_EventProc( pContextImpl: ContextImpl, nEventId: number, pEventParams: EventParams ): boolean{
             let bResult: boolean = false;
             if( !this.bHandled ){
                 this.nSourceState = MainStmTop.S822;
-                this.DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                this.DefaultDoingAction( pContextImpl, "MainStmTop	S8Rgn1	568	750	121	81	20	20	1461	931	S822" );
             }
             this.bHandled = orAssign( this.bHandled, bResult );
             this.wasHandled = orAssign( this.wasHandled, bResult );
@@ -270,7 +310,7 @@ class _S8Rgn1Hsm extends StateMachine {
         }
         S822_Exit( pContextImpl: ContextImpl ): void{
             if( this.Exitable( MainStmTop.S822 ) ){ 
-                 this.DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                 this.DefaultExitAction( pContextImpl, "MainStmTop	S8Rgn1	568	750	121	81	20	20	1461	931	S822" );
                 this.S8Rgn1_Exit( pContextImpl );
             }
         }
@@ -286,8 +326,7 @@ class _S8Rgn1Hsm extends StateMachine {
             const entryPt = args.entryPt ?? StateMachine.STATE_UNDEF;
             const lastEnteredStateRecovering = args.lastEnteredStateRecovering ?? false;
             if( entryPt != StateMachine.STATE_UNDEF ){
-                this.Req( entryPt );
-                return false;
+                return this.Req( entryPt );
             }
             this.nPseudostate = MainStmTop.S8Rgn1;
             this.bIsExternTrans = true;
@@ -325,7 +364,12 @@ class _S8Rgn1Hsm extends StateMachine {
             this.nSourceState = this.nCurrentState;
             this.nLCAState = StateMachine.STATE_UNDEF;
         if ( this.nPseudostate == MainStmTop.S82Init  ) {
-            this.BgnTrans( pContextImpl, MainStmTop.S821 );
+            this.BgnTrans( pContextImpl, MainStmTop.S822 );
+            this.EndTrans( pContextImpl );
+            bResult = orAssign( bResult, true );
+        } else if ( this.nCurrentState == MainStmTop.S821 && this.nPseudostate == MainStmTop.S821 
+         && ( this.pMain as MainStmTop ).S821Hsm.IsFinished() ) {
+            this.BgnTrans( pContextImpl, MainStmTop.S822 );
             this.EndTrans( pContextImpl );
             bResult = orAssign( bResult, true );
             }else if( this.nCurrentState != this.nPseudostate ){
@@ -367,14 +411,14 @@ class _S71Rgn1Hsm extends StateMachine {
         S7121_Entry( pContextImpl: ContextImpl ): void{
             if( this.Enterable( MainStmTop.S7121 ) ){
                 this.S71Rgn1_Entry( pContextImpl );
-                this.DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                this.DefaultEntryAction( pContextImpl, "MainStmTop	S71Rgn1	247	610	81	61	20	20	1461	931	S7121" );
             }
         }
         S7121_EventProc( pContextImpl: ContextImpl, nEventId: number, pEventParams: EventParams ): boolean{
             let bResult: boolean = false;
             if( !this.bHandled ){
                 this.nSourceState = MainStmTop.S7121;
-                this.DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                this.DefaultDoingAction( pContextImpl, "MainStmTop	S71Rgn1	247	610	81	61	20	20	1461	931	S7121" );
                 switch( nEventId ){
                 case ContextImpl.E5:{
             this.BgnTrans( pContextImpl, MainStmTop.S7122 );
@@ -390,21 +434,29 @@ class _S71Rgn1Hsm extends StateMachine {
         }
         S7121_Exit( pContextImpl: ContextImpl ): void{
             if( this.Exitable( MainStmTop.S7121 ) ){ 
-                 this.DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                 this.DefaultExitAction( pContextImpl, "MainStmTop	S71Rgn1	247	610	81	61	20	20	1461	931	S7121" );
                 this.S71Rgn1_Exit( pContextImpl );
             }
         }
         S7122_Entry( pContextImpl: ContextImpl ): void{
             if( this.Enterable( MainStmTop.S7122 ) ){
                 this.S71Rgn1_Entry( pContextImpl );
-                this.DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                this.DefaultEntryAction( pContextImpl, "MainStmTop	S71Rgn1	247	690	81	61	20	20	1461	931	S7122" );
             }
         }
         S7122_EventProc( pContextImpl: ContextImpl, nEventId: number, pEventParams: EventParams ): boolean{
             let bResult: boolean = false;
             if( !this.bHandled ){
                 this.nSourceState = MainStmTop.S7122;
-                this.DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                this.DefaultDoingAction( pContextImpl, "MainStmTop	S71Rgn1	247	690	81	61	20	20	1461	931	S7122" );
+                switch( nEventId ){
+                case ContextImpl.E4:{
+            this.BgnTrans( pContextImpl, MainStmTop.S71Rgn1 );
+            this.EndTrans( pContextImpl );
+            bResult = orAssign( bResult, true );
+                } break;
+                default: break;
+                }
             }
             this.bHandled = orAssign( this.bHandled, bResult );
             this.wasHandled = orAssign( this.wasHandled, bResult );
@@ -412,7 +464,7 @@ class _S71Rgn1Hsm extends StateMachine {
         }
         S7122_Exit( pContextImpl: ContextImpl ): void{
             if( this.Exitable( MainStmTop.S7122 ) ){ 
-                 this.DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                 this.DefaultExitAction( pContextImpl, "MainStmTop	S71Rgn1	247	690	81	61	20	20	1461	931	S7122" );
                 this.S71Rgn1_Exit( pContextImpl );
             }
         }
@@ -428,8 +480,7 @@ class _S71Rgn1Hsm extends StateMachine {
             const entryPt = args.entryPt ?? StateMachine.STATE_UNDEF;
             const lastEnteredStateRecovering = args.lastEnteredStateRecovering ?? false;
             if( entryPt != StateMachine.STATE_UNDEF ){
-                this.Req( entryPt );
-                return false;
+                return this.Req( entryPt );
             }
             this.nPseudostate = MainStmTop.S71Rgn1;
             this.bIsExternTrans = true;
@@ -509,14 +560,14 @@ class _MainStmTop extends StateMachine {
         S1_Entry( pContextImpl: ContextImpl ): void{
             if( this.Enterable( MainStmTop.S1 ) ){
                 this.MainStm_Entry( pContextImpl );
-                this.DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                this.DefaultEntryAction( pContextImpl, "MainStmTop	MainStm	169	70	121	71	20	20	1461	931	S1" );
             }
         }
         S1_EventProc( pContextImpl: ContextImpl, nEventId: number, pEventParams: EventParams ): boolean{
             let bResult: boolean = false;
             if( !this.bHandled ){
                 this.nSourceState = MainStmTop.S1;
-                this.DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                this.DefaultDoingAction( pContextImpl, "MainStmTop	MainStm	169	70	121	71	20	20	1461	931	S1" );
                 switch( nEventId ){
                 case ContextImpl.E1:{
             this.BgnTrans( pContextImpl, MainStmTop.S2 );
@@ -524,6 +575,7 @@ class _MainStmTop extends StateMachine {
             bResult = orAssign( bResult, true );
                 } break;
                 case ContextImpl.E2:{
+            let e = pEventParams as InstanceType<typeof ContextImpl.E2Params>; // need merge from "action" ★
             if (pContextImpl.internalAttribute == 0) {
                 this.BgnTrans( pContextImpl, MainStmTop.S2 );
                 this.EndTrans( pContextImpl );
@@ -550,14 +602,14 @@ class _MainStmTop extends StateMachine {
         }
         S1_Exit( pContextImpl: ContextImpl ): void{
             if( this.Exitable( MainStmTop.S1 ) ){ 
-                 this.DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                 this.DefaultExitAction( pContextImpl, "MainStmTop	MainStm	169	70	121	71	20	20	1461	931	S1" );
                 this.MainStm_Exit( pContextImpl );
             }
         }
         S2_Entry( pContextImpl: ContextImpl ): void{
             if( this.Enterable( MainStmTop.S2 ) ){
                 this.MainStm_Entry( pContextImpl );
-                this.DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                this.DefaultEntryAction( pContextImpl, "MainStmTop	MainStm	449	70	740	247	20	20	1461	931	S2" );
         if( !( this.pMain as MainStmTop ).lastEnteredStateRecovering && this.nTargetState == MainStmTop.S2 ){
             this.nPseudostate = MainStmTop.S2Init;
         }
@@ -567,7 +619,7 @@ class _MainStmTop extends StateMachine {
             let bResult: boolean = false;
             if( !this.bHandled ){
                 this.nSourceState = MainStmTop.S2;
-                this.DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                this.DefaultDoingAction( pContextImpl, "MainStmTop	MainStm	449	70	740	247	20	20	1461	931	S2" );
                 switch( nEventId ){
                 case ContextImpl.E4:{
             this.BgnTrans( pContextImpl, MainStmTop.S6 );
@@ -575,6 +627,7 @@ class _MainStmTop extends StateMachine {
             bResult = orAssign( bResult, true );
                 } break;
                 case ContextImpl.E2:{
+            let e = pEventParams as InstanceType<typeof ContextImpl.E2Params>; // need merge from "action" ★
             this.BgnTrans( pContextImpl, MainStmTop.S3 );
             this.EndTrans( pContextImpl );
             bResult = orAssign( bResult, true );
@@ -588,14 +641,14 @@ class _MainStmTop extends StateMachine {
         }
         S2_Exit( pContextImpl: ContextImpl ): void{
             if( this.Exitable( MainStmTop.S2 ) ){ 
-                 this.DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                 this.DefaultExitAction( pContextImpl, "MainStmTop	MainStm	449	70	740	247	20	20	1461	931	S2" );
                 this.MainStm_Exit( pContextImpl );
             }
         }
         S21_Entry( pContextImpl: ContextImpl ): void{
             if( this.Enterable( MainStmTop.S21 ) ){
                 this.S2_Entry( pContextImpl );
-                this.DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                this.DefaultEntryAction( pContextImpl, "MainStmTop	MainStm	648	150	120	81	20	20	1461	931	S21" );
         ( this.pMain as MainStmTop ).S2ShallowHist = MainStmTop.S21;
             }
         }
@@ -603,9 +656,10 @@ class _MainStmTop extends StateMachine {
             let bResult: boolean = false;
             if( !this.bHandled ){
                 this.nSourceState = MainStmTop.S21;
-                this.DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                this.DefaultDoingAction( pContextImpl, "MainStmTop	MainStm	648	150	120	81	20	20	1461	931	S21" );
                 switch( nEventId ){
                 case ContextImpl.E2:{
+            let e = pEventParams as InstanceType<typeof ContextImpl.E2Params>; // need merge from "action" ★
             this.BgnTrans( pContextImpl, MainStmTop.S22 );
             this.EndTrans( pContextImpl );
             bResult = orAssign( bResult, true );
@@ -624,14 +678,14 @@ class _MainStmTop extends StateMachine {
         }
         S21_Exit( pContextImpl: ContextImpl ): void{
             if( this.Exitable( MainStmTop.S21 ) ){ 
-                 this.DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                 this.DefaultExitAction( pContextImpl, "MainStmTop	MainStm	648	150	120	81	20	20	1461	931	S21" );
                 this.S2_Exit( pContextImpl );
             }
         }
         S22_Entry( pContextImpl: ContextImpl ): void{
             if( this.Enterable( MainStmTop.S22 ) ){
                 this.S2_Entry( pContextImpl );
-                this.DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                this.DefaultEntryAction( pContextImpl, "MainStmTop	MainStm	868	150	121	81	20	20	1461	931	S22" );
         ( this.pMain as MainStmTop ).S2ShallowHist = MainStmTop.S22;
             }
         }
@@ -639,11 +693,11 @@ class _MainStmTop extends StateMachine {
             let bResult: boolean = false;
             if( !this.bHandled ){
                 this.nSourceState = MainStmTop.S22;
-                this.DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                this.DefaultDoingAction( pContextImpl, "MainStmTop	MainStm	868	150	121	81	20	20	1461	931	S22" );
                 switch( nEventId ){
                 case ContextImpl.E0:{
             ( this.pMain as MainStmTop ).S2ShallowHist = StateMachine.STATE_UNDEF;
-            this.BgnTrans( pContextImpl, MainStmTop.MainStm );
+            this.BgnTrans( pContextImpl, MainStmTop.S2 );
             this.EndTrans( pContextImpl );
             bResult = orAssign( bResult, true );
                 } break;
@@ -656,14 +710,14 @@ class _MainStmTop extends StateMachine {
         }
         S22_Exit( pContextImpl: ContextImpl ): void{
             if( this.Exitable( MainStmTop.S22 ) ){ 
-                 this.DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                 this.DefaultExitAction( pContextImpl, "MainStmTop	MainStm	868	150	121	81	20	20	1461	931	S22" );
                 this.S2_Exit( pContextImpl );
             }
         }
         S8_Entry( pContextImpl: ContextImpl ): void{
             if( this.Enterable( MainStmTop.S8 ) ){
                 this.MainStm_Entry( pContextImpl );
-                this.DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                this.DefaultEntryAction( pContextImpl, "MainStmTop	MainStm	449	590	741	268	20	20	1461	931	S8" );
         if( !( this.pMain as MainStmTop ).lastEnteredStateRecovering && this.nTargetState == MainStmTop.S8 ){
             this.nPseudostate = MainStmTop.S81Init;
         }
@@ -675,7 +729,7 @@ class _MainStmTop extends StateMachine {
             this.bHandled = orAssign( this.bHandled, ( this.pMain as MainStmTop ).S8Rgn1Hsm.EventProc( pContextImpl, nEventId, pEventParams ) );
             if( !this.bHandled ){
                 this.nSourceState = MainStmTop.S8;
-                this.DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                this.DefaultDoingAction( pContextImpl, "MainStmTop	MainStm	449	590	741	268	20	20	1461	931	S8" );
                 switch( nEventId ){
                 case ContextImpl.E3:{
             if( ( this.pMain as MainStmTop ).S2ShallowHist != StateMachine.STATE_UNDEF ){
@@ -683,7 +737,7 @@ class _MainStmTop extends StateMachine {
                 this.EndTrans( pContextImpl );
                 bResult = orAssign( bResult, true );
             }else{
-                this.BgnTrans( pContextImpl, MainStmTop.MainStm );
+                this.BgnTrans( pContextImpl, MainStmTop.S2 );
                 this.EndTrans( pContextImpl );
                 bResult = orAssign( bResult, true );
             }
@@ -703,21 +757,21 @@ class _MainStmTop extends StateMachine {
         S8_Exit( pContextImpl: ContextImpl ): void{
             if( this.Exitable( MainStmTop.S8 ) ){ 
         ( this.pMain as MainStmTop ).S8Rgn1Hsm.Abort( pContextImpl );
-                 this.DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                 this.DefaultExitAction( pContextImpl, "MainStmTop	MainStm	449	590	741	268	20	20	1461	931	S8" );
                 this.MainStm_Exit( pContextImpl );
             }
         }
         S811_Entry( pContextImpl: ContextImpl ): void{
             if( this.Enterable( MainStmTop.S811 ) ){
                 this.S8_Entry( pContextImpl );
-                this.DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                this.DefaultEntryAction( pContextImpl, "MainStmTop	MainStm	568	630	121	81	20	20	1461	931	S811" );
             }
         }
         S811_EventProc( pContextImpl: ContextImpl, nEventId: number, pEventParams: EventParams ): boolean{
             let bResult: boolean = false;
             if( !this.bHandled ){
                 this.nSourceState = MainStmTop.S811;
-                this.DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                this.DefaultDoingAction( pContextImpl, "MainStmTop	MainStm	568	630	121	81	20	20	1461	931	S811" );
             }
             this.bHandled = orAssign( this.bHandled, bResult );
             this.wasHandled = orAssign( this.wasHandled, bResult );
@@ -725,21 +779,23 @@ class _MainStmTop extends StateMachine {
         }
         S811_Exit( pContextImpl: ContextImpl ): void{
             if( this.Exitable( MainStmTop.S811 ) ){ 
-                 this.DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                 this.DefaultExitAction( pContextImpl, "MainStmTop	MainStm	568	630	121	81	20	20	1461	931	S811" );
                 this.S8_Exit( pContextImpl );
             }
         }
         S812_Entry( pContextImpl: ContextImpl ): void{
             if( this.Enterable( MainStmTop.S812 ) ){
                 this.S8_Entry( pContextImpl );
-                this.DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                this.DefaultEntryAction( pContextImpl, "MainStmTop	MainStm	928	630	121	81	20	20	1461	931	S812" );
+        ( this.pMain as MainStmTop ).S812Hsm.Reset( pContextImpl );
             }
         }
         S812_EventProc( pContextImpl: ContextImpl, nEventId: number, pEventParams: EventParams ): boolean{
             let bResult: boolean = false;
+    this.bHandled = orAssign( this.bHandled, ( this.pMain as MainStmTop ).S812Hsm.EventProc( pContextImpl, nEventId, pEventParams ) );
             if( !this.bHandled ){
                 this.nSourceState = MainStmTop.S812;
-                this.DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                this.DefaultDoingAction( pContextImpl, "MainStmTop	MainStm	928	630	121	81	20	20	1461	931	S812" );
             }
             this.bHandled = orAssign( this.bHandled, bResult );
             this.wasHandled = orAssign( this.wasHandled, bResult );
@@ -747,14 +803,15 @@ class _MainStmTop extends StateMachine {
         }
         S812_Exit( pContextImpl: ContextImpl ): void{
             if( this.Exitable( MainStmTop.S812 ) ){ 
-                 this.DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+        ( this.pMain as MainStmTop ).S812Hsm.Abort( pContextImpl );
+                 this.DefaultExitAction( pContextImpl, "MainStmTop	MainStm	928	630	121	81	20	20	1461	931	S812" );
                 this.S8_Exit( pContextImpl );
             }
         }
         S7_Entry( pContextImpl: ContextImpl ): void{
             if( this.Enterable( MainStmTop.S7 ) ){
                 this.MainStm_Entry( pContextImpl );
-                this.DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                this.DefaultEntryAction( pContextImpl, "MainStmTop	MainStm	89	470	281	441	20	20	1461	931	S7" );
         if( !( this.pMain as MainStmTop ).lastEnteredStateRecovering && this.nTargetState == MainStmTop.S7 ){
             this.nPseudostate = MainStmTop.S7Init;
         }
@@ -764,15 +821,22 @@ class _MainStmTop extends StateMachine {
             let bResult: boolean = false;
             if( !this.bHandled ){
                 this.nSourceState = MainStmTop.S7;
-                this.DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                this.DefaultDoingAction( pContextImpl, "MainStmTop	MainStm	89	470	281	441	20	20	1461	931	S7" );
                 switch( nEventId ){
                 case ContextImpl.E2:{
+            let e = pEventParams as InstanceType<typeof ContextImpl.E2Params>; // need merge from "action" ★
             this.BgnTrans( pContextImpl, MainStmTop.S72 );
             this.EndTrans( pContextImpl );
             bResult = orAssign( bResult, true );
                 } break;
                 case ContextImpl.E1:{
+            this.bIsExternTrans = true;
             this.BgnTrans( pContextImpl, MainStmTop.S71 );
+            this.EndTrans( pContextImpl );
+            bResult = orAssign( bResult, true );
+                } break;
+                case ContextImpl.E3:{
+            this.BgnTrans( pContextImpl, MainStmTop.S8 );
             this.EndTrans( pContextImpl );
             bResult = orAssign( bResult, true );
                 } break;
@@ -786,14 +850,14 @@ class _MainStmTop extends StateMachine {
         S7_Exit( pContextImpl: ContextImpl ): void{
             if( this.Exitable( MainStmTop.S7 ) ){ 
         ( this.pMain as MainStmTop ).S7DeepHist = this.lastEnteredState;
-                 this.DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                 this.DefaultExitAction( pContextImpl, "MainStmTop	MainStm	89	470	281	441	20	20	1461	931	S7" );
                 this.MainStm_Exit( pContextImpl );
             }
         }
         S71_Entry( pContextImpl: ContextImpl ): void{
             if( this.Enterable( MainStmTop.S71 ) ){
                 this.S7_Entry( pContextImpl );
-                this.DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                this.DefaultEntryAction( pContextImpl, "MainStmTop	MainStm	108	550	241	261	20	20	1461	931	S71" );
         if( !( this.pMain as MainStmTop ).lastEnteredStateRecovering && this.nTargetState == MainStmTop.S71 ){
             this.nPseudostate = MainStmTop.S711Init;
         }
@@ -805,7 +869,7 @@ class _MainStmTop extends StateMachine {
             this.bHandled = orAssign( this.bHandled, ( this.pMain as MainStmTop ).S71Rgn1Hsm.EventProc( pContextImpl, nEventId, pEventParams ) );
             if( !this.bHandled ){
                 this.nSourceState = MainStmTop.S71;
-                this.DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                this.DefaultDoingAction( pContextImpl, "MainStmTop	MainStm	108	550	241	261	20	20	1461	931	S71" );
             }
             this.bHandled = orAssign( this.bHandled, bResult );
             this.wasHandled = orAssign( this.wasHandled, bResult );
@@ -814,21 +878,21 @@ class _MainStmTop extends StateMachine {
         S71_Exit( pContextImpl: ContextImpl ): void{
             if( this.Exitable( MainStmTop.S71 ) ){ 
         ( this.pMain as MainStmTop ).S71Rgn1Hsm.Abort( pContextImpl );
-                 this.DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                 this.DefaultExitAction( pContextImpl, "MainStmTop	MainStm	108	550	241	261	20	20	1461	931	S71" );
                 this.S7_Exit( pContextImpl );
             }
         }
         S7111_Entry( pContextImpl: ContextImpl ): void{
             if( this.Enterable( MainStmTop.S7111 ) ){
                 this.S71_Entry( pContextImpl );
-                this.DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                this.DefaultEntryAction( pContextImpl, "MainStmTop	MainStm	127	610	81	61	20	20	1461	931	S7111" );
             }
         }
         S7111_EventProc( pContextImpl: ContextImpl, nEventId: number, pEventParams: EventParams ): boolean{
             let bResult: boolean = false;
             if( !this.bHandled ){
                 this.nSourceState = MainStmTop.S7111;
-                this.DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                this.DefaultDoingAction( pContextImpl, "MainStmTop	MainStm	127	610	81	61	20	20	1461	931	S7111" );
                 switch( nEventId ){
                 case ContextImpl.E0:{
             this.BgnTrans( pContextImpl, MainStmTop.S7112 );
@@ -844,21 +908,29 @@ class _MainStmTop extends StateMachine {
         }
         S7111_Exit( pContextImpl: ContextImpl ): void{
             if( this.Exitable( MainStmTop.S7111 ) ){ 
-                 this.DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                 this.DefaultExitAction( pContextImpl, "MainStmTop	MainStm	127	610	81	61	20	20	1461	931	S7111" );
                 this.S71_Exit( pContextImpl );
             }
         }
         S7112_Entry( pContextImpl: ContextImpl ): void{
             if( this.Enterable( MainStmTop.S7112 ) ){
                 this.S71_Entry( pContextImpl );
-                this.DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                this.DefaultEntryAction( pContextImpl, "MainStmTop	MainStm	127	690	81	61	20	20	1461	931	S7112" );
             }
         }
         S7112_EventProc( pContextImpl: ContextImpl, nEventId: number, pEventParams: EventParams ): boolean{
             let bResult: boolean = false;
             if( !this.bHandled ){
                 this.nSourceState = MainStmTop.S7112;
-                this.DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                this.DefaultDoingAction( pContextImpl, "MainStmTop	MainStm	127	690	81	61	20	20	1461	931	S7112" );
+                switch( nEventId ){
+                case ContextImpl.E3:{
+            this.BgnTrans( pContextImpl, MainStmTop.S71 );
+            this.EndTrans( pContextImpl );
+            bResult = orAssign( bResult, true );
+                } break;
+                default: break;
+                }
             }
             this.bHandled = orAssign( this.bHandled, bResult );
             this.wasHandled = orAssign( this.wasHandled, bResult );
@@ -866,21 +938,21 @@ class _MainStmTop extends StateMachine {
         }
         S7112_Exit( pContextImpl: ContextImpl ): void{
             if( this.Exitable( MainStmTop.S7112 ) ){ 
-                 this.DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                 this.DefaultExitAction( pContextImpl, "MainStmTop	MainStm	127	690	81	61	20	20	1461	931	S7112" );
                 this.S71_Exit( pContextImpl );
             }
         }
         S72_Entry( pContextImpl: ContextImpl ): void{
             if( this.Enterable( MainStmTop.S72 ) ){
                 this.S7_Entry( pContextImpl );
-                this.DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                this.DefaultEntryAction( pContextImpl, "MainStmTop	MainStm	168	830	121	61	20	20	1461	931	S72" );
             }
         }
         S72_EventProc( pContextImpl: ContextImpl, nEventId: number, pEventParams: EventParams ): boolean{
             let bResult: boolean = false;
             if( !this.bHandled ){
                 this.nSourceState = MainStmTop.S72;
-                this.DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                this.DefaultDoingAction( pContextImpl, "MainStmTop	MainStm	168	830	121	61	20	20	1461	931	S72" );
             }
             this.bHandled = orAssign( this.bHandled, bResult );
             this.wasHandled = orAssign( this.wasHandled, bResult );
@@ -888,14 +960,14 @@ class _MainStmTop extends StateMachine {
         }
         S72_Exit( pContextImpl: ContextImpl ): void{
             if( this.Exitable( MainStmTop.S72 ) ){ 
-                 this.DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                 this.DefaultExitAction( pContextImpl, "MainStmTop	MainStm	168	830	121	61	20	20	1461	931	S72" );
                 this.S7_Exit( pContextImpl );
             }
         }
         S6_Entry( pContextImpl: ContextImpl ): void{
             if( this.Enterable( MainStmTop.S6 ) ){
                 this.MainStm_Entry( pContextImpl );
-                this.DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                this.DefaultEntryAction( pContextImpl, "MainStmTop	MainStm	1262	370	128	81	20	20	1461	931	S6" );
         ( this.pMain as MainStmTop ).S6Hsm.Reset( pContextImpl );
             }
         }
@@ -904,7 +976,7 @@ class _MainStmTop extends StateMachine {
     this.bHandled = orAssign( this.bHandled, ( this.pMain as MainStmTop ).S6Hsm.EventProc( pContextImpl, nEventId, pEventParams ) );
             if( !this.bHandled ){
                 this.nSourceState = MainStmTop.S6;
-                this.DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                this.DefaultDoingAction( pContextImpl, "MainStmTop	MainStm	1262	370	128	81	20	20	1461	931	S6" );
             }
             this.bHandled = orAssign( this.bHandled, bResult );
             this.wasHandled = orAssign( this.wasHandled, bResult );
@@ -913,21 +985,21 @@ class _MainStmTop extends StateMachine {
         S6_Exit( pContextImpl: ContextImpl ): void{
             if( this.Exitable( MainStmTop.S6 ) ){ 
         ( this.pMain as MainStmTop ).S6Hsm.Abort( pContextImpl );
-                 this.DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                 this.DefaultExitAction( pContextImpl, "MainStmTop	MainStm	1262	370	128	81	20	20	1461	931	S6" );
                 this.MainStm_Exit( pContextImpl );
             }
         }
         S3_Entry( pContextImpl: ContextImpl ): void{
             if( this.Enterable( MainStmTop.S3 ) ){
                 this.MainStm_Entry( pContextImpl );
-                this.DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                this.DefaultEntryAction( pContextImpl, "MainStmTop	MainStm	1289	90	121	81	20	20	1461	931	S3" );
             }
         }
         S3_EventProc( pContextImpl: ContextImpl, nEventId: number, pEventParams: EventParams ): boolean{
             let bResult: boolean = false;
             if( !this.bHandled ){
                 this.nSourceState = MainStmTop.S3;
-                this.DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                this.DefaultDoingAction( pContextImpl, "MainStmTop	MainStm	1289	90	121	81	20	20	1461	931	S3" );
                 switch( nEventId ){
                 case ContextImpl.E0:{
             this.BgnTrans( pContextImpl, MainStmTop.S6 );
@@ -943,14 +1015,14 @@ class _MainStmTop extends StateMachine {
         }
         S3_Exit( pContextImpl: ContextImpl ): void{
             if( this.Exitable( MainStmTop.S3 ) ){ 
-                 this.DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                 this.DefaultExitAction( pContextImpl, "MainStmTop	MainStm	1289	90	121	81	20	20	1461	931	S3" );
                 this.MainStm_Exit( pContextImpl );
             }
         }
         S9_Entry( pContextImpl: ContextImpl ): void{
             if( this.Enterable( MainStmTop.S9 ) ){
                 this.MainStm_Entry( pContextImpl );
-                this.DefaultEntryAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                this.DefaultEntryAction( pContextImpl, "MainStmTop	MainStm	1269	490	121	81	20	20	1461	931	S9" );
         ( this.pMain as MainStmTop ).S9Hsm.Reset( pContextImpl );
             }
         }
@@ -959,7 +1031,7 @@ class _MainStmTop extends StateMachine {
     this.bHandled = orAssign( this.bHandled, ( this.pMain as MainStmTop ).S9Hsm.EventProc( pContextImpl, nEventId, pEventParams ) );
             if( !this.bHandled ){
                 this.nSourceState = MainStmTop.S9;
-                this.DefaultDoingAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                this.DefaultDoingAction( pContextImpl, "MainStmTop	MainStm	1269	490	121	81	20	20	1461	931	S9" );
             }
             this.bHandled = orAssign( this.bHandled, bResult );
             this.wasHandled = orAssign( this.wasHandled, bResult );
@@ -968,7 +1040,7 @@ class _MainStmTop extends StateMachine {
         S9_Exit( pContextImpl: ContextImpl ): void{
             if( this.Exitable( MainStmTop.S9 ) ){ 
         ( this.pMain as MainStmTop ).S9Hsm.Abort( pContextImpl );
-                 this.DefaultExitAction( pContextImpl, "AllNotations/JavaSample00/Model/ContextImpl/MainStm/	" );
+                 this.DefaultExitAction( pContextImpl, "MainStmTop	MainStm	1269	490	121	81	20	20	1461	931	S9" );
                 this.MainStm_Exit( pContextImpl );
             }
         }
@@ -997,8 +1069,7 @@ class _MainStmTop extends StateMachine {
             const entryPt = args.entryPt ?? StateMachine.STATE_UNDEF;
             const lastEnteredStateRecovering = args.lastEnteredStateRecovering ?? false;
             if( entryPt != StateMachine.STATE_UNDEF ){
-                this.Req( entryPt );
-                return false;
+                return this.Req( entryPt );
             }
             this.nPseudostate = MainStmTop.MainStm;
             this.bIsExternTrans = true;
@@ -1061,18 +1132,23 @@ class _MainStmTop extends StateMachine {
             let bResult: boolean = false;
             this.nSourceState = this.nCurrentState;
             this.nLCAState = StateMachine.STATE_UNDEF;
-        if ( this.nPseudostate == MainStmTop.MainStmInit  ) {
-            this.BgnTrans( pContextImpl, MainStmTop.S1 );
+        if ( this.nCurrentState == MainStmTop.S6 && this.nPseudostate == SubStmTop.Exit1  ) {
+            this.BgnTrans( pContextImpl, MainStmTop.S9 );
             this.EndTrans( pContextImpl );
             bResult = orAssign( bResult, true );
-        } else if ( this.nCurrentState == MainStmTop.S6 && this.nPseudostate == SubStmTop.Exit1  ) {
-            this.BgnTrans( pContextImpl, MainStmTop.S9 );
+        } else if ( this.nCurrentState == MainStmTop.S812 && this.nPseudostate == SubStmTop.Exit1  ) {
+            if (( this.pMain as MainStmTop ).S821Hsm.IsIn( SubStmTop.S103 )) {
+                ( this.pMain as MainStmTop ).S8Rgn1Hsm.Reset( pContextImpl, { entryPt: MainStmTop.S822 } );
+            }
+        } else if ( this.nPseudostate == MainStmTop.MainStmInit  ) {
+            this.BgnTrans( pContextImpl, MainStmTop.S1 );
             this.EndTrans( pContextImpl );
             bResult = orAssign( bResult, true );
         } else if ( this.nCurrentState == MainStmTop.S9 && this.nPseudostate == MainStmTop.S9 
          && ( this.pMain as MainStmTop ).S9Hsm.IsFinished() ) {
-            this.BgnTrans( pContextImpl, MainStmTop.S812 );
+            ( this.pMain as MainStmTop ).S821Hsm.Reset( pContextImpl, { entryPt: SubStmTop.Entry2, lastEnteredStateRecovering: ( this.pMain as MainStmTop ).lastEnteredStateRecovering } );
             ( this.pMain as MainStmTop ).S8Rgn1Hsm.Reset( pContextImpl, { entryPt: MainStmTop.S821 } );
+            this.BgnTrans( pContextImpl, MainStmTop.S812 );
             this.EndTrans( pContextImpl );
             bResult = orAssign( bResult, true );
         } else if ( this.nPseudostate == MainStmTop.S2Init  ) {
@@ -1098,6 +1174,11 @@ class _MainStmTop extends StateMachine {
                 this.EndTrans( pContextImpl );
                 bResult = orAssign( bResult, true );
             }
+        } else if ( this.nCurrentState == MainStmTop.S71 && this.nPseudostate == MainStmTop.S71 
+         && ( this.pMain as MainStmTop ).S71Rgn1Hsm.nPseudostate == MainStmTop.S71Rgn1 ) {
+            this.BgnTrans( pContextImpl, MainStmTop.S72 );
+            this.EndTrans( pContextImpl );
+            bResult = orAssign( bResult, true );
             }else if( this.nCurrentState != this.nPseudostate ){
                 this.BgnTrans( pContextImpl, this.nPseudostate );
                 this.EndTrans( pContextImpl );
@@ -1117,9 +1198,11 @@ class SubStmTop extends BaseStmTop {
         public static readonly S101: long        = ( 1 <<  0 );
         public static readonly SubStmInit: long  = ( 1 <<  1 );
         public static readonly S102: long        = ( 1 <<  2 );
-        public static readonly Entry1: long      = ( 1 <<  3 );
-        public static readonly Exit1: long       = ( 1 <<  4 );
-        public static readonly SubStm: long      = ( SubStmTop.S101 | SubStmTop.SubStmInit | SubStmTop.S102 | SubStmTop.Entry1 | SubStmTop.Exit1 );
+        public static readonly S103: long        = ( 1 <<  3 );
+        public static readonly Entry1: long      = ( 1 <<  4 );
+        public static readonly Exit1: long       = ( 1 <<  5 );
+        public static readonly Entry2: long      = ( 1 <<  6 );
+        public static readonly SubStm: long      = ( SubStmTop.S101 | SubStmTop.SubStmInit | SubStmTop.S102 | SubStmTop.S103 | SubStmTop.Entry1 | SubStmTop.Exit1 | SubStmTop.Entry2 );
         SubStmHsm: _SubStmTop = new _SubStmTop();               
 
         public EventProc( pContextImpl: ContextImpl, nEventId: number, pEventParams: EventParams ): boolean{
@@ -1141,6 +1224,9 @@ class SubStmTop extends BaseStmTop {
             return this.SubStmHsm.Reset( pContextImpl, { entryPt: args.entryPt ?? StateMachine.STATE_UNDEF,
                 lastEnteredStateRecovering: args.lastEnteredStateRecovering ?? false } );
         }
+        public IsIn( nState: number ): boolean {
+            return this.SubStmHsm.IsIn( nState );
+        } 
         public Abort( pContextImpl: ContextImpl ): boolean{
             return this.SubStmHsm.Abort( pContextImpl );
         }
@@ -1190,7 +1276,9 @@ class MainStmTop extends BaseStmTop {
         public static readonly MainStm: long     = ( MainStmTop.S1 | MainStmTop.MainStmInit | MainStmTop.S2 | MainStmTop.S8 | MainStmTop.S7 | MainStmTop.S6 | MainStmTop.S3 | MainStmTop.S9 );
         MainStmHsm: _MainStmTop = new _MainStmTop();            
         S2ShallowHist: long = StateMachine.STATE_UNDEF;
+    S812Hsm: SubStmTop = new SubStmTop();                       
         S8Rgn1Hsm: _S8Rgn1Hsm = new _S8Rgn1Hsm();               
+    S821Hsm: SubStmTop = new SubStmTop();                       
         S71Rgn1Hsm: _S71Rgn1Hsm = new _S71Rgn1Hsm();            
         S7DeepHist: long = StateMachine.STATE_UNDEF;
     S6Hsm: SubStmTop = new SubStmTop();                         
@@ -1203,9 +1291,11 @@ class MainStmTop extends BaseStmTop {
             let bResult: boolean;
             while( true ){
                 bResult = false;
-                bResult = orAssign( bResult, this.S8Rgn1Hsm.StateDefaultTrans( pContextImpl ) );
+                bResult = orAssign( bResult, this.S821Hsm.StateDefaultTrans( pContextImpl )
+                            || this.S8Rgn1Hsm.StateDefaultTrans( pContextImpl ) );
                 bResult = orAssign( bResult, this.S71Rgn1Hsm.StateDefaultTrans( pContextImpl ) );
-                bResult = orAssign( bResult, this.S6Hsm.StateDefaultTrans( pContextImpl )
+                bResult = orAssign( bResult, this.S812Hsm.StateDefaultTrans( pContextImpl )
+                            || this.S6Hsm.StateDefaultTrans( pContextImpl )
                             || this.S9Hsm.StateDefaultTrans( pContextImpl )
                             || this.MainStmHsm.StateDefaultTrans( pContextImpl ) );
                 if( bResult == false ){
@@ -1219,6 +1309,9 @@ class MainStmTop extends BaseStmTop {
             return this.MainStmHsm.Reset( pContextImpl, { entryPt: args.entryPt ?? StateMachine.STATE_UNDEF,
                 lastEnteredStateRecovering: args.lastEnteredStateRecovering ?? false } );
         }
+        public IsIn( nState: number ): boolean {
+            return this.MainStmHsm.IsIn( nState );
+        } 
         public Abort( pContextImpl: ContextImpl ): boolean{
             return this.MainStmHsm.Abort( pContextImpl );
         }
@@ -1230,7 +1323,9 @@ class MainStmTop extends BaseStmTop {
             this.pParentStm = pParent;
             this.MainStmHsm.pMain = this;
             this.S2ShallowHist = StateMachine.STATE_UNDEF;
+    this.S812Hsm.Prepare( this.MainStmHsm );
             this.S8Rgn1Hsm.pMain = this;
+    this.S821Hsm.Prepare( this.S8Rgn1Hsm );
             this.S71Rgn1Hsm.pMain = this;
             this.S7DeepHist = StateMachine.STATE_UNDEF;
     this.S6Hsm.Prepare( this.MainStmHsm );

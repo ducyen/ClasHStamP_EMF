@@ -189,11 +189,11 @@ public  class StateMachine
         return isIn(this.nCurrentState, targetState);
     } /* StateMachine.IsIn */
 
-    public void Req(
+    public Boolean Req(
         long entryPt
     ){
         this.nPseudostate = entryPt;
-
+        return this.nPseudostate != nCurrentState;
         // NOTE: C version forgot to return a bool; Java version is void, so this matches better.
     } /* StateMachine.Req */
     

@@ -203,6 +203,7 @@ class _MainStmTop extends StateMachine {
             if( Enterable( MainStmTop.Off ) ){
                 MainStm_Entry( pContextImpl );
                 DefaultEntryAction( pContextImpl, "MainStmTop	MainStm	239	100	221	61	30	30	1411	811	Off" );
+            System.out.println("Off");
             }
         }
         boolean Off_EventProc( ContextImpl pContextImpl, ContextImpl.EventId nEventId, EventParams pEventParams ){

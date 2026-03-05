@@ -170,7 +170,9 @@
             <ownedParameter xmi:type="uml:Parameter" xmi:id="_8zdJAsO8EfCnMtYhl6TD5w" name="nState" type="_OS5pYL5BEfCXOImACTrF0w"/>
           </ownedOperation>
           <ownedOperation xmi:type="uml:Operation" xmi:id="_1SDw0MVAEfCcwJCdUe0kRg" name="Req" visibility="public">
-            <ownedParameter xmi:type="uml:Parameter" xmi:id="_1SDw0cVAEfCcwJCdUe0kRg" type="_ysTdsL14EfC7372XF4tNJw" direction="return"/>
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_1SDw0cVAEfCcwJCdUe0kRg" direction="return">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+            </ownedParameter>
             <ownedParameter xmi:type="uml:Parameter" xmi:id="_1SDw0sVAEfCcwJCdUe0kRg" name="entryPt" type="_OS5pYL5BEfCXOImACTrF0w"/>
           </ownedOperation>
           <ownedOperation xmi:type="uml:Operation" xmi:id="_zlZhEMVIEfCcwJCdUe0kRg" name="isIn" visibility="private" isStatic="true">
@@ -485,14 +487,11 @@
                 </effect>
               </transition>
               <transition xmi:type="uml:Transition" xmi:id="_185oQMO5EfCnMtYhl6TD5w" source="_xy3QwMO5EfCnMtYhl6TD5w" target="_bVjX8MHREfCpHfwTBA0bGw"/>
-              <transition xmi:type="uml:Transition" xmi:id="_4YIUkMO5EfCnMtYhl6TD5w" source="_xy3QwMO5EfCnMtYhl6TD5w" target="_jU3EQMCGEfC3V-UbsE4d9A"/>
-              <transition xmi:type="uml:Transition" xmi:id="_7n1KwMO5EfCnMtYhl6TD5w" source="_X842MMHVEfCpHfwTBA0bGw" target="_xy3QwMO5EfCnMtYhl6TD5w"/>
-              <transition xmi:type="uml:Transition" xmi:id="_ZSsmQMO8EfCnMtYhl6TD5w" source="_jU3EQMCGEfC3V-UbsE4d9A" target="_VaovkMO8EfCnMtYhl6TD5w">
-                <trigger xmi:type="uml:Trigger" xmi:id="_dgn_QMO8EfCnMtYhl6TD5w" name="" event="_fEFiQMDsEfC3V-UbsE4d9A"/>
-              </transition>
               <transition xmi:type="uml:Transition" xmi:id="_wOzFMNEbEfCdvIvPnuLjcQ" source="_e6GJEMFKEfCvssN6lsBRhw" target="_IxCAQMCGEfC3V-UbsE4d9A">
                 <trigger xmi:type="uml:Trigger" xmi:id="_1TZngNEbEfCdvIvPnuLjcQ" name="" event="_h32qYMDsEfC3V-UbsE4d9A"/>
               </transition>
+              <transition xmi:type="uml:Transition" xmi:id="_pUvUcBR3EfG2PoulsE5B_A" source="_X842MMHVEfCpHfwTBA0bGw" target="_xy3QwMO5EfCnMtYhl6TD5w"/>
+              <transition xmi:type="uml:Transition" xmi:id="_yy7TwBYEEfGRZIR1HlthgA" source="_xy3QwMO5EfCnMtYhl6TD5w" target="_vk4DYBYEEfGRZIR1HlthgA"/>
               <subvertex xmi:type="uml:State" xmi:id="_EV--kL6UEfCkNc0kfmkBvw" name="S1"/>
               <subvertex xmi:type="uml:Pseudostate" xmi:id="_z_3nkL6aEfCMrO0Z3MZOuA" name="MainStmInit"/>
               <subvertex xmi:type="uml:State" xmi:id="_GL224L6bEfCMrO0Z3MZOuA" name="S2">
@@ -517,18 +516,27 @@
               <subvertex xmi:type="uml:State" xmi:id="_IxCAQMCGEfC3V-UbsE4d9A" name="S8">
                 <region xmi:type="uml:Region" xmi:id="_YgPEEMCGEfC3V-UbsE4d9A" name="Region1">
                   <transition xmi:type="uml:Transition" xmi:id="_wPOo8MCGEfC3V-UbsE4d9A" name="tr4" source="_j1gTMMCGEfC3V-UbsE4d9A" target="_YgVxwMCGEfC3V-UbsE4d9A"/>
-                  <transition xmi:type="uml:Transition" xmi:id="_XxpDMMO8EfCnMtYhl6TD5w" source="_bVjX8MHREfCpHfwTBA0bGw" target="_VaovkMO8EfCnMtYhl6TD5w"/>
+                  <transition xmi:type="uml:Transition" xmi:id="_XxpDMMO8EfCnMtYhl6TD5w" source="_5s8-MBRlEfG2PoulsE5B_A" target="_VaovkMO8EfCnMtYhl6TD5w"/>
                   <subvertex xmi:type="uml:State" xmi:id="_YgVxwMCGEfC3V-UbsE4d9A" name="S811"/>
                   <subvertex xmi:type="uml:Pseudostate" xmi:id="_j1gTMMCGEfC3V-UbsE4d9A" name="S81Init"/>
-                  <subvertex xmi:type="uml:State" xmi:id="_bVjX8MHREfCpHfwTBA0bGw" name="S812"/>
+                  <subvertex xmi:type="uml:State" xmi:id="_bVjX8MHREfCpHfwTBA0bGw" name="S812" submachine="_29uN0MHREfCpHfwTBA0bGw">
+                    <connectionPoint xmi:type="uml:Pseudostate" xmi:id="_5s8-MBRlEfG2PoulsE5B_A" name="Exit1" kind="exitPoint"/>
+                  </subvertex>
+                  <subvertex xmi:type="uml:Pseudostate" xmi:id="_VaovkMO8EfCnMtYhl6TD5w" name="" kind="join"/>
                 </region>
                 <region xmi:type="uml:Region" xmi:id="_ioWjkMCGEfC3V-UbsE4d9A" name="Region2">
-                  <transition xmi:type="uml:Transition" xmi:id="_BqmToMCHEfC3V-UbsE4d9A" name="tr5" source="_k9o_8MCGEfC3V-UbsE4d9A" target="_jU3EQMCGEfC3V-UbsE4d9A"/>
-                  <transition xmi:type="uml:Transition" xmi:id="_iN9REMO8EfCnMtYhl6TD5w" source="_VaovkMO8EfCnMtYhl6TD5w" target="_YgVxwMCGEfC3V-UbsE4d9A"/>
-                  <subvertex xmi:type="uml:State" xmi:id="_jU3EQMCGEfC3V-UbsE4d9A" name="S821"/>
+                  <transition xmi:type="uml:Transition" xmi:id="_BqmToMCHEfC3V-UbsE4d9A" name="" source="_k9o_8MCGEfC3V-UbsE4d9A" target="_erNFIMHREfCpHfwTBA0bGw"/>
+                  <transition xmi:type="uml:Transition" xmi:id="_iN9REMO8EfCnMtYhl6TD5w" source="_VaovkMO8EfCnMtYhl6TD5w" target="_erNFIMHREfCpHfwTBA0bGw"/>
+                  <transition xmi:type="uml:Transition" xmi:id="_j5j0MBLBEfGz5-Gjq8PMIA" source="_jU3EQMCGEfC3V-UbsE4d9A" target="_erNFIMHREfCpHfwTBA0bGw"/>
+                  <subvertex xmi:type="uml:State" xmi:id="_jU3EQMCGEfC3V-UbsE4d9A" name="S821" submachine="_29uN0MHREfCpHfwTBA0bGw">
+                    <connectionPoint xmi:type="uml:Pseudostate" xmi:id="_vk4DYBYEEfGRZIR1HlthgA" name="Entry2" kind="entryPoint"/>
+                    <region xmi:type="uml:Region" xmi:id="_sEqsABYEEfGRZIR1HlthgA" name="Region1">
+                      <transition xmi:type="uml:Transition" xmi:id="_1cD5MBYEEfGRZIR1HlthgA" source="_s0FWwBYEEfGRZIR1HlthgA" target="_VaovkMO8EfCnMtYhl6TD5w"/>
+                      <subvertex xmi:type="uml:Pseudostate" xmi:id="_s0FWwBYEEfGRZIR1HlthgA" name="S103" kind="fork"/>
+                    </region>
+                  </subvertex>
                   <subvertex xmi:type="uml:Pseudostate" xmi:id="_k9o_8MCGEfC3V-UbsE4d9A" name="S82Init"/>
                   <subvertex xmi:type="uml:State" xmi:id="_erNFIMHREfCpHfwTBA0bGw" name="S822"/>
-                  <subvertex xmi:type="uml:Pseudostate" xmi:id="_VaovkMO8EfCnMtYhl6TD5w" name="Join5" kind="join"/>
                 </region>
               </subvertex>
               <subvertex xmi:type="uml:State" xmi:id="_e6GJEMFKEfCvssN6lsBRhw" name="S7">
@@ -585,24 +593,28 @@
               <subvertex xmi:type="uml:Pseudostate" xmi:id="_xy3QwMO5EfCnMtYhl6TD5w" name="" kind="fork"/>
             </region>
           </ownedBehavior>
-          <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_29uN0MHREfCpHfwTBA0bGw" name="SubStm" submachineState="_-Rad4MHREfCpHfwTBA0bGw _X842MMHVEfCpHfwTBA0bGw">
+          <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_29uN0MHREfCpHfwTBA0bGw" name="SubStm" submachineState="_-Rad4MHREfCpHfwTBA0bGw _X842MMHVEfCpHfwTBA0bGw _bVjX8MHREfCpHfwTBA0bGw _jU3EQMCGEfC3V-UbsE4d9A">
             <connectionPoint xmi:type="uml:Pseudostate" xmi:id="_GH88UMHSEfCpHfwTBA0bGw" name="Entry1" kind="entryPoint"/>
             <connectionPoint xmi:type="uml:Pseudostate" xmi:id="_HZpNsMHSEfCpHfwTBA0bGw" name="Exit1" kind="exitPoint"/>
+            <connectionPoint xmi:type="uml:Pseudostate" xmi:id="_najEUBVWEfG2PoulsE5B_A" name="Entry2" kind="entryPoint"/>
             <region xmi:type="uml:Region" xmi:id="_54mqkMHREfCpHfwTBA0bGw" name="Region1">
               <transition xmi:type="uml:Transition" xmi:id="_qykRAMH8EfCpHfwTBA0bGw" source="_oR5rEMH8EfCpHfwTBA0bGw" target="_kpO7QMH8EfCpHfwTBA0bGw"/>
               <transition xmi:type="uml:Transition" xmi:id="_ovdEMMamEfC6w-m-aYb_qQ" source="_kpO7QMH8EfCpHfwTBA0bGw" target="_fXHb0MamEfC6w-m-aYb_qQ">
-                <trigger xmi:type="uml:Trigger" xmi:id="_ru8UIMamEfC6w-m-aYb_qQ" name="" event="_DldBQMFMEfCvssN6lsBRhw"/>
+                <trigger xmi:type="uml:Trigger" xmi:id="_ru8UIMamEfC6w-m-aYb_qQ" name="" event="_fEFiQMDsEfC3V-UbsE4d9A"/>
               </transition>
               <transition xmi:type="uml:Transition" xmi:id="_2UUXYMamEfC6w-m-aYb_qQ" source="_fXHb0MamEfC6w-m-aYb_qQ" target="_HZpNsMHSEfCpHfwTBA0bGw">
                 <trigger xmi:type="uml:Trigger" xmi:id="_x43jsNECEfCdvIvPnuLjcQ" name="" event="_bpF18MCHEfC3V-UbsE4d9A"/>
               </transition>
               <transition xmi:type="uml:Transition" xmi:id="_NN37ENEFEfCdvIvPnuLjcQ" source="_fXHb0MamEfC6w-m-aYb_qQ" target="_JI8tENEFEfCdvIvPnuLjcQ">
-                <trigger xmi:type="uml:Trigger" xmi:id="_QDgrcNEFEfCdvIvPnuLjcQ" name="" event="_h32qYMDsEfC3V-UbsE4d9A"/>
+                <trigger xmi:type="uml:Trigger" xmi:id="_QDgrcNEFEfCdvIvPnuLjcQ" name="" event="_wfkpQL6dEfCJCfFNPN5vdQ"/>
               </transition>
+              <transition xmi:type="uml:Transition" xmi:id="_DxB0ABFtEfGz5-Gjq8PMIA" source="_GH88UMHSEfCpHfwTBA0bGw" target="_fXHb0MamEfC6w-m-aYb_qQ"/>
+              <transition xmi:type="uml:Transition" xmi:id="_rIBboBVWEfG2PoulsE5B_A" source="_najEUBVWEfG2PoulsE5B_A" target="_oznJABVWEfG2PoulsE5B_A"/>
               <subvertex xmi:type="uml:State" xmi:id="_kpO7QMH8EfCpHfwTBA0bGw" name="S101"/>
               <subvertex xmi:type="uml:Pseudostate" xmi:id="_oR5rEMH8EfCpHfwTBA0bGw" name="SubStmInit"/>
               <subvertex xmi:type="uml:State" xmi:id="_fXHb0MamEfC6w-m-aYb_qQ" name="S102"/>
               <subvertex xmi:type="uml:FinalState" xmi:id="_JI8tENEFEfCdvIvPnuLjcQ" name=""/>
+              <subvertex xmi:type="uml:State" xmi:id="_oznJABVWEfG2PoulsE5B_A" name="S103"/>
             </region>
           </ownedBehavior>
           <ownedOperation xmi:type="uml:Operation" xmi:id="_vGqHkLpVEfCEnM4Nhn5qiQ" name="protectedMethod" visibility="protected" method="_vGqHkbpVEfCEnM4Nhn5qiQ">
@@ -616,6 +628,10 @@
               <name xsi:nil="true"/>
             </ownedParameter>
           </ownedOperation>
+          <nestedClassifier xmi:type="uml:Class" xmi:id="_a3NRsBbZEfGRZIR1HlthgA" name="E2Params">
+            <generalization xmi:type="uml:Generalization" xmi:id="_jS4BABbaEfGRZIR1HlthgA" general="_tCDLgLpVEfCEnM4Nhn5qiQ"/>
+            <ownedAttribute xmi:type="uml:Property" xmi:id="_dCdoUBbZEfGRZIR1HlthgA" name="Property1" visibility="public" type="_OS5pYL5BEfCXOImACTrF0w"/>
+          </nestedClassifier>
         </packagedElement>
         <packagedElement xmi:type="uml:Class" xmi:id="_vG3i87pVEfCEnM4Nhn5qiQ" name="CalledDependency" visibility="public">
           <ownedAttribute xmi:type="uml:Property" xmi:id="_vG3i9LpVEfCEnM4Nhn5qiQ" name="attribute0" visibility="private" isUnique="false">
