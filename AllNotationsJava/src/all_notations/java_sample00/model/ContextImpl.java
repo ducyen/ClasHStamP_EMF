@@ -1394,12 +1394,12 @@ class MainStmTop extends BaseStmTop {
         while( true ){
             bResult = false;
                 bResult |= S821Hsm.StateDefaultTrans( pContextImpl )
-                            || S8Rgn1Hsm.StateDefaultTrans( pContextImpl );
+                        || S8Rgn1Hsm.StateDefaultTrans( pContextImpl );
                 bResult |= S71Rgn1Hsm.StateDefaultTrans( pContextImpl );
                 bResult |= S812Hsm.StateDefaultTrans( pContextImpl )
-                            || S6Hsm.StateDefaultTrans( pContextImpl )
-                            || S9Hsm.StateDefaultTrans( pContextImpl )
-                            || MainStmHsm.StateDefaultTrans( pContextImpl );
+                        || S6Hsm.StateDefaultTrans( pContextImpl )
+                        || S9Hsm.StateDefaultTrans( pContextImpl )
+                        || MainStmHsm.StateDefaultTrans( pContextImpl );
             if( bResult == false ){
                 break;
             }

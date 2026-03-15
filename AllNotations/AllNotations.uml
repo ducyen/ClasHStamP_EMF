@@ -497,7 +497,9 @@
               <subvertex xmi:type="uml:State" xmi:id="_GL224L6bEfCMrO0Z3MZOuA" name="S2">
                 <entry xmi:type="uml:OpaqueBehavior" xmi:id="_O10xoCAoEfGyNcygiMfg4w" name="">
                   <language>JAVA</language>
+                  <language>TypeScript</language>
                   <body>System.out.println(&quot;Hi!&quot;);</body>
+                  <body>console.log(&quot;Hi!&quot;);</body>
                 </entry>
                 <region xmi:type="uml:Region" xmi:id="_aABn8MDrEfC3V-UbsE4d9A" name="Region1">
                   <transition xmi:type="uml:Transition" xmi:id="_oIKAQMDrEfC3V-UbsE4d9A" source="_kYeCcMDrEfC3V-UbsE4d9A" target="_aCKV8MDrEfC3V-UbsE4d9A"/>

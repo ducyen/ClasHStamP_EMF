@@ -520,7 +520,7 @@ stm_api,"    public boolean EventProc( [tYPE] p[tYPE], [tYPE].EventId nEventId, 
 ","        bHandled |= ( ( [sCOPE] )pMain ).[mODIFIER].EventProc( p[tYPE], nEventId, pEventParams );
 ","                bResult |= [mODIFIER][cONTAINER].StateDefaultTrans( p[tYPE] );
 ","[mODIFIER].StateDefaultTrans( p[tYPE] )
-[->]        || "
+[->]    || "
 api_call,0,,#error XXXX,#error XXXX,
 friend,,,,,
 visibility,,,protected ,public ,private 

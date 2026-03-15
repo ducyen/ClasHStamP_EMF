@@ -739,8 +739,19 @@ public class RStmGenerator extends TBaseGenerator {
         String actionText = "";
         if (iState.getEntry() instanceof OpaqueBehavior) {
             OpaqueBehavior effect = (OpaqueBehavior) iState.getEntry();
-            if (effect != null && !effect.getBodies().isEmpty()) {
-                actionText = effect.getBodies().get(0);
+            if (effect != null) {
+	            int languageIndex = -1;
+	            int i = 0;
+	            for (String language: effect.getLanguages()) {
+	            	if (language.equalsIgnoreCase(m_language)) {
+	            		languageIndex = i;
+	            		break;
+	            	}
+	            	i++;
+	            }
+	            if (languageIndex >= 0) {
+	            	actionText = effect.getBodies().get(languageIndex);
+	            }
             }
         }
         // If the effect is another kind of behavior, we could handle accordingly (not needed if not present).
@@ -756,8 +767,19 @@ public class RStmGenerator extends TBaseGenerator {
         String actionText = "";
         if (iState.getExit() instanceof OpaqueBehavior) {
             OpaqueBehavior effect = (OpaqueBehavior) iState.getExit();
-            if (effect != null && !effect.getBodies().isEmpty()) {
-                actionText = effect.getBodies().get(0);
+            if (effect != null) {
+	            int languageIndex = -1;
+	            int i = 0;
+	            for (String language: effect.getLanguages()) {
+	            	if (language.equalsIgnoreCase(m_language)) {
+	            		languageIndex = i;
+	            		break;
+	            	}
+	            	i++;
+	            }
+	            if (languageIndex >= 0) {
+	            	actionText = effect.getBodies().get(languageIndex);
+	            }
             }
         }
         // If the effect is another kind of behavior, we could handle accordingly (not needed if not present).

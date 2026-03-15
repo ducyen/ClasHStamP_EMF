@@ -631,8 +631,11 @@ public class TBaseGenerator {
     protected String collectActions(int level, String routine) throws Exception {
         String actions = "";
         int adjust = 0;
-        if (Integer.parseInt(m_stxCsv.get("param_dir", "begin")) < 0) {
-            adjust = 0;
+        try {
+            if (Integer.parseInt(m_stxCsv.get("param_dir", "begin")) < 0) {
+                adjust = 0;
+            }
+        } catch (NumberFormatException e) {
         }
 
         if (!isCodeFile()) {
