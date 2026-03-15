@@ -2587,7 +2587,7 @@ public class RStmGenerator extends TBaseGenerator {
 				// ▲ transition.end
 				// print state entry actions
 				System.out.println(makeIndent(indent) + "def " + stateName + "_Enter(self):");
-				indent++;
+				indent+=2;
 				System.out.println(makeIndent(indent) + "if self.Enterable(" + getStateMachineDiagram(stmRoot).getName() + "." + stateName + "):");
 				if (_iState != null) {
 					System.out.println(makeIndent(indent) + "    self." + containerName + "_Enter()");
@@ -2793,13 +2793,13 @@ public class RStmGenerator extends TBaseGenerator {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				indent--;
+				indent-=2;
 				System.out.println(makeIndent(indent) + "# end def");
 				
 				// print transitions from states
 				System.out.println(makeIndent(indent) + "def " + stateName + "_EventHandle(self, e, params):");
 				System.out.println(makeIndent(indent) + "    self.sourceState = " + getStateMachineDiagram(stmRoot).getName() + "." + stateName);
-				indent++;
+				indent+=2;
 				boolean firstRound = true;
 				if (_iState != null) {
 					List<String> internalEvents = new ArrayList<>();
@@ -2939,7 +2939,7 @@ public class RStmGenerator extends TBaseGenerator {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				indent--;
+				indent-=2;
 				System.out.println(makeIndent(indent) + "# end def");
 				
 				// print state exit actions

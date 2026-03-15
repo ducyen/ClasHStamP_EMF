@@ -280,118 +280,118 @@ event_decl,"[->]public enum EventId {
 [->]    bResult |= mainStm.StateDefaultTrans( this );
 [->]    return bResult;
 [->]}"
-state_decl,"        public static final long [nAME] [->48] = ( 1 << [vALUE] );
-",        public static final long [nAME] [->48] = ( [vALUE], | [vALUE],"/* states' declaration */
+state_decl,"    public static final long [nAME] [->48] = ( 1 << [vALUE] );
+",    public static final long [nAME] [->48] = ( [vALUE], | [vALUE],"/* states' declaration */
 [vALUE]"," );
 "
-state_entry,"        void EndTrans( [tYPE] p[tYPE] ){
-            nCurrentState = nTargetState;
-            bIsExternTrans = false;
-","            if( nCurrentState == [sCOPE].[nAME] ) [->32]{ [nAME]_Entry( p[tYPE] ); }
-","            else if( nCurrentState == [sCOPE].[nAME] ) [->32]{ [nAME]_Entry( p[tYPE] ); }
-","            else {}
-","        }
+state_entry,"    void EndTrans( [tYPE] p[tYPE] ){
+        nCurrentState = nTargetState;
+        bIsExternTrans = false;
+","        if( nCurrentState == [sCOPE].[nAME] ) [->32]{ [nAME]_Entry( p[tYPE] ); }
+","        else if( nCurrentState == [sCOPE].[nAME] ) [->32]{ [nAME]_Entry( p[tYPE] ); }
+","        else {}
+","    }
 "
-state_exit,"        void BgnTrans( [tYPE] p[tYPE], long targetState ){
-            nTargetState = targetState;
-            nPseudostate = targetState;
-","            if( nCurrentState == [sCOPE].[nAME] ) [->32]{ [nAME]_Exit( p[tYPE] ); }
-","            else if( nCurrentState == [sCOPE].[nAME] ) [->32]{ [nAME]_Exit( p[tYPE] ); }
-","            else {}
-","        }
+state_exit,"    void BgnTrans( [tYPE] p[tYPE], long targetState ){
+        nTargetState = targetState;
+        nPseudostate = targetState;
+","        if( nCurrentState == [sCOPE].[nAME] ) [->32]{ [nAME]_Exit( p[tYPE] ); }
+","        else if( nCurrentState == [sCOPE].[nAME] ) [->32]{ [nAME]_Exit( p[tYPE] ); }
+","        else {}
+","    }
 "
-state_impl,"        public boolean Reset(  [tYPE] p[tYPE] ) {
-            return Reset( p[tYPE], StateMachine.STATE_UNDEF, false );
+state_impl,"    public boolean Reset(  [tYPE] p[tYPE] ) {
+        return Reset( p[tYPE], StateMachine.STATE_UNDEF, false );
+    }
+    public boolean Reset(  [tYPE] p[tYPE], boolean lastEnteredStateRecovering ) {
+        return Reset( p[tYPE], StateMachine.STATE_UNDEF, lastEnteredStateRecovering );
+    }
+    public boolean Reset(  [tYPE] p[tYPE], long entryPt ) {
+        return Reset( p[tYPE], entryPt, false );
+    }
+    public boolean Reset( [tYPE] p[tYPE], long entryPt, boolean lastEnteredStateRecovering ) {
+        if( entryPt != StateMachine.STATE_UNDEF ){
+            return Req( entryPt );
         }
-        public boolean Reset(  [tYPE] p[tYPE], boolean lastEnteredStateRecovering ) {
-            return Reset( p[tYPE], StateMachine.STATE_UNDEF, lastEnteredStateRecovering );
+        if (nPseudostate == StateMachine.STATE_UNDEF ) {
+            nPseudostate = [sCOPE].[nAME];
         }
-        public boolean Reset(  [tYPE] p[tYPE], long entryPt ) {
-            return Reset( p[tYPE], entryPt, false );
-        }
-        public boolean Reset( [tYPE] p[tYPE], long entryPt, boolean lastEnteredStateRecovering ) {
-            if( entryPt != StateMachine.STATE_UNDEF ){
-                return Req( entryPt );
-            }
-            if (nPseudostate == StateMachine.STATE_UNDEF ) {
-                nPseudostate = [sCOPE].[nAME];
-            }
-            bIsExternTrans = true;
-            BgnTrans( p[tYPE], nPseudostate );
-            EndTrans( p[tYPE] );
-            return true;
-        }
-        public boolean EventProc( [tYPE] p[tYPE], [tYPE].EventId nEventId, EventParams pEventParams ){
-            boolean bResult = false;
-            nLCAState = StateMachine.STATE_UNDEF;
-            bHandled = false;
-            wasHandled = false;
-","            if( nCurrentState == [sCOPE].[nAME] ) [->32]{ [nAME]_EventProc( p[tYPE], nEventId, pEventParams ); }
-","            else if( nCurrentState == [sCOPE].[nAME] ) [->32]{ [nAME]_EventProc( p[tYPE], nEventId, pEventParams ); }
-","            else {}
-","            return bResult;
-        }
-        boolean Abort( [tYPE] p[tYPE] ) {
+        bIsExternTrans = true;
+        BgnTrans( p[tYPE], nPseudostate );
+        EndTrans( p[tYPE] );
+        return true;
+    }
+    public boolean EventProc( [tYPE] p[tYPE], [tYPE].EventId nEventId, EventParams pEventParams ){
+        boolean bResult = false;
+        nLCAState = StateMachine.STATE_UNDEF;
+        bHandled = false;
+         wasHandled = false;
+","        if( nCurrentState == [sCOPE].[nAME] ) [->32]{ [nAME]_EventProc( p[tYPE], nEventId, pEventParams ); }
+","        else if( nCurrentState == [sCOPE].[nAME] ) [->32]{ [nAME]_EventProc( p[tYPE], nEventId, pEventParams ); }
+","        else {}
+","        return bResult;
+    }
+    boolean Abort( [tYPE] p[tYPE] ) {
+        nSourceState = [sCOPE].[nAME];
+        BgnTrans( p[tYPE], StateMachine.STATE_UNDEF );
+        EndTrans( p[tYPE] );
+        return true;
+    }
+"
+transition,"    void [nAME]_Entry( [tYPE] p[tYPE] ){
+        if( Enterable( [sCOPE].[nAME] ) ){
+            [cONTAINER]_Entry( p[tYPE] );
+            DefaultEntryAction( p[tYPE], ""[dESC]"" );
+[vALUE]        }
+    }
+    boolean [nAME]_EventProc( [tYPE] p[tYPE], [tYPE].EventId nEventId, EventParams pEventParams ){
+        boolean bResult = false;
+[mODIFIER]        if( !bHandled ){
             nSourceState = [sCOPE].[nAME];
-            BgnTrans( p[tYPE], StateMachine.STATE_UNDEF );
-            EndTrans( p[tYPE] );
-            return true;
-        }
-"
-transition,"        void [nAME]_Entry( [tYPE] p[tYPE] ){
-            if( Enterable( [sCOPE].[nAME] ) ){
-                [cONTAINER]_Entry( p[tYPE] );
-                DefaultEntryAction( p[tYPE], ""[dESC]"" );
-[vALUE]            }
-        }
-        boolean [nAME]_EventProc( [tYPE] p[tYPE], [tYPE].EventId nEventId, EventParams pEventParams ){
-            boolean bResult = false;
-[mODIFIER]            if( !bHandled ){
-                nSourceState = [sCOPE].[nAME];
-                DefaultDoingAction( p[tYPE], ""[dESC]"" );
-","                switch( nEventId ){
-                case [tYPE].EventId.[nAME]:{
-","                } break;
-                case [tYPE].EventId.[nAME]:{
-","                } break;
-                default: break;
-                }
-","            }
-            bHandled |= bResult;
-            wasHandled |= bResult;
-            return [cONTAINER]_EventProc( p[tYPE], nEventId, pEventParams );
-        }
-        void [nAME]_Exit( [tYPE] p[tYPE] ){
-            if( Exitable( [sCOPE].[nAME] ) ){ 
-[vALUE]                 DefaultExitAction( p[tYPE], ""[dESC]"" );
-                [cONTAINER]_Exit( p[tYPE] );
+            DefaultDoingAction( p[tYPE], ""[dESC]"" );
+","            switch( nEventId ){
+            case [tYPE].EventId.[nAME]:{
+","            } break;
+            case [tYPE].EventId.[nAME]:{
+","            } break;
+            default: break;
             }
+","        }
+        bHandled |= bResult;
+        wasHandled |= bResult;
+        return [cONTAINER]_EventProc( p[tYPE], nEventId, pEventParams );
+    }
+    void [nAME]_Exit( [tYPE] p[tYPE] ){
+        if( Exitable( [sCOPE].[nAME] ) ){ 
+[vALUE]            DefaultExitAction( p[tYPE], ""[dESC]"" );
+            [cONTAINER]_Exit( p[tYPE] );
         }
+    }
 "
-trans_top,"        void [nAME]_Entry( [tYPE] p[tYPE] ){
-            if( Enterable( [sCOPE].[nAME] ) ){
-[vALUE]            }
-        }
-        boolean [nAME]_EventProc( [tYPE] p[tYPE], [tYPE].EventId nEventId, EventParams pEventParams ){
-            boolean bResult = false;
-[mODIFIER]            if( !bHandled ){
-                nSourceState = [sCOPE].[nAME];
-","                switch( nEventId ){
-                case [tYPE].EventId.[nAME]:{
-","                } break;
-                case [tYPE].EventId.[nAME]:{
-","                } break;
-                default: break;
-                }
-","            }
-            bHandled |= bResult;
-            wasHandled |= bResult;
-            return bHandled;
-        }
-        void [nAME]_Exit( [tYPE] p[tYPE] ){
-            if( Exitable( [sCOPE].[nAME] ) ){ 
-[vALUE]            }
-        }
+trans_top,"    void [nAME]_Entry( [tYPE] p[tYPE] ){
+        if( Enterable( [sCOPE].[nAME] ) ){
+[vALUE]        }
+    }
+    boolean [nAME]_EventProc( [tYPE] p[tYPE], [tYPE].EventId nEventId, EventParams pEventParams ){
+        boolean bResult = false;
+[mODIFIER]        if( !bHandled ){
+            nSourceState = [sCOPE].[nAME];
+","            switch( nEventId ){
+            case [tYPE].EventId.[nAME]:{
+","            } break;
+            case [tYPE].EventId.[nAME]:{
+","            } break;
+            default: break;
+            }
+","        }
+        bHandled |= bResult;
+        wasHandled |= bResult;
+        return bHandled;
+    }
+    void [nAME]_Exit( [tYPE] p[tYPE] ){
+        if( Exitable( [sCOPE].[nAME] ) ){ 
+[vALUE]        }
+    }
 "
 branch,"[->]else {
 ","[->]if ([nAME]) {
@@ -411,39 +411,39 @@ action,"[->][nAME]Params* e = ( [nAME]Params* )pEventParams;
 ",
 param_dir,,,,0,.
 statemachine,,"    [tYPE][mODIFIER] mainStm;[->64][dESC]
-","    mainStm = new [tYPE]();
+","        mainStm = new [tYPE]();
 ","class [nAME] extends BaseStmTop {
 [vALUE]
 ","
-        public void Prepare( StateMachine pParent, String instanceName ){
-            super.Prepare( pParent, ""[mODIFIER]"", instanceName );
-[vALUE]        }
+    public void Prepare( StateMachine pParent, String instanceName ){
+        super.Prepare( pParent, ""[mODIFIER]"", instanceName );
+[vALUE]    }
 } /* [nAME] */
 "
-default_trans,"        boolean StateDefaultTrans( [tYPE] p[tYPE] ){
-            boolean bResult = false;
-            nSourceState = nCurrentState;
-            nLCAState = StateMachine.STATE_UNDEF;
-", nPseudostate == [cONTAINER].[nAME] [mODIFIER] , nCurrentState == [sCOPE].[vALUE] && nPseudostate == [cONTAINER].[nAME] [mODIFIER] ,"            }else if( nCurrentState != nPseudostate ){
-                BgnTrans( p[tYPE], nPseudostate );
-                EndTrans( p[tYPE] );
-                bResult = true;
-            }else{
-            }
-","            bHandled |= bResult;
-            wasHandled |= bResult;
-            ( ( [sCOPE] )pMain ).lastEnteredStateRecovering = false;
-            return bResult;
+default_trans,"    boolean StateDefaultTrans( [tYPE] p[tYPE] ){
+        boolean bResult = false;
+        nSourceState = nCurrentState;
+        nLCAState = StateMachine.STATE_UNDEF;
+", nPseudostate == [cONTAINER].[nAME] [mODIFIER] , nCurrentState == [sCOPE].[vALUE] && nPseudostate == [cONTAINER].[nAME] [mODIFIER] ,"        }else if( nCurrentState != nPseudostate ){
+            BgnTrans( p[tYPE], nPseudostate );
+            EndTrans( p[tYPE] );
+            bResult = true;
+        }else{
         }
+","        bHandled |= bResult;
+        wasHandled |= bResult;
+        ( ( [sCOPE] )pMain ).lastEnteredStateRecovering = false;
+        return bResult;
+    }
 "
 substm,"    [cONTAINER] [nAME] = new [cONTAINER]();[->64][dESC]
-","    [nAME].Prepare( [mODIFIER], ""[nAME]"" );
+","[->][nAME].Prepare( [mODIFIER], ""[nAME]"" );
 ","
 [->] && ( ( [sCOPE] )pMain ).[mODIFIER].IsFinished()","[->]bResult |= ( ( [sCOPE] )pMain ).[mODIFIER].Reset( p[tYPE], [cONTAINER].[nAME], ( ( [sCOPE] )pMain ).lastEnteredStateRecovering );
 ","[->]( ( [sCOPE] )pMain ).pParentStm.Req( [sCOPE].[nAME] );
 "
-region,"        _[cONTAINER] [nAME] = new _[cONTAINER]();[->64][dESC]
-","            [nAME].pMain = this;
+region,"    _[cONTAINER] [nAME] = new _[cONTAINER]();[->64][dESC]
+","[->][nAME].pMain = this;
 ","
 [->] && ( ( [sCOPE] )pMain ).[cONTAINER].nPseudostate == [sCOPE].[vALUE]","[->]bResult |= ( ( [sCOPE] )pMain ).[mODIFIER].Reset( p[tYPE], [sCOPE].[nAME] );
 ","class _[nAME] extends StateMachine {
@@ -454,7 +454,7 @@ state_action,"[->]if( !( ( [sCOPE] )pMain ).lastEnteredStateRecovering && nTarge
 [->]}
 ","[->]bIsExternTrans = true;
 ",[->][nAME],"[->]( ( [sCOPE] )pMain ).[mODIFIER].Reset( p[tYPE] );
-","[->]( ( [sCOPE] )pMain ).[mODIFIER].Abort( p[tYPE] );
+","            ( ( [sCOPE] )pMain ).[mODIFIER].Abort( p[tYPE] );
 "
 trans_action,"[->][cONTAINER].[nAME]Params e = ( [cONTAINER].[nAME]Params )pEventParams;
 ",( ( [sCOPE] )pMain ).[mODIFIER].IsIn( [cONTAINER].[vALUE] ),"
@@ -463,8 +463,8 @@ trans_action,"[->][cONTAINER].[nAME]Params e = ( [cONTAINER].[nAME]Params )pEven
 [->]bResult |= true;
 ","[mODIFIER][->]bResult |= true; // internal transition
 "
-history,"        long [nAME];
-","            [nAME] = StateMachine.STATE_UNDEF;
+history,"    long [nAME];
+","[->][nAME] = StateMachine.STATE_UNDEF;
 ","[->]( ( [sCOPE] )pMain ).[nAME] = [sCOPE].[vALUE];
 ","[->]if( ( ( [sCOPE] )pMain ).[nAME] != StateMachine.STATE_UNDEF ){
 [->]    BgnTrans( p[tYPE], ( ( [sCOPE] )pMain ).[nAME] );
@@ -474,8 +474,8 @@ history,"        long [nAME];
 [vALUE][->]}
 ","[->]( ( [sCOPE] )pMain ).[nAME] = StateMachine.STATE_UNDEF;
 "
-deep_hist,"        long [nAME];
-","            [nAME] = StateMachine.STATE_UNDEF;
+deep_hist,"    long [nAME];
+","[->][nAME] = StateMachine.STATE_UNDEF;
 ","[->]( ( [sCOPE] )pMain ).[nAME] = lastEnteredState;
 ","[->]if( ( ( [sCOPE] )pMain ).[nAME] != StateMachine.STATE_UNDEF ){
 [->]    BgnTrans( p[tYPE], ( ( [sCOPE] )pMain ).[nAME] );
@@ -488,36 +488,36 @@ deep_hist,"        long [nAME];
 [->]    nPseudostate = lastEnteredState;
 [->]}
 "
-stm_api,"        public boolean EventProc( [tYPE] p[tYPE], [tYPE].EventId nEventId, EventParams pEventParams ){
-            return [cONTAINER].EventProc( p[tYPE], nEventId, pEventParams );
-        }
-        public boolean StateDefaultTrans( [tYPE] p[tYPE] ){
-            boolean bResult;
-            while( true ){
-                bResult = false;
-[mODIFIER]                if( bResult == false ){
-                    break;
-                }
+stm_api,"    public boolean EventProc( [tYPE] p[tYPE], [tYPE].EventId nEventId, EventParams pEventParams ){
+        return [cONTAINER].EventProc( p[tYPE], nEventId, pEventParams );
+    }
+    public boolean StateDefaultTrans( [tYPE] p[tYPE] ){
+        boolean bResult;
+        while( true ){
+            bResult = false;
+[mODIFIER]            if( bResult == false ){
+                break;
             }
-            return bResult;
         }
-        public boolean Reset( [tYPE] p[tYPE] ){
-            return [cONTAINER].Reset( p[tYPE], StateMachine.STATE_UNDEF, false );
-        }
-        public boolean Reset( [tYPE] p[tYPE], long entryPt, boolean lastEnteredStateRecovering ){
-            return [cONTAINER].Reset( p[tYPE], entryPt, lastEnteredStateRecovering );
-        }
-        public boolean Abort( [tYPE] p[tYPE] ){
-            return [cONTAINER].Abort( p[tYPE] );
-        }
-        public boolean IsIn( long nState ){
-            return [cONTAINER].IsIn( nState );
-        }
-        public boolean IsFinished(){
-            return [cONTAINER].nPseudostate == [sCOPE].[nAME];
-        }
+        return bResult;
+    }
+    public boolean Reset( [tYPE] p[tYPE] ){
+        return [cONTAINER].Reset( p[tYPE], StateMachine.STATE_UNDEF, false );
+    }
+    public boolean Reset( [tYPE] p[tYPE], long entryPt, boolean lastEnteredStateRecovering ){
+        return [cONTAINER].Reset( p[tYPE], entryPt, lastEnteredStateRecovering );
+    }
+    public boolean Abort( [tYPE] p[tYPE] ){
+        return [cONTAINER].Abort( p[tYPE] );
+    }
+    public boolean IsIn( long nState ){
+        return [cONTAINER].IsIn( nState );
+    }
+    public boolean IsFinished(){
+        return [cONTAINER].nPseudostate == [sCOPE].[nAME];
+    }
 ","            bHandled |= ( ( [sCOPE] )pMain ).[cONTAINER].EventProc( p[tYPE], nEventId, pEventParams );
-","    bHandled |= ( ( [sCOPE] )pMain ).[mODIFIER].EventProc( p[tYPE], nEventId, pEventParams );
+","        bHandled |= ( ( [sCOPE] )pMain ).[mODIFIER].EventProc( p[tYPE], nEventId, pEventParams );
 ","                bResult |= [mODIFIER][cONTAINER].StateDefaultTrans( p[tYPE] );
 ","[mODIFIER].StateDefaultTrans( p[tYPE] )
 [->]        || "
