@@ -739,8 +739,19 @@ public class RStmGenerator extends TBaseGenerator {
         String actionText = "";
         if (iState.getEntry() instanceof OpaqueBehavior) {
             OpaqueBehavior effect = (OpaqueBehavior) iState.getEntry();
-            if (effect != null && !effect.getBodies().isEmpty()) {
-                actionText = effect.getBodies().get(0);
+            if (effect != null) {
+	            int languageIndex = -1;
+	            int i = 0;
+	            for (String language: effect.getLanguages()) {
+	            	if (language.equalsIgnoreCase(m_language)) {
+	            		languageIndex = i;
+	            		break;
+	            	}
+	            	i++;
+	            }
+	            if (languageIndex >= 0) {
+	            	actionText = effect.getBodies().get(languageIndex);
+	            }
             }
         }
         // If the effect is another kind of behavior, we could handle accordingly (not needed if not present).
@@ -756,8 +767,19 @@ public class RStmGenerator extends TBaseGenerator {
         String actionText = "";
         if (iState.getExit() instanceof OpaqueBehavior) {
             OpaqueBehavior effect = (OpaqueBehavior) iState.getExit();
-            if (effect != null && !effect.getBodies().isEmpty()) {
-                actionText = effect.getBodies().get(0);
+            if (effect != null) {
+	            int languageIndex = -1;
+	            int i = 0;
+	            for (String language: effect.getLanguages()) {
+	            	if (language.equalsIgnoreCase(m_language)) {
+	            		languageIndex = i;
+	            		break;
+	            	}
+	            	i++;
+	            }
+	            if (languageIndex >= 0) {
+	            	actionText = effect.getBodies().get(languageIndex);
+	            }
             }
         }
         // If the effect is another kind of behavior, we could handle accordingly (not needed if not present).
@@ -2587,7 +2609,7 @@ public class RStmGenerator extends TBaseGenerator {
 				// ▲ transition.end
 				// print state entry actions
 				System.out.println(makeIndent(indent) + "def " + stateName + "_Enter(self):");
-				indent++;
+				indent+=2;
 				System.out.println(makeIndent(indent) + "if self.Enterable(" + getStateMachineDiagram(stmRoot).getName() + "." + stateName + "):");
 				if (_iState != null) {
 					System.out.println(makeIndent(indent) + "    self." + containerName + "_Enter()");
@@ -2793,13 +2815,13 @@ public class RStmGenerator extends TBaseGenerator {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				indent--;
+				indent-=2;
 				System.out.println(makeIndent(indent) + "# end def");
 				
 				// print transitions from states
 				System.out.println(makeIndent(indent) + "def " + stateName + "_EventHandle(self, e, params):");
 				System.out.println(makeIndent(indent) + "    self.sourceState = " + getStateMachineDiagram(stmRoot).getName() + "." + stateName);
-				indent++;
+				indent+=2;
 				boolean firstRound = true;
 				if (_iState != null) {
 					List<String> internalEvents = new ArrayList<>();
@@ -2939,7 +2961,7 @@ public class RStmGenerator extends TBaseGenerator {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				indent--;
+				indent-=2;
 				System.out.println(makeIndent(indent) + "# end def");
 				
 				// print state exit actions
