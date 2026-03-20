@@ -2,6 +2,10 @@
 #define __ContextImpl_H__
 #include "Context.h"
 typedef struct tagContextImpl ContextImpl;
+typedef struct tagE2Params {
+    EventParams base;
+    long Property1;                                             
+}E2Params;
 typedef enum tagContextImplEvent {
     ContextImpl_E0,                                             
     ContextImpl_E1,                                             
@@ -50,9 +54,11 @@ struct tagContextImpl{
 #define SubStmTop_S101                          ( 1ULL <<  0 )
 #define SubStmTop_SubStmInit                    ( 1ULL <<  1 )
 #define SubStmTop_S102                          ( 1ULL <<  2 )
-#define SubStmTop_Entry1                        ( 1ULL <<  3 )
-#define SubStmTop_Exit1                         ( 1ULL <<  4 )
-#define SubStmTop_SubStm                        ( SubStmTop_S101 | SubStmTop_SubStmInit | SubStmTop_S102 | SubStmTop_Entry1 | SubStmTop_Exit1 )
+#define SubStmTop_S103                          ( 1ULL <<  3 )
+#define SubStmTop_Entry1                        ( 1ULL <<  4 )
+#define SubStmTop_Exit1                         ( 1ULL <<  5 )
+#define SubStmTop_Entry2                        ( 1ULL <<  6 )
+#define SubStmTop_SubStm                        ( SubStmTop_S101 | SubStmTop_SubStmInit | SubStmTop_S102 | SubStmTop_S103 | SubStmTop_Entry1 | SubStmTop_Exit1 | SubStmTop_Entry2 )
     HdStateMachine SubStmHsm;                                   
 /** @class SubStmTop
  * @extends HdStateMachine
@@ -100,7 +106,9 @@ typedef struct tagSubStmTop {
 #define MainStmTop_MainStm                      ( MainStmTop_S1 | MainStmTop_MainStmInit | MainStmTop_S2 | MainStmTop_S8 | MainStmTop_S7 | MainStmTop_S6 | MainStmTop_S3 | MainStmTop_S9 )
     HdStateMachine MainStmHsm;                                  
     uint64_t S2ShallowHist;
+    SubStmTop S812Hsm;                                          
     HdStateMachine S8Rgn1Hsm;                                   
+    SubStmTop S821Hsm;                                          
     HdStateMachine S71Rgn1Hsm;                                  
     uint64_t S7DeepHist;
     SubStmTop S6Hsm;                                            
@@ -117,7 +125,9 @@ typedef struct tagMainStmTop {
     .lastEnteredStateRecovering = FALSE,\
     .MainStmHsm = { HdStateMachine_Init() },\
     .S2ShallowHist = STATE_UNDEF,\
+    .S812Hsm = SubStmTop_Init(),\
     .S8Rgn1Hsm = { HdStateMachine_Init() },\
+    .S821Hsm = SubStmTop_Init(),\
     .S71Rgn1Hsm = { HdStateMachine_Init() },\
     .S7DeepHist = STATE_UNDEF,\
     .S6Hsm = SubStmTop_Init(),\
