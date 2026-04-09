@@ -13,7 +13,7 @@
         <mapEntry key="LANGUAGE" value="h"/>
         <mapEntry key="NEWLINE_LF" value="1"/>
         <mapEntry key="OUTPUT" value="..\AllNotationsC\src"/>
-        <mapEntry key="PACKAGE" value="AllNotations::JavaSample00::Model"/>
+        <mapEntry key="PACKAGE" value="AllNotations::JavaSample00::Abstracts"/>
         <mapEntry key="PATH_DBG" value="OFF"/>
         <mapEntry key="PROJECT" value="C:\Workspace\DucHM28_\ClasHStamP_EMF\AllNotations\AllNotations.uml"/>
         <mapEntry key="SYNTAX" value="release\Syntax_HNew.csv"/>

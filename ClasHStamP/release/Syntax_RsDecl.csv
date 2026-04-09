@@ -48,93 +48,36 @@ i_struct,"[->]struct [nAME] {
 [->]    pub base: [tYPE],
 ","[->]}
 "
-constructor,[->]pub fn new(,,,"
-[->]) -> Self {","
-[->]}[->96]
-"
-attr_group,"struct tag[nAME]{
+constructor,,,,,
+attr_group,"struct [nAME]{
 ",,,,"
 }
 "
-ctor_call,"
-[->]) -> Self {
-[->]    Self {
-[->]        base: [tYPE]::new( [vALUE] ),
-",[vALUE],", [vALUE]",_[nAME],"[nAME],
-[->]    }
-"
+ctor_call,,,,,
 __s_attr,"[->][scope][nAME]: [tYPE],[->64][dESC]
-","
-[->]    _[nAME]: [tYPE]",",
-[->]    _[nAME]: [tYPE]","
-[->][nAME]: [vALUE]",",
-[->][nAME]: [vALUE]"
+",,,,
 __o_attr,"[->][scope][nAME]: [tYPE],[->64][dESC]
-","
-[->]    _[nAME]: [tYPE]",",
-[->]    _[nAME]: [tYPE]","
-[->][nAME]: [vALUE]",",
-[->][nAME]: [vALUE]"
+",,,,
 __r_attr,"[->][scope][nAME]: [tYPE],[->64][dESC]
-","
-[->]    _[nAME]: [tYPE]",",
-[->]    _[nAME]: [tYPE]","
-[->][nAME]: [vALUE]",",
-[->][nAME]: [vALUE]"
+",,,,
 _ms_attr,"[->][scope][nAME]: Vec<[tYPE]>,[->67][dESC]
-","
-[->]    _[nAME]: Vec<[tYPE]>",",
-[->]    _[nAME]: Vec<[tYPE]>","
-[->][nAME]: [vALUE]",",
-[->][nAME]: [vALUE]"
+",,,,
 _mo_attr,"[->][scope][nAME]: Vec<[tYPE]>,[->67][dESC]
-","
-[->]    _[nAME]: Vec<[tYPE]>",",
-[->]    _[nAME]: Vec<[tYPE]>","
-[->][nAME]: [vALUE]",",
-[->][nAME]: [vALUE]"
+",,,,
 _mr_attr,"[->][scope][nAME]: Vec<[tYPE]>,[->67][dESC]
-","
-[->]    _[nAME]: Vec<[tYPE]>",",
-[->]    _[nAME]: Vec<[tYPE]>","
-[->][nAME]: [vALUE]",",
-[->][nAME]: [vALUE]"
+",,,,
 c_s_attr,"[->][scope][nAME]: [tYPE],[->64][dESC]
-","
-[->]    _[nAME]: [tYPE]",",
-[->]    _[nAME]: [tYPE]","
-[->][nAME]: [vALUE]",",
-[->][nAME]: [vALUE]"
+",,,,
 c_o_attr,"[->][scope][nAME]: [tYPE],[->64][dESC]
-","
-[->]    _[nAME]: [tYPE]",",
-[->]    _[nAME]: [tYPE]","
-[->][nAME]: [vALUE]",",
-[->][nAME]: [vALUE]"
+",,,,
 c_r_attr,"[->][scope][nAME]: [tYPE],[->64][dESC]
-","
-[->]    _[nAME]: [tYPE]",",
-[->]    _[nAME]: [tYPE]","
-[->][nAME]: [vALUE]",",
-[->][nAME]: [vALUE]"
+",,,,
 cms_attr,"[->][scope][nAME]: Vec<[tYPE]>,[->67][dESC]
-","
-[->]    _[nAME]: Vec<[tYPE]>",",
-[->]    _[nAME]: Vec<[tYPE]>","
-[->][nAME]: [vALUE]",",
-[->][nAME]: [vALUE]"
+",,,,
 cmo_attr,"[->][scope][nAME]: Vec<[tYPE]>,[->67][dESC]
-","
-[->]    _[nAME]: Vec<[tYPE]>",",
-[->]    _[nAME]: Vec<[tYPE]>","
-[->][nAME]: [vALUE]",",
-[->][nAME]: [vALUE]"
+",,,,
 cmr_attr,"[->][scope][nAME]: Vec<[tYPE]>,[->67][dESC]
-","
-[->]    _[nAME]: Vec<[tYPE]>",",
-[->]    _[nAME]: Vec<[tYPE]>","
-[->][nAME]: [vALUE]",",
-[->][nAME]: [vALUE]"
+",,,,
 s_s_attr,"[->][scope]static mut [nAME]: [tYPE] = [vALUE];[->64][dESC]
 ","[->][scope]const [nAME]: [tYPE] = [vALUE];[->64][dESC]
 ",,,"[->][scope]static mut [nAME]: [tYPE];[->64][dESC]

@@ -1,0 +1,671 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_l8zwIDQEEfGHg_QOtpMGfg" name="Design">
+  <packageImport xmi:type="uml:PackageImport" xmi:id="_l_eCkDQEEfGHg_QOtpMGfg">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+  </packageImport>
+  <packageImport xmi:type="uml:PackageImport" xmi:id="_5dh9wDQEEfGHg_QOtpMGfg">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+  </packageImport>
+  <packagedElement xmi:type="uml:Package" xmi:id="_5djy8DQEEfGHg_QOtpMGfg" name="importedTypes">
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5djy8TQEEfGHg_QOtpMGfg" name="void"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5djy8jQEEfGHg_QOtpMGfg" name="long"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5djy8zQEEfGHg_QOtpMGfg" name="Object"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_-t0ysDQEEfGHg_QOtpMGfg" name="Abstracts">
+    <packagedElement xmi:type="uml:Class" xmi:id="_-t0ysTQEEfGHg_QOtpMGfg" name="BaseClass" visibility="public">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_-t0ysjQEEfGHg_QOtpMGfg" name="derivableAttribute" visibility="package">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      </ownedAttribute>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_-t0yszQEEfGHg_QOtpMGfg" name="publicMethod" visibility="public" isAbstract="true">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t0ytDQEEfGHg_QOtpMGfg" type="_5djy8TQEEfGHg_QOtpMGfg" direction="return">
+          <name xsi:nil="true"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_-t0ytTQEEfGHg_QOtpMGfg" name="protectedMethod" visibility="protected" isAbstract="true">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t0ytjQEEfGHg_QOtpMGfg" type="_5djy8TQEEfGHg_QOtpMGfg" direction="return">
+          <name xsi:nil="true"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_-t0ytzQEEfGHg_QOtpMGfg" name="packageVisibleMethod" visibility="package" isAbstract="true">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t0yuDQEEfGHg_QOtpMGfg" name="" type="_5djy8TQEEfGHg_QOtpMGfg" direction="return"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_-t0yuTQEEfGHg_QOtpMGfg" name="BaseStmTop"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_-t1ZwDQEEfGHg_QOtpMGfg" name="Base">
+    <packagedElement xmi:type="uml:Class" xmi:id="_-t1ZwTQEEfGHg_QOtpMGfg" name="StateMachine" visibility="public">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_-t1ZwjQEEfGHg_QOtpMGfg" name="pParentStm" visibility="public" type="_-t1ZwTQEEfGHg_QOtpMGfg" isUnique="false" aggregation="shared">
+        <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_-t1ZwzQEEfGHg_QOtpMGfg" name="defaultValue">
+          <language>JAVA</language>
+          <language>TypeScript</language>
+          <body>null</body>
+          <body>undefined</body>
+        </defaultValue>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_-t1ZxDQEEfGHg_QOtpMGfg" name="nCurrentState" visibility="public" type="_5djy8jQEEfGHg_QOtpMGfg" isUnique="false">
+        <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_-t1ZxTQEEfGHg_QOtpMGfg" name="defaultValue">
+          <language>JAVA</language>
+          <language>TypeScript</language>
+          <body>STATE_UNDEF</body>
+          <body>StateMachine.STATE_UNDEF</body>
+        </defaultValue>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_-t1ZxjQEEfGHg_QOtpMGfg" name="nLCAState" visibility="public" type="_5djy8jQEEfGHg_QOtpMGfg" isUnique="false">
+        <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_-t1ZxzQEEfGHg_QOtpMGfg" name="defaultValue">
+          <language>JAVA</language>
+          <language>TypeScript</language>
+          <body>STATE_UNDEF</body>
+          <body>StateMachine.STATE_UNDEF</body>
+        </defaultValue>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_-t1ZyDQEEfGHg_QOtpMGfg" name="nTargetState" visibility="public" type="_5djy8jQEEfGHg_QOtpMGfg" isUnique="false">
+        <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_-t1ZyTQEEfGHg_QOtpMGfg" name="defaultValue">
+          <language>JAVA</language>
+          <language>TypeScript</language>
+          <body>STATE_UNDEF</body>
+          <body>StateMachine.STATE_UNDEF</body>
+        </defaultValue>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_-t1ZyjQEEfGHg_QOtpMGfg" name="nSourceState" visibility="public" type="_5djy8jQEEfGHg_QOtpMGfg" isUnique="false">
+        <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_-t1ZyzQEEfGHg_QOtpMGfg" name="defaultValue">
+          <language>JAVA</language>
+          <language>TypeScript</language>
+          <body>STATE_UNDEF</body>
+          <body>StateMachine.STATE_UNDEF</body>
+        </defaultValue>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_-t1ZzDQEEfGHg_QOtpMGfg" name="nPseudostate" visibility="public" type="_5djy8jQEEfGHg_QOtpMGfg" isUnique="false">
+        <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_-t1ZzTQEEfGHg_QOtpMGfg" name="defaultValue">
+          <language>JAVA</language>
+          <language>TypeScript</language>
+          <body>STATE_UNDEF</body>
+          <body>StateMachine.STATE_UNDEF</body>
+        </defaultValue>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_-t1ZzjQEEfGHg_QOtpMGfg" name="bIsExternTrans" visibility="public" isUnique="false">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+        <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_-t1ZzzQEEfGHg_QOtpMGfg" name="defaultValue">
+          <language>JAVA</language>
+          <language>TypeScript</language>
+          <body>false</body>
+          <body>false</body>
+        </defaultValue>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_-t1Z0DQEEfGHg_QOtpMGfg" name="bHandled" visibility="public" isUnique="false">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+        <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_-t1Z0TQEEfGHg_QOtpMGfg" name="defaultValue">
+          <language>JAVA</language>
+          <language>TypeScript</language>
+          <body>false</body>
+          <body>false</body>
+        </defaultValue>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_-t1Z0jQEEfGHg_QOtpMGfg" name="wasHandled" visibility="public" isUnique="false">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+        <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_-t1Z0zQEEfGHg_QOtpMGfg" name="defaultValue">
+          <language>JAVA</language>
+          <language>TypeScript</language>
+          <body>false</body>
+          <body>false</body>
+        </defaultValue>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_-t1Z1DQEEfGHg_QOtpMGfg" name="lastEnteredState" visibility="public" type="_5djy8jQEEfGHg_QOtpMGfg" isUnique="false">
+        <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_-t1Z1TQEEfGHg_QOtpMGfg" name="defaultValue">
+          <language>JAVA</language>
+          <language>TypeScript</language>
+          <body>STATE_UNDEF</body>
+          <body>StateMachine.STATE_UNDEF</body>
+        </defaultValue>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_-t1Z1jQEEfGHg_QOtpMGfg" name="STATE_UNDEF" isStatic="true" type="_5djy8jQEEfGHg_QOtpMGfg" isReadOnly="true">
+        <defaultValue xmi:type="uml:LiteralString" xmi:id="_-t1Z1zQEEfGHg_QOtpMGfg" value="0"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_-t1Z2DQEEfGHg_QOtpMGfg" name="pMain" visibility="public" type="_-t0yuTQEEfGHg_QOtpMGfg" isUnique="false" aggregation="shared">
+        <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_-t1Z2TQEEfGHg_QOtpMGfg" name="defaultValue">
+          <language>JAVA</language>
+          <language>TypeScript</language>
+          <body>null</body>
+          <body>undefined</body>
+        </defaultValue>
+      </ownedAttribute>
+      <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_-t1Z2jQEEfGHg_QOtpMGfg" name="Enterable" specification="_-t1Z3DQEEfGHg_QOtpMGfg">
+        <language>JAVA</language>
+        <body>return 0;</body>
+      </ownedBehavior>
+      <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_-t1Z2zQEEfGHg_QOtpMGfg" name="Exitable" specification="_-t1Z3zQEEfGHg_QOtpMGfg">
+        <language>JAVA</language>
+        <body>return 0;</body>
+      </ownedBehavior>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_-t1Z3DQEEfGHg_QOtpMGfg" name="Enterable" visibility="public" method="_-t1Z2jQEEfGHg_QOtpMGfg">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t1Z3TQEEfGHg_QOtpMGfg" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+        </ownedParameter>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t1Z3jQEEfGHg_QOtpMGfg" name="nThisState" type="_5djy8jQEEfGHg_QOtpMGfg"/>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_-t1Z3zQEEfGHg_QOtpMGfg" name="Exitable" visibility="public" isLeaf="true" method="_-t1Z2zQEEfGHg_QOtpMGfg">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t1Z4DQEEfGHg_QOtpMGfg" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+        </ownedParameter>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t1Z4TQEEfGHg_QOtpMGfg" name="nThisState" type="_5djy8jQEEfGHg_QOtpMGfg"/>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_-t1Z4jQEEfGHg_QOtpMGfg" name="DefaultEntryAction" visibility="public">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t1Z4zQEEfGHg_QOtpMGfg" type="_5djy8TQEEfGHg_QOtpMGfg" direction="return"/>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t1Z5DQEEfGHg_QOtpMGfg" name="pObj" type="_-t0ysTQEEfGHg_QOtpMGfg"/>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t1Z5TQEEfGHg_QOtpMGfg" name="pMsg" visibility="public" effect="create">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_-t1Z5jQEEfGHg_QOtpMGfg" name="DefaultExitAction" visibility="public">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t1Z5zQEEfGHg_QOtpMGfg" type="_5djy8TQEEfGHg_QOtpMGfg" direction="return"/>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t1Z6DQEEfGHg_QOtpMGfg" name="pObj" type="_-t0ysTQEEfGHg_QOtpMGfg"/>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t1Z6TQEEfGHg_QOtpMGfg" name="pMsg" visibility="public" effect="create">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_-t1Z6jQEEfGHg_QOtpMGfg" name="DefaultDoingAction" visibility="public">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t1Z6zQEEfGHg_QOtpMGfg" type="_5djy8TQEEfGHg_QOtpMGfg" direction="return"/>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t1Z7DQEEfGHg_QOtpMGfg" name="pObj" type="_-t0ysTQEEfGHg_QOtpMGfg"/>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t1Z7TQEEfGHg_QOtpMGfg" name="pMsg" visibility="public" effect="create">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_-t1Z7jQEEfGHg_QOtpMGfg" name="IsIn" visibility="public">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t1Z7zQEEfGHg_QOtpMGfg" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+        </ownedParameter>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t1Z8DQEEfGHg_QOtpMGfg" name="nState" type="_5djy8jQEEfGHg_QOtpMGfg"/>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_-t1Z8TQEEfGHg_QOtpMGfg" name="Req" visibility="public">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t1Z8jQEEfGHg_QOtpMGfg" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+        </ownedParameter>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t1Z8zQEEfGHg_QOtpMGfg" name="entryPt" type="_5djy8jQEEfGHg_QOtpMGfg"/>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_-t1Z9DQEEfGHg_QOtpMGfg" name="isIn" visibility="private" isStatic="true">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t1Z9TQEEfGHg_QOtpMGfg" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+        </ownedParameter>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t1Z9jQEEfGHg_QOtpMGfg" name="leaf" type="_5djy8jQEEfGHg_QOtpMGfg"/>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t1Z9zQEEfGHg_QOtpMGfg" name="composite" type="_5djy8jQEEfGHg_QOtpMGfg"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_-t1Z-DQEEfGHg_QOtpMGfg" name="EventParams" visibility="public"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_-t2A0DQEEfGHg_QOtpMGfg" name="Interfaces">
+    <packagedElement xmi:type="uml:Interface" xmi:id="_-t2A0TQEEfGHg_QOtpMGfg" name="Interface2" visibility="public">
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_-t2A0jQEEfGHg_QOtpMGfg" name="methodWithParams" visibility="public" isLeaf="true">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t2A0zQEEfGHg_QOtpMGfg" name="parm1">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+        </ownedParameter>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t2A1DQEEfGHg_QOtpMGfg" name="parm2">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+        </ownedParameter>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t2A1TQEEfGHg_QOtpMGfg" type="_5djy8TQEEfGHg_QOtpMGfg" direction="return">
+          <name xsi:nil="true"/>
+        </ownedParameter>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Interface" xmi:id="_-t2A1jQEEfGHg_QOtpMGfg" name="Interface1" visibility="public">
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_-t2A1zQEEfGHg_QOtpMGfg" name="finalMethod" visibility="public" isLeaf="true">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t2A2DQEEfGHg_QOtpMGfg" type="_5djy8TQEEfGHg_QOtpMGfg" direction="return">
+          <name xsi:nil="true"/>
+        </ownedParameter>
+      </ownedOperation>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_-t2n4DQEEfGHg_QOtpMGfg" name="Model">
+    <packagedElement xmi:type="uml:Class" xmi:id="_-t2n4TQEEfGHg_QOtpMGfg" name="Composition" visibility="public">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_-t2n4jQEEfGHg_QOtpMGfg" name="attribute4" visibility="private" isUnique="false">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_-t2n4zQEEfGHg_QOtpMGfg" name="Aggregration" visibility="public">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_-t2n5DQEEfGHg_QOtpMGfg" name="attribute2" visibility="private" isUnique="false">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_-t2n5TQEEfGHg_QOtpMGfg" name="Context" visibility="public">
+      <generalization xmi:type="uml:Generalization" xmi:id="_-t2n5jQEEfGHg_QOtpMGfg" general="_-t0ysTQEEfGHg_QOtpMGfg"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_-t2n5zQEEfGHg_QOtpMGfg" name="classOrStaticAttribute" visibility="private" isStatic="true" isUnique="false">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_-t2n6DQEEfGHg_QOtpMGfg" name="publicAttribute" visibility="public" isUnique="false">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_-t2n6TQEEfGHg_QOtpMGfg" name="privateAttribute" visibility="private" isUnique="false">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_-t2n6jQEEfGHg_QOtpMGfg" name="internalAttribute" visibility="package" isUnique="false">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_-t2n6zQEEfGHg_QOtpMGfg" name="isInitializedAttribute" visibility="private" isUnique="false">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+        <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_-t2n7DQEEfGHg_QOtpMGfg" name="defaultValue">
+          <language>JAVA</language>
+          <body>true</body>
+        </defaultValue>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_-t2n7TQEEfGHg_QOtpMGfg" name="readOnlyAttribute" visibility="private" isLeaf="true" isUnique="false">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_-t2n7jQEEfGHg_QOtpMGfg" name="initializedStaticArray" visibility="private" isStatic="true" isUnique="false">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_-t2n7zQEEfGHg_QOtpMGfg"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_-t2n8DQEEfGHg_QOtpMGfg" value="*"/>
+        <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_-t2n8TQEEfGHg_QOtpMGfg" name="defaultValue">
+          <language>JAVA</language>
+          <language>TypeScript</language>
+          <body>{ 1, 2, 3 }</body>
+          <body>[1, 2, 3]</body>
+        </defaultValue>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_-t2n8jQEEfGHg_QOtpMGfg" name="finalConstantAttribute" visibility="private" isLeaf="true" isStatic="true" isUnique="false">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+        <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_-t2n8zQEEfGHg_QOtpMGfg" name="defaultValue">
+          <language>JAVA</language>
+          <body>5</body>
+        </defaultValue>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_-t2n9DQEEfGHg_QOtpMGfg" name="anAggregation" visibility="private" type="_-t2n4zQEEfGHg_QOtpMGfg" isUnique="false">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_-t2n9TQEEfGHg_QOtpMGfg"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_-t2n9jQEEfGHg_QOtpMGfg" value="*"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_-t2n9zQEEfGHg_QOtpMGfg" name="aProtectedComposition" visibility="protected" type="_-t2n4TQEEfGHg_QOtpMGfg" isUnique="false">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_-t2n-DQEEfGHg_QOtpMGfg"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_-t2n-TQEEfGHg_QOtpMGfg" value="*"/>
+      </ownedAttribute>
+      <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_-t2n-jQEEfGHg_QOtpMGfg" name="Context implements Interface2" client="_-t2n5TQEEfGHg_QOtpMGfg" supplier="_-t2A0TQEEfGHg_QOtpMGfg" contract="_-t2A0TQEEfGHg_QOtpMGfg"/>
+      <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_-t2n-zQEEfGHg_QOtpMGfg" name="Context implements Interface1" client="_-t2n5TQEEfGHg_QOtpMGfg" supplier="_-t2A1jQEEfGHg_QOtpMGfg" contract="_-t2A1jQEEfGHg_QOtpMGfg"/>
+      <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_-t2n_DQEEfGHg_QOtpMGfg" name="classOrStaticMethod" specification="_-t2oBTQEEfGHg_QOtpMGfg">
+        <language>JAVA</language>
+        <body></body>
+      </ownedBehavior>
+      <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_-t2n_TQEEfGHg_QOtpMGfg" name="publicMethod" specification="_-t2oBzQEEfGHg_QOtpMGfg">
+        <language>JAVA</language>
+        <body></body>
+      </ownedBehavior>
+      <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_-t2n_jQEEfGHg_QOtpMGfg" name="privateLeafMethod" specification="_-t2oCTQEEfGHg_QOtpMGfg">
+        <language>JAVA</language>
+        <body></body>
+      </ownedBehavior>
+      <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_-t2n_zQEEfGHg_QOtpMGfg" name="protectedMethod" specification="_-t2oCzQEEfGHg_QOtpMGfg">
+        <language>JAVA</language>
+        <body></body>
+      </ownedBehavior>
+      <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_-t2oADQEEfGHg_QOtpMGfg" name="packageVisibleMethod" specification="_-t2oDTQEEfGHg_QOtpMGfg">
+        <language>JAVA</language>
+        <body></body>
+      </ownedBehavior>
+      <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_-t2oATQEEfGHg_QOtpMGfg" name="methodWithParams" specification="_-t2oDzQEEfGHg_QOtpMGfg">
+        <language>JAVA</language>
+        <body></body>
+      </ownedBehavior>
+      <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_-t2oAjQEEfGHg_QOtpMGfg" name="methodReturnsSomething" specification="_-t2oEzQEEfGHg_QOtpMGfg">
+        <language>JAVA</language>
+        <body>return null;</body>
+      </ownedBehavior>
+      <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_-t2oAzQEEfGHg_QOtpMGfg" name="methodThrowsException" specification="_-t2oFTQEEfGHg_QOtpMGfg">
+        <language>JAVA</language>
+        <body></body>
+      </ownedBehavior>
+      <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_-t2oBDQEEfGHg_QOtpMGfg" name="finalMethod" specification="_-t2oFzQEEfGHg_QOtpMGfg">
+        <language>JAVA</language>
+        <body></body>
+      </ownedBehavior>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_-t2oBTQEEfGHg_QOtpMGfg" name="classOrStaticMethod" visibility="public" isLeaf="true" isStatic="true" method="_-t2n_DQEEfGHg_QOtpMGfg">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t2oBjQEEfGHg_QOtpMGfg" name="" visibility="public" type="_5djy8TQEEfGHg_QOtpMGfg" direction="return" effect="create"/>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_-t2oBzQEEfGHg_QOtpMGfg" name="publicMethod" visibility="public" method="_-t2n_TQEEfGHg_QOtpMGfg">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t2oCDQEEfGHg_QOtpMGfg" type="_5djy8TQEEfGHg_QOtpMGfg" direction="return">
+          <name xsi:nil="true"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_-t2oCTQEEfGHg_QOtpMGfg" name="privateLeafMethod" visibility="private" isLeaf="true" method="_-t2n_jQEEfGHg_QOtpMGfg">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t2oCjQEEfGHg_QOtpMGfg" type="_5djy8TQEEfGHg_QOtpMGfg" direction="return">
+          <name xsi:nil="true"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_-t2oCzQEEfGHg_QOtpMGfg" name="protectedMethod" visibility="protected" method="_-t2n_zQEEfGHg_QOtpMGfg">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t2oDDQEEfGHg_QOtpMGfg" type="_5djy8TQEEfGHg_QOtpMGfg" direction="return">
+          <name xsi:nil="true"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_-t2oDTQEEfGHg_QOtpMGfg" name="packageVisibleMethod" visibility="package" method="_-t2oADQEEfGHg_QOtpMGfg">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t2oDjQEEfGHg_QOtpMGfg" type="_5djy8TQEEfGHg_QOtpMGfg" direction="return">
+          <name xsi:nil="true"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_-t2oDzQEEfGHg_QOtpMGfg" name="methodWithParams" visibility="public" isLeaf="true" method="_-t2oATQEEfGHg_QOtpMGfg">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t2oEDQEEfGHg_QOtpMGfg" name="parm1">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+        </ownedParameter>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t2oETQEEfGHg_QOtpMGfg" name="parm2">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+        </ownedParameter>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t2oEjQEEfGHg_QOtpMGfg" type="_5djy8TQEEfGHg_QOtpMGfg" direction="return">
+          <name xsi:nil="true"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_-t2oEzQEEfGHg_QOtpMGfg" name="methodReturnsSomething" visibility="public" isLeaf="true" method="_-t2oAjQEEfGHg_QOtpMGfg">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t2oFDQEEfGHg_QOtpMGfg" type="_-t2oGTQEEfGHg_QOtpMGfg" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_-t2oFTQEEfGHg_QOtpMGfg" name="methodThrowsException" visibility="public" isLeaf="true" method="_-t2oAzQEEfGHg_QOtpMGfg">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t2oFjQEEfGHg_QOtpMGfg" type="_5djy8TQEEfGHg_QOtpMGfg" direction="return">
+          <name xsi:nil="true"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_-t2oFzQEEfGHg_QOtpMGfg" name="finalMethod" visibility="public" isLeaf="true" method="_-t2oBDQEEfGHg_QOtpMGfg">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t2oGDQEEfGHg_QOtpMGfg" type="_5djy8TQEEfGHg_QOtpMGfg" direction="return">
+          <name xsi:nil="true"/>
+        </ownedParameter>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_-t2oGTQEEfGHg_QOtpMGfg" name="UsedDependency" visibility="public">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_-t2oGjQEEfGHg_QOtpMGfg" name="attribute6" visibility="private" isUnique="false">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_-t2oGzQEEfGHg_QOtpMGfg" name="ContextImpl" visibility="public" classifierBehavior="_-t2oHzQEEfGHg_QOtpMGfg">
+      <generalization xmi:type="uml:Generalization" xmi:id="_-t2oHDQEEfGHg_QOtpMGfg" general="_-t2n5TQEEfGHg_QOtpMGfg"/>
+      <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_-t2oHTQEEfGHg_QOtpMGfg" name="protectedMethod" specification="_-t2orDQEEfGHg_QOtpMGfg">
+        <language>JAVA</language>
+        <body></body>
+      </ownedBehavior>
+      <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_-t2oHjQEEfGHg_QOtpMGfg" name="checkE1Params" specification="_-t2orjQEEfGHg_QOtpMGfg">
+        <language>JAVA</language>
+        <body>return false;</body>
+      </ownedBehavior>
+      <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_-t2oHzQEEfGHg_QOtpMGfg" name="MainStm">
+        <region xmi:type="uml:Region" xmi:id="_-t2oIDQEEfGHg_QOtpMGfg" name="Region1">
+          <transition xmi:type="uml:Transition" xmi:id="_-t2oITQEEfGHg_QOtpMGfg" name="" source="_-t2oTzQEEfGHg_QOtpMGfg" target="_-t2oTjQEEfGHg_QOtpMGfg"/>
+          <transition xmi:type="uml:Transition" xmi:id="_-t2oIjQEEfGHg_QOtpMGfg" name="" source="_-t2oTjQEEfGHg_QOtpMGfg" target="_-t2oUDQEEfGHg_QOtpMGfg">
+            <effect xmi:type="uml:OpaqueBehavior" xmi:id="_-t2oIzQEEfGHg_QOtpMGfg" name="printHelloWorld">
+              <language>JAVA</language>
+              <language>C</language>
+              <language>C++</language>
+              <body>System.out.println(&quot;Hello, World!&quot;);</body>
+              <body>printf(&quot;Hello, World!&quot;);</body>
+              <body>std::out &lt;&lt; &quot;Hello, World!&quot; &lt;&lt; std::endln;</body>
+            </effect>
+            <trigger xmi:type="uml:Trigger" xmi:id="_-t2oJDQEEfGHg_QOtpMGfg" name="" event="_-t2ouTQEEfGHg_QOtpMGfg"/>
+          </transition>
+          <transition xmi:type="uml:Transition" xmi:id="_-t2oJTQEEfGHg_QOtpMGfg" name="" source="_-t2oUDQEEfGHg_QOtpMGfg" target="_-t2olDQEEfGHg_QOtpMGfg">
+            <trigger xmi:type="uml:Trigger" xmi:id="_-t2oJjQEEfGHg_QOtpMGfg" name="" event="_-t2ovDQEEfGHg_QOtpMGfg"/>
+          </transition>
+          <transition xmi:type="uml:Transition" xmi:id="_-t2oJzQEEfGHg_QOtpMGfg" source="_-t2oXzQEEfGHg_QOtpMGfg" target="_-t2oXjQEEfGHg_QOtpMGfg">
+            <trigger xmi:type="uml:Trigger" xmi:id="_-t2oKDQEEfGHg_QOtpMGfg" name="" event="_-t2ouzQEEfGHg_QOtpMGfg"/>
+          </transition>
+          <transition xmi:type="uml:Transition" xmi:id="_-t2oKTQEEfGHg_QOtpMGfg" kind="local" source="_-t2oczQEEfGHg_QOtpMGfg" target="_-t2ojzQEEfGHg_QOtpMGfg">
+            <trigger xmi:type="uml:Trigger" xmi:id="_-t2oKjQEEfGHg_QOtpMGfg" name="" event="_-t2oujQEEfGHg_QOtpMGfg"/>
+          </transition>
+          <transition xmi:type="uml:Transition" xmi:id="_-t2oKzQEEfGHg_QOtpMGfg" source="_-t2oczQEEfGHg_QOtpMGfg" target="_-t2oeDQEEfGHg_QOtpMGfg">
+            <trigger xmi:type="uml:Trigger" xmi:id="_-t2oLDQEEfGHg_QOtpMGfg" name="" event="_-t2ouTQEEfGHg_QOtpMGfg"/>
+          </transition>
+          <transition xmi:type="uml:Transition" xmi:id="_-t2oLTQEEfGHg_QOtpMGfg" source="_-t2oXzQEEfGHg_QOtpMGfg" target="_-t2oczQEEfGHg_QOtpMGfg">
+            <trigger xmi:type="uml:Trigger" xmi:id="_-t2oLjQEEfGHg_QOtpMGfg" name="" event="_-t2ovTQEEfGHg_QOtpMGfg"/>
+          </transition>
+          <transition xmi:type="uml:Transition" xmi:id="_-t2oLzQEEfGHg_QOtpMGfg" source="_-t2oTjQEEfGHg_QOtpMGfg" target="_-t2okDQEEfGHg_QOtpMGfg">
+            <effect xmi:type="uml:OpaqueBehavior" xmi:id="_-t2oMDQEEfGHg_QOtpMGfg" name="printWhenE2">
+              <language>JAVA</language>
+              <language>C</language>
+              <language>C++</language>
+              <body>System.out.println(&quot;Do something when E2&quot;);</body>
+              <body>printf(&quot;Hello, World!&quot;);</body>
+              <body>std::out &lt;&lt; &quot;Hello, World!&quot; &lt;&lt; std::endln;</body>
+            </effect>
+            <trigger xmi:type="uml:Trigger" xmi:id="_-t2oMTQEEfGHg_QOtpMGfg" name="" event="_-t2oujQEEfGHg_QOtpMGfg"/>
+          </transition>
+          <transition xmi:type="uml:Transition" xmi:id="_-t2oMjQEEfGHg_QOtpMGfg" guard="_-t2oMzQEEfGHg_QOtpMGfg" source="_-t2okDQEEfGHg_QOtpMGfg" target="_-t2olzQEEfGHg_QOtpMGfg">
+            <ownedRule xmi:type="uml:Constraint" xmi:id="_-t2oMzQEEfGHg_QOtpMGfg" name="">
+              <specification xmi:type="uml:OpaqueExpression" xmi:id="_-t2oNDQEEfGHg_QOtpMGfg" name="">
+                <language>OCL</language>
+                <body>else</body>
+              </specification>
+            </ownedRule>
+            <effect xmi:type="uml:OpaqueBehavior" xmi:id="_-t2oNTQEEfGHg_QOtpMGfg" name="printWhenElse">
+              <language>JAVA</language>
+              <language>C</language>
+              <language>C++</language>
+              <body>System.out.println(&quot;Do something when else&quot;);</body>
+              <body>printf(&quot;Hello, World!&quot;);</body>
+              <body>std::out &lt;&lt; &quot;Hello, World!&quot; &lt;&lt; std::endln;</body>
+            </effect>
+          </transition>
+          <transition xmi:type="uml:Transition" xmi:id="_-t2oNjQEEfGHg_QOtpMGfg" name="" guard="_-t2oNzQEEfGHg_QOtpMGfg" source="_-t2okDQEEfGHg_QOtpMGfg" target="_-t2oUDQEEfGHg_QOtpMGfg">
+            <ownedRule xmi:type="uml:Constraint" xmi:id="_-t2oNzQEEfGHg_QOtpMGfg" name="">
+              <specification xmi:type="uml:OpaqueExpression" xmi:id="_-t2oODQEEfGHg_QOtpMGfg" name="">
+                <language>OCL</language>
+                <body>pContextImpl.internalAttribute == 0</body>
+              </specification>
+            </ownedRule>
+            <effect xmi:type="uml:OpaqueBehavior" xmi:id="_-t2oOTQEEfGHg_QOtpMGfg" name="printWhen0">
+              <language>JAVA</language>
+              <language>C</language>
+              <language>C++</language>
+              <body>System.out.println(&quot;Do something when 0&quot;);</body>
+              <body>printf(&quot;Hello, World!&quot;);</body>
+              <body>std::out &lt;&lt; &quot;Hello, World!&quot; &lt;&lt; std::endln;</body>
+            </effect>
+          </transition>
+          <transition xmi:type="uml:Transition" xmi:id="_-t2oOjQEEfGHg_QOtpMGfg" source="_-t2oUDQEEfGHg_QOtpMGfg" target="_-t2olTQEEfGHg_QOtpMGfg">
+            <trigger xmi:type="uml:Trigger" xmi:id="_-t2oOzQEEfGHg_QOtpMGfg" name="" event="_-t2oujQEEfGHg_QOtpMGfg"/>
+          </transition>
+          <transition xmi:type="uml:Transition" xmi:id="_-t2oPDQEEfGHg_QOtpMGfg" source="_-t2olTQEEfGHg_QOtpMGfg" target="_-t2olDQEEfGHg_QOtpMGfg">
+            <trigger xmi:type="uml:Trigger" xmi:id="_-t2oPTQEEfGHg_QOtpMGfg" name="" event="_-t2ouDQEEfGHg_QOtpMGfg"/>
+          </transition>
+          <transition xmi:type="uml:Transition" xmi:id="_-t2oPjQEEfGHg_QOtpMGfg" source="_-t2olDQEEfGHg_QOtpMGfg" target="_-t2okTQEEfGHg_QOtpMGfg">
+            <effect xmi:type="uml:OpaqueBehavior" xmi:id="_-t2oPzQEEfGHg_QOtpMGfg" name="OpaqueBehavior1">
+              <language>JAVA</language>
+              <body>System.out.println(&quot;Do Something&quot;);</body>
+            </effect>
+          </transition>
+          <transition xmi:type="uml:Transition" xmi:id="_-t2oQDQEEfGHg_QOtpMGfg" source="_-t2okzQEEfGHg_QOtpMGfg" target="_-t2oljQEEfGHg_QOtpMGfg"/>
+          <transition xmi:type="uml:Transition" xmi:id="_-t2oQTQEEfGHg_QOtpMGfg" guard="_-t2oQjQEEfGHg_QOtpMGfg" source="_-t2olzQEEfGHg_QOtpMGfg" target="_-t2okjQEEfGHg_QOtpMGfg">
+            <ownedRule xmi:type="uml:Constraint" xmi:id="_-t2oQjQEEfGHg_QOtpMGfg" name="">
+              <specification xmi:type="uml:OpaqueExpression" xmi:id="_-t2oQzQEEfGHg_QOtpMGfg" name="">
+                <language>OCL</language>
+                <body>pContextImpl.internalAttribute == 1</body>
+              </specification>
+            </ownedRule>
+            <effect xmi:type="uml:OpaqueBehavior" xmi:id="_-t2oRDQEEfGHg_QOtpMGfg" name="printWhen1">
+              <language>JAVA</language>
+              <language>C</language>
+              <language>C++</language>
+              <body>System.out.println(&quot;Do something when 1&quot;);</body>
+              <body>printf(&quot;Hello, World!&quot;);</body>
+              <body>std::out &lt;&lt; &quot;Hello, World!&quot; &lt;&lt; std::endln;</body>
+            </effect>
+          </transition>
+          <transition xmi:type="uml:Transition" xmi:id="_-t2oRTQEEfGHg_QOtpMGfg" guard="_-t2oRjQEEfGHg_QOtpMGfg" source="_-t2olzQEEfGHg_QOtpMGfg" target="_-t2oczQEEfGHg_QOtpMGfg">
+            <ownedRule xmi:type="uml:Constraint" xmi:id="_-t2oRjQEEfGHg_QOtpMGfg" name="">
+              <specification xmi:type="uml:OpaqueExpression" xmi:id="_-t2oRzQEEfGHg_QOtpMGfg" name="">
+                <language>OCL</language>
+                <body>else</body>
+              </specification>
+            </ownedRule>
+            <effect xmi:type="uml:OpaqueBehavior" xmi:id="_-t2oSDQEEfGHg_QOtpMGfg" name="printWhen2ndElse">
+              <language>JAVA</language>
+              <language>C</language>
+              <language>C++</language>
+              <body>System.out.println(&quot;Do something when 2nd else&quot;);</body>
+              <body>printf(&quot;Hello, World!&quot;);</body>
+              <body>std::out &lt;&lt; &quot;Hello, World!&quot; &lt;&lt; std::endln;</body>
+            </effect>
+          </transition>
+          <transition xmi:type="uml:Transition" xmi:id="_-t2oSTQEEfGHg_QOtpMGfg" source="_-t2omDQEEfGHg_QOtpMGfg" target="_-t2oZTQEEfGHg_QOtpMGfg"/>
+          <transition xmi:type="uml:Transition" xmi:id="_-t2oSjQEEfGHg_QOtpMGfg" source="_-t2oczQEEfGHg_QOtpMGfg" target="_-t2oXzQEEfGHg_QOtpMGfg">
+            <trigger xmi:type="uml:Trigger" xmi:id="_-t2oSzQEEfGHg_QOtpMGfg" name="" event="_-t2ouzQEEfGHg_QOtpMGfg"/>
+          </transition>
+          <transition xmi:type="uml:Transition" xmi:id="_-t2oTDQEEfGHg_QOtpMGfg" source="_-t2oljQEEfGHg_QOtpMGfg" target="_-t2omDQEEfGHg_QOtpMGfg"/>
+          <transition xmi:type="uml:Transition" xmi:id="_-t2oTTQEEfGHg_QOtpMGfg" source="_-t2omDQEEfGHg_QOtpMGfg" target="_-t2obTQEEfGHg_QOtpMGfg"/>
+          <subvertex xmi:type="uml:State" xmi:id="_-t2oTjQEEfGHg_QOtpMGfg" name="S1"/>
+          <subvertex xmi:type="uml:Pseudostate" xmi:id="_-t2oTzQEEfGHg_QOtpMGfg" name="MainStmInit"/>
+          <subvertex xmi:type="uml:State" xmi:id="_-t2oUDQEEfGHg_QOtpMGfg" name="S2">
+            <entry xmi:type="uml:OpaqueBehavior" xmi:id="_-t2oUTQEEfGHg_QOtpMGfg" name="">
+              <language>JAVA</language>
+              <language>TypeScript</language>
+              <body>System.out.println(&quot;Hi!&quot;);</body>
+              <body>console.log(&quot;Hi!&quot;);</body>
+            </entry>
+            <region xmi:type="uml:Region" xmi:id="_-t2oUjQEEfGHg_QOtpMGfg" name="Region1">
+              <transition xmi:type="uml:Transition" xmi:id="_-t2oUzQEEfGHg_QOtpMGfg" source="_-t2oXDQEEfGHg_QOtpMGfg" target="_-t2oWjQEEfGHg_QOtpMGfg"/>
+              <transition xmi:type="uml:Transition" xmi:id="_-t2oVDQEEfGHg_QOtpMGfg" source="_-t2oWjQEEfGHg_QOtpMGfg" target="_-t2oWzQEEfGHg_QOtpMGfg">
+                <trigger xmi:type="uml:Trigger" xmi:id="_-t2oVTQEEfGHg_QOtpMGfg" name="" event="_-t2oujQEEfGHg_QOtpMGfg"/>
+              </transition>
+              <transition xmi:type="uml:Transition" xmi:id="_-t2oVjQEEfGHg_QOtpMGfg" source="_-t2oWzQEEfGHg_QOtpMGfg" target="_-t2oXTQEEfGHg_QOtpMGfg">
+                <trigger xmi:type="uml:Trigger" xmi:id="_-t2oVzQEEfGHg_QOtpMGfg" name="" event="_-t2ouDQEEfGHg_QOtpMGfg"/>
+              </transition>
+              <transition xmi:type="uml:Transition" xmi:id="_-t2oWDQEEfGHg_QOtpMGfg" source="_-t2oWjQEEfGHg_QOtpMGfg" target="_-t2olTQEEfGHg_QOtpMGfg">
+                <trigger xmi:type="uml:Trigger" xmi:id="_-t2oWTQEEfGHg_QOtpMGfg" name="" event="_-t2ouTQEEfGHg_QOtpMGfg"/>
+              </transition>
+              <subvertex xmi:type="uml:State" xmi:id="_-t2oWjQEEfGHg_QOtpMGfg" name="S21"/>
+              <subvertex xmi:type="uml:State" xmi:id="_-t2oWzQEEfGHg_QOtpMGfg" name="S22"/>
+              <subvertex xmi:type="uml:Pseudostate" xmi:id="_-t2oXDQEEfGHg_QOtpMGfg" name="S2Init"/>
+              <subvertex xmi:type="uml:FinalState" xmi:id="_-t2oXTQEEfGHg_QOtpMGfg" name="S2Final"/>
+              <subvertex xmi:type="uml:Pseudostate" xmi:id="_-t2oXjQEEfGHg_QOtpMGfg" name="S2ShallowHist" kind="shallowHistory"/>
+            </region>
+          </subvertex>
+          <subvertex xmi:type="uml:State" xmi:id="_-t2oXzQEEfGHg_QOtpMGfg" name="S8">
+            <region xmi:type="uml:Region" xmi:id="_-t2oYDQEEfGHg_QOtpMGfg" name="Region1">
+              <transition xmi:type="uml:Transition" xmi:id="_-t2oYTQEEfGHg_QOtpMGfg" name="tr4" source="_-t2oZDQEEfGHg_QOtpMGfg" target="_-t2oYzQEEfGHg_QOtpMGfg"/>
+              <transition xmi:type="uml:Transition" xmi:id="_-t2oYjQEEfGHg_QOtpMGfg" source="_-t2oZjQEEfGHg_QOtpMGfg" target="_-t2oZzQEEfGHg_QOtpMGfg"/>
+              <subvertex xmi:type="uml:State" xmi:id="_-t2oYzQEEfGHg_QOtpMGfg" name="S811"/>
+              <subvertex xmi:type="uml:Pseudostate" xmi:id="_-t2oZDQEEfGHg_QOtpMGfg" name="S81Init"/>
+              <subvertex xmi:type="uml:State" xmi:id="_-t2oZTQEEfGHg_QOtpMGfg" name="S812" submachine="_-t2omTQEEfGHg_QOtpMGfg">
+                <connectionPoint xmi:type="uml:Pseudostate" xmi:id="_-t2oZjQEEfGHg_QOtpMGfg" name="Exit1" kind="exitPoint"/>
+              </subvertex>
+              <subvertex xmi:type="uml:Pseudostate" xmi:id="_-t2oZzQEEfGHg_QOtpMGfg" name="" kind="join"/>
+            </region>
+            <region xmi:type="uml:Region" xmi:id="_-t2oaDQEEfGHg_QOtpMGfg" name="Region2">
+              <transition xmi:type="uml:Transition" xmi:id="_-t2oaTQEEfGHg_QOtpMGfg" name="" source="_-t2ocTQEEfGHg_QOtpMGfg" target="_-t2ocjQEEfGHg_QOtpMGfg"/>
+              <transition xmi:type="uml:Transition" xmi:id="_-t2oajQEEfGHg_QOtpMGfg" source="_-t2oZzQEEfGHg_QOtpMGfg" target="_-t2ocjQEEfGHg_QOtpMGfg"/>
+              <transition xmi:type="uml:Transition" xmi:id="_-t2oazQEEfGHg_QOtpMGfg" source="_-t2obDQEEfGHg_QOtpMGfg" target="_-t2ocjQEEfGHg_QOtpMGfg"/>
+              <subvertex xmi:type="uml:State" xmi:id="_-t2obDQEEfGHg_QOtpMGfg" name="S821" submachine="_-t2omTQEEfGHg_QOtpMGfg">
+                <connectionPoint xmi:type="uml:Pseudostate" xmi:id="_-t2obTQEEfGHg_QOtpMGfg" name="Entry2" kind="entryPoint"/>
+                <region xmi:type="uml:Region" xmi:id="_-t2objQEEfGHg_QOtpMGfg" name="Region1">
+                  <transition xmi:type="uml:Transition" xmi:id="_-t2obzQEEfGHg_QOtpMGfg" source="_-t2ocDQEEfGHg_QOtpMGfg" target="_-t2oZzQEEfGHg_QOtpMGfg"/>
+                  <subvertex xmi:type="uml:Pseudostate" xmi:id="_-t2ocDQEEfGHg_QOtpMGfg" name="S103" kind="fork"/>
+                </region>
+              </subvertex>
+              <subvertex xmi:type="uml:Pseudostate" xmi:id="_-t2ocTQEEfGHg_QOtpMGfg" name="S82Init"/>
+              <subvertex xmi:type="uml:State" xmi:id="_-t2ocjQEEfGHg_QOtpMGfg" name="S822"/>
+            </region>
+          </subvertex>
+          <subvertex xmi:type="uml:State" xmi:id="_-t2oczQEEfGHg_QOtpMGfg" name="S7">
+            <region xmi:type="uml:Region" xmi:id="_-t2odDQEEfGHg_QOtpMGfg" name="Region1">
+              <transition xmi:type="uml:Transition" xmi:id="_-t2odTQEEfGHg_QOtpMGfg" source="_-t2ojjQEEfGHg_QOtpMGfg" target="_-t2ojTQEEfGHg_QOtpMGfg"/>
+              <transition xmi:type="uml:Transition" xmi:id="_-t2odjQEEfGHg_QOtpMGfg" source="_-t2ojTQEEfGHg_QOtpMGfg" target="_-t2oeDQEEfGHg_QOtpMGfg"/>
+              <transition xmi:type="uml:Transition" xmi:id="_-t2odzQEEfGHg_QOtpMGfg" source="_-t2oeDQEEfGHg_QOtpMGfg" target="_-t2ojzQEEfGHg_QOtpMGfg"/>
+              <subvertex xmi:type="uml:State" xmi:id="_-t2oeDQEEfGHg_QOtpMGfg" name="S71">
+                <region xmi:type="uml:Region" xmi:id="_-t2oeTQEEfGHg_QOtpMGfg" name="Region1">
+                  <transition xmi:type="uml:Transition" xmi:id="_-t2oejQEEfGHg_QOtpMGfg" source="_-t2ogTQEEfGHg_QOtpMGfg" target="_-t2ofzQEEfGHg_QOtpMGfg"/>
+                  <transition xmi:type="uml:Transition" xmi:id="_-t2oezQEEfGHg_QOtpMGfg" source="_-t2ofzQEEfGHg_QOtpMGfg" target="_-t2ogDQEEfGHg_QOtpMGfg">
+                    <trigger xmi:type="uml:Trigger" xmi:id="_-t2ofDQEEfGHg_QOtpMGfg" name="" event="_-t2ouDQEEfGHg_QOtpMGfg"/>
+                  </transition>
+                  <transition xmi:type="uml:Transition" xmi:id="_-t2ofTQEEfGHg_QOtpMGfg" source="_-t2ogDQEEfGHg_QOtpMGfg" target="_-t2ogjQEEfGHg_QOtpMGfg">
+                    <trigger xmi:type="uml:Trigger" xmi:id="_-t2ofjQEEfGHg_QOtpMGfg" event="_-t2ouzQEEfGHg_QOtpMGfg">
+                      <name xsi:nil="true"/>
+                    </trigger>
+                  </transition>
+                  <subvertex xmi:type="uml:State" xmi:id="_-t2ofzQEEfGHg_QOtpMGfg" name="S7111"/>
+                  <subvertex xmi:type="uml:State" xmi:id="_-t2ogDQEEfGHg_QOtpMGfg" name="S7112"/>
+                  <subvertex xmi:type="uml:Pseudostate" xmi:id="_-t2ogTQEEfGHg_QOtpMGfg" name="S711Init"/>
+                  <subvertex xmi:type="uml:FinalState" xmi:id="_-t2ogjQEEfGHg_QOtpMGfg" name=""/>
+                </region>
+                <region xmi:type="uml:Region" xmi:id="_-t2ogzQEEfGHg_QOtpMGfg" name="Region2">
+                  <transition xmi:type="uml:Transition" xmi:id="_-t2ohDQEEfGHg_QOtpMGfg" source="_-t2oizQEEfGHg_QOtpMGfg" target="_-t2oiTQEEfGHg_QOtpMGfg"/>
+                  <transition xmi:type="uml:Transition" xmi:id="_-t2ohTQEEfGHg_QOtpMGfg" source="_-t2oiTQEEfGHg_QOtpMGfg" target="_-t2oijQEEfGHg_QOtpMGfg">
+                    <trigger xmi:type="uml:Trigger" xmi:id="_-t2ohjQEEfGHg_QOtpMGfg" name="" event="_-t2ovTQEEfGHg_QOtpMGfg"/>
+                  </transition>
+                  <transition xmi:type="uml:Transition" xmi:id="_-t2ohzQEEfGHg_QOtpMGfg" source="_-t2oijQEEfGHg_QOtpMGfg" target="_-t2ojDQEEfGHg_QOtpMGfg">
+                    <trigger xmi:type="uml:Trigger" xmi:id="_-t2oiDQEEfGHg_QOtpMGfg" event="_-t2ovDQEEfGHg_QOtpMGfg">
+                      <name xsi:nil="true"/>
+                    </trigger>
+                  </transition>
+                  <subvertex xmi:type="uml:State" xmi:id="_-t2oiTQEEfGHg_QOtpMGfg" name="S7121"/>
+                  <subvertex xmi:type="uml:State" xmi:id="_-t2oijQEEfGHg_QOtpMGfg" name="S7122"/>
+                  <subvertex xmi:type="uml:Pseudostate" xmi:id="_-t2oizQEEfGHg_QOtpMGfg" name="S712Init"/>
+                  <subvertex xmi:type="uml:FinalState" xmi:id="_-t2ojDQEEfGHg_QOtpMGfg" name=""/>
+                </region>
+              </subvertex>
+              <subvertex xmi:type="uml:Pseudostate" xmi:id="_-t2ojTQEEfGHg_QOtpMGfg" name="S7DeepHist" kind="deepHistory"/>
+              <subvertex xmi:type="uml:Pseudostate" xmi:id="_-t2ojjQEEfGHg_QOtpMGfg" name="S7Init"/>
+              <subvertex xmi:type="uml:State" xmi:id="_-t2ojzQEEfGHg_QOtpMGfg" name="S72"/>
+            </region>
+          </subvertex>
+          <subvertex xmi:type="uml:Pseudostate" xmi:id="_-t2okDQEEfGHg_QOtpMGfg" name="" kind="choice"/>
+          <subvertex xmi:type="uml:State" xmi:id="_-t2okTQEEfGHg_QOtpMGfg" name="S6" submachine="_-t2omTQEEfGHg_QOtpMGfg">
+            <connectionPoint xmi:type="uml:Pseudostate" xmi:id="_-t2okjQEEfGHg_QOtpMGfg" name="Entry1" kind="entryPoint"/>
+            <connectionPoint xmi:type="uml:Pseudostate" xmi:id="_-t2okzQEEfGHg_QOtpMGfg" name="Exit1" kind="exitPoint"/>
+          </subvertex>
+          <subvertex xmi:type="uml:Pseudostate" xmi:id="_-t2olDQEEfGHg_QOtpMGfg" name="" kind="junction"/>
+          <subvertex xmi:type="uml:State" xmi:id="_-t2olTQEEfGHg_QOtpMGfg" name="S3"/>
+          <subvertex xmi:type="uml:State" xmi:id="_-t2oljQEEfGHg_QOtpMGfg" name="S9" submachine="_-t2omTQEEfGHg_QOtpMGfg"/>
+          <subvertex xmi:type="uml:Pseudostate" xmi:id="_-t2olzQEEfGHg_QOtpMGfg" name="" kind="choice"/>
+          <subvertex xmi:type="uml:Pseudostate" xmi:id="_-t2omDQEEfGHg_QOtpMGfg" name="" kind="fork"/>
+        </region>
+      </ownedBehavior>
+      <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_-t2omTQEEfGHg_QOtpMGfg" name="SubStm" submachineState="_-t2okTQEEfGHg_QOtpMGfg _-t2oljQEEfGHg_QOtpMGfg _-t2oZTQEEfGHg_QOtpMGfg _-t2obDQEEfGHg_QOtpMGfg">
+        <connectionPoint xmi:type="uml:Pseudostate" xmi:id="_-t2omjQEEfGHg_QOtpMGfg" name="Entry1" kind="entryPoint"/>
+        <connectionPoint xmi:type="uml:Pseudostate" xmi:id="_-t2omzQEEfGHg_QOtpMGfg" name="Exit1" kind="exitPoint"/>
+        <connectionPoint xmi:type="uml:Pseudostate" xmi:id="_-t2onDQEEfGHg_QOtpMGfg" name="Entry2" kind="entryPoint"/>
+        <region xmi:type="uml:Region" xmi:id="_-t2onTQEEfGHg_QOtpMGfg" name="Region1">
+          <transition xmi:type="uml:Transition" xmi:id="_-t2onjQEEfGHg_QOtpMGfg" source="_-t2oqDQEEfGHg_QOtpMGfg" target="_-t2opzQEEfGHg_QOtpMGfg"/>
+          <transition xmi:type="uml:Transition" xmi:id="_-t2onzQEEfGHg_QOtpMGfg" source="_-t2opzQEEfGHg_QOtpMGfg" target="_-t2oqTQEEfGHg_QOtpMGfg">
+            <trigger xmi:type="uml:Trigger" xmi:id="_-t2ooDQEEfGHg_QOtpMGfg" name="" event="_-t2oujQEEfGHg_QOtpMGfg"/>
+          </transition>
+          <transition xmi:type="uml:Transition" xmi:id="_-t2ooTQEEfGHg_QOtpMGfg" source="_-t2oqTQEEfGHg_QOtpMGfg" target="_-t2omzQEEfGHg_QOtpMGfg">
+            <trigger xmi:type="uml:Trigger" xmi:id="_-t2oojQEEfGHg_QOtpMGfg" name="" event="_-t2ovDQEEfGHg_QOtpMGfg"/>
+          </transition>
+          <transition xmi:type="uml:Transition" xmi:id="_-t2oozQEEfGHg_QOtpMGfg" source="_-t2oqTQEEfGHg_QOtpMGfg" target="_-t2oqjQEEfGHg_QOtpMGfg">
+            <trigger xmi:type="uml:Trigger" xmi:id="_-t2opDQEEfGHg_QOtpMGfg" name="" event="_-t2ouTQEEfGHg_QOtpMGfg"/>
+          </transition>
+          <transition xmi:type="uml:Transition" xmi:id="_-t2opTQEEfGHg_QOtpMGfg" source="_-t2omjQEEfGHg_QOtpMGfg" target="_-t2oqTQEEfGHg_QOtpMGfg"/>
+          <transition xmi:type="uml:Transition" xmi:id="_-t2opjQEEfGHg_QOtpMGfg" source="_-t2onDQEEfGHg_QOtpMGfg" target="_-t2oqzQEEfGHg_QOtpMGfg"/>
+          <subvertex xmi:type="uml:State" xmi:id="_-t2opzQEEfGHg_QOtpMGfg" name="S101"/>
+          <subvertex xmi:type="uml:Pseudostate" xmi:id="_-t2oqDQEEfGHg_QOtpMGfg" name="SubStmInit"/>
+          <subvertex xmi:type="uml:State" xmi:id="_-t2oqTQEEfGHg_QOtpMGfg" name="S102"/>
+          <subvertex xmi:type="uml:FinalState" xmi:id="_-t2oqjQEEfGHg_QOtpMGfg" name=""/>
+          <subvertex xmi:type="uml:State" xmi:id="_-t2oqzQEEfGHg_QOtpMGfg" name="S103"/>
+        </region>
+      </ownedBehavior>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_-t2orDQEEfGHg_QOtpMGfg" name="protectedMethod" visibility="protected" method="_-t2oHTQEEfGHg_QOtpMGfg">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t2orTQEEfGHg_QOtpMGfg" type="_5djy8TQEEfGHg_QOtpMGfg" direction="return">
+          <name xsi:nil="true"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_-t2orjQEEfGHg_QOtpMGfg" name="checkE1Params" visibility="protected" isLeaf="true" isStatic="true" method="_-t2oHjQEEfGHg_QOtpMGfg">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t2orzQEEfGHg_QOtpMGfg" name="e" type="_-t1Z-DQEEfGHg_QOtpMGfg"/>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_-t2osDQEEfGHg_QOtpMGfg" type="_5djy8TQEEfGHg_QOtpMGfg" direction="return">
+          <name xsi:nil="true"/>
+        </ownedParameter>
+      </ownedOperation>
+      <nestedClassifier xmi:type="uml:Class" xmi:id="_-t2osTQEEfGHg_QOtpMGfg" name="E2Params">
+        <generalization xmi:type="uml:Generalization" xmi:id="_-t2osjQEEfGHg_QOtpMGfg" general="_-t1Z-DQEEfGHg_QOtpMGfg"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_-t2oszQEEfGHg_QOtpMGfg" name="Property1" visibility="public" type="_5djy8jQEEfGHg_QOtpMGfg"/>
+      </nestedClassifier>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_-t2otDQEEfGHg_QOtpMGfg" name="CalledDependency" visibility="public">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_-t2otTQEEfGHg_QOtpMGfg" name="attribute0" visibility="private" isUnique="false">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_-t2otjQEEfGHg_QOtpMGfg" name="AFriend" visibility="public">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_-t2otzQEEfGHg_QOtpMGfg" name="attribute3" visibility="package" isUnique="false">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:CallEvent" xmi:id="_-t2ouDQEEfGHg_QOtpMGfg" name="E0"/>
+    <packagedElement xmi:type="uml:CallEvent" xmi:id="_-t2ouTQEEfGHg_QOtpMGfg" name="E1"/>
+    <packagedElement xmi:type="uml:CallEvent" xmi:id="_-t2oujQEEfGHg_QOtpMGfg" name="E2"/>
+    <packagedElement xmi:type="uml:CallEvent" xmi:id="_-t2ouzQEEfGHg_QOtpMGfg" name="E3"/>
+    <packagedElement xmi:type="uml:CallEvent" xmi:id="_-t2ovDQEEfGHg_QOtpMGfg" name="E4"/>
+    <packagedElement xmi:type="uml:CallEvent" xmi:id="_-t2ovTQEEfGHg_QOtpMGfg" name="E5"/>
+    <packagedElement xmi:type="uml:Usage" xmi:id="_-t2ovjQEEfGHg_QOtpMGfg" client="_-t2n5TQEEfGHg_QOtpMGfg" supplier="_-t2oGTQEEfGHg_QOtpMGfg"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_-t2ovzQEEfGHg_QOtpMGfg" client="_-t2oGzQEEfGHg_QOtpMGfg" supplier="_-t2n4TQEEfGHg_QOtpMGfg"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_-t2owDQEEfGHg_QOtpMGfg" client="_-t2oGzQEEfGHg_QOtpMGfg" supplier="_-t2n4zQEEfGHg_QOtpMGfg"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Usage" xmi:id="_-t32ADQEEfGHg_QOtpMGfg" client="_-t2oGzQEEfGHg_QOtpMGfg" supplier="_-t1Z-DQEEfGHg_QOtpMGfg"/>
+  <packagedElement xmi:type="uml:Dependency" xmi:id="_-t4dEDQEEfGHg_QOtpMGfg" client="_-t1ZwTQEEfGHg_QOtpMGfg" supplier="_-t0ysTQEEfGHg_QOtpMGfg"/>
+  <packagedElement xmi:type="uml:Dependency" xmi:id="_-t4dETQEEfGHg_QOtpMGfg" client="_-t2oGzQEEfGHg_QOtpMGfg" supplier="_-t0ysTQEEfGHg_QOtpMGfg"/>
+</uml:Model>

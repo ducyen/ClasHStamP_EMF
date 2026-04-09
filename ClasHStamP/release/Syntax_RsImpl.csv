@@ -4,7 +4,11 @@ file,[container]/[nAME]_impl.rs,,"use crate::[nAME];[->64][dESC]
 use crate::common_include::*;
 use crate::[nAME];
 ",
-class,,,,,
+class,"
+[->][sCOPE] impl [nAME][mODIFIER][tYPE]
+[vALUE]",,,"[->]{
+","[->]}
+"
 b_enum,"fn [nAME]_to_string( value: [nAME] ) -> &'static str {
 ","    match value {
     [nAME] => ""[nAME]"",
@@ -36,37 +40,80 @@ i_struct,"pub struct [nAME] {
     pub base: [tYPE],
 ","}
 "
-constructor,"pub fn copy_from( p[nAME]: &mut [nAME], pSource: &[nAME] ) -> &mut [cONTAINER] {
-",,,,"    p[nAME]
-}
+constructor,[->]pub fn new(,,,"
+[->]) -> Self {
+[->]  Self {","
+[->]  }
+[->]}[->96]
 "
 attr_group,,,,,
-ctor_call,"    Self::copy_from( p[nAME], pSource );
-",,,,
-__s_attr,,,,"    self.[nAME] = pSource.[nAME].clone();
-","    self.[nAME] = pSource.[nAME].clone();
+ctor_call,"
+[->]) -> Self {
+[->]    Self {
+[->]        base: [tYPE]::new( [vALUE] ),
+",[vALUE],", [vALUE]",_[nAME],"[nAME],
+[->]    }
 "
-__o_attr,,,,"    self.[nAME].clone_from( &pSource.[nAME] );
-","    self.[nAME].clone_from( &pSource.[nAME] );
-"
-__r_attr,,,,"    self.[nAME] = pSource.[nAME].clone();
-","    self.[nAME] = pSource.[nAME].clone();
-"
-_ms_attr,,,,"    self.[nAME].clone_from( &pSource.[nAME] );
-","    self.[nAME].clone_from( &pSource.[nAME] );
-"
-_mo_attr,,,,"    self.[nAME].clone_from( &pSource.[nAME] );
-","    self.[nAME].clone_from( &pSource.[nAME] );
-"
-_mr_attr,,,,"    self.[nAME].clone_from( &pSource.[nAME] );
-","    self.[nAME].clone_from( &pSource.[nAME] );
-"
-c_s_attr,,,,,
-c_o_attr,,,,,
-c_r_attr,,,,,
-cms_attr,,,,,
-cmo_attr,,,,,
-cmr_attr,,,,,
+__s_attr,,"
+[->]    _[nAME]: [tYPE]",",
+[->]    _[nAME]: [tYPE]","
+[->][nAME]: [vALUE]",",
+[->][nAME]: [vALUE]"
+__o_attr,,"
+[->]    _[nAME]: [tYPE]",",
+[->]    _[nAME]: [tYPE]","
+[->][nAME]: [vALUE]",",
+[->][nAME]: [vALUE]"
+__r_attr,,"
+[->]    _[nAME]: [tYPE]",",
+[->]    _[nAME]: [tYPE]","
+[->][nAME]: [vALUE]",",
+[->][nAME]: [vALUE]"
+_ms_attr,,"
+[->]    _[nAME]: Vec<[tYPE]>",",
+[->]    _[nAME]: Vec<[tYPE]>","
+[->][nAME]: [vALUE]",",
+[->][nAME]: [vALUE]"
+_mo_attr,,"
+[->]    _[nAME]: Vec<[tYPE]>",",
+[->]    _[nAME]: Vec<[tYPE]>","
+[->][nAME]: [vALUE]",",
+[->][nAME]: [vALUE]"
+_mr_attr,,"
+[->]    _[nAME]: Vec<[tYPE]>",",
+[->]    _[nAME]: Vec<[tYPE]>","
+[->][nAME]: [vALUE]",",
+[->][nAME]: [vALUE]"
+c_s_attr,,"
+[->]    _[nAME]: [tYPE]",",
+[->]    _[nAME]: [tYPE]","
+[->][nAME]: [vALUE]",",
+[->][nAME]: [vALUE]"
+c_o_attr,,"
+[->]    _[nAME]: [tYPE]",",
+[->]    _[nAME]: [tYPE]","
+[->][nAME]: [vALUE]",",
+[->][nAME]: [vALUE]"
+c_r_attr,,"
+[->]    _[nAME]: [tYPE]",",
+[->]    _[nAME]: [tYPE]","
+[->][nAME]: [vALUE]",",
+[->][nAME]: [vALUE]"
+cms_attr,,"
+[->]    _[nAME]: Vec<[tYPE]>",",
+[->]    _[nAME]: Vec<[tYPE]>","
+[->][nAME]: [vALUE]",",
+[->][nAME]: [vALUE]"
+cmo_attr,,"
+[->]    _[nAME]: Vec<[tYPE]>",",
+[->]    _[nAME]: Vec<[tYPE]>","
+[->][nAME]: [vALUE]",",
+[->][nAME]: [vALUE]"
+cmr_attr,,"
+[->]    _[nAME]: Vec<[tYPE]>",",
+[->]    _[nAME]: Vec<[tYPE]>","
+[->][nAME]: [vALUE]",",
+[->][nAME]: [vALUE]"
 s_s_attr,"pub static [nAME]: [tYPE][mODIFIER] = [vALUE];[->64][dESC]
 ","pub const [nAME]: [tYPE][mODIFIER] = [vALUE];[->64][dESC]
 ",,,"pub static [nAME]: [tYPE][mODIFIER];[->64][dESC]
@@ -141,10 +188,7 @@ pmr_attr,,"fn get[Name]( &self, index: u32 ) -> &[tYPE]{
 ","    return self.[nAME].clone();
 ","    self.[nAME] = value;
 "
-vptr_impl,"const G_[tYPE]_VTBL: [cONTAINER]Vtbl = {
-[nAME]};
-",,,"    [nAME]: [cONTAINER]_[nAME],","
-"
+vptr_impl,,,,,
 __c_oper,"pub(crate) fn [nAME](
     p[vALUE]: &mut [vALUE]",",
     [nAME]: [tYPE][mODIFIER]",",
@@ -162,22 +206,8 @@ __b_oper,"pub fn [nAME](
 
 "
 vptr_decl,,,,,
-_ac_oper,"pub(crate) fn [nAME](
-    &self",",
-    [nAME]: [tYPE][mODIFIER]",",
-    [nAME]: [tYPE][mODIFIER]","
-) -> [tYPE][mODIFIER] {
-","} /* [Container].[nAME] */
-
-"
-_ab_oper,"pub fn [nAME](
-    &self",",
-    [nAME]: [tYPE][mODIFIER]",",
-    [nAME]: [tYPE][mODIFIER]","
-) -> [tYPE][mODIFIER] {
-","} /* [Container].[nAME] */
-
-"
+_ac_oper,,,,,
+_ab_oper,,,,,
 l_i_oper,"fn [nAME](
     &mut self",",
     [nAME]: [tYPE][mODIFIER]",",
@@ -204,10 +234,7 @@ l_b_oper,"pub fn [nAME](
 "
 lai_oper,fn [nAME]( &mut self,", [nAME]: [tYPE][mODIFIER]",", [nAME]: [tYPE][mODIFIER]"," ) -> [tYPE][mODIFIER];
 ",
-vptr_call,"    if self.vTbl.is_none() || self.vTbl.as_ref().unwrap().[nAME].is_none() { return Default::default(); }
-    return self.vTbl.as_ref().unwrap().[nAME].unwrap()( self",", [nAME]",", [nAME]","    if self.vTbl.is_none() || self.vTbl.as_ref().unwrap().[nAME].is_none() { return; }
-    self.vTbl.as_ref().unwrap().[nAME].unwrap()( self"," );
-"
+vptr_call,,,,,
 s_i_oper,"fn [nAME](
 ",    [nAME]: [tYPE][mODIFIER],",
     [nAME]: [tYPE][mODIFIER]","
@@ -385,7 +412,7 @@ action,"[->]let e = pEventParams.downcast_ref::<[nAME]Params>();
 ","[->][nAME]
 ","[->][nAME]
 ",,
-param_dir,,,,-2,
+param_dir,,,,0,::
 inheritance,,,,,
 template,,,,,
 statemachine,,,,"
